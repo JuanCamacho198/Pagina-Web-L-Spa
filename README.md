@@ -1,4 +1,4 @@
-Luxury SPA Web
+**Luxury SPA Web**
 
 Proyecto frontend para sitio de spa de lujo. Tecnologías: React + Vite + Firebase.
 
