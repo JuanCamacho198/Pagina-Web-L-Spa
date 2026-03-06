@@ -1,35 +1,28 @@
 // src/models/citasModel.ts
 import { db, appointments, users, services } from '../db';
 import { eq, desc } from 'drizzle-orm';
-import { getAuth } from '@/lib/auth'; 
 import { Appointment } from '../types';
 
 /**
  * Agrega una cita a la base de datos PostgreSQL.
- * @param appointmentData - Los datos de la cita, incluyendo serviceId, date, y time.
+ * @param appointmentData - Los datos de la cita.
+ * @param auth0Id - El ID de Auth0 del usuario.
  * @returns El ID (UUID) de la nueva cita.
  */
 export async function addAppointment(appointmentData: { 
   serviceId: string; 
   appointmentDate: string; 
   appointmentTime: string; 
-}): Promise<string> {
+}, auth0Id: string): Promise<string> {
   try {
-    const auth = getAuth();
-    const firebaseUser = auth.currentUser;
-
-    if (!firebaseUser) {
-      throw new Error("Usuario no autenticado.");
-    }
-
-    // Buscamos el ID (UUID) del usuario en Postgres usando su Firebase UID
+    // Buscamos el ID (UUID) del usuario en Postgres usando su Auth0 ID
     const userResult = await db.select({ id: users.id })
       .from(users)
-      .where(eq(users.firebaseUid, firebaseUser.uid))
+      .where(eq(users.auth0Id, auth0Id))
       .limit(1);
 
     if (userResult.length === 0) {
-      throw new Error("Usuario no encontrado en la base de datos de Postgres.");
+      throw new Error("Usuario no encontrado en la base de datos.");
     }
 
     const userId = userResult[0].id;
@@ -50,51 +43,43 @@ export async function addAppointment(appointmentData: {
 }
 
 /**
- * Obtiene las citas del usuario actual desde Postgres filtrando por Firebase UID.
- * @param firebaseUid - El UID de Firebase del usuario.
+ * Obtiene todas las citas de un usuario específico desde Postgres.
+ * @param auth0Id - El ID de Auth0 del usuario.
+ * @returns Un arreglo de citas.
  */
-export async function fetchAppointments(firebaseUid: string): Promise<Appointment[]> {
+export async function fetchAppointments(auth0Id: string): Promise<Appointment[]> {
   try {
-    const result = await db.select({
+    // Primero obtenemos el ID (UUID) de Postgres usando el Auth0 ID
+    const userResult = await db.select({ id: users.id })
+      .from(users)
+      .where(eq(users.auth0Id, auth0Id))
+      .limit(1);
+
+    if (userResult.length === 0) {
+      return [];
+    }
+
+    const userId = userResult[0].id;
+
+    // Obtenemos las citas uniéndolas con la tabla de servicios
+    const results = await db.select({
       id: appointments.id,
-      serviceName: services.nombre,
+      userId: appointments.userId,
       serviceId: appointments.serviceId,
       appointmentDate: appointments.appointmentDate,
       appointmentTime: appointments.appointmentTime,
       status: appointments.status,
-      createdAt: appointments.createdAt
+      createdAt: appointments.createdAt,
+      serviceName: services.name,
     })
     .from(appointments)
-    .innerJoin(users, eq(appointments.userId, users.id))
     .innerJoin(services, eq(appointments.serviceId, services.id))
-    .where(eq(users.firebaseUid, firebaseUid))
-    .orderBy(desc(appointments.createdAt));
+    .where(eq(appointments.userId, userId))
+    .orderBy(desc(appointments.appointmentDate));
 
-    // Mapeamos para mantener la estructura de la interfaz `Appointment`
-    return result.map(appointment => ({
-      id: appointment.id,
-      serviceName: appointment.serviceName,
-      serviceId: appointment.serviceId || undefined,
-      appointmentDate: appointment.appointmentDate,
-      appointmentTime: appointment.appointmentTime,
-      status: appointment.status as "pending" | "confirmed" | "cancelled" | "completed",
-      createdAt: appointment.createdAt?.toISOString() || new Date().toISOString()
-    }));
-  } catch (e) {
+    return results as unknown as Appointment[];
+  } catch (e: any) {
     console.error("Error fetching appointments from Postgres: ", e);
-    throw new Error("Failed to fetch appointments.");
-  }
-}
-
-/**
- * Borra una cita por su ID.
- * @param id - El UUID de la cita.
- */
-export async function deleteAppointment(id: string): Promise<void> {
-  try {
-    await db.delete(appointments).where(eq(appointments.id, id));
-  } catch (e) {
-    console.error("Error deleting appointment from Postgres: ", e);
-    throw new Error("Failed to delete appointment.");
+    throw new Error(e.message || "Error al obtener las citas.");
   }
 }

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useAuth0 } from '@auth0/auth0-react';
 import { fetchServiceById } from '../../models/servicesModel';
 import { addAppointment } from '../../models/citasModel';
 import { useCart } from '../../context/CartContext';
@@ -53,6 +54,7 @@ interface CheckoutItem {
 }
 
 export default function CheckoutView() {
+  const { user, isAuthenticated } = useAuth0();
   const [itemsToCheckout, setItemsToCheckout] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -156,6 +158,10 @@ export default function CheckoutView() {
 
   const onCheckoutSubmit = async (formData: CheckoutFormValues) => {
     if (isSubmitting) return;
+    if (!isAuthenticated || !user?.sub) {
+      setError('Debes iniciar sesión para realizar una reserva.');
+      return;
+    }
 
     setError('');
     setIsSubmitting(true);
@@ -165,20 +171,12 @@ export default function CheckoutView() {
       for (const item of groupedItems) {
         const appointmentDataToSave = {
           serviceId: item.serviceId,
-          serviceName: item.Nombre,
-          servicePrice: item.Precio,
-          userName: formData.name,
-          userLastName: formData.lastName,
-          userEmail: formData.email,
-          userPhone: formData.phone,
-          userCC: formData.userCC,
-          notes: formData.notes || '',
           appointmentDate: formData.preferredDate,
           appointmentTime: formData.preferredTime,
-          status: 'Pending Payment',
-          createdAt: new Date(),
+          // user data is still in formData for potential display, 
+          // but addAppointment now uses auth0Id primarily
         };
-        const newAppointmentId = await addAppointment(appointmentDataToSave);
+        const newAppointmentId = await addAppointment(appointmentDataToSave, user.sub);
         savedAppointmentIds.push(newAppointmentId);
       }
 

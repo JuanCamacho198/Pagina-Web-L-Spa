@@ -6,7 +6,7 @@ export const userRoleEnum = pgEnum('user_role', ['admin', 'employee', 'customer'
 // Definición de la Tabla de Usuarios
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
-  firebaseUid: varchar('firebase_uid', { length: 255 }).unique().notNull(),
+  auth0Id: varchar('auth0_id', { length: 255 }).unique().notNull(),
   email: varchar('email', { length: 255 }).unique().notNull(),
   nombre: varchar('nombre', { length: 100 }),
   apellido: varchar('apellido', { length: 100 }),

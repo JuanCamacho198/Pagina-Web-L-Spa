@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth } from '@/lib/auth';
+import { useAuth0 } from '@auth0/auth0-react';
 import { fetchAppointments, deleteAppointment } from '../../models/citasModel';
 import { 
   Calendar, 
@@ -26,6 +26,7 @@ interface Appointment {
 }
 
 export default function CitasView() {
+  const { user, isAuthenticated, isLoading: authLoading } = useAuth0();
   const [citas, setCitas] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -41,14 +42,16 @@ export default function CitasView() {
 
   useEffect(() => {
     async function load() {
+      if (authLoading) return;
+      
+      if (!isAuthenticated || !user?.sub) {
+        setError('Inicia sesión para ver tus citas.');
+        setLoading(false);
+        return;
+      }
+
       try {
-        const auth = getAuth();
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
-          setError('Inicia sesión para ver tus citas.');
-          return;
-        }
-        const list = await fetchAppointments(currentUser.uid);
+        const list = await fetchAppointments(user.sub);
         setCitas(list as Appointment[]);
       } catch (err: any) {
         setError('No pudimos recuperar tus citas. Inténtalo de nuevo más tarde.');
@@ -57,7 +60,7 @@ export default function CitasView() {
       }
     }
     load();
-  }, []);
+  }, [user, isAuthenticated, authLoading]);
 
   const confirmCancel = async () => {
     if (!modalId) return;

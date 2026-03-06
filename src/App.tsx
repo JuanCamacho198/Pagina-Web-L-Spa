@@ -35,7 +35,7 @@ import AboutView from './features/static/AboutView';
 
 import CreateServiceView from './features/admin/CreateServiceView';
 
-import { registroUsuario } from './controllers/authController';
+import { AuthSync } from './components/shared/AuthSync';
 
 export default function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -53,6 +53,7 @@ export default function App() {
     // se envolvio toda la aplicación con CartProvider para que cualquier componente pueda usar useCart
     <CartProvider>
       <Router>
+        <AuthSync />
         <NavBar user={user} />
         {/* rutas de la aplicación */}
         <Routes>

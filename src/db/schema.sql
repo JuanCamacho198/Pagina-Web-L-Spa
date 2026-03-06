@@ -10,7 +10,7 @@ END $$;
 -- Tabla de Usuarios
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    firebase_uid VARCHAR(255) UNIQUE NOT NULL,
+    auth0_id VARCHAR(255) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     nombre VARCHAR(100),
     apellido VARCHAR(100),

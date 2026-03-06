@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { db, cartItems as dbCartItems, users, services } from '../db';
 import { eq, and } from 'drizzle-orm';
-import { auth } from '../lib/auth';
+import { useAuth0 } from "@auth0/auth0-react";
 import { CartItem } from '../types';
 
 interface CartContextType {
@@ -19,28 +19,27 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartCount, setCartCount] = useState(0);
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
+    if (!isLoading) {
+      if (isAuthenticated && user) {
         loadCartFromDb();
       } else {
         setCartItems([]);
         setCartCount(0);
       }
-    });
-    return () => unsubscribe();
-  }, []);
+    }
+  }, [user, isAuthenticated, isLoading]);
 
   const loadCartFromDb = async () => {
     try {
-      const user = auth.currentUser;
-      if (!user) return;
+      if (!user?.sub) return;
 
       // Obtener el ID del usuario en Postgres
       const userResult = await db.select({ id: users.id })
         .from(users)
-        .where(eq(users.firebaseUid, user.uid))
+        .where(eq(users.auth0Id, user.sub))
         .limit(1);
 
       if (userResult.length === 0) return;
@@ -82,13 +81,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const clearCart = async () => {
-    const user = auth.currentUser;
-    if (!user) return;
+    if (!user?.sub) return;
 
     try {
       const userResult = await db.select({ id: users.id })
         .from(users)
-        .where(eq(users.firebaseUid, user.uid))
+        .where(eq(users.auth0Id, user.sub))
         .limit(1);
 
       if (userResult.length > 0) {

@@ -5,69 +5,59 @@ import { UserProfile } from "../types";
 
 /**
  * Guarda (o crea) un perfil de usuario en la base de datos Postgres.
- * @param uid - El UID único proveído por Firebase Auth
+ * @param auth0Id - El ID único proveído por Auth0
  * @param nombre - Nombre del usuario
  * @param apellido - Apellido del usuario
  * @param correo - Email del usuario
  */
-export async function saveUserData(uid: string, nombre: string, apellido: string, correo: string) {
+export async function saveUserData(auth0Id: string, nombre: string, apellido: string, correo: string) {
   console.log("[userModel] ⇢ saveUserData llamado con:", {
-    uid, nombre, apellido, correo
+    auth0Id, nombre, apellido, correo
   });
   
   try {
     const result = await db.insert(users).values({
-      firebaseUid: uid,
+      auth0Id: auth0Id,
       nombre,
       apellido,
       email: correo,
-      // Nota: No guardamos la contraseña en Postgres por seguridad, 
-      // ya que Firebase Auth se encarga de ello en sus propios servidores.
     }).returning();
     
-    console.log("[userModel] ✔ Insert exitoso para UID:", uid);
+    console.log("[userModel] ✔ Insert exitoso para ID Auth0:", auth0Id);
     return result[0];
   } catch (err: any) {
-    console.error("[userModel] ✖ error en insert para UID:", uid, err);
+    console.error("[userModel] ✖ error en insert para ID Auth0:", auth0Id, err);
     throw err;
   }
 }
 
 /**
- * Trae un perfil de usuario por su Firebase UID.
- * @param uid - El UID de Firebase.
+ * Trae un perfil de usuario por su Auth0 ID.
+ * @param auth0Id - El ID de Auth0.
  * @returns El perfil de usuario mapeado.
  */
-export async function getUserById(uid: string): Promise<UserProfile | null> {
-  try {
-    const result = await db.select()
-      .from(users)
-      .where(eq(users.firebaseUid, uid))
-      .limit(1);
-      
-    if (result.length === 0) return null;
-    
-    const user = result[0];
-    return {
-      uid: user.firebaseUid,
-      id: user.id,
-      nombre: user.nombre,
-      apellido: user.apellido,
-      email: user.email,
-      telefono: user.telefono || undefined,
-      fechaNacimiento: user.fechaNacimiento || undefined
-    };
-  } catch (err: any) {
-    console.error("[userModel] Error bajando datos del usuario:", err);
-    throw err;
-  }
+export async function getAuth0UserById(auth0Id: string): Promise<UserProfile | null> {
+  const result = await db.select().from(users).where(eq(users.auth0Id, auth0Id)).limit(1);
+  if (result.length === 0) return null;
+  const user = result[0];
+  return {
+    uid: user.auth0Id,
+    id: user.id,
+    nombre: user.nombre || '',
+    apellido: user.apellido || '',
+    email: user.email,
+    telefono: user.telefono || undefined,
+    fechaNacimiento: user.fechaNacimiento || undefined,
+    role: user.role as any
+  };
 }
+
 /**
  * Actualiza los datos de un usuario en PostgreSQL.
- * @param uid - El Firebase UID del usuario.
+ * @param auth0Id - El Auth0 ID del usuario.
  * @param updates - Objeto con los campos a actualizar.
  */
-export async function updateUserData(uid: string, updates: Partial<UserProfile>) {
+export async function updateUserData(auth0Id: string, updates: Partial<UserProfile>) {
   try {
     const result = await db.update(users)
       .set({
@@ -77,7 +67,7 @@ export async function updateUserData(uid: string, updates: Partial<UserProfile>)
         telefono: updates.telefono,
         fechaNacimiento: updates.fechaNacimiento
       })
-      .where(eq(users.firebaseUid, uid))
+      .where(eq(users.auth0Id, auth0Id))
       .returning();
     return result[0];
   } catch (err: any) {
@@ -88,11 +78,11 @@ export async function updateUserData(uid: string, updates: Partial<UserProfile>)
 
 /**
  * Elimina los datos de un usuario de PostgreSQL.
- * @param uid - El Firebase UID del usuario.
+ * @param auth0Id - El Auth0 ID del usuario.
  */
-export async function deleteUserData(uid: string) {
+export async function deleteUserData(auth0Id: string) {
   try {
-    await db.delete(users).where(eq(users.firebaseUid, uid));
+    await db.delete(users).where(eq(users.auth0Id, auth0Id));
   } catch (err: any) {
     console.error("[userModel] Error eliminando usuario:", err);
     throw err;
