@@ -128,7 +128,7 @@ export default function ProfileView() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await signOut();
       showNotification('Sesión cerrada correctamente');
       navigate('/', { replace: true });
     } catch (error: any) {
