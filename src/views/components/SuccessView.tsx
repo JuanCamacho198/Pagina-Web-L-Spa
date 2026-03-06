@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+// @ts-ignore
 import styles from '../../styles/SuccessView.module.css';
-import { FaCheckCircle } from 'react-icons/fa'; // Importa un icono de "check"
-
-// Si no tienes react-icons instalado, puedes instalarlo:
-// npm install react-icons
+import { CheckCircle2 } from 'lucide-react'; 
 
 export default function SuccessView() {
   const location = useLocation();
@@ -41,7 +39,7 @@ export default function SuccessView() {
   return (
     <div className={styles['success-page']}>
       <div className={styles['success-icon-container']}>
-        <FaCheckCircle className={styles['success-icon']} /> {/* Icono de éxito */}
+        <CheckCircle2 size={64} className="text-green-500 mb-4" /> {/* Icono de éxito */}
       </div>
       <h1>¡Agendamiento y Pago Confirmados!</h1>
 
