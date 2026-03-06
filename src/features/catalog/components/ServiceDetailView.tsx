@@ -1,15 +1,16 @@
 // src/features/catalog/components/ServiceDetailView.tsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import { db, cartItems, users } from '../../../db';
 import { eq } from 'drizzle-orm';
-import { getAuth } from '@/lib/auth';
 import { fetchServiceById, fetchServices } from '../../../models/servicesModel';
 import { Service } from '../../../types';
 import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
 
 const ServiceDetailView = () => {
   const { id } = useParams<{ id: string }>();
+  const { user, isAuthenticated } = useAuth0();
   const [service, setService] = useState<Service | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +18,6 @@ const ServiceDetailView = () => {
   const [notification, setNotification] = useState<{ message: string; type: string } | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const navigate = useNavigate();
-  const auth = getAuth();
 
   // Función para mostrar notificaciones
   const showNotification = (message: string, type = 'success') => {
@@ -64,14 +64,13 @@ const ServiceDetailView = () => {
 
   const handleAddToCart = async () => { 
     if (service) {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
+      if (isAuthenticated && user?.sub) {
         setIsAddingToCart(true);
         try {
-          // Buscamos el ID del usuario en Postgres
+          // Buscamos el ID del usuario en Postgres por auth0Id
           const userResult = await db.select({ id: users.id })
             .from(users)
-            .where(eq(users.firebaseUid, currentUser.uid))
+            .where(eq(users.auth0Id, user.sub))
             .limit(1);
 
           if (userResult.length === 0) {

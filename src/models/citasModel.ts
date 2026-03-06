@@ -83,3 +83,16 @@ export async function fetchAppointments(auth0Id: string): Promise<Appointment[]>
     throw new Error(e.message || "Error al obtener las citas.");
   }
 }
+
+/**
+ * Elimina (cancela) una cita de la base de datos PostgreSQL.
+ * @param appointmentId - El ID (UUID) de la cita a eliminar.
+ */
+export async function deleteAppointment(appointmentId: string): Promise<void> {
+  try {
+    await db.delete(appointments).where(eq(appointments.id, appointmentId));
+  } catch (e: any) {
+    console.error("Error deleting appointment from Postgres: ", e);
+    throw new Error(e.message || "Error al cancelar la cita.");
+  }
+}

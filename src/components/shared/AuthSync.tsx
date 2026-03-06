@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { saveUserData } from '../models/userModel';
+import { saveUserData } from '../../models/userModel';
 
 /**
  * Componente que se encarga de sincronizar el usuario de Auth0 con la base de datos de Postgres.
