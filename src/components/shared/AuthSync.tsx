@@ -23,6 +23,7 @@ export function AuthSync() {
 
           if (userData.auth0Id) {
             console.log('Sincronizando usuario con Postgres:', userData.email);
+            // Pasamos el objeto userData completo al modelo
             await saveUserData(userData);
           }
         } catch (error) {

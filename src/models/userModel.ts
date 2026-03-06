@@ -5,28 +5,33 @@ import { UserProfile } from "../types";
 
 /**
  * Guarda (o crea) un perfil de usuario en la base de datos Postgres.
- * @param auth0Id - El ID único proveído por Auth0
- * @param nombre - Nombre del usuario
- * @param apellido - Apellido del usuario
- * @param correo - Email del usuario
+ * @param userData - Objeto con los datos del usuario.
  */
-export async function saveUserData(auth0Id: string, nombre: string, apellido: string, correo: string) {
-  console.log("[userModel] ⇢ saveUserData llamado con:", {
-    auth0Id, nombre, apellido, correo
-  });
+export async function saveUserData(userData: {
+  auth0Id: string;
+  email: string;
+  name: string;
+  role?: 'admin' | 'employee' | 'customer';
+}) {
+  console.log("[userModel] ⇢ saveUserData llamado con:", userData);
   
   try {
     const result = await db.insert(users).values({
-      auth0Id: auth0Id,
-      nombre,
-      apellido,
-      email: correo,
+      auth0Id: userData.auth0Id,
+      nombre: userData.name,
+      email: userData.email,
+      role: userData.role || 'customer',
+    }).onConflictDoUpdate({
+      target: users.auth0Id,
+      set: {
+        nombre: userData.name,
+      }
     }).returning();
     
-    console.log("[userModel] ✔ Insert exitoso para ID Auth0:", auth0Id);
+    console.log("[userModel] ✔ Sync exitoso para ID Auth0:", userData.auth0Id);
     return result[0];
   } catch (err: any) {
-    console.error("[userModel] ✖ error en insert para ID Auth0:", auth0Id, err);
+    console.error("[userModel] ✖ error en sync para ID Auth0:", userData.auth0Id, err);
     throw err;
   }
 }
