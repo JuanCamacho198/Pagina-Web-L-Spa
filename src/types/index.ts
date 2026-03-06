@@ -42,3 +42,23 @@ export interface CartItem {
   addedAt: string;
   Duracion: number;
 }
+
+export interface ServiceFormValues {
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  duracion: number;
+  categoria: string;
+  imagenURL?: string;
+}
+
+export interface CheckoutFormValues {
+  name: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  userCC: string;
+  preferredDate: string;
+  preferredTime: string;
+  notes?: string;
+}

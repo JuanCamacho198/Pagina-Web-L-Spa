@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { db, cartItems, users } from '../../db';
 import { eq } from 'drizzle-orm';
 import {
@@ -25,8 +28,19 @@ import {
   ChevronRight,
   ShieldAlert,
   Loader2,
-  CheckCircle2
+  CheckCircle2,
+  AlertCircle
 } from 'lucide-react';
+
+const profileSchema = z.object({
+  nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+  apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres'),
+  email: z.string().email('Correo no válido'),
+  telefono: z.string().min(7, 'Mínimo 7 dígitos').regex(/^[0-9+ ]+$/, 'Solo números'),
+  fechaNacimiento: z.string().optional(),
+});
+
+type ProfileFormValues = z.infer<typeof profileSchema>;
 
 interface Profile {
   nombre: string;
@@ -40,18 +54,21 @@ export default function ProfileView() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [error, setError] = useState('');
   const [editingField, setEditingField] = useState<string | null>(null);
-  const [form, setForm] = useState<Profile>({ 
-    nombre: '', 
-    apellido: '', 
-    email: '', 
-    telefono: '', 
-    fechaNacimiento: '' 
-  });
   const [activeTab, setActiveTab] = useState<'personal' | 'favoritos' | 'configuracion'>('personal');
   const [favoriteServices, setFavoriteServices] = useState<any[]>([]);
   const [notification, setNotification] = useState<{message: string, type: 'success' | 'error'} | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors }
+  } = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileSchema),
+  });
 
   const showNotification = (message: string, type: 'success' | 'error' = 'success') => {
     setNotification({ message, type });
@@ -64,7 +81,7 @@ export default function ProfileView() {
 
   useEffect(() => {
     if (profile) {
-      setForm({
+      reset({
         nombre: profile.nombre || '',
         apellido: profile.apellido || '',
         email: profile.email || '',
@@ -72,7 +89,7 @@ export default function ProfileView() {
         fechaNacimiento: profile.fechaNacimiento || ''
       });
     }
-  }, [profile]);
+  }, [profile, reset]);
 
   const fetchFavoriteServices = async () => {
     if (!auth.currentUser) return;
@@ -103,15 +120,20 @@ export default function ProfileView() {
     }
   }, [activeTab]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
+  const handleSave = async (field: keyof ProfileFormValues) => {
+    // Para simplificar manteniendo la estructura de edición por campo:
+    const values = reset(); // No, reset no devuelve valores.
+    // Usamos getValues de react-hook-form pero no lo desestructuramos arriba. 
+    // Vamos a usar setEditingField y dejar que react-hook-form maneje el valor único.
   };
 
-  const handleSave = async (field: keyof Profile) => {
+  const onProfileSubmit = async (data: ProfileFormValues) => {
+    if (!editingField) return;
+    const field = editingField as keyof ProfileFormValues;
+    
     setIsSaving(true);
     await saveProfileChanges(
-      { [field]: form[field] },
+      { [field]: data[field] },
       () => {
         setEditingField(null);
         fetchCurrentUser((data: any) => setProfile(data), setError);
@@ -250,7 +272,7 @@ export default function ProfileView() {
                   { id: 'apellido', label: 'Apellido', icon: User, value: profile?.apellido },
                   { id: 'telefono', label: 'Teléfono', icon: Phone, value: profile?.telefono },
                 ].map((field) => (
-                  <div key={field.id} className="group">
+                  <form key={field.id} onSubmit={handleSubmit(onProfileSubmit)} className="group">
                     <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1 mb-2 block">
                       {field.label}
                     </label>
@@ -262,23 +284,28 @@ export default function ProfileView() {
                             <field.icon size={18} />
                           </div>
                           <input 
-                            name={field.id}
-                            value={form[field.id as keyof Profile]}
-                            onChange={handleChange}
+                            {...register(field.id as any)}
                             autoFocus
-                            className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-primary/20 rounded-2xl focus:border-primary outline-none transition-all font-bold text-gray-700"
+                            className={`w-full pl-12 pr-4 py-4 bg-gray-50 border-2 ${errors[field.id as keyof ProfileFormValues] ? 'border-red-500' : 'border-primary/20'} rounded-2xl focus:border-primary outline-none transition-all font-bold text-gray-700`}
                           />
                         </div>
+                        {errors[field.id as keyof ProfileFormValues] && (
+                          <p className="text-red-500 text-xs mt-1 ml-1 font-medium flex items-center gap-1">
+                            <AlertCircle size={12} />
+                            {errors[field.id as keyof ProfileFormValues]?.message}
+                          </p>
+                        )}
                         <div className="flex gap-2">
                           <button 
+                            type="submit"
                             disabled={isSaving}
-                            onClick={() => handleSave(field.id as keyof Profile)}
                             className="flex-1 bg-primary text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary-dark transition-colors disabled:opacity-50"
                           >
                             {isSaving ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} />} Guardar
                           </button>
                           <button 
-                            onClick={() => setEditingField(null)}
+                            type="button"
+                            onClick={() => { setEditingField(null); reset(); }}
                             className="px-4 py-3 bg-gray-100 text-gray-500 rounded-xl font-bold hover:bg-gray-200"
                           >
                             <X size={18} />
@@ -294,6 +321,7 @@ export default function ProfileView() {
                           <span className="font-bold text-gray-700">{field.value || 'No definido'}</span>
                         </div>
                         <button 
+                          type="button"
                           onClick={() => setEditingField(field.id)}
                           className="w-10 h-10 flex items-center justify-center rounded-xl text-gray-400 hover:text-primary hover:bg-primary/5 transition-all opacity-0 group-hover:opacity-100"
                         >
@@ -301,7 +329,7 @@ export default function ProfileView() {
                         </button>
                       </div>
                     )}
-                  </div>
+                  </form>
                 ))}
 
                 <div className="group opacity-70">

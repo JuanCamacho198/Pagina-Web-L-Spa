@@ -14,22 +14,21 @@ import {
   X, 
   UploadCloud,
   CheckCircle2,
-  AlertCircle,
+  AlertCircle as AlertIcon,
   Loader2
 } from 'lucide-react';
 import { createService } from '../../models/servicesModel';
+import { ServiceFormValues } from '../../types';
 
 // Esquema de validación con Zod
 const serviceSchema = z.object({
   nombre: z.string().min(3, 'El nombre debe tener al menos 3 caracteres'),
   descripcion: z.string().min(10, 'La descripción debe tener al menos 10 caracteres'),
-  precio: z.coerce.number().positive('El precio debe ser un número positivo'),
-  duracion: z.coerce.number().int().positive('La duración debe ser en minutos'),
+  precio: z.number().positive('El precio debe ser un número positivo'),
+  duracion: z.number().int().positive('La duración debe ser en minutos'),
   categoria: z.string().min(1, 'La categoría es obligatoria'),
-  imagenURL: z.string().url('Debe ser una URL válida de imagen').or(z.string().min(0)),
+  imagenURL: z.string().url('Debe ser una URL válida de imagen').optional().or(z.literal('')),
 });
-
-type ServiceFormValues = z.infer<typeof serviceSchema>;
 
 const CATEGORIES = [
   'Facial', 
@@ -55,7 +54,7 @@ export default function CreateServiceView() {
     watch,
     formState: { errors }
   } = useForm<ServiceFormValues>({
-    resolver: zodResolver(serviceSchema),
+    resolver: zodResolver(serviceSchema) as any,
     defaultValues: {
       categoria: '',
       imagenURL: ''
@@ -259,7 +258,7 @@ export default function CreateServiceView() {
 
             {error && (
               <div className="bg-red-50 border border-red-100 p-4 rounded-xl flex items-start gap-3 text-red-700 animate-shake">
-                <AlertCircle className="w-5 h-5 shrink-0" />
+                <AlertIcon className="w-5 h-5 shrink-0" />
                 <p className="text-sm font-medium">{error}</p>
               </div>
             )}

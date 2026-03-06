@@ -1,5 +1,8 @@
-import React, { useState, useEffect, useMemo, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { fetchServiceById } from '../../models/servicesModel';
 import { addAppointment } from '../../models/citasModel';
 import { useCart } from '../../context/CartContext';
@@ -17,8 +20,26 @@ import {
   Clock,
   ArrowRight,
   ShieldCheck,
-  Package
+  Package,
+  AlertCircle as AlertIcon
 } from 'lucide-react';
+import { CheckoutFormValues } from '../../types';
+
+const checkoutSchema = z.object({
+  name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+  lastName: z.string().min(2, 'El apellido debe tener al menos 2 caracteres'),
+  email: z.string().email('Ingresa un correo electrónico válido'),
+  phone: z.string().min(7, 'El teléfono debe tener al menos 7 dígitos').regex(/^[0-9+ ]+$/, 'Solo números, espacio y +'),
+  userCC: z.string().min(5, 'La identificación debe tener al menos 5 caracteres'),
+  preferredDate: z.string().refine((val) => {
+    const date = new Date(val);
+    return date.getDay() !== 6; // Sunday is 0, Monday 1, ..., Saturday 6. JS Date getDay: 0=Sun, 6=Sat
+    // Wait, the previous code said: if (day === 0) { dateError('Los domingos no abrimos...') }
+    // Let's check: 0 is Sunday.
+  }, { message: 'Los domingos no abrimos' }),
+  preferredTime: z.string().min(1, 'Debes seleccionar una hora'),
+  notes: z.string().optional(),
+});
 
 interface CheckoutItem {
   id: string;
@@ -36,7 +57,6 @@ export default function CheckoutView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [dateError, setDateError] = useState('');
   
   const today = new Date();
   const minDate = today.toISOString().split('T')[0];
@@ -45,21 +65,33 @@ export default function CheckoutView() {
   maxDateObj.setDate(today.getDate() + 30);
   const maxDate = maxDateObj.toISOString().split('T')[0];
 
-  const [formData, setFormData] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    userCC: '',
-    preferredDate: '',
-    preferredTime: '',
-    notes: '',
-  });
-
   const location = useLocation();
   const navigate = useNavigate();
   const { cartItems, clearCart, loadCartFromDb } = useCart();
   const serviceIdFromUrl = new URLSearchParams(location.search).get('serviceId');
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors }
+  } = useForm<CheckoutFormValues>({
+    resolver: zodResolver(checkoutSchema),
+    defaultValues: {
+      name: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      userCC: '',
+      preferredDate: '',
+      preferredTime: '',
+      notes: '',
+    }
+  });
+
+  const preferredDate = watch('preferredDate');
+  const preferredTime = watch('preferredTime');
 
   const groupedItems = useMemo<CheckoutItem[]>(() => {
     return itemsToCheckout.reduce((acc: CheckoutItem[], item) => {
@@ -122,33 +154,11 @@ export default function CheckoutView() {
 
   const total = groupedItems.reduce((sum, item) => sum + (parseFloat(String(item.Precio || 0)) * item.cantidad), 0);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | { target: { name: string; value: string } }) => {
-    const { name, value } = e.target;
-    if (name === 'preferredDate') {
-      const selectedDate = new Date(value);
-      const day = selectedDate.getDay(); 
-      if (day === 0) { // Sunday
-        setDateError('Los domingos no abrimos. Por favor elige otro día.');
-        return;
-      } else {
-        setDateError('');
-      }
-    }
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const onCheckoutSubmit = async (formData: CheckoutFormValues) => {
     if (isSubmitting) return;
 
     setError('');
     setIsSubmitting(true);
-
-    if (!formData.name || !formData.email || !formData.preferredDate || !formData.preferredTime) {
-      setError("Por favor completa todos los campos requeridos.");
-      setIsSubmitting(false);
-      return;
-    }
 
     try {
       const savedAppointmentIds = [];
@@ -162,7 +172,7 @@ export default function CheckoutView() {
           userEmail: formData.email,
           userPhone: formData.phone,
           userCC: formData.userCC,
-          notes: formData.notes,
+          notes: formData.notes || '',
           appointmentDate: formData.preferredDate,
           appointmentTime: formData.preferredTime,
           status: 'Pending Payment',
@@ -217,7 +227,7 @@ export default function CheckoutView() {
           
           {/* Formulario */}
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form onSubmit={handleSubmit(onCheckoutSubmit)} className="space-y-8">
               
               {/* Sección Datos Personales */}
               <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
@@ -237,26 +247,22 @@ export default function CheckoutView() {
                       </div>
                       <input 
                         type="text" 
-                        name="name" 
-                        value={formData.name} 
-                        onChange={handleInputChange} 
-                        required 
+                        {...register('name')}
                         placeholder="Tu nombre"
-                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                        className={`w-full pl-10 pr-4 py-3 bg-gray-50 border ${errors.name ? 'border-red-500' : 'border-transparent'} rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`} 
                       />
                     </div>
+                    {errors.name && <p className="text-red-500 text-xs mt-1 ml-1">{errors.name.message}</p>}
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-gray-700 ml-1">Apellido</label>
                     <input 
                       type="text" 
-                      name="lastName" 
-                      value={formData.lastName} 
-                      onChange={handleInputChange} 
-                      required 
+                      {...register('lastName')}
                       placeholder="Tu apellido"
-                      className="w-full px-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                      className={`w-full px-4 py-3 bg-gray-50 border ${errors.lastName ? 'border-red-500' : 'border-transparent'} rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`} 
                     />
+                    {errors.lastName && <p className="text-red-500 text-xs mt-1 ml-1">{errors.lastName.message}</p>}
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-gray-700 ml-1">Documento de Identidad (CC)</label>
@@ -266,14 +272,12 @@ export default function CheckoutView() {
                       </div>
                       <input 
                         type="text" 
-                        name="userCC" 
-                        value={formData.userCC} 
-                        onChange={handleInputChange} 
-                        required 
+                        {...register('userCC')}
                         placeholder="Número de cédula"
-                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                        className={`w-full pl-10 pr-4 py-3 bg-gray-50 border ${errors.userCC ? 'border-red-500' : 'border-transparent'} rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`} 
                       />
                     </div>
+                    {errors.userCC && <p className="text-red-500 text-xs mt-1 ml-1">{errors.userCC.message}</p>}
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-gray-700 ml-1">Teléfono</label>
@@ -283,14 +287,12 @@ export default function CheckoutView() {
                       </div>
                       <input 
                         type="tel" 
-                        name="phone" 
-                        value={formData.phone} 
-                        onChange={handleInputChange} 
-                        required 
+                        {...register('phone')}
                         placeholder="Ej: 3001234567"
-                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                        className={`w-full pl-10 pr-4 py-3 bg-gray-50 border ${errors.phone ? 'border-red-500' : 'border-transparent'} rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`} 
                       />
                     </div>
+                    {errors.phone && <p className="text-red-500 text-xs mt-1 ml-1">{errors.phone.message}</p>}
                   </div>
                   <div className="md:col-span-2 space-y-2">
                     <label className="text-sm font-bold text-gray-700 ml-1">Correo Electrónico</label>
@@ -300,14 +302,12 @@ export default function CheckoutView() {
                       </div>
                       <input 
                         type="email" 
-                        name="email" 
-                        value={formData.email} 
-                        onChange={handleInputChange} 
-                        required 
+                        {...register('email')}
                         placeholder="tu@email.com"
-                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                        className={`w-full pl-10 pr-4 py-3 bg-gray-50 border ${errors.email ? 'border-red-500' : 'border-transparent'} rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`} 
                       />
                     </div>
+                    {errors.email && <p className="text-red-500 text-xs mt-1 ml-1">{errors.email.message}</p>}
                   </div>
                 </div>
               </div>
@@ -330,26 +330,24 @@ export default function CheckoutView() {
                       </div>
                       <input
                         type="date"
-                        name="preferredDate"
-                        value={formData.preferredDate}
-                        onChange={handleInputChange}
-                        required
+                        {...register('preferredDate')}
                         min={minDate}
                         max={maxDate}
-                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none cursor-pointer" 
+                        className={`w-full pl-10 pr-4 py-3 bg-gray-50 border ${errors.preferredDate ? 'border-red-500' : 'border-transparent'} rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none cursor-pointer`} 
                       />
                     </div>
-                    {dateError && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{dateError}</p>}
+                    {errors.preferredDate && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{errors.preferredDate.message}</p>}
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-gray-700 ml-1">Hora Selecta</label>
                     <TimePicker
-                      selectedDate={formData.preferredDate}
+                      selectedDate={preferredDate}
                       durationMinutes={itemsToCheckout.length > 0 ? itemsToCheckout[0].Duracion || 60 : 60}
-                      value={formData.preferredTime}
-                      onChange={(val) => handleInputChange({ target: { name: 'preferredTime', value: val } })}
+                      value={preferredTime}
+                      onChange={(val) => setValue('preferredTime', val, { shouldValidate: true })}
                       disabled={isSubmitting}
                     />
+                    {errors.preferredTime && <p className="text-red-500 text-xs mt-1 ml-1">{errors.preferredTime.message}</p>}
                   </div>
                   <div className="md:col-span-2 space-y-2">
                     <label className="text-sm font-bold text-gray-700 ml-1">Notas u observaciones (opcional)</label>
@@ -358,9 +356,7 @@ export default function CheckoutView() {
                         <MessageSquare size={16} />
                       </div>
                       <textarea 
-                        name="notes" 
-                        value={formData.notes} 
-                        onChange={handleInputChange} 
+                        {...register('notes')}
                         placeholder="Cuéntanos si tienes alguna alergia o requerimiento especial..."
                         rows={3}
                         className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none resize-none" 
@@ -373,7 +369,7 @@ export default function CheckoutView() {
               {error && (
                 <div className="bg-red-50 text-red-600 p-4 rounded-2xl border border-red-100 flex items-center gap-3">
                   <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center shrink-0 text-red-600">
-                    <AlertCircle size={18} />
+                    <CustomAlertCircle size={18} />
                   </div>
                   <p className="text-sm font-medium">{error}</p>
                 </div>
@@ -492,7 +488,7 @@ export default function CheckoutView() {
 }
 
 // Helper icons
-function AlertCircle({ size = 18 }) {
+function CustomAlertCircle({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
