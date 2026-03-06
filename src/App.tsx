@@ -6,7 +6,7 @@ import {
   Navigate,
   useNavigate
 } from 'react-router-dom';
-import { auth } from './firebase/firebaseConfig';
+import { auth } from './lib/auth';
 import { CartProvider } from './context/CartContext';
 import NavBar from './components/layout/NavBar';
 import ProfileView from './features/profile/ProfileView';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signOut, User } from 'firebase/auth';
-import { auth } from '../../firebase/firebaseConfig';
+import { auth, signOut } from '../../lib/auth';
+import { User } from '../../lib/auth';
 import { Settings, ShoppingCart, User as UserIcon, LogOut } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { clsx, type ClassValue } from 'clsx';

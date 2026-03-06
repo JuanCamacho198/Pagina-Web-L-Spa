@@ -7,8 +7,7 @@ import {
   saveProfileChanges,
   deleteCurrentUser
 } from '../../controllers/userController';
-import { auth } from '../../firebase/firebaseConfig';
-import { signOut } from 'firebase/auth';
+import { auth, signOut } from '@/lib/auth';
 import { 
   User, 
   Mail, 

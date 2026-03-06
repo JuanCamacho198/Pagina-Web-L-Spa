@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { db, cartItems as dbCartItems, users, services } from '../db';
 import { eq, and } from 'drizzle-orm';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../lib/auth';
 import { CartItem } from '../types';
 
 interface CartContextType {
@@ -19,10 +19,9 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartCount, setCartCount] = useState(0);
-  const auth = getAuth();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         loadCartFromDb();
       } else {

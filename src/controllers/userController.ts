@@ -4,7 +4,7 @@ import {
   updateUserData,
   deleteUserData
 } from "../models/userModel";
-import { auth } from "../firebase/firebaseConfig";
+import { auth } from "../lib/auth";
 import { UserProfile } from "../types";
 
 /**
@@ -70,9 +70,9 @@ export const deleteCurrentUser = async (
     await deleteUserData(uid);
     console.log("[userController] Postgres user data deleted");
 
-    // 2) Borramos usuario de Firebase Authentication
-    await user.delete();
-    console.log("[userController] Firebase Auth user deleted");
+    // 2) Borramos usuario del Auth Mock
+    await auth.deleteUser?.(); 
+    console.log("[userController] Mock Auth user deleted");
 
     onSuccess();    
   } catch (err: any) {
