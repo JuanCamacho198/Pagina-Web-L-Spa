@@ -1,0 +1,131 @@
+// src/context/CartContext.tsx
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { db, cartItems as dbCartItems, users, services } from '../db';
+import { eq, and } from 'drizzle-orm';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { CartItem } from '../types';
+
+interface CartContextType {
+  cartItems: CartItem[];
+  cartCount: number;
+  loadCartFromDb: () => Promise<void>;
+  clearCart: () => Promise<void>;
+  removeItem: (itemId: string) => Promise<void>;
+  setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
+}
+
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+export function CartProvider({ children }: { children: ReactNode }) {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartCount, setCartCount] = useState(0);
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loadCartFromDb();
+      } else {
+        setCartItems([]);
+        setCartCount(0);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const loadCartFromDb = async () => {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      // Obtener el ID del usuario en Postgres
+      const userResult = await db.select({ id: users.id })
+        .from(users)
+        .where(eq(users.firebaseUid, user.uid))
+        .limit(1);
+
+      if (userResult.length === 0) return;
+      const userId = userResult[0].id;
+
+      // Join para traer datos del servicio en el carrito
+      const result = await db.select({
+        id: dbCartItems.id,
+        serviceId: dbCartItems.serviceId,
+        nombre: services.nombre,
+        precio: services.precio,
+        imagenUrl: services.imagenUrl,
+        addedAt: dbCartItems.addedAt
+      })
+      .from(dbCartItems)
+      .innerJoin(services, eq(dbCartItems.serviceId, services.id))
+      .where(eq(dbCartItems.userId, userId));
+
+      const items: CartItem[] = result.map(item => ({
+        id: item.id,
+        serviceId: item.serviceId,
+        Nombre: item.nombre,
+        Precio: Number(item.precio),
+        imagenURL: item.imagenUrl || '',
+        addedAt: item.addedAt?.toISOString() || new Date().toISOString()
+      }));
+
+      setCartItems(items);
+      setCartCount(items.length);
+    } catch (error) {
+      console.error("Error al cargar el carrito desde Postgres:", error);
+    }
+  };
+
+  const clearCart = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+      const userResult = await db.select({ id: users.id })
+        .from(users)
+        .where(eq(users.firebaseUid, user.uid))
+        .limit(1);
+
+      if (userResult.length > 0) {
+        const userId = userResult[0].id;
+        await db.delete(dbCartItems).where(eq(dbCartItems.userId, userId));
+        setCartItems([]);
+        setCartCount(0);
+      }
+    } catch (error) {
+      console.error("Error al vaciar el carrito:", error);
+    }
+  };
+
+  const removeItem = async (itemId: string) => {
+    try {
+      await db.delete(dbCartItems).where(eq(dbCartItems.id, itemId));
+      const updatedItems = cartItems.filter(item => item.id !== itemId);
+      setCartItems(updatedItems);
+      setCartCount(updatedItems.length);
+    } catch (error) {
+      console.error("Error al eliminar el ítem del carrito:", error);
+    }
+  };
+
+  return (
+    <CartContext.Provider value={{ 
+      cartItems, 
+      setCartItems, 
+      cartCount, 
+      loadCartFromDb, 
+      clearCart, 
+      removeItem 
+    }}>
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+export function useCart() {
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  return context;
+}
