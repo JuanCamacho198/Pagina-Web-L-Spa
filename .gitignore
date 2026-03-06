@@ -20,6 +20,13 @@ drizzle/
 node_modules
 dist
 dist-ssr
+.vscode*/
 *.local
 
 .docs/
+
+.vscode/
+.env
+node_modules/
+dist/
+
