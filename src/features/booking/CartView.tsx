@@ -113,7 +113,7 @@ export default function CartView() {
                   key={item.id} 
                   className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-4 group hover:shadow-md transition-shadow"
                 >
-                  <div className="w-24 h-24 rounded-xl bg-gray-100 overflow-hidden flex-shrink-0">
+                  <div className="w-24 h-24 rounded-xl bg-gray-100 overflow-hidden shrink-0">
                     <img 
                       src={item.imagenURL || '/assets/bannerSpa.avif'} 
                       alt={item.Nombre}
@@ -124,7 +124,7 @@ export default function CartView() {
                     />
                   </div>
                   
-                  <div className="flex-grow">
+                  <div className="grow">
                     <div className="flex justify-between items-start">
                       <div>
                         <h3 className="text-lg font-serif text-gray-900 group-hover:text-primary transition-colors">{item.Nombre}</h3>

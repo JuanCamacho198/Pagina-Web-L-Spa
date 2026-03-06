@@ -56,7 +56,7 @@ export default function ContactView() {
 
           {/* Interactive Map & Form */}
           <div className="lg:col-span-2 space-y-8">
-            <div className="bg-white p-4 rounded-[3rem] shadow-2xl shadow-gray-200/60 border border-white overflow-hidden h-[500px] relative">
+            <div className="bg-white p-4 rounded-[3rem] shadow-2xl shadow-gray-200/60 border border-white overflow-hidden h-125 relative">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d891.3024654937047!2d-75.56598343906558!3d6.208142145211063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e442829c522fdb3%3A0x5abdd43099235c76!2sCra.%2036%20%238a-40%2C%20El%20Poblado%2C%20Medell%C3%ADn%2C%20El%20Poblado%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1727018084186!5m2!1ses-419!2sco"
                 className="w-full h-full rounded-[2.5rem] grayscale hover:grayscale-0 transition-all duration-700"

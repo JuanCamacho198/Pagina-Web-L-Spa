@@ -66,7 +66,7 @@ export default function ServicesView() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex-grow">
+      <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full grow">
         
         <header className="text-center mb-16 animate-in fade-in slide-in-from-top-4 duration-700">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">Nuestros Servicios</h1>
@@ -191,7 +191,7 @@ export default function ServicesView() {
 
       {/* Info WhatsApp Section */}
       <section className="bg-primary overflow-hidden relative mt-16">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white to-transparent"></div>
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,var(--tw-gradient-stops))] from-white to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12 text-white">
           <div className="max-w-xl text-center md:text-left">
             <h3 className="text-3xl font-bold mb-6">Reserva en segundos por WhatsApp</h3>

@@ -97,7 +97,7 @@ export default function AboutView() {
               desc: "Transparencia y profesionalismo en cada etapa de tu experiencia con nosotros." 
             }
           ].map((v, i) => (
-            <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
+            <div key={i} className="bg-white p-8 rounded-4xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
               <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all">
                 <v.icon size={28} />
               </div>

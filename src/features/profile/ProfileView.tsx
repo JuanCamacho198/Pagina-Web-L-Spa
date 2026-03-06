@@ -193,7 +193,7 @@ export default function ProfileView() {
             <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-4 border-white shadow-sm" title="En línea"></div>
           </div>
 
-          <div className="text-center md:text-left flex-grow">
+          <div className="text-center md:text-left grow">
             <h1 className="text-3xl font-black text-gray-900 tracking-tight leading-none mb-2">
               {profile?.nombre} {profile?.apellido}
             </h1>
@@ -330,10 +330,10 @@ export default function ProfileView() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {favoriteServices.map((service) => (
                     <div key={service.id} className="p-5 border border-gray-100 rounded-3xl hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all group flex items-center gap-4">
-                      <div className="w-16 h-16 bg-gray-50 rounded-2xl flex-shrink-0 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                      <div className="w-16 h-16 bg-gray-50 rounded-2xl shrink-0 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                         <ShoppingBag size={24} />
                       </div>
-                      <div className="flex-grow min-w-0">
+                      <div className="grow min-w-0">
                         <h4 className="font-black text-gray-900 truncate">{service.Nombre}</h4>
                         <div className="flex items-center gap-3 mt-1">
                           <span className="text-sm font-bold text-primary">

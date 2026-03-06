@@ -171,7 +171,7 @@ export default function CitasView() {
               const status = getAppointmentStatus(cita);
               return (
                 <div key={cita.id} className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group self-start">
-                  <div className="p-6 flex-grow">
+                  <div className="p-6 grow">
                     <div className="flex justify-between items-start mb-4">
                       <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${status.color}`}>
                         {status.label}
@@ -242,8 +242,8 @@ export default function CitasView() {
 
         {/* Modal Confirmación */}
         {modalId && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-white rounded-[2rem] max-w-sm w-full p-8 shadow-2xl animate-in zoom-in duration-300 text-center">
+          <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+            <div className="bg-white rounded-4xl max-w-sm w-full p-8 shadow-2xl animate-in zoom-in duration-300 text-center">
               <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-6 text-red-600">
                 <Info size={32} />
               </div>

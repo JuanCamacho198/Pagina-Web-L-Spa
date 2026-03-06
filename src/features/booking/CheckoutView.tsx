@@ -372,7 +372,7 @@ export default function CheckoutView() {
 
               {error && (
                 <div className="bg-red-50 text-red-600 p-4 rounded-2xl border border-red-100 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 text-red-600">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center shrink-0 text-red-600">
                     <AlertCircle size={18} />
                   </div>
                   <p className="text-sm font-medium">{error}</p>
@@ -412,7 +412,7 @@ export default function CheckoutView() {
               <div className="space-y-4 mb-8">
                 {groupedItems.map((item, idx) => (
                   <div key={item.serviceId + idx} className="flex gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group">
-                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 shrink-0">
                       {item.imageFileName || item.imagenURL ? (
                         <img 
                           src={`/assets/${item.imageFileName || item.imagenURL}`} 
@@ -425,7 +425,7 @@ export default function CheckoutView() {
                         </div>
                       )}
                     </div>
-                    <div className="flex-grow min-w-0">
+                    <div className="grow min-w-0">
                       <h4 className="font-bold text-gray-900 truncate">{item.Nombre}</h4>
                       <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">
                         <Clock size={12} className="text-primary" /> {item.Duracion || 60} min
@@ -457,7 +457,7 @@ export default function CheckoutView() {
                   if (form) form.requestSubmit();
                 }}
                 disabled={isSubmitting || groupedItems.length === 0}
-                className="w-full btn btn-primary py-4 mt-8 flex items-center justify-center gap-3 shadow-xl shadow-primary/20 hidden lg:flex"
+                className="w-full btn btn-primary py-4 mt-8 items-center justify-center gap-3 shadow-xl shadow-primary/20 hidden lg:flex"
               >
                 {isSubmitting ? (
                   <>

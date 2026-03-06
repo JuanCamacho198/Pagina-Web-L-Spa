@@ -34,15 +34,15 @@ const Footer: React.FC = () => {
             <h4 className={sectionTitleClass}>Contacto</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-sm text-gray-400">
-                <MapPin size={18} className="text-primary flex-shrink-0" />
+                <MapPin size={18} className="text-primary shrink-0" />
                 <span>Calle 87c#23-52</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-400">
-                <Phone size={18} className="text-primary flex-shrink-0" />
+                <Phone size={18} className="text-primary shrink-0" />
                 <span>(123) 456-7890</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-400">
-                <Mail size={18} className="text-primary flex-shrink-0" />
+                <Mail size={18} className="text-primary shrink-0" />
                 <a href="mailto:contacto@l-spa.com" className="hover:text-white">contacto@l-spa.com</a>
               </li>
             </ul>

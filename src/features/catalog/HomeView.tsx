@@ -36,7 +36,7 @@ function HomeView() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <main className="flex-grow">
+      <main className="grow">
         
         {/* Hero Section */}
         <section className="relative h-[80vh] flex items-center overflow-hidden">
@@ -112,7 +112,7 @@ function HomeView() {
             <div className="relative group overflow-hidden rounded-2xl shadow-2xl">
               <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
                 {[1, 2, 3].map((num) => (
-                    <div key={num} className="min-w-full h-[500px]">
+                    <div key={num} className="min-w-full h-125">
                         <img 
                         src={`/assets/carrusel${num}.jpg`} 
                         alt={`Carrusel ${num}`} 
@@ -170,7 +170,7 @@ function HomeView() {
                         <span className="text-gray-400">📋</span>
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                         <span className="text-white font-medium flex items-center gap-2">Explorar servicio <ChevronRight size={16} /></span>
                     </div>
                   </div>

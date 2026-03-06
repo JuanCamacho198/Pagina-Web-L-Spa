@@ -59,7 +59,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ onRegister, error: propErro
         {displayError && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl animate-in slide-in-from-top duration-300">
             <div className="flex">
-              <div className="flex-shrink-0 text-red-400">⚠️</div>
+              <div className="shrink-0 text-red-400">⚠️</div>
               <div className="ml-3">
                 <p className="text-sm text-red-700 font-medium">{displayError}</p>
               </div>

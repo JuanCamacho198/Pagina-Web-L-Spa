@@ -39,7 +39,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onLogin, error }) => {
         {error && (
             <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl animate-in slide-in-from-left duration-300">
                 <div className="flex items-center">
-                    <div className="flex-shrink-0">
+                    <div className="shrink-0">
                         <span className="text-red-500 text-lg">⚠️</span>
                     </div>
                     <div className="ml-3">
