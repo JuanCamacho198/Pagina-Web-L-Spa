@@ -85,7 +85,7 @@ function HomeView() {
               ].map((item, i) => (
                 <Card key={i} className="flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-300 p-8 border-none shadow-xl shadow-gray-200/50">
                   <div className="mb-6 p-4 bg-primary/5 rounded-2xl group-hover:bg-primary/10 transition-colors">
-                    {React.cloneElement(item.icon as React.ReactElement, { size: 32 })}
+                    {React.cloneElement(item.icon as React.ReactElement, { size: 32 } as any)}
                   </div>
                   <Typography variant="h4" className="mb-3 text-gray-800">{item.title}</Typography>
                   <Typography className="text-gray-500 text-sm leading-relaxed mt-0">{item.desc}</Typography>
@@ -112,7 +112,7 @@ function HomeView() {
                   <Card key={service.id} className="overflow-hidden group border-none shadow-lg hover:shadow-2xl transition-all duration-300 rounded-3xl">
                     <div className="h-64 overflow-hidden relative">
                       <img 
-                        src={service.image_url || '/placeholder-spa.jpg'} 
+                        src={service.imageUrl || '/placeholder-spa.jpg'} 
                         alt={service.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
