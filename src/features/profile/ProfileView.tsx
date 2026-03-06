@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
+import { db, cartItems, users } from '../../db';
+import { eq } from 'drizzle-orm';
 import {
   fetchCurrentUser,
   saveProfileChanges,
   deleteCurrentUser
 } from '../../controllers/userController';
-import { auth, db } from '../../firebase/firebaseConfig';
+import { auth } from '../../firebase/firebaseConfig';
 import { signOut } from 'firebase/auth';
 import { 
   User, 
@@ -77,15 +78,23 @@ export default function ProfileView() {
   const fetchFavoriteServices = async () => {
     if (!auth.currentUser) return;
     try {
-      const cartRef = collection(db, 'Usuarios', auth.currentUser.uid, 'Carrito');
-      const querySnapshot = await getDocs(cartRef);
-      const services: any[] = [];
-      querySnapshot.forEach((doc) => {
-        services.push({ id: doc.id, ...doc.data() });
-      });
-      setFavoriteServices(services);
+      // Obtener el ID del usuario en Postgres
+      const userResult = await db.select({ id: users.id })
+        .from(users)
+        .where(eq(users.firebaseUid, auth.currentUser.uid))
+        .limit(1);
+
+      if (userResult.length === 0) return;
+      const userId = userResult[0].id;
+
+      // Consultar el carrito en Postgres
+      const result = await db.select()
+        .from(cartItems)
+        .where(eq(cartItems.userId, userId));
+
+      setFavoriteServices(result);
     } catch (error) {
-      console.error('Error fetching favorite services:', error);
+      console.error('Error fetching favorite services from Postgres:', error);
     }
   };
 
