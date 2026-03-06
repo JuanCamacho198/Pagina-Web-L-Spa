@@ -25,8 +25,8 @@ export default function ContactView() {
                 <Mail size={32} />
               </div>
               <h3 className="text-xl font-black text-gray-900 mb-2 group-hover:text-white">Correo Electrónico</h3>
-              <a href="mailto:info@luxuryspa.com" className="text-primary font-bold group-hover:text-white/90">
-                info@luxuryspa.com
+              <a href="mailto:info@l-spa.com" className="text-primary font-bold group-hover:text-white/90">
+                info@l-spa.com
               </a>
             </div>
 
@@ -63,7 +63,7 @@ export default function ContactView() {
                 style={{ border: 0 }}
                 allowFullScreen={true}
                 loading="lazy"
-                title="Luxury Spa Location"
+                title="L-Spa Location"
               ></iframe>
             </div>
 

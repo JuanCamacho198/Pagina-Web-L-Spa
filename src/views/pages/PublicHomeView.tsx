@@ -10,7 +10,7 @@ export default function PublicHomeView() {
         {/* Banner principal */}
         <header className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 py-16 px-8">
           <div className="animate-in fade-in slide-in-from-left duration-700">
-            <h1 className="text-5xl font-bold mb-4 text-[#3A3831]">¡Bienvenido a Luxury Spa!</h1>
+            <h1 className="text-5xl font-bold mb-4 text-[#3A3831]">¡Bienvenido a L-Spa!</h1>
             <h2 className="text-3xl font-semibold mb-4 text-[#3A3831]">Spa exclusivo en Medellín</h2>
             <p className="text-lg mb-8 text-[#3A3831] leading-relaxed">
               Sumérgete en un oasis de relajación y belleza. Experimenta

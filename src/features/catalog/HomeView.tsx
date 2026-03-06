@@ -43,7 +43,7 @@ function HomeView() {
           <div className="absolute inset-0 z-0">
             <img 
               src="/src/assets/bannerSpa.avif" 
-              alt="Luxury Spa Banner" 
+              alt="L-Spa Banner" 
               className="w-full h-full object-cover brightness-50"
             />
           </div>
@@ -54,7 +54,7 @@ function HomeView() {
                 Bienvenido al Bienestar
               </span>
               <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight">
-                ¡Bienvenido a <span className="text-primary-light">Luxury Spa!</span>
+                ¡Bienvenido a <span className="text-primary-light">L-Spa!</span>
               </h1>
               <h2 className="text-2xl md:text-3xl font-light mb-8 text-gray-200">
                 Un oasis de relajación en Medellín

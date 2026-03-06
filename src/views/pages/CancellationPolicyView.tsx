@@ -90,7 +90,7 @@ export default function CancellationPolicyView() {
       <section className="pb-24 px-4 text-center">
         <div className="max-w-2xl mx-auto bg-gray-50 p-8 rounded-[2.5rem] border border-dashed border-gray-200">
            <p className="text-gray-500 font-medium text-sm leading-relaxed">
-             Al reservar en <strong className="text-gray-900">Luxury Spa</strong>, el cliente acepta tácitamente todas las condiciones aquí expresadas. Estas políticas rigen para asegurar la sostenibilidad y calidad de nuestro servicio.
+             Al reservar en <strong className="text-gray-900">L-Spa</strong>, el cliente acepta tácitamente todas las condiciones aquí expresadas. Estas políticas rigen para asegurar la sostenibilidad y calidad de nuestro servicio.
            </p>
         </div>
       </section>

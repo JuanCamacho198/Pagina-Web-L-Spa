@@ -27,12 +27,12 @@ export default function FaqView() {
     },
     {
       q: "¿Está permitido ingresar con alimentos o bebidas?",
-      a: "No. En Grupo Luxury Spa te ofrecemos bebidas especiales como vino o té según el ritual, pero no está permitido ingresar con alimentos o bebidas del exterior.",
+      a: "No. En Grupo L-Spa te ofrecemos bebidas especiales como vino o té según el ritual, pero no está permitido ingresar con alimentos o bebidas del exterior.",
       icon: Info
     },
     {
         q: "¿Hay parqueadero disponible?",
-        a: "Sí, contamos con parqueadero gratuito para nuestros clientes. Sin embargo, Grupo Luxury Spa no se hace responsable por objetos dejados en los vehículos.",
+        a: "Sí, contamos con parqueadero gratuito para nuestros clientes. Sin embargo, Grupo L-Spa no se hace responsable por objetos dejados en los vehículos.",
         icon: Info
     },
     {

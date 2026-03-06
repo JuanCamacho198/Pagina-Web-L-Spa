@@ -1,4 +1,4 @@
--- Esquema inicial para Luxury Spa en Neon Postgres
+-- Esquema inicial para L-Spa en Neon Postgres
 
 -- Tabla de Usuarios
 CREATE TABLE IF NOT EXISTS users (

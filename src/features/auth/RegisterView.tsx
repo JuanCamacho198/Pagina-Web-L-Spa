@@ -52,7 +52,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ onRegister, error: propErro
             Crea tu cuenta
           </h2>
           <p className="mt-2 text-sm text-gray-500">
-            Únete a Luxury Spa y empieza a disfrutar del bienestar.
+            Únete a L-Spa y empieza a disfrutar del bienestar.
           </p>
         </div>
 

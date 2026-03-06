@@ -1,6 +1,6 @@
 # Identidad Visual: L-SPA (Rebranding)
 
-Este documento detalla la paleta de colores oficial tras el rebranding de **Luxury Spa** a **L-SPA**. Estos colores están implementados en el núcleo de Tailwind CSS v4 del proyecto.
+Este documento detalla la paleta de colores oficial tras el rebranding de **L-Spa** a **L-SPA**. Estos colores están implementados en el núcleo de Tailwind CSS v4 del proyecto.
 
 ## 🎨 Paleta de Colores
 
@@ -27,5 +27,5 @@ Los colores están definidos en `src/index.css` bajo el bloque `@theme`:
 ```
 
 ## 📝 Notas del Rebranding
-- El nombre oficial pasa de **Luxury Spa** a **L-SPA**.
+- El nombre oficial pasa de **L-Spa** a **L-SPA**.
 - Se mantiene la elegancia del borgoña pero con un enfoque más minimalista y moderno.

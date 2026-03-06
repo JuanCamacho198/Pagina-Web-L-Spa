@@ -16,7 +16,7 @@ export default function DataPrivacyPolicyView() {
               Política de <span className="text-primary italic">Privacidad</span>
             </h1>
             <p className="text-lg text-gray-600 font-medium leading-relaxed">
-              En <strong className="text-gray-900">Grupo Luxury Spa (NIT 900.983.715-1)</strong>, la protección de tus datos es nuestra prioridad. Cumplimos estrictamente con la normativa colombiana de tratamiento de información personal.
+              En <strong className="text-gray-900">Grupo L-Spa (NIT 900.983.715-1)</strong>, la protección de tus datos es nuestra prioridad. Cumplimos estrictamente con la normativa colombiana de tratamiento de información personal.
             </p>
           </div>
         </div>
@@ -79,8 +79,8 @@ export default function DataPrivacyPolicyView() {
               <div>
                 <h3 className="text-2xl font-black mb-2 tracking-tight text-white">¿Dudas sobre tus datos?</h3>
                 <p className="text-primary-light font-medium mb-4">Escríbenos a nuestro canal oficial de atención al titular:</p>
-                <a href="mailto:luxuryspa@hotmail.com" className="text-xl font-black underline decoration-white/30 hover:decoration-white transition-all">
-                  luxuryspa@hotmail.com
+                <a href="mailto:l-spa@hotmail.com" className="text-xl font-black underline decoration-white/30 hover:decoration-white transition-all">
+                  l-spa@hotmail.com
                 </a>
               </div>
             </div>

@@ -32,7 +32,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onLogin, error }) => {
                 ¡Qué bueno verte!
             </h2>
             <p className="mt-2 text-sm text-gray-500">
-                Inicia sesión en Luxury Spa para gestionar tus citas.
+                Inicia sesión en L-Spa para gestionar tus citas.
             </p>
         </div>
 

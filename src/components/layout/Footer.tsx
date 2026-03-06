@@ -16,8 +16,8 @@ const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="Luxury Spa logo" className="h-12 w-auto brightness-110" />
-              <h4 className="text-xl font-bold tracking-tight">Luxury Spa</h4>
+              <img src={logo} alt="L-Spa logo" className="h-12 w-auto brightness-110" />
+              <h4 className="text-xl font-bold tracking-tight">L-Spa</h4>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Tu refugio de bienestar y relajación. Expertos en masajes, tratamientos faciales y cuidado personal.
@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-400">
                 <Mail size={18} className="text-primary flex-shrink-0" />
-                <a href="mailto:contacto@luxuryspa.com" className="hover:text-white">contacto@luxuryspa.com</a>
+                <a href="mailto:contacto@l-spa.com" className="hover:text-white">contacto@l-spa.com</a>
               </li>
             </ul>
           </div>
@@ -86,7 +86,7 @@ const Footer: React.FC = () => {
 
         <div className="pt-8 mt-8 border-t border-gray-800 text-center">
           <p className="text-gray-500 text-xs">
-            © {new Date().getFullYear()} Luxury Spa. Todos los derechos reservados.
+            © {new Date().getFullYear()} L-Spa. Todos los derechos reservados.
           </p>
         </div>
       </div>

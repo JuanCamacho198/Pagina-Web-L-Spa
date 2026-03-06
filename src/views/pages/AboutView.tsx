@@ -37,7 +37,7 @@ export default function AboutView() {
               Compromiso con tu <span className="text-primary">Bienestar Integral</span>
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              En <strong className="text-gray-900">Luxury Spa</strong>, nos dedicamos a ofrecer un servicio integral de calidad en relajación, vitalidad, belleza y salud. Nuestra prioridad es la satisfacción total a través de una atención personalizada y eficiente que trasciende lo convencional.
+              En <strong className="text-gray-900">L-Spa</strong>, nos dedicamos a ofrecer un servicio integral de calidad en relajación, vitalidad, belleza y salud. Nuestra prioridad es la satisfacción total a través de una atención personalizada y eficiente que trasciende lo convencional.
             </p>
             <div className="grid grid-cols-2 gap-6">
               <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 flex items-start gap-3">
