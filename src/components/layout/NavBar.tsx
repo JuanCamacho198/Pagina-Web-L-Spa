@@ -21,7 +21,7 @@ export default function NavBar({ user }: NavBarProps) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await signOut(auth);
+    await signOut();
     setMenuOpen(false);
     navigate('/', { replace: true });
   };

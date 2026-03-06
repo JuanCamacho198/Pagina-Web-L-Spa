@@ -20,8 +20,8 @@ export const registroUsuario = async (
   registroError: (error: string) => void
 ): Promise<void> => {
   try {
-    console.log("[authController] Intentando registrar usuario en Firebase Authentication...");
-    const { user } = await AuthModel.Registro(correo, contrasena);
+    console.log("[authController] Intentando registrar usuario...");
+    const user = await AuthModel.Registro(correo, contrasena);
     const uid = user.uid;
 
     // Guardado en Postgres via Drizzle

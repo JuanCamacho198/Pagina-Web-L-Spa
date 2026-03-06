@@ -71,7 +71,7 @@ export const deleteCurrentUser = async (
     console.log("[userController] Postgres user data deleted");
 
     // 2) Borramos usuario del Auth Mock
-    await auth.deleteUser?.(); 
+    await auth.deleteUser(); 
     console.log("[userController] Mock Auth user deleted");
 
     onSuccess();    

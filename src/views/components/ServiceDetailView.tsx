@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm';
 import { getAuth } from '@/lib/auth';
 import { fetchServiceById, fetchServices } from '../../models/servicesModel';
 import { Service } from '../../types';
-import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
 
 const ServiceDetailView = () => {
   const { id } = useParams<{ id: string }>();
@@ -96,6 +96,11 @@ const ServiceDetailView = () => {
       } else {
         showNotification('🔐 Necesitas iniciar sesión para añadir servicios al carrito', 'warning'); 
       }
+    }
+  };
+  const handleBuyNow = () => { 
+    if (service) {
+      navigate(`/checkout?serviceId=${service.id}`);
     }
   };
 

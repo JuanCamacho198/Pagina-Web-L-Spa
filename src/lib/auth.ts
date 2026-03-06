@@ -23,6 +23,10 @@ export const auth = {
       const index = listeners.indexOf(callback);
       if (index > -1) listeners.splice(index, 1);
     };
+  },
+  deleteUser: async (): Promise<void> => {
+    currentUser = null;
+    listeners.forEach(cb => cb(null));
   }
 };
 
