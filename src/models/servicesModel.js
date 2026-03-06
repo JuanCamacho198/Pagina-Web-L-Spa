@@ -1,29 +1,38 @@
 // src/models/servicesModel.js
-import { db } from '../firebase/firebaseConfig';
-// Importamos getDocs, collection, doc y getDoc para obtener un documento específico
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
-
-const SERVICES_COLL = 'Servicios'; // Nombre de la collecion
+import { db, services } from '../db';
+import { eq } from 'drizzle-orm';
 
 // Obtiene todos los servicios
 export async function fetchServices() {
-  const snap = await getDocs(collection(db, SERVICES_COLL));
-  // mapeamos cada documento a objeto JS con su id
-  return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  const data = await db.select().from(services);
+  // Transformamos campos para mantener compatibilidad con la UI si es necesario
+  return data.map(service => ({
+    id: service.id,
+    Nombre: service.nombre,
+    Precio: service.precio,
+    Categoria: service.categoria,
+    imagenURL: service.imagenUrl,
+    imageFileName: service.imageFileName,
+    Duracion: service.duracion
+  }));
 }
 
 // Obtiene un servicio por su ID
 export async function fetchServiceById(serviceId) {
-  // Creamos una referencia a un documento específico dentro de la colección
-  const docRef = doc(db, SERVICES_COLL, serviceId);
-  const docSnap = await getDoc(docRef);
-
-
-  if (docSnap.exists()) {
-    // Si existe, se devuelve un objeto con el id del documento y sus datos
-    return { id: docSnap.id, ...docSnap.data() };
+  const result = await db.select().from(services).where(eq(services.id, serviceId)).limit(1);
+  
+  if (result.length > 0) {
+    const service = result[0];
+    return {
+      id: service.id,
+      Nombre: service.nombre,
+      Precio: service.precio,
+      Categoria: service.categoria,
+      imagenURL: service.imagenUrl,
+      imageFileName: service.imageFileName,
+      Duracion: service.duracion
+    };
   } else {
-    // Si no existe
     console.log("No such document!");
     return null;
   }
