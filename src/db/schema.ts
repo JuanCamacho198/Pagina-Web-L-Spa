@@ -1,4 +1,7 @@
-import { pgTable, uuid, text, decimal, integer, timestamp, varchar, date, time } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, decimal, integer, timestamp, varchar, date, time, pgEnum } from 'drizzle-orm/pg-core';
+
+// Definición de los Roles
+export const userRoleEnum = pgEnum('user_role', ['admin', 'employee', 'customer']);
 
 // Definición de la Tabla de Usuarios
 export const users = pgTable('users', {
@@ -9,6 +12,7 @@ export const users = pgTable('users', {
   apellido: varchar('apellido', { length: 100 }),
   telefono: varchar('telefono', { length: 20 }),
   fechaNacimiento: date('fecha_nacimiento'),
+  role: userRoleEnum('role').default('customer').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
 

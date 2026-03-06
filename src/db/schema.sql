@@ -1,5 +1,12 @@
 -- Esquema inicial para L-Spa en Neon Postgres
 
+-- Definición de Roles
+DO $$ BEGIN
+    CREATE TYPE user_role AS ENUM ('admin', 'employee', 'customer');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
 -- Tabla de Usuarios
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -9,6 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
     apellido VARCHAR(100),
     telefono VARCHAR(20),
     fecha_nacimiento DATE,
+    role user_role NOT NULL DEFAULT 'customer',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 

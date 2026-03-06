@@ -29,6 +29,7 @@ export interface UserProfile {
   telefono?: string;
   fechaNacimiento?: string;
   photoURL?: string;
+  role: 'admin' | 'employee' | 'customer';
 }
 
 export interface CartItem {
