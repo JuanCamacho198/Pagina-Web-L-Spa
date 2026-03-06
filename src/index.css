@@ -1,10 +1,16 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary-light: #BF3F7F;
+  --color-primary: #8C1B58;
+  --color-primary-dark: #590E35;
+  --color-secondary: #F2D7D9;
+  --color-accent: #D99B9B;
+}
 
 @layer base {
   body {
-    @apply antialiased text-gray-900 bg-gray-50 bg-fixed; /* Fondo base suave */
+    @apply antialiased text-gray-900 bg-gray-50 bg-fixed;
   }
 }
 
