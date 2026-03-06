@@ -8,27 +8,27 @@ import {
 } from 'react-router-dom';
 import { auth } from './firebase/firebaseConfig';
 import { CartProvider } from './context/CartContext';
-import NavBar                   from './views/components/NavBar';
-import ProfileView              from './views/components/ProfileView';
+import NavBar from './components/layout/NavBar';
+import ProfileView from './features/profile/ProfileView';
 import ServiceDetailView from './views/components/ServiceDetailView'; 
 
 // Vistas principales
 import PublicHomeView from './views/pages/PublicHomeView';
-import LoginView                from './views/pages/LoginView';
-import RegisterView             from './views/pages/RegisterView';
-import HomeView                 from './views/pages/HomeView';
+import LoginView from './features/auth/LoginView';
+import RegisterView from './features/auth/RegisterView';
+import HomeView from './features/catalog/HomeView';
 
 import PoliticasCancelacionView from './views/pages/CancellationPolicyView';
 import DataPrivacyPolicyView from './views/pages/DataPrivacyPolicyView';
 import ImportantReservationInfoView from './views/pages/ImportantReservationInfoView';
 import FaqView from './views/pages/FaqView';
 
-import ServicesView from './views/pages/ServicesView';
-import CheckoutView from './views/components/CheckoutView';
-import CitasView from './views/pages/CitasView';
+import ServicesView from './features/catalog/ServicesView';
+import CheckoutView from './features/booking/CheckoutView';
+import CitasView from './features/booking/CitasView';
 import PaymentView from './views/pages/PaymentView';
 import SuccessView from './views/components/SuccessView';
-import CartView from './views/components/CartView';
+import CartView from './features/booking/CartView';
 
 import ContactView from './views/pages/ContactView';
 import AboutView from './views/pages/AboutView';
@@ -103,7 +103,7 @@ export default function App() {
               <Route path="/contact" element={<ContactView />} />
 
               {/* Pasamos el usuario al ProfileView si lo necesita */}
-              <Route path="/profile" element={<ProfileView user={user} />} />
+              <Route path="/profile" element={<ProfileView />} />
               <Route path="/services" element={<ServicesView/>} />
               <Route path="/checkout" element={<CheckoutView />} />
               <Route path="/citas" element={<CitasView />} />
@@ -160,7 +160,7 @@ function RegisterRoute() {
   const [registrationError, setRegistrationError] = useState('');
 
   // Esta función se pasaría a RegisterView para ser llamada al enviar el formulario
-  const handleRegister = async (nombre, apellido, email, password) => {
+  const handleRegister = async (nombre: string, apellido: string, email: string, password: string) => {
     // registroUsuario debe estar definido en tu authController.js y manejar navegación y errores
     await registroUsuario(
       nombre,

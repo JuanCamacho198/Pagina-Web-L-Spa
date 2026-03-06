@@ -399,23 +399,3 @@ export default function ProfileView() {
     </div>
   );
 }
-
-            
-
-
-            <div className={styles["settings-section danger-zone"]}>
-              <div className={styles["danger-actions"]}>
-                <button className={styles["logout-btn"]} onClick={handleLogout}>
-                  🚪 Cerrar Sesión
-                </button>
-                <button className={styles["delete-btn"]} onClick={handleDelete}>
-                  🗑️ Eliminar Cuenta
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}

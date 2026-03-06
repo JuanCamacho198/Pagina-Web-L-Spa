@@ -1,6 +1,6 @@
 // src/views/PublicHomeViewView.jsx
 
-import Footer from '../components/Footer';
+import Footer from '../../components/layout/Footer';
 import { Link } from 'react-router-dom';
 import styles from '../../styles/PublicHomeView.module.css';
 

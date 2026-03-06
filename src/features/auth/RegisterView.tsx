@@ -3,7 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { registroUsuario } from '../../controllers/authController';
 import { User, Mail, Lock, UserPlus, ArrowLeft, Loader2 } from 'lucide-react';
 
-const RegisterView: React.FC = () => {
+interface RegisterViewProps {
+  onRegister: (nombre: string, apellido: string, email: string, password: string) => Promise<void>;
+  error?: string;
+}
+
+const RegisterView: React.FC<RegisterViewProps> = ({ onRegister, error: propError }) => {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [email, setEmail] = useState('');
@@ -17,15 +22,15 @@ const RegisterView: React.FC = () => {
     setError('');
     setIsSubmitting(true);
     try {
-      await registroUsuario(nombre, apellido, email, password, navigate, (err: string) => {
-        setError(err);
-        setIsSubmitting(false);
-      });
+      await onRegister(nombre, apellido, email, password);
     } catch (err: any) {
       setError(err.message || 'Error al registrar usuario');
+    } finally {
       setIsSubmitting(false);
     }
   };
+
+  const displayError = propError || error;
 
   const inputGroupClass = "group space-y-1";
   const labelClass = "block text-sm font-medium text-gray-700 group-focus-within:text-primary transition-colors";
@@ -51,12 +56,12 @@ const RegisterView: React.FC = () => {
           </p>
         </div>
 
-        {error && (
+        {displayError && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl animate-in slide-in-from-top duration-300">
             <div className="flex">
               <div className="flex-shrink-0 text-red-400">⚠️</div>
               <div className="ml-3">
-                <p className="text-sm text-red-700 font-medium">{error}</p>
+                <p className="text-sm text-red-700 font-medium">{displayError}</p>
               </div>
             </div>
           </div>
