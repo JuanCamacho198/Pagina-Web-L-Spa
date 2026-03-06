@@ -1,82 +1,56 @@
 // src/controllers/userController.ts
 import {
-  getUserById,
+  getAuth0UserById,
   updateUserData,
   deleteUserData
 } from "../models/userModel";
-import { auth } from "../lib/auth";
 import { UserProfile } from "../types";
 
 /**
- * Obtiene el perfil del usuario autenticado actualmente en Firebase.
- * @param setProfile - Función para setear el perfil en el estado de la UI.
- * @param setError - Función para manejar mensajes de error.
+ * Obtiene el perfil del usuario de Postgres usando su ID de Auth0.
+ * @param auth0Id - El ID de Auth0 del usuario.
+ * @returns El perfil del usuario o null si no se encuentra.
  */
-export const fetchCurrentUser = async (
-  setProfile: (profile: UserProfile | null) => void, 
-  setError: (error: string) => void
-): Promise<void> => {
+export const fetchUserProfile = async (
+  auth0Id: string
+): Promise<UserProfile | null> => {
   try {
-    const current = auth.currentUser;
-    if (!current) throw new Error("No hay usuario autenticado");
-    
-    const profile = await getUserById(current.uid);
-    setProfile(profile);
+    const profile = await getAuth0UserById(auth0Id);
+    return profile;
   } catch (err: any) {
-    console.error("[userController] fetchCurrentUser error:", err);
-    setError(err.message || "Error al obtener el perfil");
+    console.error("[userController] fetchUserProfile error:", err);
+    throw new Error(err.message || "Error al obtener el perfil");
   }
 };
 
 /**
  * Guarda los cambios realizados en el perfil del usuario.
+ * @param auth0Id - El ID de Auth0 del usuario.
  * @param updates - Objeto con los datos actualizados.
- * @param onSuccess - Callback tras actualización exitosa.
- * @param onError - Callback para manejar errores.
  */
 export const saveProfileChanges = async (
-  updates: Partial<UserProfile>, 
-  onSuccess: () => void, 
-  onError: (error: string) => void
+  auth0Id: string,
+  updates: Partial<UserProfile>
 ): Promise<void> => {
   try {
-    const user = auth.currentUser;
-    if (!user) throw new Error("No hay sesión activa para actualizar perfil");
-    
-    await updateUserData(user.uid, updates);
-    onSuccess();
+    await updateUserData(auth0Id, updates);
   } catch (err: any) {
     console.error("[userController] saveProfileChanges error:", err);
-    onError(err.message || "Error al actualizar perfil");
+    throw new Error(err.message || "Error al actualizar perfil");
   }
 };
 
 /**
- * Elimina la cuenta del usuario actual de Postgres y de Firebase Auth.
- * @param onSuccess - Callback tras eliminación exitosa.
- * @param onError - Callback para manejar errores.
+ * Elimina la cuenta (los datos de Postgres) del usuario actual.
+ * @param auth0Id - El ID de Auth0 del usuario.
  */
 export const deleteCurrentUser = async (
-  onSuccess: () => void, 
-  onError: (error: string) => void
+  auth0Id: string
 ): Promise<void> => {
-  console.log("[userController] deleteCurrentUser start");
   try {
-    const user = auth.currentUser;
-    if (!user) throw new Error("No hay usuario autenticado");
-    const uid = user.uid;
-
-    // 1) Borramos datos en PostgreSQL
-    await deleteUserData(uid);
-    console.log("[userController] Postgres user data deleted");
-
-    // 2) Borramos usuario del Auth Mock
-    await auth.deleteUser(); 
-    console.log("[userController] Mock Auth user deleted");
-
-    onSuccess();    
+    await deleteUserData(auth0Id);
   } catch (err: any) {
     console.error("[userController] deleteCurrentUser error:", err);
-    onError(err.message || "Error al eliminar la cuenta");
+    throw new Error(err.message || "Error al eliminar cuenta");
   }
 };

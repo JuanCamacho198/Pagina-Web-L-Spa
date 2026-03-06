@@ -70,7 +70,7 @@ export async function fetchAppointments(auth0Id: string): Promise<Appointment[]>
       appointmentTime: appointments.appointmentTime,
       status: appointments.status,
       createdAt: appointments.createdAt,
-      serviceName: services.name,
+      serviceName: services.nombre,
     })
     .from(appointments)
     .innerJoin(services, eq(appointments.serviceId, services.id))
