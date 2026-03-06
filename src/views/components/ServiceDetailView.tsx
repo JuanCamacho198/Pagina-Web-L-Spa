@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db, cartItems, users } from '../../db';
 import { eq } from 'drizzle-orm';
-import { getAuth } from 'firebase/auth';
+import { getAuth } from '@/lib/auth';
 import { fetchServiceById, fetchServices } from '../../models/servicesModel';
 import { Service } from '../../types';
 import styles from '../../styles/ServiceDetailView.module.css';

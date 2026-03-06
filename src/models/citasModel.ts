@@ -1,7 +1,7 @@
 // src/models/citasModel.ts
 import { db, appointments, users, services } from '../db';
 import { eq, desc } from 'drizzle-orm';
-import { getAuth } from 'firebase/auth'; 
+import { getAuth } from '@/lib/auth'; 
 import { Appointment } from '../types';
 
 /**
