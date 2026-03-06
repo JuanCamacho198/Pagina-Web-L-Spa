@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm';
 import { getAuth } from '@/lib/auth';
 import { fetchServiceById, fetchServices } from '../../models/servicesModel';
 import { Service } from '../../types';
-import styles from '../../styles/ServiceDetailView.module.css';
+import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle } from 'lucide-react';
 
 const ServiceDetailView = () => {
   const { id } = useParams<{ id: string }>();
@@ -99,104 +99,177 @@ const ServiceDetailView = () => {
     }
   };
 
-  const handleBuyNow = () => {
-    if (service) {
-      navigate(`/checkout?serviceId=${service.id}`);
-    }
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
+        <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-500 font-medium">Cargando detalles del servicio...</p>
+      </div>
+    );
+  }
 
-  if (loading) return <p className="p-8 text-center text-gray-500">Cargando detalles del servicio...</p>;
-  if (error) return <p className="p-8 text-center text-red-500">Error: {error}</p>;
-  if (!service) return <p className="p-8 text-center text-gray-500">No se ha seleccionado ningún servicio.</p>;
+  if (error || !service) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
+        <div className="bg-white p-8 rounded-3xl shadow-xl text-center max-w-md">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">¡Vaya! Algo salió mal</h2>
+          <p className="text-gray-500 mb-6">{error || 'No se ha seleccionado ningún servicio.'}</p>
+          <button onClick={() => navigate('/services')} className="btn btn-primary w-full">
+            Ver otros servicios
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* Notificaciones */}
       {notification && (
-        <div className={`${styles.notification} ${styles['notification-' + notification.type]}`}>
-          <div className={styles['notification-content']}>
-            <span className={styles['notification-message']}>{notification.message}</span>
-            <button 
-              className={styles['notification-close']} 
-              onClick={() => setNotification(null)}
-              aria-label="Cerrar notificación"
-            >
-              ×
+        <div className="fixed top-24 right-4 z-50 animate-in slide-in-from-right duration-300">
+          <div className={`flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border ${
+            notification.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 
+            notification.type === 'warning' ? 'bg-amber-50 border-amber-200 text-amber-800' : 
+            'bg-red-50 border-red-200 text-red-800'
+          }`}>
+            {notification.type === 'success' ? <CheckCircle2 size={24} /> : <AlertCircle size={24} />}
+            <span className="font-medium">{notification.message}</span>
+            <button onClick={() => setNotification(null)} className="ml-4 opacity-50 hover:opacity-100 Transition-all">
+              <X size={20} />
             </button>
           </div>
         </div>
       )}
 
-      <div className={styles['service-detail']}>
-        <h2 className={styles['service-detail-title']}>{service.Nombre}</h2>
-
-        <div className={styles['service-detail-content']}>
-          <div className={styles['service-detail-left']}>
-            <div className={styles['service-detail-image-container']}>
-              {service.imagenURL && (
-                <img src={service.imagenURL} alt={service.Nombre} className={styles['service-detail-image']} />
-              )}
-            </div>
-
-            <div className={styles['service-detail-info']}>
-              <p className={styles['service-detail-price']}>
-                Precio: {service.Precio.toLocaleString('es-CO', {
-                  style: 'currency',
-                  currency: 'COP',
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })}
-              </p>
-              
-              <div className={styles['service-detail-meta']}>
-                <span className={styles['service-detail-duration']}>
-                  ⏱ Duración: {service.Duracion}
-                </span>
-                <span className={styles['service-detail-category']}>
-                  🏷 Categoría: {service.Categoria}
-                </span>
-              </div>
-            </div>
+      {/* Hero Header */}
+      <div className="bg-primary pt-32 pb-48 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-center text-center md:text-left text-white">
+          <div className="flex-1 space-y-4">
+             <span className="px-4 py-1.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-bold tracking-widest uppercase">
+               {service.Categoria}
+             </span>
+             <h1 className="text-4xl md:text-6xl font-black tracking-tight">{service.Nombre}</h1>
           </div>
-
-          <div className={styles['service-detail-right']}>
-            <div className={styles['service-detail-description']}>
-              <h3>Sobre este servicio</h3>
-              <p>Disfruta de una experiencia única de relajación y bienestar en Luxury Spa. Nuestros profesionales se encargarán de brindarte la mejor atención.</p>
-            </div>
-
-            <div className={styles['service-detail-actions']}>
-              <button 
-                className={styles['btn-add-cart']} 
-                onClick={handleAddToCart}
-                disabled={isAddingToCart}
-              >
-                {isAddingToCart ? 'Añadiendo...' : 'Añadir al carrito'}
-              </button>
-              <button className={styles['btn-buy-now']} onClick={handleBuyNow}>
-                Reservar Ahora
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles['recommended-services']}>
-          <h3>También te puede interesar</h3>
-          <div className={styles['recommended-grid']}>
-            {recommendedServices.map((rec) => (
-              <div 
-                key={rec.id} 
-                className={styles['recommended-card']}
-                onClick={() => navigate(`/service-detail/${rec.id}`)}
-              >
-                <img src={rec.imagenURL} alt={rec.Nombre} />
-                <h4>{rec.Nombre}</h4>
-                <p>${rec.Precio.toLocaleString()}</p>
-              </div>
-            ))}
+          <div className="text-3xl md:text-5xl font-black">
+            {service.Precio.toLocaleString('es-CO', {
+              style: 'currency',
+              currency: 'COP',
+              minimumFractionDigits: 0,
+            })}
           </div>
         </div>
       </div>
-    </>
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 -mt-32">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Imagen y Características */}
+          <div className="lg:col-span-2 space-y-8">
+             <div className="bg-white p-4 rounded-[3rem] shadow-2xl border border-white overflow-hidden aspect-video relative group">
+                <img 
+                  src={service.imagenURL} 
+                  alt={service.Nombre} 
+                  className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105"
+                />
+             </div>
+
+             <div className="bg-white p-10 md:p-12 rounded-[3rem] shadow-xl border border-gray-100">
+                <h3 className="text-2xl font-black text-gray-900 mb-6">Sobre esta experiencia</h3>
+                <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                  Sumérgete en un oasis de relajación con nuestro exclusivo tratamiento de {service.Nombre.toLowerCase()}. 
+                  Diseñado para revitalizar cuerpo y mente, esta experiencia combina técnicas ancestrales con lo último en bienestar.
+                </p>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
+                      <Clock className="text-primary" size={24} />
+                      <div className="text-sm font-bold text-gray-700">{service.Duracion} min</div>
+                   </div>
+                   <div className="flex items-center gap-3 p-4 bg-primary/5 rounded-2xl">
+                      <Tag className="text-primary" size={24} />
+                      <div className="text-sm font-bold text-gray-700">{service.Categoria}</div>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+          {/* Sidebar Acciones */}
+          <div className="space-y-6">
+             <div className="sticky top-28 bg-white p-8 rounded-[2.5rem] shadow-2xl border border-primary/10 space-y-6">
+                <div className="text-center">
+                   <div className="text-sm text-gray-500 uppercase font-black tracking-widest mb-1">Precio Total</div>
+                   <div className="text-4xl font-black text-primary">
+                      {service.Precio.toLocaleString('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
+                        minimumFractionDigits: 0,
+                      })}
+                   </div>
+                </div>
+
+                <div className="space-y-4 pt-4">
+                   <button 
+                    onClick={handleBuyNow}
+                    className="w-full py-5 bg-primary text-white font-black rounded-2xl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20 flex items-center justify-center gap-3"
+                   >
+                     <Calendar size={22} />
+                     Reservar Ahora
+                   </button>
+                   
+                   <button 
+                    onClick={handleAddToCart}
+                    disabled={isAddingToCart}
+                    className="w-full py-5 border-2 border-primary text-primary font-black rounded-2xl hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50"
+                   >
+                     {isAddingToCart ? (
+                       <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                     ) : <ShoppingCart size={22} />}
+                     Añadir al Carrito
+                   </button>
+                </div>
+
+                <div className="pt-6 border-t border-gray-100 flex items-center gap-2 text-primary font-bold justify-center">
+                   <ShieldCheck size={20} />
+                   <span className="text-sm">Transacción 100% Segura</span>
+                </div>
+             </div>
+          </div>
+        </div>
+
+        {/* Recomendados */}
+        <section className="mt-24">
+          <h3 className="text-3xl font-black text-gray-900 mb-10 flex items-center gap-4">
+             <Sparkles className="text-primary" /> También te podría encantar
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {recommendedServices.map((rec) => (
+              <div 
+                key={rec.id} 
+                className="group bg-white rounded-[2.5rem] shadow-lg border border-gray-100 overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-300"
+                onClick={() => navigate(`/servicio/${rec.id}`)}
+              >
+                <div className="h-48 overflow-hidden relative">
+                  <img 
+                    src={rec.imagenURL} 
+                    alt={rec.Nombre} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                  />
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-xs font-bold text-primary shadow-sm">
+                    {rec.Categoria}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h4 className="text-xl font-black text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{rec.Nombre}</h4>
+                  <p className="text-lg font-bold text-primary">${rec.Precio.toLocaleString()}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
   );
 };
 
