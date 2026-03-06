@@ -53,8 +53,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
         serviceId: dbCartItems.serviceId,
         nombre: services.nombre,
         precio: services.precio,
+        categoria: services.categoria,
         imagenUrl: services.imagenUrl,
-        addedAt: dbCartItems.addedAt
+        duracion: services.duracion,
+        quantity: dbCartItems.quantity,
+        addedAt: dbCartItems.createdAt
       })
       .from(dbCartItems)
       .innerJoin(services, eq(dbCartItems.serviceId, services.id))
@@ -62,11 +65,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       const items: CartItem[] = result.map(item => ({
         id: item.id,
-        serviceId: item.serviceId,
+        serviceId: item.serviceId || '',
         Nombre: item.nombre,
         Precio: Number(item.precio),
+        Categoria: item.categoria || '',
         imagenURL: item.imagenUrl || '',
-        addedAt: item.addedAt?.toISOString() || new Date().toISOString()
+        quantity: item.quantity || 1,
+        addedAt: item.addedAt?.toISOString() || new Date().toISOString(),
+        Duracion: Number(item.duracion || 60)
       }));
 
       setCartItems(items);

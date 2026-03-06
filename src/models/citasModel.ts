@@ -1,5 +1,5 @@
 // src/models/citasModel.ts
-import { db, appointments, users } from '../db';
+import { db, appointments, users, services } from '../db';
 import { eq, desc } from 'drizzle-orm';
 import { getAuth } from 'firebase/auth'; 
 import { Appointment } from '../types';
@@ -57,6 +57,8 @@ export async function fetchAppointments(firebaseUid: string): Promise<Appointmen
   try {
     const result = await db.select({
       id: appointments.id,
+      serviceName: services.nombre,
+      serviceId: appointments.serviceId,
       appointmentDate: appointments.appointmentDate,
       appointmentTime: appointments.appointmentTime,
       status: appointments.status,
@@ -64,12 +66,15 @@ export async function fetchAppointments(firebaseUid: string): Promise<Appointmen
     })
     .from(appointments)
     .innerJoin(users, eq(appointments.userId, users.id))
+    .innerJoin(services, eq(appointments.serviceId, services.id))
     .where(eq(users.firebaseUid, firebaseUid))
     .orderBy(desc(appointments.createdAt));
 
     // Mapeamos para mantener la estructura de la interfaz `Appointment`
     return result.map(appointment => ({
       id: appointment.id,
+      serviceName: appointment.serviceName,
+      serviceId: appointment.serviceId || undefined,
       appointmentDate: appointment.appointmentDate,
       appointmentTime: appointment.appointmentTime,
       status: appointment.status as "pending" | "confirmed" | "cancelled" | "completed",

@@ -17,7 +17,7 @@ export async function fetchServices(): Promise<Service[]> {
     Categoria: service.categoria || '',
     imagenURL: service.imagenUrl || '',
     imageFileName: service.imageFileName || '',
-    Duracion: service.duracion || ''
+    Duracion: Number(service.duracion || 60)
   }));
 }
 
@@ -38,7 +38,7 @@ export async function fetchServiceById(serviceId: string): Promise<Service | nul
       Categoria: service.categoria || '',
       imagenURL: service.imagenUrl || '',
       imageFileName: service.imageFileName || '',
-      Duracion: service.duracion || ''
+      Duracion: Number(service.duracion || 60)
     };
   } else {
     console.warn("No such document in Postgres with ID:", serviceId);
