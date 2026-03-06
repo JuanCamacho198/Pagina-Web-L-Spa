@@ -58,19 +58,21 @@ export default function CheckoutView() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems, clearCart, loadCartFromFirestore } = useCart();
+  const { cartItems, clearCart, loadCartFromDb } = useCart();
   const serviceIdFromUrl = new URLSearchParams(location.search).get('serviceId');
 
   const groupedItems = useMemo<CheckoutItem[]>(() => {
     return itemsToCheckout.reduce((acc: CheckoutItem[], item) => {
       const sId = item.serviceId || item.id;
-      const existing = acc.find(i => i.serviceId === sId);
+      const existing = acc.find(i => (i.serviceId === sId || i.id === sId));
 
       if (existing) {
         existing.cantidad += 1;
       } else {
+        const price = typeof item.Precio === 'string' ? parseFloat(item.Precio) : (item.Precio || 0);
         acc.push({
           ...item,
+          Precio: price,
           cantidad: 1,
           serviceId: sId
         });
@@ -87,13 +89,17 @@ export default function CheckoutView() {
         if (serviceIdFromUrl) {
           const singleService = await fetchServiceById(serviceIdFromUrl);
           if (singleService) {
-            singleService.imageFileName = singleService.imagenURL;
-            setItemsToCheckout([singleService]);
+            // Adaptamos el servicio al formato de CheckoutItem
+            const adaptedService = {
+              ...singleService,
+              imageFileName: singleService.imageFileName || singleService.imagenURL
+            };
+            setItemsToCheckout([adaptedService]);
           } else {
             setError("El servicio no fue encontrado.");
           }
         } else {
-          await loadCartFromFirestore();
+          await loadCartFromDb();
         }
       } catch (err) {
         console.error("Error al cargar servicios:", err);

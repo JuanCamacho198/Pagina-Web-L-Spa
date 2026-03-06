@@ -1,66 +1,31 @@
+// src/features/booking/CartView.tsx
 import React, { useState, useEffect } from 'react'; 
 import { useCart } from '../../context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { db, auth } from '../../firebase/firebaseConfig'; 
-import { collection, getDocs } from 'firebase/firestore';
 import { ShoppingBag, Trash2, ArrowRight, CreditCard, ChevronLeft, Loader2, Clock } from 'lucide-react';
 
-interface CartItem {
-  id: string;
-  Nombre: string;
-  Precio: string | number;
-  imageFileName?: string;
-  Duracion?: number;
-  quantity?: number;
-}
-
 export default function CartView() {
-  const { removeItem, clearCart } = useCart();
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const { removeItem, clearCart, cartItems: contextCartItems, loadCartFromDb } = useCart();
   const [loading, setLoading] = useState(true);
   const [removing, setRemoving] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const groupedItems = cartItems.reduce((acc: Record<string, CartItem & { quantity: number }>, item) => {
-    const key = item.Nombre;
-    if (!acc[key]) {
-      acc[key] = { ...item, quantity: 1 };
-    } else {
-      acc[key].quantity += 1;
-    }
-    return acc;
-  }, {});
-
   useEffect(() => {
-    const fetchCartItems = async () => {
+    const initCart = async () => {
       setLoading(true);
-      if (auth.currentUser) {
-        const userCartRef = collection(db, 'Usuarios', auth.currentUser.uid, 'Carrito');
-        try {
-          const snapshot = await getDocs(userCartRef);
-          const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as CartItem));
-          setCartItems(items);
-        } catch (error) {
-          console.error('Error fetching cart items:', error);
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        setLoading(false);
-      }
+      await loadCartFromDb();
+      setLoading(false);
     };
-
-    fetchCartItems();
+    initCart();
   }, []);
 
-  const total = cartItems.reduce((sum, item) => sum + parseFloat(String(item.Precio || 0)), 0);
-  const itemCount = cartItems.length;
+  const total = contextCartItems.reduce((sum, item) => sum + (item.Precio || 0), 0);
+  const itemCount = contextCartItems.length;
 
-  const handleRemoveItem = async (item: CartItem) => {
-    setRemoving(item.id);
+  const handleRemoveItem = async (itemId: string) => {
+    setRemoving(itemId);
     try {
-      await removeItem(item.id);
-      setCartItems(prev => prev.filter(cartItem => cartItem.id !== item.id));
+      await removeItem(itemId);
     } catch (error) {
       console.error('Error removing item:', error);
     } finally {
@@ -73,8 +38,6 @@ export default function CartView() {
     if (confirmClear) {
       try {
         await clearCart();
-        setCartItems([]);
-        localStorage.removeItem('cartItems');
       } catch (error) {
         console.error('Error clearing cart:', error);
       }
@@ -82,7 +45,7 @@ export default function CartView() {
   };
 
   const handleCheckout = () => {
-    if (cartItems.length > 0) {
+    if (contextCartItems.length > 0) {
       navigate('/checkout');
     } else {
       alert("Tu carrito está vacío.");
@@ -99,65 +62,88 @@ export default function CartView() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-          <div>
-            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Tu Carrito</h1>
-            <p className="text-gray-500 mt-1">
-              Tienes <span className="font-bold text-primary">{itemCount}</span> {itemCount === 1 ? 'servicio seleccionado' : 'servicios seleccionados'}
-            </p>
-          </div>
+    <div className="min-h-screen bg-[#FDFCFB] pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-center justify-between mb-8">
           <button 
             onClick={() => navigate('/services')}
-            className="inline-flex items-center text-primary font-semibold hover:underline group"
+            className="flex items-center text-gray-500 hover:text-primary transition-colors group"
           >
             <ChevronLeft size={20} className="mr-1 group-hover:-translate-x-1 transition-transform" />
-            Continuar explorando
+            <span className="text-sm font-medium">Volver a servicios</span>
           </button>
+          <div className="text-center">
+            <h1 className="text-3xl font-serif text-gray-900 mb-2">Tu Carrito</h1>
+            <div className="h-1 w-12 bg-primary/30 mx-auto rounded-full"></div>
+          </div>
+          <div className="w-24"></div> {/* Spacer for symmetry */}
         </div>
 
-        {cartItems.length === 0 ? (
-          <div className="bg-white rounded-3xl p-16 text-center shadow-sm border border-gray-100 animate-in fade-in zoom-in duration-500">
-            <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-              <ShoppingBag size={48} className="text-gray-300" />
+        {contextCartItems.length === 0 ? (
+          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-12 text-center">
+            <div className="bg-primary/5 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <ShoppingBag size={40} className="text-primary/40" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Tu carrito está vacío</h2>
-            <p className="text-gray-500 max-w-sm mx-auto mb-8">
-              ¡Descubre nuestros increíbles servicios y añade algunos a tu día de spa!
-            </p>
-            <button 
-              className="btn btn-primary px-8 py-4 text-lg shadow-xl shadow-primary/20"
+            <h2 className="text-2xl font-serif text-gray-800 mb-4">Tu carrito está vacío</h2>
+            <p className="text-gray-500 mb-8 max-w-md mx-auto">Parece que aún no has seleccionado ningún servicio. Descubre nuestras experiencias de relajación y comienza tu viaje de bienestar.</p>
+            <button
               onClick={() => navigate('/services')}
+              className="bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-full font-medium transition-all shadow-md hover:shadow-lg flex items-center mx-auto"
             >
               Explorar Servicios
+              <ArrowRight size={18} className="ml-2" />
             </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            {/* Lista de Items */}
             <div className="lg:col-span-2 space-y-4">
-              {Object.values(groupedItems).map(item => (
-                <div key={item.id + item.Nombre} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow group">
-                  <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-50 flex-shrink-0">
-                    {item.imageFileName ? (
-                      <img src={`/assets/${item.imageFileName}`} alt={item.Nombre} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-300">
-                        <ShoppingBag size={24} />
-                      </div>
-                    )}
+              <div className="flex items-center justify-between px-4 mb-2">
+                <span className="text-sm font-medium text-gray-500">{itemCount} {itemCount === 1 ? 'servicio' : 'servicios'} en total</span>
+                <button 
+                  onClick={handleClearCart}
+                  className="text-sm font-medium text-red-500 hover:text-red-600 flex items-center transition-colors"
+                >
+                  <Trash2 size={14} className="mr-1" />
+                  Vaciar carrito
+                </button>
+              </div>
+
+              {contextCartItems.map((item) => (
+                <div 
+                  key={item.id} 
+                  className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-4 group hover:shadow-md transition-shadow"
+                >
+                  <div className="w-24 h-24 rounded-xl bg-gray-100 overflow-hidden flex-shrink-0">
+                    <img 
+                      src={item.imagenURL || '/assets/bannerSpa.avif'} 
+                      alt={item.Nombre}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/assets/bannerSpa.avif';
+                      }}
+                    />
                   </div>
                   
                   <div className="flex-grow">
                     <div className="flex justify-between items-start">
-                      <h3 className="font-bold text-gray-900 leading-tight">{item.Nombre}</h3>
-                      <button
-                        className="text-gray-400 hover:text-red-500 p-1 transition-colors"
-                        onClick={() => handleRemoveItem(item)}
+                      <div>
+                        <h3 className="text-lg font-serif text-gray-900 group-hover:text-primary transition-colors">{item.Nombre}</h3>
+                        <div className="flex items-center text-gray-400 text-xs mt-1">
+                          <Clock size={12} className="mr-1" />
+                          <span>Sesión individual</span>
+                        </div>
+                      </div>
+                      <span className="text-lg font-medium text-primary">${item.Precio.toLocaleString()}</span>
+                    </div>
+                    
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="flex items-center bg-gray-50 rounded-lg px-2 py-1">
+                        <span className="text-sm font-medium text-gray-600">Cantidad: 1</span>
+                      </div>
+                      <button 
+                        onClick={() => handleRemoveItem(item.id)}
                         disabled={removing === item.id}
+                        className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all"
                         title="Eliminar del carrito"
                       >
                         {removing === item.id ? (
@@ -167,79 +153,58 @@ export default function CartView() {
                         )}
                       </button>
                     </div>
-                    
-                    <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
-                      {item.Duracion && (
-                        <span className="flex items-center gap-1 font-medium bg-gray-50 px-2 py-0.5 rounded-md border border-gray-100">
-                          <Clock size={14} className="text-primary" /> {item.Duracion} min
-                        </span>
-                      )}
-                      <span className="font-bold text-primary">
-                        ${parseFloat(String(item.Precio || 0)).toLocaleString('es-CO')}
-                      </span>
-                    </div>
-
-                    <div className="mt-3 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Cantidad:</span>
-                        <span className="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full">{item.quantity}</span>
-                      </div>
-                      {item.quantity > 1 && (
-                        <span className="text-xs font-medium text-gray-400">
-                          Subtotal: ${(parseFloat(String(item.Precio || 0)) * item.quantity).toLocaleString('es-CO')}
-                        </span>
-                      )}
-                    </div>
                   </div>
                 </div>
               ))}
-
-              <button
-                className="w-full py-4 border-2 border-dashed border-gray-200 rounded-2xl text-gray-400 font-medium hover:text-red-500 hover:border-red-200 transition-all flex items-center justify-center gap-2 group"
-                onClick={handleClearCart}
-              >
-                <Trash2 size={18} className="group-hover:shake" />
-                Vaciar todo el carrito
-              </button>
             </div>
 
-            {/* Resumen */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 sticky top-24">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Resumen del pedido</h2>
+              <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 sticky top-28">
+                <h2 className="text-xl font-serif text-gray-900 mb-6">Resumen de reserva</h2>
                 
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between text-gray-500 text-sm">
-                    <span>Servicios ({itemCount})</span>
-                    <span>${total.toLocaleString('es-CO')}</span>
+                <div className="space-y-4 mb-8">
+                  <div className="flex justify-between text-gray-600">
+                    <span>Subtotal</span>
+                    <span>${total.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between text-gray-500 text-sm">
-                    <span>Descuento</span>
-                    <span className="text-green-500">$0</span>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Impuestos (Incl.)</span>
+                    <span>$0</span>
                   </div>
-                  <div className="h-px bg-gray-100 my-4"></div>
-                  <div className="flex justify-between items-center bg-primary/5 p-4 rounded-2xl">
-                    <span className="text-gray-900 font-bold">Total</span>
-                    <span className="text-2xl font-black text-primary">${total.toLocaleString('es-CO')}</span>
+                  <div className="h-px bg-gray-100 w-full my-4"></div>
+                  <div className="flex justify-between items-end">
+                    <span className="text-gray-900 font-medium">Total a pagar</span>
+                    <span className="text-3xl font-serif text-primary">${total.toLocaleString()}</span>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3">
-                  <button 
-                    className="w-full btn btn-primary py-4 text-lg flex items-center justify-center gap-2 shadow-xl shadow-primary/20 mb-3" 
+                  <button
                     onClick={handleCheckout}
+                    className="w-full bg-primary hover:bg-primary-dark text-white py-4 rounded-xl font-medium transition-all shadow-md hover:shadow-lg flex items-center justify-center group"
                   >
-                    <CreditCard size={20} />
-                    Pagar Ahora
-                    <ArrowRight size={18} className="ml-1" />
+                    Proceder al pago
+                    <CreditCard size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </button>
-                  <p className="text-[10px] text-center text-gray-400 px-4">
-                    Al proceder al pago aceptas nuestras políticas de reserva y cancelación.
-                  </p>
+                  <button
+                    onClick={() => navigate('/services')}
+                    className="w-full bg-white border border-gray-200 text-gray-600 py-3 rounded-xl font-medium hover:bg-gray-50 transition-all flex items-center justify-center"
+                  >
+                    Seguir explorando
+                  </button>
                 </div>
+
+                <div className="mt-8 flex items-center justify-center gap-4 opacity-40 grayscale">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-4" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-5" />
+                </div>
+                
+                <p className="mt-6 text-[10px] text-gray-400 text-center uppercase tracking-widest leading-relaxed">
+                  Pago 100% seguro garantizado para tu tranquilidad
+                </p>
               </div>
             </div>
-
           </div>
         )}
       </div>
