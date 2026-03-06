@@ -2,12 +2,12 @@
 
 export interface Service {
   id: string;
-  Nombre: string;
-  Precio: number;
-  Categoria: string;
-  imagenURL?: string;
+  name: string;
+  price: number;
+  category: string;
+  imageUrl?: string;
   imageFileName?: string;
-  Duracion: number;
+  duration: number;
 }
 
 export interface Appointment {
@@ -23,11 +23,11 @@ export interface Appointment {
 export interface UserProfile {
   id?: string;
   uid: string;
-  nombre: string;
-  apellido: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  telefono?: string;
-  fechaNacimiento?: string;
+  phone?: string;
+  birthDate?: string;
   photoURL?: string;
   role: 'admin' | 'employee' | 'customer';
 }
@@ -35,22 +35,22 @@ export interface UserProfile {
 export interface CartItem {
   id: string;
   serviceId: string;
-  Nombre: string;
-  Precio: number;
-  Categoria: string;
-  imagenURL: string;
+  name: string;
+  price: number;
+  category: string;
+  imageUrl: string;
   quantity: number;
   addedAt: string;
-  Duracion: number;
+  duration: number;
 }
 
 export interface ServiceFormValues {
-  nombre: string;
-  descripcion: string;
-  precio: number;
-  duracion: number;
-  categoria: string;
-  imagenURL?: string;
+  name: string;
+  description: string;
+  price: number;
+  duration: number;
+  category: string;
+  imageUrl?: string;
 }
 
 export interface CheckoutFormValues {

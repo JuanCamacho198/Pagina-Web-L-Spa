@@ -12,12 +12,12 @@ export async function fetchServices(): Promise<Service[]> {
   // Transformamos campos para mantener compatibilidad con la UI si es necesario
   return data.map(service => ({
     id: service.id,
-    Nombre: service.nombre,
-    Precio: Number(service.precio), // Convertimos de string/decimal a number
-    Categoria: service.categoria || '',
-    imagenURL: service.imagenUrl || '',
+    name: service.name,
+    price: Number(service.price), // Convertimos de string/decimal a number
+    category: service.category || '',
+    imageUrl: service.imageUrl || '',
     imageFileName: service.imageFileName || '',
-    Duracion: Number(service.duracion || 60)
+    duration: Number(service.duration || 60)
   }));
 }
 
@@ -33,12 +33,12 @@ export async function fetchServiceById(serviceId: string): Promise<Service | nul
     const service = result[0];
     return {
       id: service.id,
-      Nombre: service.nombre,
-      Precio: Number(service.precio),
-      Categoria: service.categoria || '',
-      imagenURL: service.imagenUrl || '',
+      name: service.name,
+      price: Number(service.price),
+      category: service.category || '',
+      imageUrl: service.imageUrl || '',
       imageFileName: service.imageFileName || '',
-      Duracion: Number(service.duracion || 60)
+      duration: Number(service.duration || 60)
     };
   } else {
     console.warn("No such document in Postgres with ID:", serviceId);
@@ -52,11 +52,11 @@ export async function fetchServiceById(serviceId: string): Promise<Service | nul
  */
 export async function createService(serviceData: any): Promise<void> {
   await db.insert(services).values({
-    nombre: serviceData.Nombre,
-    descripcion: serviceData.Descripcion,
-    precio: serviceData.Precio.toString(),
-    categoria: serviceData.Categoria,
-    imagenUrl: serviceData.imagenURL,
-    duracion: serviceData.Duracion
+    name: serviceData.name,
+    description: serviceData.description,
+    price: serviceData.price.toString(),
+    category: serviceData.category,
+    imageUrl: serviceData.imageUrl,
+    duration: serviceData.duration
   });
 }

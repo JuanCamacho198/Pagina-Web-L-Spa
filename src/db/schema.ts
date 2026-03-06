@@ -8,10 +8,10 @@ export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   auth0Id: varchar('auth0_id', { length: 255 }).unique().notNull(),
   email: varchar('email', { length: 255 }).unique().notNull(),
-  nombre: varchar('nombre', { length: 100 }),
-  apellido: varchar('apellido', { length: 100 }),
-  telefono: varchar('telefono', { length: 20 }),
-  fechaNacimiento: date('fecha_nacimiento'),
+  firstName: varchar('first_name', { length: 100 }),
+  lastName: varchar('last_name', { length: 100 }),
+  phone: varchar('phone', { length: 20 }),
+  birthDate: date('birth_date'),
   role: userRoleEnum('role').default('customer').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
@@ -19,13 +19,13 @@ export const users = pgTable('users', {
 // Definición de la Tabla de Servicios
 export const services = pgTable('services', {
   id: uuid('id').primaryKey().defaultRandom(),
-  nombre: varchar('nombre', { length: 255 }).notNull(),
-  descripcion: text('descripcion'),
-  precio: decimal('precio', { precision: 10, scale: 2 }).notNull(),
-  categoria: varchar('categoria', { length: 100 }),
-  imagenUrl: text('imagen_url'),
-  imageFileName: text('imagen_filename'),
-  duracion: integer('duracion').default(60), // en minutos
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  price: decimal('price', { precision: 10, scale: 2 }).notNull(),
+  category: varchar('category', { length: 100 }),
+  imageUrl: text('image_url'),
+  imageFileName: text('image_filename'),
+  duration: integer('duration').default(60), // en minutos
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
 

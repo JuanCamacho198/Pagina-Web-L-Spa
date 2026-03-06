@@ -66,19 +66,19 @@ export default function App() {
               <Route path="/register" element={<RegisterView />} />
               <Route path="/services" element={<ServicesView />} />
               <Route path="/contact" element={<ContactView />} />
-              <Route path="/sobre-nosotros" element={<AboutView />} />
-              <Route path="/politicas-cancelacion" element={<PoliticasCancelacionView />} />
-              <Route path="/politica-datos" element={<DataPrivacyPolicyView />} />
-              <Route path="/informacion-reserva" element={<ImportantReservationInfoView />} />
-              <Route path="/preguntas-frecuentes" element={<FaqView />} />
+              <Route path="/about-us" element={<AboutView />} />
+              <Route path="/cancellation-policies" element={<PoliticasCancelacionView />} />
+              <Route path="/data-privacy" element={<DataPrivacyPolicyView />} />
+              <Route path="/reservation-info" element={<ImportantReservationInfoView />} />
+              <Route path="/faq" element={<FaqView />} />
               
 
               {/* Redirecciona las rutas privadas si el usuario no está autenticado */}
               <Route path="/checkout" element={<Navigate to="/login" replace />} />
-              <Route path="/citas" element={<Navigate to="/login" replace />} />
-              <Route path="/pago" element={<Navigate to="/login" replace />} />
-              <Route path="/confirmacion-pago" element={<Navigate to="/login" replace />} />
-              <Route path="/carrito" element={<Navigate to="/login" replace />} />
+              <Route path="/appointments" element={<Navigate to="/login" replace />} />
+              <Route path="/payment" element={<Navigate to="/login" replace />} />
+              <Route path="/payment-confirmation" element={<Navigate to="/login" replace />} />
+              <Route path="/cart" element={<Navigate to="/login" replace />} />
               
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
@@ -96,23 +96,26 @@ export default function App() {
               <Route path="/profile" element={<ProfileView />} />
               <Route path="/services" element={<ServicesView/>} />
               <Route path="/checkout" element={<CheckoutView />} />
-              <Route path="/citas" element={<CitasView />} />
-              <Route path="/pago" element={<PaymentView />} />
-              <Route path="/confirmacion-pago" element={<SuccessView />} />
-              <Route path="/carrito" element={<CartView />} />
-              <Route path="/admin/crear-servicio" element={<CreateServiceView />} />
-              <Route path="/politicas-cancelacion" element={<PoliticasCancelacionView />} />
-              <Route path="/politica-datos" element={<DataPrivacyPolicyView />} />
-              <Route path="/informacion-reserva" element={<ImportantReservationInfoView />} />
-              <Route path="/preguntas-frecuentes" element={<FaqView />} />
+              <Route path="/appointments" element={<CitasView />} />
+              <Route path="/payment" element={<PaymentView />} />
+              <Route path="/payment-confirmation" element={<SuccessView />} />
+              <Route path="/cart" element={<CartView />} />
+
+              {/* Solo administradores pueden crear servicios */}
+              <Route path="/admin/create-service" element={<CreateServiceView />} />
+              <Route path="/admin/create-user" element={<RegisterView />} />
+
+              <Route path="/cancellation-policies" element={<PoliticasCancelacionView />} />
+              <Route path="/data-privacy" element={<DataPrivacyPolicyView />} />
+              <Route path="/reservation-info" element={<ImportantReservationInfoView />} />
+              <Route path="/faq" element={<FaqView />} />
 
               {/* Cualquier otra ruta no definida en este bloque para autenticados ➔ redirige a /home */}
               <Route path="*" element={<Navigate to="/home" replace />} />
-              
             </>
           )}
           {/* Esta ruta debe estar fuera del bloque condicional de autenticación */}
-          <Route path="/servicio/:id" element={<ServiceDetailView />} />
+          <Route path="/service/:id" element={<ServiceDetailView />} />
         </Routes> 
       </Router>
     </CartProvider>

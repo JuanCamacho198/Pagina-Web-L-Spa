@@ -1,0 +1,33 @@
+import React from 'react';
+import { cn } from './Button';
+
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  hoverable?: boolean;
+}
+
+export const Card = ({ className, hoverable, children, ...props }: CardProps) => {
+  return (
+    <div
+      className={cn(
+        'bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden',
+        hoverable && 'transition-all hover:shadow-md hover:border-primary/20',
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+export const CardHeader = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('p-6 border-b border-gray-50', className)} {...props}>
+    {children}
+  </div>
+);
+
+export const CardContent = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('p-6', className)} {...props}>
+    {children}
+  </div>
+);

@@ -18,13 +18,13 @@ export async function saveUserData(userData: {
   try {
     const result = await db.insert(users).values({
       auth0Id: userData.auth0Id,
-      nombre: userData.name,
+      firstName: userData.name,
       email: userData.email,
       role: userData.role || 'customer',
     }).onConflictDoUpdate({
       target: users.auth0Id,
       set: {
-        nombre: userData.name,
+        firstName: userData.name,
       }
     }).returning();
     
@@ -48,11 +48,11 @@ export async function getAuth0UserById(auth0Id: string): Promise<UserProfile | n
   return {
     uid: user.auth0Id,
     id: user.id,
-    nombre: user.nombre || '',
-    apellido: user.apellido || '',
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
     email: user.email,
-    telefono: user.telefono || undefined,
-    fechaNacimiento: user.fechaNacimiento || undefined,
+    phone: user.phone || undefined,
+    birthDate: user.birthDate || undefined,
     role: user.role as any
   };
 }
@@ -66,11 +66,11 @@ export async function updateUserData(auth0Id: string, updates: Partial<UserProfi
   try {
     const result = await db.update(users)
       .set({
-        nombre: updates.nombre,
-        apellido: updates.apellido,
+        firstName: updates.firstName,
+        lastName: updates.lastName,
         email: updates.email,
-        telefono: updates.telefono,
-        fechaNacimiento: updates.fechaNacimiento
+        phone: updates.phone,
+        birthDate: updates.birthDate
       })
       .where(eq(users.auth0Id, auth0Id))
       .returning();

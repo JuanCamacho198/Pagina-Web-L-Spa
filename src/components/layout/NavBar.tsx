@@ -47,9 +47,9 @@ export default function NavBar({ user }: NavBarProps) {
           <div className="hidden md:flex space-x-8 items-center">
             <Link to="/services" className={navLinkClass}>Servicios</Link>
             {!user ? (
-              <Link to="/sobre-nosotros" className={navLinkClass}>Sobre Nosotros</Link>
+              <Link to="/about-us" className={navLinkClass}>Sobre Nosotros</Link>
             ) : (
-              <Link to="/citas" className={navLinkClass}>Citas</Link>
+              <Link to="/appointments" className={navLinkClass}>Citas</Link>
             )}
             <Link to="/contact" className={navLinkClass}>Contacto</Link>
           </div>
@@ -75,7 +75,7 @@ export default function NavBar({ user }: NavBarProps) {
               <div className="flex items-center space-x-3">
                 {/* Carrito */}
                 <button
-                  onClick={() => navigate('/carrito')}
+                  onClick={() => navigate('/cart')}
                   className="relative p-2 text-gray-600 hover:text-primary transition-colors rounded-full hover:bg-gray-50"
                   aria-label={`Carrito con ${cartCount} ítems`}
                 >
@@ -114,13 +114,23 @@ export default function NavBar({ user }: NavBarProps) {
                         <>
                           <hr className="my-1 border-gray-100" />
                           <Link 
-                            to="/admin/crear-servicio" 
+                            to="/admin/create-service" 
                             className={cn(mobileMenuBtnClass, "text-primary font-semibold")}
                             onClick={() => setMenuOpen(false)}
                           >
                             <div className="flex items-center gap-2">
                               <PlusCircle size={16} />
                               <span>Crear Servicio</span>
+                            </div>
+                          </Link>
+                          <Link 
+                            to="/admin/create-user" 
+                            className={cn(mobileMenuBtnClass, "text-primary font-semibold")}
+                            onClick={() => setMenuOpen(false)}
+                          >
+                            <div className="flex items-center gap-2">
+                              <PlusCircle size={16} />
+                              <span>Crear Usuario</span>
                             </div>
                           </Link>
                         </>
