@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer';
+import Footer from '../../components/layout/Footer';
 import { fetchServices } from '../../models/servicesModel';
 import { ChevronLeft, ChevronRight, Star, Clock, MapPin } from 'lucide-react';
-
-interface Service {
-  id: string;
-  Nombre: string;
-  Precio: number | string;
-  imagenURL?: string;
-}
+import { Service } from '../../types';
 
 function HomeView() {
   const navigate = useNavigate();
@@ -20,7 +14,7 @@ function HomeView() {
   useEffect(() => {
     async function loadServices() {
       const data = await fetchServices();
-      setServices(data || []);
+      setServices(data as Service[] || []);
     }
     loadServices();
   }, []);

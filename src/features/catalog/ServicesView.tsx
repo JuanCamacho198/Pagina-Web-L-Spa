@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllServices } from '../../controllers/servicesController';
 import Footer from '../../components/layout/Footer';
 import { Filter, SortAsc, MessageCircle, ArrowRight, Loader2, Search } from 'lucide-react';
-
-interface Service {
-  id: string;
-  Nombre: string;
-  Precio: number;
-  Categoria: string;
-  imageFileName: string;
-}
+import { Service } from '../../types';
 
 export default function ServicesView() {
   const [services, setServices] = useState<Service[]>([]);
@@ -66,9 +59,9 @@ export default function ServicesView() {
   } else if (sortOption === 'nombre-desc') {
     filteredServices.sort((a, b) => b.Nombre.localeCompare(a.Nombre));
   } else if (sortOption === 'precio-asc') {
-    filteredServices.sort((a, b) => a.Precio - b.Precio);
+    filteredServices.sort((a, b) => Number(a.Precio) - Number(b.Precio));
   } else if (sortOption === 'precio-desc') {
-    filteredServices.sort((a, b) => b.Precio - a.Precio);
+    filteredServices.sort((a, b) => Number(b.Precio) - Number(a.Precio));
   }
 
   return (

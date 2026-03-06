@@ -17,7 +17,13 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "@features/*": ["features/*"],
+      "@components/*": ["components/*"],
+      "@types/*": ["types/*"],
+      "@context/*": ["context/*"],
+      "@controllers/*": ["controllers/*"],
+      "@models/*": ["models/*"]
     }
   },
   "include": ["src"],
