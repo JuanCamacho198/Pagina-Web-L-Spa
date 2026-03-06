@@ -45,3 +45,18 @@ export async function fetchServiceById(serviceId: string): Promise<Service | nul
     return null;
   }
 }
+
+/**
+ * Crea un nuevo servicio en la base de datos PostgreSQL.
+ * @param {Omit<Service, 'id'>} serviceData - Datos del nuevo servicio.
+ */
+export async function createService(serviceData: any): Promise<void> {
+  await db.insert(services).values({
+    nombre: serviceData.Nombre,
+    descripcion: serviceData.Descripcion,
+    precio: serviceData.Precio.toString(),
+    categoria: serviceData.Categoria,
+    imagenUrl: serviceData.imagenURL,
+    duracion: serviceData.Duracion
+  });
+}

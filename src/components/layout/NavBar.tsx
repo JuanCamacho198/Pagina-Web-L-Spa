@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
-import { Settings, ShoppingCart, User as UserIcon, LogOut } from 'lucide-react';
+import { Settings, ShoppingCart, User as UserIcon, LogOut, PlusCircle } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -19,6 +19,9 @@ export default function NavBar({ user }: NavBarProps) {
   const { cartCount } = useCart();
   const navigate = useNavigate();
   const { logout, loginWithRedirect } = useAuth0();
+
+  // En un sistema real, esto vendría de los roles de Auth0 (user['https://my-app.com/roles'])
+  const isAdmin = user?.email?.includes('admin') || user?.email === 'juan@luxuryspa.com'; 
 
   const handleLogout = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
@@ -106,6 +109,23 @@ export default function NavBar({ user }: NavBarProps) {
                           <span>Mi Perfil</span>
                         </div>
                       </Link>
+
+                      {isAdmin && (
+                        <>
+                          <hr className="my-1 border-gray-100" />
+                          <Link 
+                            to="/admin/crear-servicio" 
+                            className={cn(mobileMenuBtnClass, "text-primary font-semibold")}
+                            onClick={() => setMenuOpen(false)}
+                          >
+                            <div className="flex items-center gap-2">
+                              <PlusCircle size={16} />
+                              <span>Crear Servicio</span>
+                            </div>
+                          </Link>
+                        </>
+                      )}
+                      
                       <hr className="my-1 border-gray-100" />
                       <button 
                         onClick={handleLogout}

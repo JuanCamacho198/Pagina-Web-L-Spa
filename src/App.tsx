@@ -33,6 +33,8 @@ import CartView from './features/booking/CartView';
 import ContactView from './features/static/ContactView';
 import AboutView from './features/static/AboutView';
 
+import CreateServiceView from './features/admin/CreateServiceView';
+
 import { registroUsuario } from './controllers/authController';
 
 export default function App() {
@@ -97,6 +99,7 @@ export default function App() {
               <Route path="/pago" element={<PaymentView />} />
               <Route path="/confirmacion-pago" element={<SuccessView />} />
               <Route path="/carrito" element={<CartView />} />
+              <Route path="/admin/crear-servicio" element={<CreateServiceView />} />
               <Route path="/politicas-cancelacion" element={<PoliticasCancelacionView />} />
               <Route path="/politica-datos" element={<DataPrivacyPolicyView />} />
               <Route path="/informacion-reserva" element={<ImportantReservationInfoView />} />
