@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, signOut } from '../../lib/auth';
 import { User } from '../../lib/auth';
@@ -37,7 +37,7 @@ export default function NavBar({ user }: NavBarProps) {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Luxury Spa
+              L-Spa
             </Link>
           </div>
 
