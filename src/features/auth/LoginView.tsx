@@ -38,50 +38,5 @@ const LoginView: React.FC = () => {
   );
 };
 
-                    >
-                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
-                </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-end">
-            <div className="text-sm">
-                <a href="#" className="font-medium text-primary hover:text-primary-dark transition-colors">
-                    ¿Olvidaste tu contraseña?
-                </a>
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all shadow-lg shadow-primary/20 disabled:opacity-70 active:scale-95"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                {isSubmitting ? (
-                    <Loader2 className="animate-spin text-white/50" size={18} />
-                ) : (
-                    <ArrowRight className="text-white/50 group-hover:text-white transition-colors" size={18} />
-                )}
-              </span>
-              {isSubmitting ? "Iniciando sesión..." : "Iniciar Sesión"}
-            </button>
-          </div>
-        </form>
-
-        <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-                ¿Aún no tienes cuenta?{" "}
-                <Link to="/register" className="font-bold text-primary hover:text-primary-dark transition-colors">
-                    Regístrate aquí
-                </Link>
-            </p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export default LoginView;
+

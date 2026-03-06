@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useNavigate,
 } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import { CartProvider } from './context/CartContext';
@@ -31,6 +32,8 @@ import CartView from './features/booking/CartView';
 
 import ContactView from './features/static/ContactView';
 import AboutView from './features/static/AboutView';
+
+import { registroUsuario } from './controllers/authController';
 
 export default function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -110,36 +113,4 @@ export default function App() {
       </Router>
     </CartProvider>
   ); 
-}
-
-    />
-  );
-}
-
-/**
- * Wrapper para RegisterView para poder usar useNavigate y estado de error
- */
-function RegisterRoute() {
-  const navigate = useNavigate();
-  const [registrationError, setRegistrationError] = useState('');
-
-  // Esta función se pasaría a RegisterView para ser llamada al enviar el formulario
-  const handleRegister = async (nombre: string, apellido: string, email: string, password: string) => {
-    // registroUsuario debe estar definido en tu authController.js y manejar navegación y errores
-    await registroUsuario(
-      nombre,
-      apellido,
-      email,
-      password,
-      navigate,
-      setRegistrationError
-    );
-  };
-
-  return (
-    <RegisterView
-      onRegister={handleRegister} // Pasamos la función de registro como prop
-      error={registrationError} // Pasamos el estado de error como prop
-    />
-  );
 }
