@@ -10,28 +10,28 @@ import { auth } from './lib/auth';
 import { CartProvider } from './context/CartContext';
 import NavBar from './components/layout/NavBar';
 import ProfileView from './features/profile/ProfileView';
-import ServiceDetailView from './views/components/ServiceDetailView'; 
+import ServiceDetailView from './features/catalog/components/ServiceDetailView'; 
 
 // Vistas principales
-import PublicHomeView from './views/pages/PublicHomeView';
+import PublicHomeView from './features/static/PublicHomeView';
 import LoginView from './features/auth/LoginView';
 import RegisterView from './features/auth/RegisterView';
 import HomeView from './features/catalog/HomeView';
 
-import PoliticasCancelacionView from './views/pages/CancellationPolicyView';
-import DataPrivacyPolicyView from './views/pages/DataPrivacyPolicyView';
-import ImportantReservationInfoView from './views/pages/ImportantReservationInfoView';
-import FaqView from './views/pages/FaqView';
+import PoliticasCancelacionView from './features/static/CancellationPolicyView';
+import DataPrivacyPolicyView from './features/static/DataPrivacyPolicyView';
+import ImportantReservationInfoView from './features/static/ImportantReservationInfoView';
+import FaqView from './features/static/FaqView';
 
 import ServicesView from './features/catalog/ServicesView';
 import CheckoutView from './features/booking/CheckoutView';
 import CitasView from './features/booking/CitasView';
-import PaymentView from './views/pages/PaymentView';
-import SuccessView from './views/components/SuccessView';
+import PaymentView from './features/booking/PaymentView';
+import SuccessView from './features/booking/SuccessView';
 import CartView from './features/booking/CartView';
 
-import ContactView from './views/pages/ContactView';
-import AboutView from './views/pages/AboutView';
+import ContactView from './features/static/ContactView';
+import AboutView from './features/static/AboutView';
 
 // --- Importa los controladores ---
 import { loginUsuario, registroUsuario } from './controllers/authController';

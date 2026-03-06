@@ -1,11 +1,11 @@
-// src/views/components/ServiceDetailView.tsx
+// src/features/catalog/components/ServiceDetailView.tsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { db, cartItems, users } from '../../db';
+import { db, cartItems, users } from '../../../db';
 import { eq } from 'drizzle-orm';
 import { getAuth } from '@/lib/auth';
-import { fetchServiceById, fetchServices } from '../../models/servicesModel';
-import { Service } from '../../types';
+import { fetchServiceById, fetchServices } from '../../../models/servicesModel';
+import { Service } from '../../../types';
 import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
 
 const ServiceDetailView = () => {

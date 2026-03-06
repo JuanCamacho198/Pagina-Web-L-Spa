@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ShieldCheck, CreditCard, Wallet, Smartphone, Landmark, CheckCircle2, ChevronRight, Lock } from 'lucide-react';
-import PaymentSuccessModal from '../components/PaymentSuccessModal';
+import PaymentSuccessModal from './PaymentSuccessModal';
 
 // --- IMÁGENES (Manteniendo las rutas actuales) ---
 import creditCardImage from '../../assets/epayco-pagos.png';
@@ -138,7 +138,7 @@ export default function PaymentView() {
               <button
                 onClick={handlePaymentSubmit}
                 disabled={!selectedPaymentMethod}
-                className="w-full mt-8 py-5 bg-gray-900 text-white font-black rounded-[2rem] hover:bg-black transition-all transform hover:-translate-y-1 shadow-2xl disabled:opacity-50 disabled:grayscale disabled:hover:translate-y-0"
+                className="w-full mt-8 py-5 bg-gray-900 text-white font-black rounded-4xl hover:bg-black transition-all transform hover:-translate-y-1 shadow-2xl disabled:opacity-50 disabled:grayscale disabled:hover:translate-y-0"
               >
                 Confirmar Pago de {totalAmount} COL
               </button>
@@ -146,7 +146,7 @@ export default function PaymentView() {
             
             <div className="flex items-center justify-center gap-6 opacity-30">
                 <img src="/assets/epayco-pagos.png" className="h-6 grayscale" alt="Secure" />
-                <div className="h-4 w-[1px] bg-gray-400"></div>
+                <div className="h-4 w-px bg-gray-400"></div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-gray-600">Transacción 100% Protegida</p>
             </div>
           </div>

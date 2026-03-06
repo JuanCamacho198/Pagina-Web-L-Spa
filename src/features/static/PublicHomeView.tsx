@@ -1,4 +1,4 @@
-// src/views/pages/PublicHomeView.tsx
+// src/features/static/PublicHomeView.tsx
 
 import Footer from '../../components/layout/Footer';
 import { Link } from 'react-router-dom';
