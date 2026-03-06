@@ -1,103 +1,43 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, Loader2, ArrowRight } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
+import { Loader2, ArrowRight, ShieldCheck } from 'lucide-react';
 
-interface LoginViewProps {
-  onLogin: (email: string, pass: string) => void;
-  error?: string;
-}
+const LoginView: React.FC = () => {
+  const { loginWithRedirect, isLoading } = useAuth0();
 
-const LoginView: React.FC<LoginViewProps> = ({ onLogin, error }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      await onLogin(email, password);
-    } finally {
-      setIsSubmitting(false);
+  useEffect(() => {
+    if (!isLoading) {
+      loginWithRedirect();
     }
-  };
+  }, [isLoading, loginWithRedirect]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-xl border border-gray-100 animate-in fade-in zoom-in duration-500">
-        
-        <div className="text-center">
-            <h2 className="mt-6 text-3xl font-extrabold text-gray-900 tracking-tight">
-                ¡Qué bueno verte!
-            </h2>
-            <p className="mt-2 text-sm text-gray-500">
-                Inicia sesión en L-Spa para gestionar tus citas.
-            </p>
+      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-xl border border-gray-100 text-center animate-in fade-in zoom-in duration-500">
+        <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto mb-6">
+          <ShieldCheck size={40} />
         </div>
+        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          Redirigiendo...
+        </h2>
+        <p className="mt-2 text-sm text-gray-500">
+          Estamos conectando con nuestro portal seguro de autenticación.
+        </p>
+        <div className="flex justify-center mt-8">
+          <Loader2 className="animate-spin text-primary" size={32} />
+        </div>
+        <button 
+          onClick={() => loginWithRedirect()}
+          className="mt-8 flex items-center justify-center w-full py-3 px-4 rounded-xl text-white bg-primary hover:bg-primary-dark transition-colors font-bold shadow-lg shadow-primary/20"
+        >
+          Si no eres redirigido, haz clic aquí
+          <ArrowRight className="ml-2" size={18} />
+        </button>
+      </div>
+    </div>
+  );
+};
 
-        {error && (
-            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl animate-in slide-in-from-left duration-300">
-                <div className="flex items-center">
-                    <div className="shrink-0">
-                        <span className="text-red-500 text-lg">⚠️</span>
-                    </div>
-                    <div className="ml-3">
-                        <p className="text-sm text-red-700 font-medium">Contraseña o correo incorrectos</p>
-                    </div>
-                </div>
-            </div>
-        )}
-
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            {/* Email Field */}
-            <div className="group">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Correo Electrónico
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
-                  <Mail size={18} />
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all sm:text-sm"
-                  placeholder="tu@correo.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {/* Password Field */}
-            <div className="group">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                    Contraseña
-                </label>
-                <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors">
-                        <Lock size={18} />
-                    </div>
-                    <input
-                        id="password"
-                        name="password"
-                        type={showPassword ? "text" : "password"}
-                        autoComplete="current-password"
-                        required
-                        className="block w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all sm:text-sm"
-                        placeholder="••••••••"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button
-                        type="button"
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
-                        onClick={() => setShowPassword(!showPassword)}
                     >
                         {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>

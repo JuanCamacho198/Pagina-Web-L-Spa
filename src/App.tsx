@@ -4,9 +4,8 @@ import {
   Routes,
   Route,
   Navigate,
-  useNavigate
 } from 'react-router-dom';
-import { auth } from './lib/auth';
+import { useAuth0 } from "@auth0/auth0-react";
 import { CartProvider } from './context/CartContext';
 import NavBar from './components/layout/NavBar';
 import ProfileView from './features/profile/ProfileView';
@@ -33,30 +32,18 @@ import CartView from './features/booking/CartView';
 import ContactView from './features/static/ContactView';
 import AboutView from './features/static/AboutView';
 
-// --- Importa los controladores ---
-import { loginUsuario, registroUsuario } from './controllers/authController';
-
 export default function App() {
-  //saber si ya se verificó el estado de autenticación 
-  const [userChecked, setUserChecked] = useState(false);
-  // usuario autenticado
-  const [user, setUser] = useState(null);
-
-  // Efecto para suscribirse a los cambios en el estado de autenticación de Firebase
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(u => {
-      setUser(u); // Actualiza el estado 'user' (será null si no hay usuario)
-      setUserChecked(true); // Marca como verificada la autenticación inicial
-    });
-    // Limpia la suscripción cuando el componente App se desmonta
-    return unsubscribe;
-  }, []); // El array vacío asegura que este efecto se ejecuta solo una vez al montar
-
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   // Si aún estamos verificando el estado de autenticación, muestra un mensaje de carga
-  if (!userChecked) {
-    return <div>Cargando…</div>;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
   }
+
   return (
     // se envolvio toda la aplicación con CartProvider para que cualquier componente pueda usar useCart
     <CartProvider>
@@ -64,13 +51,13 @@ export default function App() {
         <NavBar user={user} />
         {/* rutas de la aplicación */}
         <Routes>
-          {/* rutas para usuarios NO autenticados (user es null) */}
-          {!user ? (
+          {/* rutas para usuarios NO autenticados */}
+          {!isAuthenticated ? (
             <>
               {/* RUTAS PÚBLICAS */}
               <Route path="/" element={<PublicHomeView />} />
-              <Route path="/login" element={<LoginRoute />} />
-              <Route path="/register" element={<RegisterRoute />} />
+              <Route path="/login" element={<LoginView />} />
+              <Route path="/register" element={<RegisterView />} />
               <Route path="/services" element={<ServicesView />} />
               <Route path="/contact" element={<ContactView />} />
               <Route path="/sobre-nosotros" element={<AboutView />} />
@@ -81,21 +68,18 @@ export default function App() {
               
 
               {/* Redirecciona las rutas privadas si el usuario no está autenticado */}
-              {/* Si intenta acceder a checkout, citas, pago, confirmación o carrito, lo mandamos al login */}
               <Route path="/checkout" element={<Navigate to="/login" replace />} />
               <Route path="/citas" element={<Navigate to="/login" replace />} />
               <Route path="/pago" element={<Navigate to="/login" replace />} />
               <Route path="/confirmacion-pago" element={<Navigate to="/login" replace />} />
               <Route path="/carrito" element={<Navigate to="/login" replace />} />
               
-              {/* Cualquier otra ruta no definida en este bloque para no autenticados ➔ redirige a la landing page */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
           ) : (
-            /* Bloque de rutas para usuarios SÍ autenticados (user no es null) */
+            /* Bloque de rutas para usuarios SÍ autenticados */
             <>
               {/* RUTAS PRIVADAS */}
-              {/* Redirige la ruta raíz a /home si el usuario está loggeado */}
               <Route path="/" element={<Navigate to="/home" replace />} />
 
               {/* Rutas accesibles solo para usuarios autenticados */}
@@ -123,31 +107,11 @@ export default function App() {
           {/* Esta ruta debe estar fuera del bloque condicional de autenticación */}
           <Route path="/servicio/:id" element={<ServiceDetailView />} />
         </Routes> 
-      </Router> {/* <-- Cierre de Router */}
+      </Router>
     </CartProvider>
   ); 
-} // <-- Cierre de App
+}
 
-
-/**
- * Wrapper para LoginView para poder usar useNavigate y estado de error
- * Usamos esto si LoginView o RegisterView necesitan hooks de Router como useNavigate
- * o si queremos pasar lógica específica desde App.
- */
-function LoginRoute() {
-  const navigate = useNavigate();
-  const [loginError, setLoginError] = useState('');
-
-  // Esta función se pasaría a LoginView para ser llamada al enviar el formulario
-  const handleLogin = async (email, password) => {
-    // loginUsuario debe estar definido en tu authController.js y debe manejar la navegación y errores
-    await loginUsuario(email, password, navigate, setLoginError);
-  };
-
-  return (
-    <LoginView
-      onLogin={handleLogin} // Pasamos la función de login como prop
-      error={loginError} // Pasamos el estado de error como prop
     />
   );
 }

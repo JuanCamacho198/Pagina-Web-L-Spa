@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, signOut } from '../../lib/auth';
-import { User } from '../../lib/auth';
+import { useAuth0 } from "@auth0/auth0-react";
 import { Settings, ShoppingCart, User as UserIcon, LogOut } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { clsx, type ClassValue } from 'clsx';
@@ -12,18 +11,18 @@ function cn(...inputs: ClassValue[]) {
 }
 
 interface NavBarProps {
-  user: User | null;
+  user: any;
 }
 
 export default function NavBar({ user }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { cartCount } = useCart();
   const navigate = useNavigate();
+  const { logout, loginWithRedirect } = useAuth0();
 
-  const handleLogout = async () => {
-    await signOut();
+  const handleLogout = () => {
+    logout({ logoutParams: { returnTo: window.location.origin } });
     setMenuOpen(false);
-    navigate('/', { replace: true });
   };
 
   const navLinkClass = "text-gray-600 hover:text-primary font-medium transition-colors duration-200";
@@ -56,12 +55,18 @@ export default function NavBar({ user }: NavBarProps) {
           <div className="flex items-center space-x-4">
             {!user ? (
               <div className="hidden md:flex items-center space-x-2">
-                <Link to="/login" className="btn px-4 py-2 text-gray-700 hover:text-primary transition-colors">
+                <button 
+                  onClick={() => loginWithRedirect()}
+                  className="btn px-4 py-2 text-gray-700 hover:text-primary transition-colors"
+                >
                   Iniciar Sesión
-                </Link>
-                <Link to="/register" className="btn btn-primary shadow-md hover:shadow-lg transform transition-all active:scale-95">
+                </button>
+                <button 
+                  onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
+                  className="btn btn-primary shadow-md hover:shadow-lg transform transition-all active:scale-95"
+                >
                   Registrarse
-                </Link>
+                </button>
               </div>
             ) : (
               <div className="flex items-center space-x-3">

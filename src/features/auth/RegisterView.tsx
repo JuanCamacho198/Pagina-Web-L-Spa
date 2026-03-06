@@ -1,53 +1,47 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { registroUsuario } from '../../controllers/authController';
-import { User, Mail, Lock, UserPlus, ArrowLeft, Loader2 } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
+import { Loader2, ArrowRight, UserPlus } from 'lucide-react';
 
-interface RegisterViewProps {
-  onRegister: (nombre: string, apellido: string, email: string, password: string) => Promise<void>;
-  error?: string;
-}
+const RegisterView: React.FC = () => {
+  const { loginWithRedirect, isLoading } = useAuth0();
 
-const RegisterView: React.FC<RegisterViewProps> = ({ onRegister, error: propError }) => {
-  const [nombre, setNombre] = useState('');
-  const [apellido, setApellido] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate();
-
-  const enviarFormulario = async (evento: React.FormEvent) => {
-    evento.preventDefault();
-    setError('');
-    setIsSubmitting(true);
-    try {
-      await onRegister(nombre, apellido, email, password);
-    } catch (err: any) {
-      setError(err.message || 'Error al registrar usuario');
-    } finally {
-      setIsSubmitting(false);
+  useEffect(() => {
+    if (!isLoading) {
+      loginWithRedirect({
+        authorizationParams: {
+          screen_hint: 'signup',
+        },
+      });
     }
-  };
-
-  const displayError = propError || error;
-
-  const inputGroupClass = "group space-y-1";
-  const labelClass = "block text-sm font-medium text-gray-700 group-focus-within:text-primary transition-colors";
-  const inputClass = "block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all sm:text-sm";
-  const iconClass = "absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-primary transition-colors";
+  }, [isLoading, loginWithRedirect]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8 bg-[url('/src/assets/bannerSpa.avif')] bg-cover bg-fixed bg-center">
-      <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
-      
-      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-2xl border border-gray-100 relative z-10 animate-in fade-in zoom-in duration-500">
-        
-        <div className="text-center">
-          <Link to="/" className="inline-flex items-center text-sm font-medium text-primary hover:text-primary-dark transition-colors mb-6 group">
-            <ArrowLeft size={16} className="mr-2 group-hover:-translate-x-1 transition-transform" />
-            Volver al inicio
-          </Link>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-xl border border-gray-100 text-center animate-in fade-in zoom-in duration-500">
+        <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mx-auto mb-6">
+          <UserPlus size={40} />
+        </div>
+        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          Creando tu cuenta...
+        </h2>
+        <p className="mt-2 text-sm text-gray-500">
+          Te estamos redirigiendo a nuestra página de registro seguro.
+        </p>
+        <div className="flex justify-center mt-8">
+          <Loader2 className="animate-spin text-primary" size={32} />
+        </div>
+        <button 
+          onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
+          className="mt-8 flex items-center justify-center w-full py-3 px-4 rounded-xl text-white bg-primary hover:bg-primary-dark transition-colors font-bold shadow-lg shadow-primary/20"
+        >
+          Si no eres redirigido, haz clic aquí
+          <ArrowRight className="ml-2" size={18} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
           <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
             Crea tu cuenta
           </h2>
