@@ -1,26 +1,48 @@
-// src/views/components/CheckoutView.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, ChangeEvent, FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchServiceById } from '../../models/servicesModel';
 import { addAppointment } from '../../models/citasModel';
 import { useCart } from '../../context/CartContext';
-import { useMemo } from 'react';
-import styles from '../../styles/CheckoutView.module.css';
 import TimePicker from './TimePicker';
+import { 
+  ChevronLeft, 
+  CreditCard, 
+  User, 
+  Mail, 
+  Phone, 
+  IdCard, 
+  Calendar, 
+  MessageSquare, 
+  Loader2,
+  Clock,
+  ArrowRight,
+  ShieldCheck,
+  Package
+} from 'lucide-react';
+
+interface CheckoutItem {
+  id: string;
+  serviceId?: string;
+  Nombre: string;
+  Precio: string | number;
+  imageFileName?: string;
+  imagenURL?: string;
+  Duracion?: number;
+  cantidad: number;
+}
 
 export default function CheckoutView() {
-  
-  const [itemsToCheckout, setItemsToCheckout] = useState([]);
+  const [itemsToCheckout, setItemsToCheckout] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dateError, setDateError] = useState('');
-  const [durationMinutes, setDurationMinutes] = useState(60); //default 60 mins
+  
   const today = new Date();
-  const minDate = today.toISOString().split('T')[0]; // fecha actual en formato 'AAAA-MM-DD'
+  const minDate = today.toISOString().split('T')[0];
 
   const maxDateObj = new Date();
-  maxDateObj.setDate(today.getDate() + 30);//30 dias despues maximo para agendar
+  maxDateObj.setDate(today.getDate() + 30);
   const maxDate = maxDateObj.toISOString().split('T')[0];
 
   const [formData, setFormData] = useState({
@@ -36,120 +58,97 @@ export default function CheckoutView() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems, clearCart, loadCartFromFirestore  } = useCart();
+  const { cartItems, clearCart, loadCartFromFirestore } = useCart();
   const serviceIdFromUrl = new URLSearchParams(location.search).get('serviceId');
 
-  // Agrupa items con cantidad para resumen pedido
-  const groupedItems = useMemo(() => {
-  return itemsToCheckout.reduce((acc, item) => {
-    const existing = acc.find(i => i.serviceId === item.serviceId);
+  const groupedItems = useMemo<CheckoutItem[]>(() => {
+    return itemsToCheckout.reduce((acc: CheckoutItem[], item) => {
+      const sId = item.serviceId || item.id;
+      const existing = acc.find(i => i.serviceId === sId);
 
-    if (existing) {
-      existing.cantidad += 1;
-    } else {
-      acc.push({
-        ...item,
-        cantidad: 1,
-        serviceId: item.serviceId || item.id
-      });
-    }
-
-    return acc;
-  }, []);
-}, [itemsToCheckout]);
+      if (existing) {
+        existing.cantidad += 1;
+      } else {
+        acc.push({
+          ...item,
+          cantidad: 1,
+          serviceId: sId
+        });
+      }
+      return acc;
+    }, []);
+  }, [itemsToCheckout]);
 
   useEffect(() => {
     const processItems = async () => {
-    setLoading(true);
-    setError('');
-    
-    try {
-      //si le da al boton comprar ahora en ServiciosDetalle
-      if (serviceIdFromUrl) {
-        const singleService = await fetchServiceById(serviceIdFromUrl);
-        if (singleService) {
-          singleService.imageFileName = singleService.imagenURL;
-          setItemsToCheckout([singleService]);
-          setDurationMinutes(singleService.Duracion || 60); 
+      setLoading(true);
+      setError('');
+      try {
+        if (serviceIdFromUrl) {
+          const singleService = await fetchServiceById(serviceIdFromUrl);
+          if (singleService) {
+            singleService.imageFileName = singleService.imagenURL;
+            setItemsToCheckout([singleService]);
+          } else {
+            setError("El servicio no fue encontrado.");
+          }
         } else {
-          setError("El servicio no fue encontrado.");
-          setItemsToCheckout([]);
+          await loadCartFromFirestore();
         }
-        return;
-      } else {
-        await loadCartFromFirestore(); //si hay elementos en el carrito
-        if (cartItems.length > 0) {
-          setItemsToCheckout(cartItems);
-          setDurationMinutes(cartItems[0]?.Duracion || 60);
-        } else {
-          setError("Tu carrito está vacío.");
-        }
+      } catch (err) {
+        console.error("Error al cargar servicios:", err);
+        setError("Error al cargar los servicios.");
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error("Error al cargar servicios:", err);
-      setError("Error al cargar los servicios.");
-      setItemsToCheckout([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  processItems();
-
-  return () => {
-    setError('');
-  };
+    };
+    processItems();
   }, [serviceIdFromUrl]);
 
-  useEffect(() => {//si no hay elementos
-    if (!serviceIdFromUrl && cartItems.length === 0) {
+  useEffect(() => {
+    if (!serviceIdFromUrl && cartItems && cartItems.length > 0) {
+      setItemsToCheckout(cartItems);
+    } else if (!serviceIdFromUrl && (!cartItems || cartItems.length === 0) && !loading) {
       setItemsToCheckout([]);
+      setError("Tu carrito está vacío.");
     }
-  }, [cartItems, serviceIdFromUrl]);
+  }, [cartItems, serviceIdFromUrl, loading]);
 
-  const total = groupedItems.reduce((sum, item) => sum + parseFloat(item?.Precio || 0), 0);
+  const total = groupedItems.reduce((sum, item) => sum + (parseFloat(String(item.Precio || 0)) * item.cantidad), 0);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
     if (name === 'preferredDate') {
       const selectedDate = new Date(value);
       const day = selectedDate.getDay(); 
-      // 6 = domingo
-      if (day === 6) {
-        setDateError('Los domingos no hay Laburo. Por favor elige otro día.');
-        return; // no actualiza el valor
+      if (day === 0) { // Sunday
+        setDateError('Los domingos no abrimos. Por favor elige otro día.');
+        return;
       } else {
         setDateError('');
       }
     }
-
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     setError('');
     setIsSubmitting(true);
 
-    if (!formData.name || !formData.email || !formData.preferredDate) {
-      setError("Completa todos los campos requeridos.");
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (itemsToCheckout.length === 0) {
-      setError("No hay servicios válidos para procesar.");
+    if (!formData.name || !formData.email || !formData.preferredDate || !formData.preferredTime) {
+      setError("Por favor completa todos los campos requeridos.");
       setIsSubmitting(false);
       return;
     }
 
     try {
       const savedAppointmentIds = [];
-
       for (const item of groupedItems) {
         const appointmentDataToSave = {
-          serviceId: item.id,
+          serviceId: item.serviceId,
           serviceName: item.Nombre,
           servicePrice: item.Precio,
           userName: formData.name,
@@ -168,7 +167,7 @@ export default function CheckoutView() {
       }
 
       if (!serviceIdFromUrl) {
-        clearCart();
+        await clearCart();
       }
 
       navigate('/pago', {
@@ -180,116 +179,318 @@ export default function CheckoutView() {
       });
     } catch (submitError) {
       console.error("Error al agendar:", submitError);
-      setError("Error al procesar la compra. Inténtalo nuevamente.");
+      setError("Error al procesar la reserva. Inténtalo de nuevo.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (error && !isSubmitting) return <p className={styles.error}>{error}</p>;
-  if (loading) return <p className={styles.loading}>Cargando detalles del servicio…</p>;
-  if (isSubmitting) return <p className={styles.loading}>Procesando compra...</p>;
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50 text-center">
+        <Loader2 className="animate-spin text-primary mb-4" size={48} />
+        <p className="text-gray-500 font-medium">Preparando los detalles de tu reserva...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className={styles['checkout-page']}>
-      <h1>Completar Compra</h1>
-      <div className={styles['checkout-content']}>
-        <form className={styles['scheduling-form']} onSubmit={handleSubmit}>
-          <h2>Datos de Agendamiento</h2>
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        <button 
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center text-gray-500 hover:text-primary mb-8 transition-colors group"
+        >
+          <ChevronLeft size={20} className="mr-1 group-hover:-translate-x-1 transition-transform" />
+          Volver atrás
+        </button>
 
-          <div className={styles['form-row']}>
-            <div className={styles['form-group']}>
-              <label htmlFor="name">Nombre:</label>
-              <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required disabled={isSubmitting} />
-            </div>
-            <div className={styles['form-group']}>
-              <label htmlFor="lastName">Apellido:</label>
-              <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleInputChange} required disabled={isSubmitting} />
-            </div>
-          </div>
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-8 tracking-tight">Finalizar Reserva</h1>
 
-          <div className={styles['form-row']}>
-            <div className={styles['form-group']}>
-              <label htmlFor="userCC">CC:</label>
-              <input type="text" id="userCC" name="userCC" value={formData.userCC} onChange={handleInputChange} required disabled={isSubmitting} />
-            </div>
-            <div className={styles['form-group']}>
-              <label htmlFor="phone">Teléfono:</label>
-              <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} required disabled={isSubmitting} />
-            </div>
-          </div>
-
-          <div className={styles['form-group']}>
-            <label htmlFor="email">Correo Electrónico:</label>
-            <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required disabled={isSubmitting} />
-          </div>
-
-          <div className={styles['form-group']}>
-            <label htmlFor="notes">Información Adicional (Opcional):</label>
-            <textarea id="notes" name="notes" value={formData.notes} onChange={handleInputChange} disabled={isSubmitting} />
-          </div>
-
-          <div className={styles['form-row']}>
-            <div className={styles['form-group']}>
-              <label htmlFor="preferredDate">Fecha Preferida:</label>
-              <input
-                type="date"
-                id="preferredDate"
-                name="preferredDate"
-                value={formData.preferredDate}
-                onChange={handleInputChange}
-                required
-                disabled={isSubmitting}
-                min={minDate}
-                max={maxDate}
-              />
-              {dateError && <p className={styles.error}>{dateError}</p>}
-            </div>
-            <div className={styles['form-group']}>
-              <label htmlFor="preferredTime">Hora Preferida:</label>
-              <TimePicker
-                selectedDate={formData.preferredDate}
-                durationMinutes={itemsToCheckout.length > 0 ? itemsToCheckout[0].Duracion || 60 : 60} // duración del primer servicio, 60min default
-                value={formData.preferredTime}
-                onChange={(value) => handleInputChange({ target: { name: 'preferredTime', value } })}
-                disabled={isSubmitting}
-              />
-            </div>
-          </div>
-
-          <button type="submit" className={`${styles.btn} ${styles['btn-primary']}`} disabled={isSubmitting || itemsToCheckout.length === 0}>
-            {isSubmitting ? 'Procesando...' : `Agendar y Proceder al Pago ($${total.toLocaleString('es-CO')} COP)`}
-          </button>
-
-          {error && !isSubmitting && <p className={styles.error}>{error}</p>}
-        </form>
-
-        <div className={styles['checkout-summary']}>
-          <h2>Resumen del Pedido</h2>
-          {groupedItems.map(item => (
-            <div key={item?.id} className={styles['summary-item']}>
-              {item?.imageFileName && (
-                <img
-                  src={item.imageFileName}
-                  alt={item.Nombre}
-                />
-              )}
-              <div>
-                <span style={{fontWeight: 'bold',fontSize:  18}}>{item?.Nombre || 'Servicio Desconocido'}</span>
-                <div>
-                  Cantidad: {item.cantidad} &nbsp;|&nbsp; Subtotal: {(item.cantidad * parseFloat(item?.Precio || 0)).toLocaleString()} COP
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          
+          {/* Formulario */}
+          <div className="lg:col-span-2">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              
+              {/* Sección Datos Personales */}
+              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+                    <User size={20} />
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900">Datos del cliente</h2>
                 </div>
-                <div>
-                  Duracion: {item.Duracion} minutos
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700 ml-1">Nombre</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <User size={16} />
+                      </div>
+                      <input 
+                        type="text" 
+                        name="name" 
+                        value={formData.name} 
+                        onChange={handleInputChange} 
+                        required 
+                        placeholder="Tu nombre"
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700 ml-1">Apellido</label>
+                    <input 
+                      type="text" 
+                      name="lastName" 
+                      value={formData.lastName} 
+                      onChange={handleInputChange} 
+                      required 
+                      placeholder="Tu apellido"
+                      className="w-full px-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700 ml-1">Documento de Identidad (CC)</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <IdCard size={16} />
+                      </div>
+                      <input 
+                        type="text" 
+                        name="userCC" 
+                        value={formData.userCC} 
+                        onChange={handleInputChange} 
+                        required 
+                        placeholder="Número de cédula"
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700 ml-1">Teléfono</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <Phone size={16} />
+                      </div>
+                      <input 
+                        type="tel" 
+                        name="phone" 
+                        value={formData.phone} 
+                        onChange={handleInputChange} 
+                        required 
+                        placeholder="Ej: 3001234567"
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                      />
+                    </div>
+                  </div>
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-sm font-bold text-gray-700 ml-1">Correo Electrónico</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <Mail size={16} />
+                      </div>
+                      <input 
+                        type="email" 
+                        name="email" 
+                        value={formData.email} 
+                        onChange={handleInputChange} 
+                        required 
+                        placeholder="tu@email.com"
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" 
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-          <div style={{ borderTop: '1px solid #eee', marginTop: '10px', paddingTop: '10px', fontWeight: 'bold', fontSize:  18}}>
-            Total: <span style={{ float: 'right' }}>${total.toLocaleString('es-CO')} COL</span>
+
+              {/* Sección Cita */}
+              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+                    <Calendar size={20} />
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900">Programación de la cita</h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700 ml-1">Fecha Preferida</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <Calendar size={16} />
+                      </div>
+                      <input
+                        type="date"
+                        name="preferredDate"
+                        value={formData.preferredDate}
+                        onChange={handleInputChange}
+                        required
+                        min={minDate}
+                        max={maxDate}
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none cursor-pointer" 
+                      />
+                    </div>
+                    {dateError && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{dateError}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700 ml-1">Hora Selecta</label>
+                    <TimePicker
+                      selectedDate={formData.preferredDate}
+                      durationMinutes={itemsToCheckout.length > 0 ? itemsToCheckout[0].Duracion || 60 : 60}
+                      value={formData.preferredTime}
+                      onChange={(val) => handleInputChange({ target: { name: 'preferredTime', value: val } })}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-sm font-bold text-gray-700 ml-1">Notas u observaciones (opcional)</label>
+                    <div className="relative">
+                      <div className="absolute top-3 left-3 text-gray-400">
+                        <MessageSquare size={16} />
+                      </div>
+                      <textarea 
+                        name="notes" 
+                        value={formData.notes} 
+                        onChange={handleInputChange} 
+                        placeholder="Cuéntanos si tienes alguna alergia o requerimiento especial..."
+                        rows={3}
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none resize-none" 
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {error && (
+                <div className="bg-red-50 text-red-600 p-4 rounded-2xl border border-red-100 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 text-red-600">
+                    <AlertCircle size={18} />
+                  </div>
+                  <p className="text-sm font-medium">{error}</p>
+                </div>
+              )}
+
+              <button 
+                type="submit" 
+                disabled={isSubmitting || groupedItems.length === 0}
+                className="w-full btn btn-primary py-5 text-lg flex items-center justify-center gap-3 shadow-xl shadow-primary/20 lg:hidden"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={24} className="animate-spin" />
+                    Procesando...
+                  </>
+                ) : (
+                  <>
+                    <CreditCard size={20} />
+                    Proceder al Pago (${total.toLocaleString('es-CO')})
+                  </>
+                )}
+              </button>
+            </form>
           </div>
+
+          {/* Resumen Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 sticky top-24">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+                  <Package size={20} />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900">Tu pedido</h2>
+              </div>
+
+              <div className="space-y-4 mb-8">
+                {groupedItems.map((item, idx) => (
+                  <div key={item.serviceId + idx} className="flex gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-colors group">
+                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                      {item.imageFileName || item.imagenURL ? (
+                        <img 
+                          src={`/assets/${item.imageFileName || item.imagenURL}`} 
+                          alt={item.Nombre} 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-300">
+                          <Package size={20} />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-grow min-w-0">
+                      <h4 className="font-bold text-gray-900 truncate">{item.Nombre}</h4>
+                      <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">
+                        <Clock size={12} className="text-primary" /> {item.Duracion || 60} min
+                      </p>
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-gray-400 font-medium">x{item.cantidad}</span>
+                        <span className="text-primary font-bold">${(parseFloat(String(item.Precio)).toLocaleString('es-CO'))}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-3 pt-6 border-t border-gray-100">
+                <div className="flex justify-between text-gray-500 text-sm px-2">
+                  <span>Subtotal</span>
+                  <span>${total.toLocaleString('es-CO')}</span>
+                </div>
+                <div className="flex justify-between text-gray-900 font-black text-xl px-2 py-4 bg-gray-50 rounded-2xl mt-4">
+                  <span>Total</span>
+                  <span className="text-primary underline decoration-primary/20 decoration-4 underline-offset-4">${total.toLocaleString('es-CO')}</span>
+                </div>
+              </div>
+
+              <button 
+                type="button" 
+                onClick={(e) => {
+                  const form = document.querySelector('form');
+                  if (form) form.requestSubmit();
+                }}
+                disabled={isSubmitting || groupedItems.length === 0}
+                className="w-full btn btn-primary py-4 mt-8 flex items-center justify-center gap-3 shadow-xl shadow-primary/20 hidden lg:flex"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Procesando...
+                  </>
+                ) : (
+                  <>
+                    <CreditCard size={18} />
+                    Pagar Ahora
+                    <ArrowRight size={16} />
+                  </>
+                )}
+              </button>
+
+              <div className="mt-8 pt-6 border-t border-gray-100">
+                <div className="flex items-center gap-3 text-gray-400 text-[10px] uppercase font-bold tracking-wider mb-4">
+                  <ShieldCheck size={14} className="text-green-500" />
+                  Transacción protegida
+                </div>
+                <p className="text-[10px] text-gray-400 leading-relaxed text-center">
+                  Toda tu información está cifrada. Al continuar, aceptas el procesamiento seguro de pagos.
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   );
 }
+
+// Helper icons
+function AlertCircle({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+    </svg>
+  );
+}
+

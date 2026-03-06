@@ -1,5 +1,4 @@
-// src/views/components/ProfileView.jsx
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import {
@@ -9,28 +8,58 @@ import {
 } from '../../controllers/userController';
 import { auth, db } from '../../firebase/firebaseConfig';
 import { signOut } from 'firebase/auth';
-import styles from '../../styles/ProfileView.module.css';
+import { 
+  User, 
+  Mail, 
+  Phone, 
+  Calendar, 
+  LogOut, 
+  Trash2, 
+  Edit3, 
+  Check, 
+  X, 
+  ShoppingBag, 
+  Settings, 
+  UserCircle,
+  Clock,
+  ChevronRight,
+  ShieldAlert,
+  Loader2,
+  CheckCircle2
+} from 'lucide-react';
+
+interface Profile {
+  nombre: string;
+  apellido: string;
+  email: string;
+  telefono: string;
+  fechaNacimiento?: string;
+}
 
 export default function ProfileView() {
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [error, setError] = useState('');
-  const [editingField, setEditingField] = useState(null);
-  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', telefono: '', fechaNacimiento: '' });
-  const [activeTab, setActiveTab] = useState('personal');
-  const [setOrderHistory] = useState([]);
-  const [favoriteServices, setFavoriteServices] = useState([]);
-  const [setLoadingHistory] = useState(false);
-  const [notification, setNotification] = useState(null);
+  const [editingField, setEditingField] = useState<string | null>(null);
+  const [form, setForm] = useState<Profile>({ 
+    nombre: '', 
+    apellido: '', 
+    email: '', 
+    telefono: '', 
+    fechaNacimiento: '' 
+  });
+  const [activeTab, setActiveTab] = useState<'personal' | 'favoritos' | 'configuracion'>('personal');
+  const [favoriteServices, setFavoriteServices] = useState<any[]>([]);
+  const [notification, setNotification] = useState<{message: string, type: 'success' | 'error'} | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
 
-  // Función para mostrar notificaciones
-  const showNotification = (message, type = 'success') => {
+  const showNotification = (message: string, type: 'success' | 'error' = 'success') => {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 4000);
   };
 
   useEffect(() => {
-    fetchCurrentUser(setProfile, setError);
+    fetchCurrentUser((data: any) => setProfile(data), setError);
   }, []);
 
   useEffect(() => {
@@ -45,40 +74,12 @@ export default function ProfileView() {
     }
   }, [profile]);
 
-  // Obtener historial de órdenes
-  const fetchOrderHistory = async () => {
-    if (!auth.currentUser) return;
-    
-    setLoadingHistory(true);
-    try {
-      const ordersRef = collection(db, 'Ordenes');
-      const q = query(
-        ordersRef, 
-        where('userId', '==', auth.currentUser.uid),
-        orderBy('fechaCreacion', 'desc'),
-        limit(10)
-      );
-      const querySnapshot = await getDocs(q);
-      const orders = [];
-      querySnapshot.forEach((doc) => {
-        orders.push({ id: doc.id, ...doc.data() });
-      });
-      setOrderHistory(orders);
-    } catch (error) {
-      console.error('Error fetching order history:', error);
-    } finally {
-      setLoadingHistory(false);
-    }
-  };
-
-  // Obtener servicios del carrito (como favoritos)
   const fetchFavoriteServices = async () => {
     if (!auth.currentUser) return;
-    
     try {
       const cartRef = collection(db, 'Usuarios', auth.currentUser.uid, 'Carrito');
       const querySnapshot = await getDocs(cartRef);
-      const services = [];
+      const services: any[] = [];
       querySnapshot.forEach((doc) => {
         services.push({ id: doc.id, ...doc.data() });
       });
@@ -89,31 +90,30 @@ export default function ProfileView() {
   };
 
   useEffect(() => {
-    if (activeTab === 'historial') {
-      fetchOrderHistory();
-    } else if (activeTab === 'favoritos') {
+    if (activeTab === 'favoritos') {
       fetchFavoriteServices();
     }
   }, [activeTab]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const handleSave = async (field) => {
+  const handleSave = async (field: keyof Profile) => {
+    setIsSaving(true);
     await saveProfileChanges(
       { [field]: form[field] },
       () => {
-        console.log(`[ProfileView] saveProfileChanges success: ${field}`);
         setEditingField(null);
-        fetchCurrentUser(setProfile, setError);
-        showNotification('✅ Perfil actualizado correctamente', 'success');
+        fetchCurrentUser((data: any) => setProfile(data), setError);
+        showNotification('Perfil actualizado correctamente');
+        setIsSaving(false);
       },
       (msg) => {
-        console.error("[ProfileView] saveProfileChanges error:", msg);
         setError(msg);
-        showNotification('❌ Error al actualizar el perfil', 'error');
+        showNotification('Error al actualizar el perfil', 'error');
+        setIsSaving(false);
       }
     );
   };
@@ -121,10 +121,10 @@ export default function ProfileView() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      showNotification('👋 Sesión cerrada correctamente', 'success');
+      showNotification('Sesión cerrada correctamente');
       navigate('/', { replace: true });
-    } catch (error) {
-      showNotification('❌ Error al cerrar sesión', error.message || 'error');
+    } catch (error: any) {
+      showNotification('Error al cerrar sesión', 'error');
     }
   };
 
@@ -132,169 +132,274 @@ export default function ProfileView() {
     if (!window.confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) return;
     await deleteCurrentUser(
       () => {
-        showNotification('✅ Cuenta eliminada correctamente', 'success');
+        showNotification('Cuenta eliminada correctamente');
         navigate('/', { replace: true });
       },
       (msg) => {
         setError(msg);
-        showNotification('❌ Error al eliminar la cuenta', 'error');
+        showNotification('Error al eliminar la cuenta', 'error');
       }
     );
   };
 
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  if (error) return <p className={styles.error}>{error}</p>;
-  if (!profile) return <p className={styles.loading}>Cargando perfil…</p>;
+  if (!profile && !error) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+        <Loader2 className="animate-spin text-primary mb-4" size={40} />
+        <p className="text-gray-500 font-medium">Cargando tu perfil...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className={styles['profile-view']}>
-      {/* Notificaciones */}
-      {notification && (
-        <div className={`${styles.notification} ${styles['notification-' + notification.type]}`}>
-          <div className={styles['notification-content']}>
-            <span className={styles['notification-message']}>{notification.message}</span>
-            <button 
-              className={styles['notification-close']} 
-              onClick={() => setNotification(null)}
-            >
-              ×
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        
+        {/* Notificación flotante */}
+        {notification && (
+          <div className={`fixed top-24 right-4 z-50 animate-in slide-in-from-right duration-300 ${
+            notification.type === 'success' ? 'bg-green-600' : 'bg-red-600'
+          } text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3`}>
+            {notification.type === 'success' ? <CheckCircle2 size={20} /> : <ShieldAlert size={20} />}
+            <span className="font-medium">{notification.message}</span>
+            <button onClick={() => setNotification(null)} className="ml-2 hover:bg-white/20 p-1 rounded-full">
+              <X size={16} />
             </button>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Header del perfil */}
-      <div className={styles['profile-header']}>
-        <div className={styles['profile-avatar']}>
-          <div className={styles['avatar-circle']}>
-            {profile.nombre ? profile.nombre.charAt(0).toUpperCase() : 'U'}
+        {/* Header con gradiente suave */}
+        <div className="bg-white rounded-[2.5rem] p-8 mb-8 shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 sm:block hidden"></div>
+          
+          <div className="relative">
+            <div className="w-32 h-32 rounded-3xl bg-primary/10 flex items-center justify-center text-primary border-4 border-white shadow-xl overflow-hidden group">
+              {profile?.nombre ? (
+                <span className="text-5xl font-black group-hover:scale-110 transition-transform duration-500">
+                  {profile.nombre.charAt(0).toUpperCase()}
+                </span>
+              ) : (
+                <UserCircle size={80} strokeWidth={1} />
+              )}
+            </div>
+            <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-4 border-white shadow-sm" title="En línea"></div>
           </div>
+
+          <div className="text-center md:text-left flex-grow">
+            <h1 className="text-3xl font-black text-gray-900 tracking-tight leading-none mb-2">
+              {profile?.nombre} {profile?.apellido}
+            </h1>
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 text-sm font-medium text-gray-500">
+              <span className="flex items-center gap-1.5"><Mail size={14} className="text-primary" /> {profile?.email}</span>
+              {profile?.telefono && <span className="flex items-center gap-1.5"><Phone size={14} className="text-primary" /> {profile.telefono}</span>}
+            </div>
+          </div>
+
+          <button 
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-6 py-3 bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-500 rounded-2xl font-bold transition-all border border-gray-100 group"
+          >
+            <LogOut size={18} className="group-hover:-translate-x-1 transition-transform" />
+            Cerrar Sesión
+          </button>
         </div>
-        <div className={styles['profile-info']}>
-          <h1 className={styles['profile-name']}>{profile.nombre} {profile.apellido}</h1>
-          <p className={styles['profile-email']}>{profile.email}</p>
+
+        {/* Navigation Tabs */}
+        <div className="flex p-1.5 bg-white rounded-2xl shadow-sm border border-gray-100 mb-8 overflow-x-auto no-scrollbar">
+          {[
+            { id: 'personal', label: 'Datos Personales', icon: User },
+            { id: 'favoritos', label: 'Mi Carrito', icon: ShoppingBag },
+            { id: 'configuracion', label: 'Ajustes', icon: Settings },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as any)}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-all flex-1 justify-center ${
+                activeTab === tab.id 
+                  ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]' 
+                  : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              <tab.icon size={18} />
+              {tab.label}
+            </button>
+          ))}
         </div>
-      </div>
 
-      {/* Navegación por pestañas */}
-      <div className={styles['profile-tabs']}>
-        <button 
-          className={`${styles.tab} ${activeTab === 'personal' ? styles.active : ''}`}
-          onClick={() => setActiveTab('personal')}
-        >
-          📝 Información Personal
-        </button>
-
-        <button 
-          className={`${styles.tab} ${activeTab === 'favoritos' ? styles.active : ''}`}
-          onClick={() => setActiveTab('favoritos')}
-        >
-          ❤️ En mi Carrito
-        </button>
-        <button 
-          className={`${styles.tab} ${activeTab === 'configuracion' ? styles.active : ''}`}
-          onClick={() => setActiveTab('configuracion')}
-        >
-          ⚙️ Configuración
-        </button>
-      </div>
-
-      {/* Contenido de las pestañas */}
-      <div className={styles['tab-content']}>
-        {activeTab === 'personal' && (
-          <div className={styles['personal-info']}>
-            <h2>Información Personal</h2>
-            <div className={styles['profile-fields']}>
-              {['nombre', 'apellido', 'telefono'].map((field) => (
-                <div key={field} className={styles['profile-field']}>
-                  {editingField === field ? (
-                    <div className={styles['edit-mode']}>
-                      <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
-                      <input
-                        name={field}
-                        value={form[field]}
-                        onChange={handleChange}
-                        placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                      />
-                      <div className={styles['edit-actions']}>
-                        <button className={styles['save-btn']} onClick={() => handleSave(field)}>Guardar</button>
-                        <button className={styles['cancel-btn']} onClick={() => setEditingField(null)}>Cancelar</button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className={styles['field-display']}>
-                      <div className={styles['field-info']}>
-                        <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
-                        <span>{profile[field] || 'No especificado'}</span>
-                      </div>
-                      <button className={styles['edit-btn']} onClick={() => setEditingField(field)}>
-                        ✏️ Editar
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
+        {/* Tab Content Area */}
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          
+          {activeTab === 'personal' && (
+            <div className="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100">
+              <h2 className="text-2xl font-black text-gray-900 mb-8 flex items-center gap-3">
+                <div className="w-1.5 h-8 bg-primary rounded-full"></div>
+                Información de contacto
+              </h2>
               
-              {/* Email (no editable) */}
-              <div className={styles['profile-field']}>
-                <div className={styles['field-display']}>
-                  <div className={styles['field-info']}>
-                    <label>Email:</label>
-                    <span>{profile.email}</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {[
+                  { id: 'nombre', label: 'Nombre', icon: User, value: profile?.nombre },
+                  { id: 'apellido', label: 'Apellido', icon: User, value: profile?.apellido },
+                  { id: 'telefono', label: 'Teléfono', icon: Phone, value: profile?.telefono },
+                ].map((field) => (
+                  <div key={field.id} className="group">
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1 mb-2 block">
+                      {field.label}
+                    </label>
+                    
+                    {editingField === field.id ? (
+                      <div className="space-y-3">
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                            <field.icon size={18} />
+                          </div>
+                          <input 
+                            name={field.id}
+                            value={form[field.id as keyof Profile]}
+                            onChange={handleChange}
+                            autoFocus
+                            className="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-primary/20 rounded-2xl focus:border-primary outline-none transition-all font-bold text-gray-700"
+                          />
+                        </div>
+                        <div className="flex gap-2">
+                          <button 
+                            disabled={isSaving}
+                            onClick={() => handleSave(field.id as keyof Profile)}
+                            className="flex-1 bg-primary text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary-dark transition-colors disabled:opacity-50"
+                          >
+                            {isSaving ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} />} Guardar
+                          </button>
+                          <button 
+                            onClick={() => setEditingField(null)}
+                            className="px-4 py-3 bg-gray-100 text-gray-500 rounded-xl font-bold hover:bg-gray-200"
+                          >
+                            <X size={18} />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between p-4 bg-gray-50/50 rounded-2xl border border-transparent group-hover:border-gray-100 group-hover:bg-white transition-all">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-white shadow-sm border border-gray-100 rounded-xl flex items-center justify-center text-gray-400">
+                            <field.icon size={18} />
+                          </div>
+                          <span className="font-bold text-gray-700">{field.value || 'No definido'}</span>
+                        </div>
+                        <button 
+                          onClick={() => setEditingField(field.id)}
+                          className="w-10 h-10 flex items-center justify-center rounded-xl text-gray-400 hover:text-primary hover:bg-primary/5 transition-all opacity-0 group-hover:opacity-100"
+                        >
+                          <Edit3 size={18} />
+                        </button>
+                      </div>
+                    )}
                   </div>
-                  <span className={styles['email-notice']}>📧 No editable</span>
+                ))}
+
+                <div className="group opacity-70">
+                  <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1 mb-2 block">Email</label>
+                  <div className="flex items-center justify-between p-4 bg-gray-100/50 rounded-2xl border border-transparent cursor-not-allowed">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-white/50 border border-gray-100 rounded-xl flex items-center justify-center text-gray-400">
+                        <Mail size={18} />
+                      </div>
+                      <span className="font-bold text-gray-500 italic">{profile?.email}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-
-        {activeTab === 'favoritos' && (
-          <div className={styles['favorite-services']}>
-            <h2>Servicios en mi Carrito</h2>
-            {favoriteServices.length > 0 ? (
-              <div className={styles['services-list']}>
-                {favoriteServices.map((service) => (
-                  <div key={service.id} className={styles['service-card-mini']}>
-                    <div className={styles['service-info']}>
-                      <h4>{service.Nombre}</h4>
-                      <p className={styles['service-price']}>{formatCurrency(service.Precio)}</p>
-                      {service.Duracion && (
-                        <p className={styles['service-duration']}>{service.Duracion} minutos</p>
-                      )}
+          {activeTab === 'favoritos' && (
+            <div className="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100">
+              <h2 className="text-2xl font-black text-gray-900 mb-8 flex items-center gap-3">
+                <div className="w-1.5 h-8 bg-primary rounded-full"></div>
+                En mi Carrito
+              </h2>
+              
+              {favoriteServices.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {favoriteServices.map((service) => (
+                    <div key={service.id} className="p-5 border border-gray-100 rounded-3xl hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all group flex items-center gap-4">
+                      <div className="w-16 h-16 bg-gray-50 rounded-2xl flex-shrink-0 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                        <ShoppingBag size={24} />
+                      </div>
+                      <div className="flex-grow min-w-0">
+                        <h4 className="font-black text-gray-900 truncate">{service.Nombre}</h4>
+                        <div className="flex items-center gap-3 mt-1">
+                          <span className="text-sm font-bold text-primary">
+                            ${parseFloat(String(service.Precio || 0)).toLocaleString('es-CO')}
+                          </span>
+                          {service.Duracion && (
+                            <span className="text-[10px] font-bold text-gray-400 uppercase flex items-center gap-1">
+                              <Clock size={10} /> {service.Duracion} min
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <button 
+                        onClick={() => navigate(`/services`)}
+                        className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary/10 hover:text-primary transition-all"
+                      >
+                        <ChevronRight size={20} />
+                      </button>
                     </div>
-                    <button 
-                      onClick={() => navigate(`/servicio/${service.serviceId}`)}
-                      className={styles['view-service-btn']}
-                    >
-                      Ver Detalles
-                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-300">
+                    <ShoppingBag size={40} />
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className={styles['empty-state']}>
-                <p>🛒 Tu carrito está vacío.</p>
-                <button onClick={() => navigate('/servicios')} className={styles['btn-primary']}>
-                  Explorar Servicios
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Tu carrito está vacío</h3>
+                  <p className="text-gray-500 mb-8">Descubre nuestras experiencias de spa y empieza a consentirte.</p>
+                  <button 
+                    onClick={() => navigate('/services')}
+                    className="btn btn-primary px-10 py-4 shadow-xl shadow-primary/20"
+                  >
+                    Ver Servicios
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
 
-        {activeTab === 'configuracion' && (
-          <div className={styles["account-settings"]}>
-            <h2>Configuración de Cuenta</h2>
+          {activeTab === 'configuracion' && (
+            <div className="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100">
+              <h2 className="text-2xl font-black text-gray-900 mb-8 flex items-center gap-3">
+                <div className="w-1.5 h-8 bg-primary rounded-full"></div>
+                Zona de seguridad
+              </h2>
+
+              <div className="space-y-6">
+                <div className="p-6 border border-red-50 bg-red-50/20 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div>
+                    <h3 className="font-black text-red-600 mb-1 flex items-center gap-2">
+                       Eliminar mi cuenta
+                    </h3>
+                    <p className="text-sm text-gray-500 leading-relaxed max-w-md">
+                      Al eliminar tu cuenta se perderá todo tu historial de citas y preferencias personales. Esta acción es irreversible.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={handleDelete}
+                    className="flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-red-600 text-red-600 hover:text-white border-2 border-red-100 hover:border-red-600 font-black rounded-2xl transition-all shadow-sm"
+                  >
+                    <Trash2 size={20} />
+                    Eliminar Permanente
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
             
 
 
