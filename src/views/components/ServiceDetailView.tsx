@@ -1,0 +1,281 @@
+// src/views/components/ServiceDetailView.tsx
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { db, cartItems, users } from '../../db';
+import { eq } from 'drizzle-orm';
+import { getAuth } from '@/lib/auth';
+import { fetchServiceById, fetchServices } from '../../models/servicesModel';
+import { Service } from '../../types';
+import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
+
+const ServiceDetailView = () => {
+  const { id } = useParams<{ id: string }>();
+  const [service, setService] = useState<Service | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [recommendedServices, setRecommendedServices] = useState<Service[]>([]);
+  const [notification, setNotification] = useState<{ message: string; type: string } | null>(null);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const navigate = useNavigate();
+  const auth = getAuth();
+
+  // Función para mostrar notificaciones
+  const showNotification = (message: string, type = 'success') => {
+    setNotification({ message, type });
+    setTimeout(() => {
+      setNotification(null);
+    }, 4000);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!id) return;
+      setLoading(true);
+      setError(null);
+      try {
+        const fetchedService = await fetchServiceById(id);
+
+        if (fetchedService) {
+          setService(fetchedService);
+
+          // Obtener otros servicios sugeridos
+          const allServices = await fetchServices();
+          const otrosServicios = allServices.filter(s => s.id !== id);
+
+          // Limitar a 3 servicios aleatorios
+          const seleccionados = otrosServicios
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 3);
+
+          setRecommendedServices(seleccionados);
+        } else {
+          setError('Servicio no encontrado.');
+        }
+      } catch (err: any) {
+        console.error('Error al obtener el servicio:', err);
+        setError('Error al cargar el servicio.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  const handleAddToCart = async () => { 
+    if (service) {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        setIsAddingToCart(true);
+        try {
+          // Buscamos el ID del usuario en Postgres
+          const userResult = await db.select({ id: users.id })
+            .from(users)
+            .where(eq(users.firebaseUid, currentUser.uid))
+            .limit(1);
+
+          if (userResult.length === 0) {
+            throw new Error("Usuario no encontrado en la base de datos.");
+          }
+
+          const userId = userResult[0].id;
+
+          // Añadir al carrito en Postgres
+          await db.insert(cartItems).values({
+            userId: userId,
+            serviceId: service.id,
+          });
+
+          showNotification(`✅ ${service.Nombre} ha sido añadido al carrito exitosamente`, 'success');
+        } catch (e: any) {
+          console.error('Error añadiendo al Carrito', e);
+          showNotification('❌ Error al añadir el servicio al carrito. Inténtalo de nuevo.', 'error');
+        } finally {
+          setIsAddingToCart(false);
+        }
+      } else {
+        showNotification('🔐 Necesitas iniciar sesión para añadir servicios al carrito', 'warning'); 
+      }
+    }
+  };
+  const handleBuyNow = () => { 
+    if (service) {
+      navigate(`/checkout?serviceId=${service.id}`);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
+        <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-500 font-medium">Cargando detalles del servicio...</p>
+      </div>
+    );
+  }
+
+  if (error || !service) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
+        <div className="bg-white p-8 rounded-3xl shadow-xl text-center max-w-md">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">¡Vaya! Algo salió mal</h2>
+          <p className="text-gray-500 mb-6">{error || 'No se ha seleccionado ningún servicio.'}</p>
+          <button onClick={() => navigate('/services')} className="btn btn-primary w-full">
+            Ver otros servicios
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* Notificaciones */}
+      {notification && (
+        <div className="fixed top-24 right-4 z-50 animate-in slide-in-from-right duration-300">
+          <div className={`flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border ${
+            notification.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 
+            notification.type === 'warning' ? 'bg-amber-50 border-amber-200 text-amber-800' : 
+            'bg-red-50 border-red-200 text-red-800'
+          }`}>
+            {notification.type === 'success' ? <CheckCircle2 size={24} /> : <AlertCircle size={24} />}
+            <span className="font-medium">{notification.message}</span>
+            <button onClick={() => setNotification(null)} className="ml-4 opacity-50 hover:opacity-100 Transition-all">
+              <X size={20} />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Hero Header */}
+      <div className="bg-primary pt-32 pb-48 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-center text-center md:text-left text-white">
+          <div className="flex-1 space-y-4">
+             <span className="px-4 py-1.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-bold tracking-widest uppercase">
+               {service.Categoria}
+             </span>
+             <h1 className="text-4xl md:text-6xl font-black tracking-tight">{service.Nombre}</h1>
+          </div>
+          <div className="text-3xl md:text-5xl font-black">
+            {service.Precio.toLocaleString('es-CO', {
+              style: 'currency',
+              currency: 'COP',
+              minimumFractionDigits: 0,
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 -mt-32">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Imagen y Características */}
+          <div className="lg:col-span-2 space-y-8">
+             <div className="bg-white p-4 rounded-[3rem] shadow-2xl border border-white overflow-hidden aspect-video relative group">
+                <img 
+                  src={service.imagenURL} 
+                  alt={service.Nombre} 
+                  className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105"
+                />
+             </div>
+
+             <div className="bg-white p-10 md:p-12 rounded-[3rem] shadow-xl border border-gray-100">
+                <h3 className="text-2xl font-black text-gray-900 mb-6">Sobre esta experiencia</h3>
+                <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                  Sumérgete en un oasis de relajación con nuestro exclusivo tratamiento de {service.Nombre.toLowerCase()}. 
+                  Diseñado para revitalizar cuerpo y mente, esta experiencia combina técnicas ancestrales con lo último en bienestar.
+                </p>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
+                      <Clock className="text-primary" size={24} />
+                      <div className="text-sm font-bold text-gray-700">{service.Duracion} min</div>
+                   </div>
+                   <div className="flex items-center gap-3 p-4 bg-primary/5 rounded-2xl">
+                      <Tag className="text-primary" size={24} />
+                      <div className="text-sm font-bold text-gray-700">{service.Categoria}</div>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+          {/* Sidebar Acciones */}
+          <div className="space-y-6">
+             <div className="sticky top-28 bg-white p-8 rounded-[2.5rem] shadow-2xl border border-primary/10 space-y-6">
+                <div className="text-center">
+                   <div className="text-sm text-gray-500 uppercase font-black tracking-widest mb-1">Precio Total</div>
+                   <div className="text-4xl font-black text-primary">
+                      {service.Precio.toLocaleString('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
+                        minimumFractionDigits: 0,
+                      })}
+                   </div>
+                </div>
+
+                <div className="space-y-4 pt-4">
+                   <button 
+                    onClick={handleBuyNow}
+                    className="w-full py-5 bg-primary text-white font-black rounded-2xl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20 flex items-center justify-center gap-3"
+                   >
+                     <Calendar size={22} />
+                     Reservar Ahora
+                   </button>
+                   
+                   <button 
+                    onClick={handleAddToCart}
+                    disabled={isAddingToCart}
+                    className="w-full py-5 border-2 border-primary text-primary font-black rounded-2xl hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50"
+                   >
+                     {isAddingToCart ? (
+                       <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                     ) : <ShoppingCart size={22} />}
+                     Añadir al Carrito
+                   </button>
+                </div>
+
+                <div className="pt-6 border-t border-gray-100 flex items-center gap-2 text-primary font-bold justify-center">
+                   <ShieldCheck size={20} />
+                   <span className="text-sm">Transacción 100% Segura</span>
+                </div>
+             </div>
+          </div>
+        </div>
+
+        {/* Recomendados */}
+        <section className="mt-24">
+          <h3 className="text-3xl font-black text-gray-900 mb-10 flex items-center gap-4">
+             <Sparkles className="text-primary" /> También te podría encantar
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {recommendedServices.map((rec) => (
+              <div 
+                key={rec.id} 
+                className="group bg-white rounded-[2.5rem] shadow-lg border border-gray-100 overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-300"
+                onClick={() => navigate(`/servicio/${rec.id}`)}
+              >
+                <div className="h-48 overflow-hidden relative">
+                  <img 
+                    src={rec.imagenURL} 
+                    alt={rec.Nombre} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                  />
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-xs font-bold text-primary shadow-sm">
+                    {rec.Categoria}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h4 className="text-xl font-black text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{rec.Nombre}</h4>
+                  <p className="text-lg font-bold text-primary">${rec.Precio.toLocaleString()}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+export default ServiceDetailView;

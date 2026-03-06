@@ -1,4 +1,4 @@
-# Contributing to Luxury SPA Web
+# Contributing to L-SPA Web
 
 Thank you for your interest in contributing! This document outlines how to contribute to the project in a respectful, efficient, and maintainable way.
 
