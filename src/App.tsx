@@ -33,7 +33,10 @@ import CartView from '@/features/booking/CartView';
 import ContactView from '@/features/static/ContactView';
 import AboutView from '@/features/static/AboutView';
 
+import AdminDashboardView from '@/features/admin/AdminDashboardView';
+import AdminServicesListView from '@/features/admin/AdminServicesListView';
 import CreateServiceView from '@/features/admin/CreateServiceView';
+import EditServiceView from '@/features/admin/EditServiceView';
 
 import { AuthSync } from '@/components/shared/AuthSync';
 
@@ -101,9 +104,11 @@ export default function App() {
               <Route path="/payment-confirmation" element={<SuccessView />} />
               <Route path="/cart" element={<CartView />} />
 
-              {/* Solo administradores pueden crear servicios */}
-              <Route path="/admin/create-service" element={<CreateServiceView />} />
-              <Route path="/admin/create-user" element={<RegisterView />} />
+              {/* Rutas de Administración */}
+              <Route path="/admin" element={<AdminDashboardView />} />
+              <Route path="/admin/services" element={<AdminServicesListView />} />
+              <Route path="/admin/services/new" element={<CreateServiceView />} />
+              <Route path="/admin/services/edit/:id" element={<EditServiceView />} />
 
               <Route path="/cancellation-policies" element={<PoliticasCancelacionView />} />
               <Route path="/data-privacy" element={<DataPrivacyPolicyView />} />

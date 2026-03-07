@@ -13,6 +13,7 @@ export default function AboutView() {
           <img 
             src="/assets/bannerSpa.avif" 
             alt="Spa Atmosphere" 
+            loading="lazy"
             className="w-full h-full object-cover brightness-[0.4]"
           />
         </div>

@@ -30,6 +30,7 @@ export default function PublicHomeView() {
             <img 
               src="/src/assets/bannerSpa.avif" 
               alt="Spa" 
+              loading="lazy"
               className="w-full h-auto rounded-tl-[80px] rounded-bl-[80px] rounded-tr-lg rounded-br-lg shadow-2xl"
             />
           </div>

@@ -56,6 +56,32 @@ export async function fetchServiceByName(name: string): Promise<Service | null> 
 }
 
 /**
+ * Actualiza un servicio existente.
+ * @param serviceId - ID del servicio a actualizar.
+ * @param serviceData - Nuevos datos del servicio.
+ */
+export async function updateService(serviceId: string, serviceData: any): Promise<void> {
+  await db.update(services)
+    .set({
+      name: serviceData.name,
+      description: serviceData.description,
+      price: serviceData.price.toString(),
+      category: serviceData.category,
+      imageUrl: serviceData.imageUrl,
+      duration: serviceData.duration
+    })
+    .where(eq(services.id, serviceId));
+}
+
+/**
+ * Elimina un servicio.
+ * @param serviceId - ID del servicio a eliminar.
+ */
+export async function deleteService(serviceId: string): Promise<void> {
+  await db.delete(services).where(eq(services.id, serviceId));
+}
+
+/**
  * Crea un nuevo servicio en la base de datos PostgreSQL.
  * @param {Omit<Service, 'id'>} serviceData - Datos del nuevo servicio.
  */

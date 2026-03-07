@@ -95,6 +95,9 @@ export default function NavBar({ user }: NavBarProps) {
               {isAuthenticated && (
                 <Link to="/appointments" className={navLinkClass('/appointments')}>Mis Citas</Link>
               )}
+              {isAdmin && (
+                <Link to="/admin" className={navLinkClass('/admin')}>Admin</Link>
+              )}
               <Link to="/about-us" className={navLinkClass('/about-us')}>Nosotros</Link>
               <Link to="/contact" className={navLinkClass('/contact')}>Contacto</Link>
             </div>
@@ -151,8 +154,11 @@ export default function NavBar({ user }: NavBarProps) {
                             <div className="px-4 py-2 mt-2">
                               <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Administración</p>
                             </div>
-                            <Link to="/admin/create-service" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-primary hover:bg-primary/5 transition-colors">
-                              <PlusCircle size={18} /> Crear Servicio
+                            <Link to="/admin" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-primary hover:bg-primary/5 transition-colors">
+                              <Settings size={18} /> Panel Admin
+                            </Link>
+                            <Link to="/admin/services" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-primary hover:bg-primary/5 transition-colors">
+                              <PlusCircle size={18} /> Gestionar Servicios
                             </Link>
                           </>
                         )}

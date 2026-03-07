@@ -31,6 +31,7 @@ function HomeView() {
             <img 
               src="/src/assets/bannerSpa.avif" 
               alt="L-Spa Banner" 
+              loading="lazy"
               className="w-full h-full object-cover brightness-50"
             />
           </div>
