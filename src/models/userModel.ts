@@ -73,4 +73,3 @@ export async function deleteUserData(auth0Id: string) {
   if (!response.ok) throw new Error('Error al eliminar usuario');
 }
 
-}
