@@ -92,13 +92,6 @@ export default function NavBar({ user }: NavBarProps) {
             <div className="hidden md:flex space-x-10 items-center">
               <Link to="/home" className={navLinkClass('/home')}>Inicio</Link>
               <Link to="/services" className={navLinkClass('/services')}>Servicios</Link>
-              {isAuthenticated && (
-                <Link to="/appointments" className={navLinkClass('/appointments')}>Mis Citas</Link>
-              )}
-              {isAdmin && (
-                <Link to="/admin" className={navLinkClass('/admin')}>Admin</Link>
-              )}
-              <Link to="/about-us" className={navLinkClass('/about-us')}>Nosotros</Link>
               <Link to="/contact" className={navLinkClass('/contact')}>Contacto</Link>
             </div>
 
@@ -147,6 +140,10 @@ export default function NavBar({ user }: NavBarProps) {
                         
                         <Link to="/profile" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-gray-600 hover:bg-primary/5 hover:text-primary transition-colors">
                           <UserIcon size={18} /> Mi Perfil
+                        </Link>
+                        
+                        <Link to="/appointments" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-gray-600 hover:bg-primary/5 hover:text-primary transition-colors">
+                          <Calendar size={18} /> Mis Citas
                         </Link>
                         
                         {isAdmin && (
@@ -220,10 +217,6 @@ export default function NavBar({ user }: NavBarProps) {
             <div className="flex flex-col gap-2 grow overflow-y-auto pr-2 custom-scrollbar">
               <Link to="/home" className={mobileLinkClass('/home')}><Home size={20} /> Inicio</Link>
               <Link to="/services" className={mobileLinkClass('/services')}><Sparkle size={20} /> Servicios</Link>
-              {isAuthenticated && (
-                <Link to="/appointments" className={mobileLinkClass('/appointments')}><Calendar size={20} /> Mis Citas</Link>
-              )}
-              <Link to="/about-us" className={mobileLinkClass('/about-us')}><Info size={20} /> Nosotros</Link>
               <Link to="/contact" className={mobileLinkClass('/contact')}><MessageSquare size={20} /> Contacto</Link>
               
               <hr className="my-4 border-gray-100" />
@@ -231,8 +224,10 @@ export default function NavBar({ user }: NavBarProps) {
               {isAuthenticated ? (
                 <>
                   <Link to="/profile" className={mobileLinkClass('/profile')}><UserIcon size={20} /> Mi Perfil</Link>
+                  <Link to="/appointments" className={mobileLinkClass('/appointments')}><Calendar size={20} /> Mis Citas</Link>
+                  <Link to="/about-us" className={mobileLinkClass('/about-us')}><Info size={20} /> Información</Link>
                   {isAdmin && (
-                    <Link to="/admin/create-service" className={cn(mobileLinkClass('/admin/create-service'), "text-primary")}><PlusCircle size={20} /> Panel Admin</Link>
+                    <Link to="/admin" className={cn(mobileLinkClass('/admin'), "text-primary")}><Settings size={20} /> Panel Admin</Link>
                   )}
                   <button onClick={handleLogout} className="flex items-center gap-4 px-6 py-4 rounded-2xl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs text-red-500 hover:bg-red-50 mt-auto">
                     <LogOut size={20} /> Cerrar Sesión

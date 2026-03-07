@@ -22,15 +22,34 @@ export async function saveUserData(userData: {
       email: userData.email,
       role: userData.role || 'customer',
     }).onConflictDoUpdate({
-      target: users.auth0Id,
+      target: [users.auth0Id],
       set: {
         firstName: userData.name,
+        email: userData.email, // Actualizar email si cambia el ID de Auth0
       }
     }).returning();
     
     console.log("[userModel] ✔ Sync exitoso para ID Auth0:", userData.auth0Id);
     return result[0];
   } catch (err: any) {
+    // Si el error es por duplicado de email (pero diferente Auth0 ID), 
+    // intentamos actualizar el usuario existente por email
+    if (err.message?.includes("users_email_unique")) {
+      console.log("[userModel] ⚠ Email duplicado detectado, actualizando por email...");
+      const updateResult = await db.update(users)
+        .set({
+          auth0Id: userData.auth0Id,
+          firstName: userData.name,
+        })
+        .where(eq(users.email, userData.email))
+        .returning();
+      
+      if (updateResult.length > 0) {
+        console.log("[userModel] ✔ Sync (por email) exitoso para:", userData.email);
+        return updateResult[0];
+      }
+    }
+
     console.error("[userModel] ✖ error en sync para ID Auth0:", userData.auth0Id, err);
     throw err;
   }

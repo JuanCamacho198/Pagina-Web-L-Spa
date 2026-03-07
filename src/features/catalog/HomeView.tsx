@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/layout/Footer';
 import { fetchServices } from '../../models/servicesModel';
-import { Star, Clock, MapPin } from 'lucide-react';
+import { Star, Clock, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Service } from '../../types';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
@@ -12,6 +12,8 @@ import { Typography } from '../../components/ui/Typography';
 function HomeView() {
   const navigate = useNavigate();
   const [services, setServices] = useState<Service[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const totalImages = 3;
 
   useEffect(() => {
     async function loadServices() {
@@ -20,6 +22,21 @@ function HomeView() {
     }
     loadServices();
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % totalImages);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handlePrev = () => {
+    setActiveIndex((prevIndex) => (prevIndex - 1 + totalImages) % totalImages);
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prevIndex) => (prevIndex + 1) % totalImages);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -92,6 +109,55 @@ function HomeView() {
                   <Typography className="text-gray-500 text-sm leading-relaxed mt-0">{item.desc}</Typography>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Carousel Section */}
+        <section className="py-20 bg-white">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <Typography variant="h2" className="text-gray-900 border-none mb-4">Nuestras Instalaciones</Typography>
+              <div className="h-1.5 w-20 bg-primary mx-auto rounded-full"></div>
+            </div>
+
+            <div className="relative group overflow-hidden rounded-3xl shadow-2xl border-none">
+              <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
+                {[1, 2, 3].map((num) => (
+                  <div key={num} className="min-w-full h-80 sm:h-100 md:h-[550px] relative">
+                    <img
+                      src={`/assets/carrusel${num}.jpg`}
+                      alt={`Instalación ${num}`}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={handlePrev}
+                className="absolute left-6 top-1/2 -translate-y-1/2 p-4 rounded-full bg-white/30 backdrop-blur-lg text-white hover:bg-primary hover:text-white transition-all opacity-0 group-hover:opacity-100 shadow-lg border border-white/20"
+              >
+                <ChevronLeft size={28} />
+              </button>
+              <button
+                onClick={handleNext}
+                className="absolute right-6 top-1/2 -translate-y-1/2 p-4 rounded-full bg-white/30 backdrop-blur-lg text-white hover:bg-primary hover:text-white transition-all opacity-0 group-hover:opacity-100 shadow-lg border border-white/20"
+              >
+                <ChevronRight size={28} />
+              </button>
+
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                {[...Array(totalImages)].map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveIndex(i)}
+                    className={`h-2.5 rounded-full transition-all duration-300 ${activeIndex === i ? 'w-10 bg-primary' : 'w-2.5 bg-white/50'}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </section>
