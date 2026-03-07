@@ -83,7 +83,7 @@ export default async function handler(req: any, res: any) {
     return res.status(405).json({ error: 'Método no permitido' });
   } catch (error: any) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ error: 'Error de validación', details: error.errors });
+      return res.status(400).json({ error: 'Error de validación', details: error.cause });
     }
     console.error(error);
     return res.status(500).json({ error: error.message });
