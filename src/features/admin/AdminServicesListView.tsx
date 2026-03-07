@@ -71,7 +71,7 @@ export default function AdminServicesListView() {
                 </Button>
                 <Button 
                   size="sm" 
-                  variant="destructive"
+                  variant="danger"
                   className="bg-red-500/90 hover:bg-red-500 text-white shadow-sm"
                   onClick={() => handleDelete(service.id)}
                 >
@@ -84,7 +84,7 @@ export default function AdminServicesListView() {
                 <Typography variant="h3" className="text-lg font-bold">{service.name}</Typography>
                 <Typography className="text-primary font-bold">${service.price}</Typography>
               </div>
-              <Typography variant="body2" className="text-gray-500 line-clamp-2 mb-4">
+              <Typography variant="p" className="text-gray-500 line-clamp-2 mb-4 mt-0!">
                 {service.description}
               </Typography>
               <div className="flex items-center text-xs text-gray-400 gap-4">
