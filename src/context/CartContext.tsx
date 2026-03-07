@@ -49,11 +49,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const result = await db.select({
         id: dbCartItems.id,
         serviceId: dbCartItems.serviceId,
-        nombre: services.nombre,
-        precio: services.precio,
-        categoria: services.categoria,
-        imagenUrl: services.imagenUrl,
-        duracion: services.duracion,
+        nombre: services.name,
+        precio: services.price,
+        categoria: services.category,
+        imagenUrl: services.imageUrl,
+        duracion: services.duration,
         quantity: dbCartItems.quantity,
         addedAt: dbCartItems.createdAt
       })
