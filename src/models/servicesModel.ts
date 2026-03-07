@@ -1,19 +1,20 @@
-import { db, services } from '@/db';
-import { eq } from 'drizzle-orm';
 import { Service } from '@/types';
 
+const API_URL = '/api/services';
+
 /**
- * Obtiene todos los servicios desde la base de datos PostgreSQL.
+ * Obtiene todos los servicios desde la API serverless.
  * @returns {Promise<Service[]>} Lista de servicios mapeada al formato de la UI.
  */
 export async function fetchServices(): Promise<Service[]> {
-  const data = await db.select().from(services);
+  const response = await fetch(API_URL);
+  if (!response.ok) throw new Error('Error al cargar servicios');
+  const data = await response.json();
   
-  // Transformamos campos para mantener compatibilidad con la UI si es necesario
-  return data.map(service => ({
+  return data.map((service: any) => ({
     id: service.id,
     name: service.name,
-    price: Number(service.price), // Convertimos de string/decimal a number
+    price: Number(service.price),
     category: service.category || '',
     imageUrl: service.imageUrl || '',
     imageFileName: service.imageFileName || '',
@@ -27,9 +28,10 @@ export async function fetchServices(): Promise<Service[]> {
  * @returns {Promise<Service | null>} El servicio encontrado o null.
  */
 export async function fetchServiceById(serviceId: string): Promise<Service | null> {
-  const result = await db.select().from(services).where(eq(services.id, serviceId)).limit(1);
-  if (result.length === 0) return null;
-  const service = result[0];
+  const response = await fetch(`${API_URL}?id=${serviceId}`);
+  if (!response.ok) return null;
+  const service = await response.json();
+  
   return {
     id: service.id,
     name: service.name,
@@ -40,6 +42,7 @@ export async function fetchServiceById(serviceId: string): Promise<Service | nul
     duration: Number(service.duration || 60)
   };
 }
+
 
 /**
  * Obtiene un servicio por su nombre (slug-friendly).
@@ -61,16 +64,12 @@ export async function fetchServiceByName(name: string): Promise<Service | null> 
  * @param serviceData - Nuevos datos del servicio.
  */
 export async function updateService(serviceId: string, serviceData: any): Promise<void> {
-  await db.update(services)
-    .set({
-      name: serviceData.name,
-      description: serviceData.description,
-      price: serviceData.price.toString(),
-      category: serviceData.category,
-      imageUrl: serviceData.imageUrl,
-      duration: serviceData.duration
-    })
-    .where(eq(services.id, serviceId));
+  const response = await fetch(API_URL, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: serviceId, ...serviceData })
+  });
+  if (!response.ok) throw new Error('Error al actualizar servicio');
 }
 
 /**
@@ -78,7 +77,10 @@ export async function updateService(serviceId: string, serviceData: any): Promis
  * @param serviceId - ID del servicio a eliminar.
  */
 export async function deleteService(serviceId: string): Promise<void> {
-  await db.delete(services).where(eq(services.id, serviceId));
+  const response = await fetch(`${API_URL}?id=${serviceId}`, {
+    method: 'DELETE'
+  });
+  if (!response.ok) throw new Error('Error al eliminar servicio');
 }
 
 /**
@@ -86,12 +88,10 @@ export async function deleteService(serviceId: string): Promise<void> {
  * @param {Omit<Service, 'id'>} serviceData - Datos del nuevo servicio.
  */
 export async function createService(serviceData: any): Promise<void> {
-  await db.insert(services).values({
-    name: serviceData.name,
-    description: serviceData.description,
-    price: serviceData.price.toString(),
-    category: serviceData.category,
-    imageUrl: serviceData.imageUrl,
-    duration: serviceData.duration
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(serviceData)
   });
+  if (!response.ok) throw new Error('Error al crear servicio');
 }

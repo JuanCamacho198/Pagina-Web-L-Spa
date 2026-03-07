@@ -1,10 +1,10 @@
 // src/models/userModel.ts
-import { db, users } from "@/db";
-import { eq } from "drizzle-orm";
 import { UserProfile } from "@/types";
 
+const API_URL = '/api/users';
+
 /**
- * Guarda (o crea) un perfil de usuario en la base de datos Postgres.
+ * Guarda (o crea) un perfil de usuario en la base de datos Postgres via API.
  * @param userData - Objeto con los datos del usuario.
  */
 export async function saveUserData(userData: {
@@ -13,57 +13,25 @@ export async function saveUserData(userData: {
   name: string;
   role?: 'admin' | 'employee' | 'customer';
 }) {
-  console.log("[userModel] ⇢ saveUserData llamado con:", userData);
-  
-  try {
-    const result = await db.insert(users).values({
-      auth0Id: userData.auth0Id,
-      firstName: userData.name,
-      email: userData.email,
-      role: userData.role || 'customer',
-    }).onConflictDoUpdate({
-      target: [users.auth0Id],
-      set: {
-        firstName: userData.name,
-        email: userData.email, // Actualizar email si cambia el ID de Auth0
-      }
-    }).returning();
-    
-    console.log("[userModel] ✔ Sync exitoso para ID Auth0:", userData.auth0Id);
-    return result[0];
-  } catch (err: any) {
-    // Si el error es por duplicado de email (pero diferente Auth0 ID), 
-    // intentamos actualizar el usuario existente por email
-    if (err.message?.includes("users_email_unique")) {
-      console.log("[userModel] ⚠ Email duplicado detectado, actualizando por email...");
-      const updateResult = await db.update(users)
-        .set({
-          auth0Id: userData.auth0Id,
-          firstName: userData.name,
-        })
-        .where(eq(users.email, userData.email))
-        .returning();
-      
-      if (updateResult.length > 0) {
-        console.log("[userModel] ✔ Sync (por email) exitoso para:", userData.email);
-        return updateResult[0];
-      }
-    }
-
-    console.error("[userModel] ✖ error en sync para ID Auth0:", userData.auth0Id, err);
-    throw err;
-  }
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData)
+  });
+  if (!response.ok) throw new Error('Error al sincronizar usuario');
+  return response.json();
 }
 
 /**
- * Trae un perfil de usuario por su Auth0 ID.
+ * Trae un perfil de usuario por su Auth0 ID via API.
  * @param auth0Id - El ID de Auth0.
  * @returns El perfil de usuario mapeado.
  */
 export async function getAuth0UserById(auth0Id: string): Promise<UserProfile | null> {
-  const result = await db.select().from(users).where(eq(users.auth0Id, auth0Id)).limit(1);
-  if (result.length === 0) return null;
-  const user = result[0];
+  const response = await fetch(`${API_URL}?auth0Id=${auth0Id}`);
+  if (!response.ok) return null;
+  const user = await response.json();
+  
   return {
     auth0Id: user.auth0Id,
     id: user.id,
@@ -73,31 +41,27 @@ export async function getAuth0UserById(auth0Id: string): Promise<UserProfile | n
     phone: user.phone || undefined,
     birthDate: user.birthDate || undefined,
     role: user.role as any,
-    createdAt: user.createdAt?.toISOString() || new Date().toISOString()
+    createdAt: user.createdAt || new Date().toISOString()
   };
 }
 
 export const getUserById = getAuth0UserById;
 
 /**
- * Actualiza los datos de un usuario en PostgreSQL.
+ * Actualiza los datos de un usuario en PostgreSQL via API.
  * @param auth0Id - El Auth0 ID del usuario.
  * @param updates - Objeto con los campos a actualizar.
  */
 export async function updateUserData(auth0Id: string, updates: Partial<UserProfile>) {
-  try {
-    const result = await db.update(users)
-      .set({
-        firstName: updates.firstName,
-        lastName: updates.lastName,
-        email: updates.email,
-        phone: updates.phone,
-        birthDate: updates.birthDate
-      })
-      .where(eq(users.auth0Id, auth0Id))
-      .returning();
-    return result[0];
-  } catch (err: any) {
+  const response = await fetch(API_URL, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ auth0Id, ...updates })
+  });
+  if (!response.ok) throw new Error('Error al actualizar usuario');
+  return response.json();
+}
+
     console.error("[userModel] Error actualizando usuario:", err);
     throw err;
   }

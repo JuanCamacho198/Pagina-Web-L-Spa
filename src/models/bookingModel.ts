@@ -1,6 +1,5 @@
 // src/models/bookingModel.ts
-import { db, appointments } from '@/db';
-import { eq, and } from 'drizzle-orm';
+const API_URL = '/api/appointments';
 
 /**
  * Obtiene las horas que ya están reservadas para una fecha específica.
@@ -8,25 +7,8 @@ import { eq, and } from 'drizzle-orm';
  * @returns Lista de strings con las horas reservadas (ej: "09:00 AM", "14:30 PM")
  */
 export async function fetchReservedTimes(date: string): Promise<string[]> {
-  try {
-    const results = await db.select({ 
-      time: appointments.appointmentTime 
-    })
-    .from(appointments)
-    .where(
-      and(
-        eq(appointments.appointmentDate, date),
-        // Solo considerar citas que no estén canceladas
-        sql`${appointments.status} != 'cancelled'`
-      )
-    );
-
-    return results.map(r => r.time);
-  } catch (error) {
-    console.error("Error fetching reserved times:", error);
-    return [];
-  }
+  const response = await fetch(`${API_URL}?date=${date}`);
+  if (!response.ok) return [];
+  return response.json();
 }
 
-// Necesitamos importar sql de drizzle-orm para el filtro de status
-import { sql } from 'drizzle-orm';
