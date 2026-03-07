@@ -26,8 +26,17 @@ interface NavBarProps {
 }
 
 export default function NavBar({ user }: NavBarProps) {
-  const { logoUrl, brandText, showLogo, showText } = useNavbarStore();
+  const { logoUrl, brandText, showLogo, showText, logoSize, textSize, fontFamily, customFontUrl } = useNavbarStore();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (customFontUrl) {
+      const fontFace = new FontFace('CustomNavbarFont', `url(${customFontUrl})`);
+      fontFace.load().then((loadedFace) => {
+        document.fonts.add(loadedFace);
+      }).catch(err => console.error("Error cargando fuente personalizada:", err));
+    }
+  }, [customFontUrl]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const { cartCount } = useCart();
@@ -84,16 +93,26 @@ export default function NavBar({ user }: NavBarProps) {
             {/* Logo */}
             <Link to="/" className="shrink-0 flex items-center group">
               {showLogo && (
-                <div className="flex items-center justify-center mr-3 group-hover:scale-105 transition-transform duration-300">
+                <div className="flex items-center justify-center mr-3 group-hover:scale-105 transition-all duration-300">
                   <img 
                     src={logoUrl || logo} 
                     alt={`${brandText} Logo`} 
-                    className="h-10 w-auto" 
+                    style={{ height: `${logoSize}px` }}
+                    className="w-auto object-contain" 
                   />
                 </div>
               )}
               {showText && (
-                <span className="text-2xl font-black bg-linear-to-r from-primary to-primary-dark bg-clip-text text-transparent tracking-tighter uppercase">
+                <span 
+                  style={{ 
+                    fontSize: `${textSize}px`,
+                    fontFamily: fontFamily === 'custom' ? 'CustomNavbarFont' : fontFamily === 'serif' ? 'serif' : fontFamily === 'mono' ? 'monospace' : 'inherit'
+                  }}
+                  className={cn(
+                    "font-black bg-linear-to-r from-primary to-primary-dark bg-clip-text text-transparent tracking-tighter uppercase transition-all duration-300",
+                    fontFamily === 'serif' && "font-serif"
+                  )}
+                >
                   {brandText}
                 </span>
               )}
