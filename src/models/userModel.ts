@@ -62,20 +62,15 @@ export async function updateUserData(auth0Id: string, updates: Partial<UserProfi
   return response.json();
 }
 
-    console.error("[userModel] Error actualizando usuario:", err);
-    throw err;
-  }
-}
-
 /**
- * Elimina los datos de un usuario de PostgreSQL.
+ * Elimina los datos de un usuario de PostgreSQL via API.
  * @param auth0Id - El Auth0 ID del usuario.
  */
 export async function deleteUserData(auth0Id: string) {
-  try {
-    await db.delete(users).where(eq(users.auth0Id, auth0Id));
-  } catch (err: any) {
-    console.error("[userModel] Error eliminando usuario:", err);
-    throw err;
-  }
+  const response = await fetch(`${API_URL}?auth0Id=${auth0Id}`, {
+    method: 'DELETE'
+  });
+  if (!response.ok) throw new Error('Error al eliminar usuario');
+}
+
 }
