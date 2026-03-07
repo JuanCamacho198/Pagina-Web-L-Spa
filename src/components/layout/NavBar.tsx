@@ -15,6 +15,7 @@ import {
   MessageSquare,
   Info
 } from 'lucide-react';
+import logo from '@assets/logos/LOGO4x-sinfondo.png';
 import { useCart } from '@context/CartContext';
 import { getAuth0UserById } from '@models/userModel';
 import { cn } from '@/lib/utils';
@@ -80,8 +81,8 @@ export default function NavBar({ user }: NavBarProps) {
             
             {/* Logo */}
             <Link to="/" className="shrink-0 flex items-center group">
-              <div className="w-10 h-10 bg-linear-to-br from-primary to-accent rounded-xl flex items-center justify-center mr-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <Sparkle className="text-white" size={24} fill="currentColor" />
+              <div className="flex items-center justify-center mr-3 group-hover:scale-105 transition-transform duration-300">
+                <img src={logo} alt="L-SPA Logo" className="h-10 w-auto" />
               </div>
               <span className="text-2xl font-black bg-linear-to-r from-primary to-primary-dark bg-clip-text text-transparent tracking-tighter">
                 L-SPA
