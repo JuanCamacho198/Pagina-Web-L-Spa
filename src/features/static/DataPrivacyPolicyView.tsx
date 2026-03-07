@@ -1,9 +1,11 @@
 import React from 'react';
-import { ShieldCheck, Eye, FileText, UserCheck, Mail, Clock } from 'lucide-react';
+import { ShieldCheck, Eye, FileText, UserCheck, Mail, Clock, Check } from 'lucide-react';
+import Footer from '@/components/layout/Footer';
 
 export default function DataPrivacyPolicyView() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-32 pb-24">
+    <>
+      <div className="min-h-screen bg-gray-50 pt-32 pb-24">
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <div className="bg-white rounded-[3rem] p-10 md:p-16 shadow-xl shadow-gray-200/50 border border-gray-100 mb-12 relative overflow-hidden">
@@ -94,26 +96,10 @@ export default function DataPrivacyPolicyView() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 
-// Internal icon for specific use
-function Check({ size, className }: { size: number, className: string }) {
-  return (
-    <svg 
-      width={size} 
-      height={size} 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-      className={className}
-    >
-      <polyline points="20 6 9 17 4 12"></polyline>
-    </svg>
-  );
-}
 

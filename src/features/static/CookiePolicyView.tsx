@@ -1,10 +1,12 @@
 import React from 'react';
 import { Typography } from '@/components/ui/Typography';
 import { Card } from '@/components/ui/Card';
+import Footer from '@/components/layout/Footer';
 
 const CookiePolicyView: React.FC = () => {
   return (
-    <div className="pt-24 pb-16 min-h-screen bg-gray-50">
+    <>
+      <div className="pt-24 pb-16 min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4">
         <Typography variant="h1" className="mb-8">Política de Cookies</Typography>
         <Card className="p-8 space-y-6">
@@ -29,7 +31,10 @@ const CookiePolicyView: React.FC = () => {
         </Card>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
+
 
 export default CookiePolicyView;

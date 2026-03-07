@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavbarStore } from '@context/NavbarStore';
 import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { Typography } from '@components/ui/Typography';
-import { Image, Type, Eye, RefreshCw, Save, CheckCircle, Info } from 'lucide-react';
+import { Image, Type, Eye, RefreshCw, Save, CheckCircle, Info, Layout } from 'lucide-react';
 import logoLocal from '@assets/logos/LOGO.svg';
 import { cn } from '@/lib/utils';
 import NavBar from '@/components/layout/NavBar';
+import Footer from '@/components/layout/Footer';
 
 export default function NavbarSettingsView() {
   const store = useNavbarStore();
@@ -26,9 +27,33 @@ export default function NavbarSettingsView() {
     customFontUrl: store.customFontUrl,
   });
 
-  const [isSaved, setIsSaved] = useState(false);
+  // Estado para el Footer
+  const [footerSettings, setFooterSettings] = useState({
+    logoUrl: '',
+    description: '',
+  });
 
-  const handleSave = () => {
+  const [isSaved, setIsSaved] = useState(false);
+  const [isLoadingFooter, setIsLoadingFooter] = useState(true);
+
+  // Cargar configuración del footer al iniciar
+  useEffect(() => {
+    fetch('/api/config?id=footer')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.value) {
+          setFooterSettings({
+            logoUrl: data.value.logoUrl || '',
+            description: data.value.description || '',
+          });
+        }
+        setIsLoadingFooter(false);
+      })
+      .catch(() => setIsLoadingFooter(false));
+  }, []);
+
+  const handleSave = async () => {
+    // Guardar Navbar Store
     store.setLogoUrl(localSettings.logoUrl);
     store.setBrandText(localSettings.brandText);
     store.setShowLogo(localSettings.showLogo);
@@ -38,6 +63,20 @@ export default function NavbarSettingsView() {
     store.setLogoTextSpacing(localSettings.logoTextSpacing);
     store.setFontFamily(localSettings.fontFamily);
     store.setCustomFontUrl(localSettings.customFontUrl);
+    
+    // Guardar Footer Config en API
+    try {
+      await fetch('/api/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: 'footer',
+          value: footerSettings
+        })
+      });
+    } catch (error) {
+      console.error('Error saving footer config:', error);
+    }
     
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 3000);
@@ -264,6 +303,47 @@ export default function NavbarSettingsView() {
               </label>
             </div>
           </Card>
+
+          <Card className="p-6 border-gray-100 shadow-sm animate-in fade-in slide-in-from-left-2 delay-150">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 bg-primary/10 rounded-lg text-primary">
+                <Layout size={24} />
+              </div>
+              <Typography variant="h3" className="text-lg font-bold">Configuración del Footer</Typography>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-bold text-gray-700 mb-1.5 block">Logo del Footer (URL)</label>
+                <Input 
+                  placeholder="https://ejemplo.com/footer-logo.png"
+                  value={footerSettings.logoUrl}
+                  onChange={(e) => setFooterSettings(prev => ({ ...prev, logoUrl: e.target.value }))}
+                  className="bg-gray-50/50 border-gray-200"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-bold text-gray-700 mb-1.5 block">Descripción de la Marca (Footer)</label>
+                <textarea 
+                  placeholder="Ej. Los mejores servicios de SPA y cuidado personal en un solo lugar."
+                  value={footerSettings.description}
+                  onChange={(e) => setFooterSettings(prev => ({ ...prev, description: e.target.value }))}
+                  rows={4}
+                  className="w-full h-24 px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all font-medium text-sm resize-none"
+                />
+              </div>
+              
+              <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-100 flex items-start gap-3">
+                 <div className="p-1 bg-blue-100 rounded text-blue-600">
+                    <Info size={14} />
+                 </div>
+                 <p className="text-[11px] text-blue-800 font-medium leading-tight">
+                    El footer se actualiza globalmente en todas las páginas del sitio.
+                 </p>
+              </div>
+            </div>
+          </Card>
         </div>
 
         {/* Vista Previa */}
@@ -284,6 +364,12 @@ export default function NavbarSettingsView() {
                {/* Usamos el NavBar real pero con los settings locales inyectados */}
                <div className="pointer-events-none transform scale-90 md:scale-100 origin-center">
                   <NavBar user={null} previewSettings={localSettings} />
+               </div>
+            </div>
+
+            <div className="bg-white/40 backdrop-blur-md border-t border-gray-100 overflow-hidden">
+               <div className="pointer-events-none transform scale-75 origin-top">
+                  <Footer previewSettings={footerSettings} />
                </div>
             </div>
 

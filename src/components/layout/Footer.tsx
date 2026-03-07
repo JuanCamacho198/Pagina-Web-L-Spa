@@ -3,7 +3,14 @@ import logo from '@assets/logos/LOGO4x-sinfondo.png';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, MessageCircle, Mail, Phone, MapPin, Clock } from 'lucide-react';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  previewSettings?: {
+    logoUrl?: string;
+    description?: string;
+  };
+}
+
+const Footer: React.FC<FooterProps> = ({ previewSettings }) => {
   const [config, setConfig] = React.useState({
     logoUrl: logo,
     description: "Tu refugio de bienestar y relajación. Expertos en masajes, tratamientos faciales y cuidado personal.",
@@ -11,11 +18,28 @@ const Footer: React.FC = () => {
   });
 
   React.useEffect(() => {
+    if (previewSettings) return; // No fetching if in preview mode
+
     fetch('/api/config?id=footer')
       .then(res => res.ok ? res.json() : null)
-      .then(data => data && setConfig(prev => ({ ...prev, ...data })))
+      .then(data => {
+        if (data && data.value) {
+          setConfig(prev => ({ 
+            ...prev, 
+            logoUrl: data.value.logoUrl || logo, 
+            description: data.value.description || prev.description 
+          }));
+        }
+      })
       .catch(() => {});
-  }, []);
+  }, [previewSettings]);
+
+  // Use preview settings if provided, otherwise use fetched config
+  const displayConfig = {
+    logoUrl: previewSettings?.logoUrl || config.logoUrl,
+    description: previewSettings?.description || config.description,
+    social: config.social
+  };
 
   const sectionTitleClass = "text-lg font-bold mb-4 text-primary-light";
   const linkClass = "text-gray-400 hover:text-white transition-colors duration-200 text-sm";
@@ -29,16 +53,16 @@ const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img src={config.logoUrl} alt="L-SPA logo" className="h-12 w-auto brightness-110" />
+              <img src={displayConfig.logoUrl} alt="L-SPA logo" className="h-12 w-auto brightness-110" />
               <h4 className="text-xl font-bold tracking-tight uppercase">L-SPA</h4>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              {config.description}
+              {displayConfig.description}
             </p>
             <div className="flex gap-4 pt-2">
-              <a href={config.social.facebook} className={iconLinkClass} aria-label="Facebook"><Facebook size={20} /></a>
-              <a href={config.social.instagram} className={iconLinkClass} aria-label="Instagram"><Instagram size={20} /></a>
-              <a href={config.social.whatsapp} className={iconLinkClass} aria-label="WhatsApp"><MessageCircle size={20} /></a>
+              <a href={displayConfig.social.facebook} className={iconLinkClass} aria-label="Facebook"><Facebook size={20} /></a>
+              <a href={displayConfig.social.instagram} className={iconLinkClass} aria-label="Instagram"><Instagram size={20} /></a>
+              <a href={displayConfig.social.whatsapp} className={iconLinkClass} aria-label="WhatsApp"><MessageCircle size={20} /></a>
             </div>
           </div>
 

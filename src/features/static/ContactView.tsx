@@ -1,9 +1,10 @@
-import React from 'react';
-import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react';
+import { Mail, MapPin, Send, MessageCircle } from 'lucide-react';
+import Footer from '@/components/layout/Footer';
 
 export default function ContactView() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <div className="min-h-screen bg-gray-50">
       {/* Hero Header */}
       <section className="bg-primary pt-32 pb-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
@@ -92,7 +93,10 @@ export default function ContactView() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }
+
 

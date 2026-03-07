@@ -1,5 +1,6 @@
 import React from 'react';
 import { AlertCircle, ShieldAlert, Sparkles, MapPin, Watch, Wine, Info } from 'lucide-react';
+import Footer from '@/components/layout/Footer';
 
 export default function ImportantReservationInfoView() {
   const points = [
@@ -36,7 +37,8 @@ export default function ImportantReservationInfoView() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-32 pb-24 px-4 overflow-hidden">
+    <>
+      <div className="min-h-screen bg-gray-50 pt-32 pb-24 px-4 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-[4rem] p-10 md:p-20 shadow-2xl shadow-gray-200/50 border border-gray-100 relative">
           {/* Background Decorative */}
@@ -86,6 +88,8 @@ export default function ImportantReservationInfoView() {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
 

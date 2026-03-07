@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { HelpCircle, ChevronDown, ChevronUp, Sparkles, Users, Clock, Info } from 'lucide-react';
+import Footer from '@/components/layout/Footer';
 
 export default function FaqView() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -43,7 +44,8 @@ export default function FaqView() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-32 pb-24 px-4">
+    <>
+      <div className="min-h-screen bg-gray-50 pt-32 pb-24 px-4">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -103,7 +105,10 @@ export default function FaqView() {
            </button>
         </div>
       </div>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }
+
 
