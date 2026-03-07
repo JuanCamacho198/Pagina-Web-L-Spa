@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Loader2, ArrowRight, ShieldCheck } from 'lucide-react';
-import { Button } from '../../components/ui/Button';
-import { Card } from '../../components/ui/Card';
-import { Typography } from '../../components/ui/Typography';
+import { Button } from '@components/ui/Button';
+import { Card } from '@components/ui/Card';
+import { Typography } from '@components/ui/Typography';
 
 const LoginView: React.FC = () => {
   const { loginWithRedirect, isLoading } = useAuth0();

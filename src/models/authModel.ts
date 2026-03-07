@@ -1,5 +1,5 @@
 // src/models/authModel.ts
-import { auth, signInWithGoogle, signOut } from "../lib/auth";
+import { auth, signInWithGoogle, signOut } from "@/lib/auth";
 
 const Registro = async (correo: string, contrasena: string) => {
   // Mock de registro que usa Google Auth por ahora

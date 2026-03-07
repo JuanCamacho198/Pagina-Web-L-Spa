@@ -1,6 +1,6 @@
-import { db, services } from '../db';
+import { db, services } from '@/db';
 import { eq } from 'drizzle-orm';
-import { Service } from '../types';
+import { Service } from '@types';
 
 /**
  * Obtiene todos los servicios desde la base de datos PostgreSQL.

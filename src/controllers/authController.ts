@@ -1,6 +1,6 @@
 // src/controllers/authController.ts
-import AuthModel from "../models/authModel";
-import { saveUserData, getUserById } from "../models/userModel";    
+import AuthModel from "@models/authModel";
+import { saveUserData, getUserById } from "@models/userModel";    
 
 /**
  * Registra un usuario en Firebase Authentication y guarda sus datos en PostgreSQL.

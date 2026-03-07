@@ -1,9 +1,9 @@
 // src/controllers/servicesController.ts
-import { fetchServices } from '../models/servicesModel';
-import { Service } from '../types';
+import { fetchServices } from '@models/servicesModel';
+import { Service } from '@types';
 
 /**
- * Controlador para obtener todos los servicios y actualizar el estado de la UI.
+ * Controlador para obtener todos los servicios e informar/actualizar el estado de la UI.
  * @param setServices - Función para actualizar la lista de servicios.
  * @param setError - Función para manejar errores.
  */

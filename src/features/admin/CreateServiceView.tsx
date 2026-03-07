@@ -15,11 +15,11 @@ import {
   CheckCircle2,
   AlertCircle as AlertIcon,
 } from 'lucide-react';
-import { createService } from '../../models/servicesModel';
-import { ServiceFormValues } from '../../types';
-import { Button } from '../../components/ui/Button';
-import { Input } from '../../components/ui/Input';
-import { Card, CardContent, CardHeader } from '../../components/ui/Card';
+import { createService } from '@models/servicesModel';
+import { ServiceFormValues } from '@types';
+import { Button } from '@components/ui/Button';
+import { Input } from '@components/ui/Input';
+import { Card, CardContent, CardHeader } from '@components/ui/Card';
 
 // Esquema de validación con Zod
 const serviceSchema = z.object({

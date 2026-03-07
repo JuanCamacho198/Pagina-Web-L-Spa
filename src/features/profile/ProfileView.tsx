@@ -22,17 +22,17 @@ import {
   ShoppingBag,
   Edit3
 } from 'lucide-react';
-import { fetchUserProfile, saveProfileChanges } from '../../controllers/userController';
-import { UserProfile } from '../../types';
-import { Button } from '../../components/ui/Button';
-import { Card } from '../../components/ui/Card';
-import { Input } from '../../components/ui/Input';
-import { Typography } from '../../components/ui/Typography';
-import { Badge } from '../../components/ui/Badge';
-import { Modal } from '../../components/ui/Modal';
-import { useToast } from '../../components/ui/Toast';
-import { fetchAppointments, deleteAppointment } from '../../models/citasModel';
-import { Appointment } from '../../types';
+import { fetchUserProfile, saveProfileChanges } from '@controllers/userController';
+import { UserProfile } from '@types';
+import { Button } from '@components/ui/Button';
+import { Card } from '@components/ui/Card';
+import { Input } from '@components/ui/Input';
+import { Typography } from '@components/ui/Typography';
+import { Badge } from '@components/ui/Badge';
+import { Modal } from '@components/ui/Modal';
+import { useToast } from '@components/ui/Toast';
+import { fetchAppointments, deleteAppointment } from '@models/citasModel';
+import { Appointment } from '@types';
 
 const profileSchema = z.object({
   firstName: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),

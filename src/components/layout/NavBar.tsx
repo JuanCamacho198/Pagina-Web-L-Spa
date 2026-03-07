@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
-import { Settings, ShoppingCart, User as UserIcon, LogOut, PlusCircle } from 'lucide-react';
+import { 
+  Settings, 
+  ShoppingCart, 
+  User as UserIcon, 
+  LogOut, 
+  PlusCircle, 
+  Home, 
+  Sparkle, 
+  Calendar, 
+  Menu, 
+  X,
+  MessageSquare,
+  Info
+} from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { getAuth0UserById } from '../../models/userModel';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from '../ui/Button';
 
 interface NavBarProps {
   user: any;
@@ -17,9 +25,11 @@ interface NavBarProps {
 
 export default function NavBar({ user }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const { cartCount } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout, loginWithRedirect, isAuthenticated } = useAuth0();
 
   useEffect(() => {
@@ -39,149 +49,209 @@ export default function NavBar({ user }: NavBarProps) {
     checkAdminRole();
   }, [user, isAuthenticated]);
 
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setMenuOpen(false);
+  }, [location.pathname]);
+
   const handleLogout = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
-    setMenuOpen(false);
   };
 
-  const navLinkClass = "text-gray-600 hover:text-primary font-medium transition-colors duration-200";
-  const mobileMenuBtnClass = "block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 w-full text-left";
+  const navLinkClass = (path: string) => cn(
+    "text-sm font-bold uppercase tracking-widest transition-all duration-300 relative py-2 px-1",
+    location.pathname === path 
+      ? "text-primary after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full" 
+      : "text-gray-500 hover:text-primary"
+  );
+
+  const mobileLinkClass = (path: string) => cn(
+    "flex items-center gap-4 px-6 py-4 rounded-2xl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs",
+    location.pathname === path 
+      ? "bg-primary text-white shadow-lg shadow-primary/20" 
+      : "text-gray-500 hover:bg-primary/5 hover:text-primary"
+  );
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          
-          {/* Logo */}
-          <div className="shrink-0 flex items-center">
-            <Link to="/" className="text-2xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
-              L-Spa
-            </Link>
-          </div>
-
-          {/* Links Centro */}
-          <div className="hidden md:flex space-x-8 items-center">
-            <Link to="/services" className={navLinkClass}>Servicios</Link>
-            {!user ? (
-              <Link to="/about-us" className={navLinkClass}>Sobre Nosotros</Link>
-            ) : (
-              <Link to="/appointments" className={navLinkClass}>Citas</Link>
-            )}
-            <Link to="/contact" className={navLinkClass}>Contacto</Link>
-          </div>
-
-          {/* Acciones Derecha */}
-          <div className="flex items-center space-x-4">
-            {!user ? (
-              <div className="hidden md:flex items-center space-x-2">
-                <button 
-                  onClick={() => loginWithRedirect()}
-                  className="btn px-4 py-2 text-gray-700 hover:text-primary transition-colors"
-                >
-                  Iniciar Sesión
-                </button>
-                <button 
-                  onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
-                  className="btn btn-primary shadow-md hover:shadow-lg transform transition-all active:scale-95"
-                >
-                  Registrarse
-                </button>
+    <>
+      <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            
+            {/* Logo */}
+            <Link to="/" className="shrink-0 flex items-center group">
+              <div className="w-10 h-10 bg-linear-to-br from-primary to-accent rounded-xl flex items-center justify-center mr-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Sparkle className="text-white" size={24} fill="currentColor" />
               </div>
-            ) : (
-              <div className="flex items-center space-x-3">
-                {/* Carrito */}
-                <button
-                  onClick={() => navigate('/cart')}
-                  className="relative p-2 text-gray-600 hover:text-primary transition-colors rounded-full hover:bg-gray-50"
-                  aria-label={`Carrito con ${cartCount} ítems`}
-                >
-                  <ShoppingCart size={22} />
-                  {cartCount > 0 && (
-                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-primary rounded-full ring-2 ring-white">
-                      {cartCount}
-                    </span>
-                  )}
-                </button>
+              <span className="text-2xl font-black bg-linear-to-r from-primary to-primary-dark bg-clip-text text-transparent tracking-tighter">
+                L-SPA
+              </span>
+            </Link>
 
-                {/* Menú Usuario */}
-                <div className="relative">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-10 items-center">
+              <Link to="/home" className={navLinkClass('/home')}>Inicio</Link>
+              <Link to="/services" className={navLinkClass('/services')}>Servicios</Link>
+              {isAuthenticated && (
+                <Link to="/appointments" className={navLinkClass('/appointments')}>Mis Citas</Link>
+              )}
+              <Link to="/about-us" className={navLinkClass('/about-us')}>Nosotros</Link>
+              <Link to="/contact" className={navLinkClass('/contact')}>Contacto</Link>
+            </div>
+
+            {/* User Actions */}
+            <div className="flex items-center gap-3">
+              {isAuthenticated ? (
+                <>
                   <button
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    className="p-2 text-gray-600 hover:text-primary transition-colors rounded-full hover:bg-gray-50 flex items-center gap-1"
-                    aria-label="Abrir menú de configuración"
+                    onClick={() => navigate('/cart')}
+                    className="relative p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-xl hover:bg-primary/5 group"
                   >
-                    <Settings size={22} className={cn("transition-transform duration-300", menuOpen && "rotate-90")} />
+                    <ShoppingCart size={22} className="group-hover:scale-110 transition-transform" />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-black text-white ring-2 ring-white animate-in zoom-in">
+                        {cartCount}
+                      </span>
+                    )}
                   </button>
 
-                  {menuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-1 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                      <Link 
-                        to="/profile" 
-                        className={mobileMenuBtnClass}
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        <div className="flex items-center gap-2">
-                          <UserIcon size={16} />
-                          <span>Mi Perfil</span>
-                        </div>
-                      </Link>
-
-                      {isAdmin && (
-                        <>
-                          <hr className="my-1 border-gray-100" />
-                          <Link 
-                            to="/admin/create-service"
-                            className={cn(mobileMenuBtnClass, "text-primary font-semibold")}
-                            onClick={() => setMenuOpen(false)}
-                          >
-                            <div className="flex items-center gap-2">
-                              <PlusCircle size={16} />
-                              <span>Crear Servicio</span>
-                            </div>
-                          </Link>
-                          <Link 
-                            to="/admin/create-user" 
-                            className={cn(mobileMenuBtnClass, "text-primary font-semibold")}
-                            onClick={() => setMenuOpen(false)}
-                          >
-                            <div className="flex items-center gap-2">
-                              <PlusCircle size={16} />
-                              <span>Gestionar Servicios</span>
-                            </div>
-                          </Link>
-                        </>
+                  <div className="hidden md:block relative">
+                    <button
+                      onClick={() => setMenuOpen(!menuOpen)}
+                      className={cn(
+                        "p-1 rounded-2xl flex items-center gap-2 border-2 transition-all duration-300 hover:shadow-md",
+                        menuOpen ? "border-primary bg-primary/5 shadow-inner" : "border-gray-100 bg-white"
                       )}
-                      
-                      <hr className="my-1 border-gray-100" />
-                      <button 
-                        onClick={handleLogout}
-                        className={cn(mobileMenuBtnClass, "text-red-600 hover:bg-red-50")}
-                      >
-                        <div className="flex items-center gap-2">
-                          <LogOut size={16} />
-                          <span>Cerrar Sesión</span>
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-gray-100 overflow-hidden">
+                        {user?.picture ? (
+                          <img src={user.picture} alt="" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-400">
+                            <UserIcon size={16} />
+                          </div>
+                        )}
+                      </div>
+                      <Settings size={18} className={cn("text-gray-400 mr-1 transition-transform duration-500", menuOpen && "rotate-180 text-primary")} />
+                    </button>
+
+                    {menuOpen && (
+                      <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50 overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300">
+                        <div className="px-4 py-3 mb-2 border-b border-gray-50">
+                          <p className="text-xs font-black text-primary uppercase tracking-widest mb-0.5">Bienvenido</p>
+                          <p className="text-sm font-bold text-gray-900 truncate">{user?.name || user?.email}</p>
                         </div>
-                      </button>
-                    </div>
-                  )}
+                        
+                        <Link to="/profile" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-gray-600 hover:bg-primary/5 hover:text-primary transition-colors">
+                          <UserIcon size={18} /> Mi Perfil
+                        </Link>
+                        
+                        {isAdmin && (
+                          <>
+                            <div className="px-4 py-2 mt-2">
+                              <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Administración</p>
+                            </div>
+                            <Link to="/admin/create-service" className="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-primary hover:bg-primary/5 transition-colors">
+                              <PlusCircle size={18} /> Crear Servicio
+                            </Link>
+                          </>
+                        )}
+
+                        <hr className="my-2 border-gray-100" />
+                        
+                        <button 
+                          onClick={handleLogout}
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors"
+                        >
+                          <LogOut size={18} /> Cerrar Sesión
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <div className="hidden md:flex items-center gap-3">
+                  <button onClick={() => loginWithRedirect()} className="px-5 py-2.5 text-sm font-bold text-gray-700 hover:text-primary transition-colors">
+                    Log in
+                  </button>
+                  <button 
+                    onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
+                    className="px-6 py-2.5 text-sm font-black bg-primary text-white rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95"
+                  >
+                    REGISTRARSE
+                  </button>
                 </div>
-              </div>
-            )}
-            
-            {/* Botón Menú Móvil */}
-            <div className="md:hidden flex items-center">
+              )}
+
+              {/* Mobile Menu Toggle */}
               <button 
-                className="text-gray-600 p-2"
-                onClick={() => setMenuOpen(!menuOpen)}
+                className="md:hidden p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-xl hover:bg-primary/5"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
-                 <Settings size={22} />
+                {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
               </button>
             </div>
           </div>
-
         </div>
-      </div>
-    </nav>
+
+        {/* Mobile Sidebar Menu */}
+        <div className={cn(
+          "fixed inset-0 z-40 md:hidden transition-all duration-500 ease-in-out",
+          mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        )}>
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+          <div className={cn(
+            "absolute right-0 top-0 h-full w-[80%] max-w-sm bg-white shadow-2xl transition-transform duration-500 p-6 flex flex-col",
+            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          )}>
+            <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
+               <span className="text-xl font-black text-primary tracking-tighter">MENÚ L-SPA</span>
+               <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-gray-400">
+                 <X size={24} />
+               </button>
+            </div>
+
+            <div className="flex flex-col gap-2 grow overflow-y-auto pr-2 custom-scrollbar">
+              <Link to="/home" className={mobileLinkClass('/home')}><Home size={20} /> Inicio</Link>
+              <Link to="/services" className={mobileLinkClass('/services')}><Sparkle size={20} /> Servicios</Link>
+              {isAuthenticated && (
+                <Link to="/appointments" className={mobileLinkClass('/appointments')}><Calendar size={20} /> Mis Citas</Link>
+              )}
+              <Link to="/about-us" className={mobileLinkClass('/about-us')}><Info size={20} /> Nosotros</Link>
+              <Link to="/contact" className={mobileLinkClass('/contact')}><MessageSquare size={20} /> Contacto</Link>
+              
+              <hr className="my-4 border-gray-100" />
+              
+              {isAuthenticated ? (
+                <>
+                  <Link to="/profile" className={mobileLinkClass('/profile')}><UserIcon size={20} /> Mi Perfil</Link>
+                  {isAdmin && (
+                    <Link to="/admin/create-service" className={cn(mobileLinkClass('/admin/create-service'), "text-primary")}><PlusCircle size={20} /> Panel Admin</Link>
+                  )}
+                  <button onClick={handleLogout} className="flex items-center gap-4 px-6 py-4 rounded-2xl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs text-red-500 hover:bg-red-50 mt-auto">
+                    <LogOut size={20} /> Cerrar Sesión
+                  </button>
+                </>
+              ) : (
+                <div className="mt-auto space-y-3">
+                  <button onClick={() => loginWithRedirect()} className="w-full py-4 text-sm font-black text-gray-700 bg-gray-50 rounded-2xl transition-all">
+                    INICIAR SESIÓN
+                  </button>
+                  <button 
+                    onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
+                    className="w-full py-4 text-sm font-black text-white bg-primary rounded-2xl shadow-xl shadow-primary/20 transition-all"
+                  >
+                    CREAR CUENTA
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </>
+  );
+}
   );
 }
 
