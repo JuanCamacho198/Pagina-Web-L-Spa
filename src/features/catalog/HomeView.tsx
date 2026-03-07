@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../../components/layout/Footer';
-import { fetchServices } from '../../models/servicesModel';
+import Footer from '@components/layout/Footer';
+import { fetchServices } from '@models/servicesModel';
 import { Star, Clock, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Service } from '../../types';
-import { Button } from '../../components/ui/Button';
-import { Card } from '../../components/ui/Card';
-import { Badge } from '../../components/ui/Badge';
-import { Typography } from '../../components/ui/Typography';
+import { Service } from '@/types/';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { Typography } from '@/components/ui/Typography';
 
 function HomeView() {
   const navigate = useNavigate();
@@ -124,7 +124,7 @@ function HomeView() {
             <div className="relative group overflow-hidden rounded-3xl shadow-2xl border-none">
               <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
                 {[1, 2, 3].map((num) => (
-                  <div key={num} className="min-w-full h-80 sm:h-100 md:h-[550px] relative">
+                  <div key={num} className="min-w-full h-80 sm:h-100 md:h-137.5 relative">
                     <img
                       src={`/assets/carrusel${num}.jpg`}
                       alt={`Instalación ${num}`}

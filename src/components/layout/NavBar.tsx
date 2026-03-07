@@ -15,8 +15,8 @@ import {
   MessageSquare,
   Info
 } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
-import { getAuth0UserById } from '../../models/userModel';
+import { useCart } from '@context/CartContext';
+import { getAuth0UserById } from '@models/userModel';
 import { cn } from '@/lib/utils';
 
 interface NavBarProps {
