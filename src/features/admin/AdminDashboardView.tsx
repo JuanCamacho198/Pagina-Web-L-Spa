@@ -9,13 +9,15 @@ import {
   XCircle,
   MoreVertical,
   Filter,
-  UserPlus
+  UserPlus,
+  ChevronDown
 } from 'lucide-react';
 import { fetchAllAppointments, updateAppointmentStatus, fetchAdminStats } from '@/models/adminModel';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Typography } from '@/components/ui/Typography';
+import { Dropdown } from '@/components/ui/Dropdown';
 import { toast } from 'react-hot-toast';
 
 export default function AdminDashboardView() {
@@ -181,37 +183,22 @@ export default function AdminDashboardView() {
                       {getStatusBadge(appt.status)}
                     </td>
                     <td className="py-4 text-right">
-                      <div className="flex justify-end gap-2">
-                        {appt.status === 'pending' && (
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            className="bg-green-50 text-green-600 hover:bg-green-100"
-                            onClick={() => handleStatusChange(appt.id, 'confirmed')}
-                          >
-                            <CheckCircle size={16} />
-                          </Button>
-                        )}
-                        {appt.status !== 'completed' && appt.status !== 'cancelled' && (
-                          <>
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              className="bg-blue-50 text-blue-600 hover:bg-blue-100"
-                              onClick={() => handleStatusChange(appt.id, 'completed')}
-                            >
-                              <CheckCircle size={16} />
+                      <div className="flex justify-end">
+                        <Dropdown
+                          align="right"
+                          trigger={
+                            <Button variant="ghost" size="sm" className="hover:bg-gray-100 flex gap-2">
+                              Gestionar
+                              <ChevronDown size={14} />
                             </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              className="bg-red-50 text-red-600 hover:bg-red-100"
-                              onClick={() => handleStatusChange(appt.id, 'cancelled')}
-                            >
-                              <XCircle size={16} />
-                            </Button>
-                          </>
-                        )}
+                          }
+                          items={[
+                            { label: 'Confirmar', onClick: () => handleStatusChange(appt.id, 'confirmed'), icon: <CheckCircle size={14} className="text-green-500" /> },
+                            { label: 'Completar', onClick: () => handleStatusChange(appt.id, 'completed'), icon: <CheckCircle size={14} className="text-blue-500" /> },
+                            { label: 'Pendiente', onClick: () => handleStatusChange(appt.id, 'pending'), icon: <Clock size={14} className="text-yellow-500" /> },
+                            { label: 'Cancelar', onClick: () => handleStatusChange(appt.id, 'cancelled'), icon: <XCircle size={14} className="text-red-500" />, variant: 'danger' },
+                          ]}
+                        />
                       </div>
                     </td>
                   </tr>

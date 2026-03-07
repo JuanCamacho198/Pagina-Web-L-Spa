@@ -7,6 +7,7 @@ import {
   Calendar,
   ChevronRight,
   RefreshCw,
+  ChevronDown
 } from 'lucide-react';
 import { fetchAllUsers, updateUserRole } from '@/models/adminModel';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
@@ -14,6 +15,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Typography } from '@/components/ui/Typography';
 import { SearchBar } from '@/components/ui/SearchBar';
+import { Dropdown } from '@/components/ui/Dropdown';
 import { toast } from 'react-hot-toast';
 
 export default function AdminUsersListView() {
@@ -50,14 +52,10 @@ export default function AdminUsersListView() {
     }
   };
 
-  const handleRoleChange = async (userId: string, currentRole: string) => {
-    const roles: ('admin' | 'employee' | 'customer')[] = ['customer', 'employee', 'admin'];
-    const nextRoleIndex = (roles.indexOf(currentRole as any) + 1) % roles.length;
-    const nextRole = roles[nextRoleIndex];
-
+  const handleUpdateRole = async (userId: string, newRole: 'admin' | 'employee' | 'customer') => {
     try {
-      await updateUserRole(userId, nextRole);
-      toast.success(`Rol actualizado a ${nextRole}`);
+      await updateUserRole(userId, newRole);
+      toast.success(`Rol actualizado a ${newRole}`);
       loadUsers();
     } catch (error) {
       toast.error("Error al actualizar el rol");
@@ -141,13 +139,20 @@ export default function AdminUsersListView() {
 
                   <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
                     {getRoleBadge(user.role)}
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleRoleChange(user.id, user.role)}
-                    >
-                      Cambiar Rol
-                    </Button>
+                    <Dropdown
+                      align="right"
+                      trigger={
+                        <Button variant="outline" size="sm" className="flex gap-2">
+                          Cambiar Rol
+                          <ChevronDown size={14} />
+                        </Button>
+                      }
+                      items={[
+                        { label: 'Administrador', onClick: () => handleUpdateRole(user.id, 'admin'), icon: <Shield size={14} /> },
+                        { label: 'Empleado', onClick: () => handleUpdateRole(user.id, 'employee'), icon: <Users size={14} /> },
+                        { label: 'Cliente', onClick: () => handleUpdateRole(user.id, 'customer'), icon: <UserIcon size={14} /> },
+                      ]}
+                    />
                   </div>
                 </div>
               </CardContent>
