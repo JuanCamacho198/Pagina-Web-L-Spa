@@ -4,6 +4,19 @@ import { Link } from 'react-router-dom';
 import { Facebook, Instagram, MessageCircle, Mail, Phone, MapPin, Clock } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const [config, setConfig] = React.useState({
+    logoUrl: logo,
+    description: "Tu refugio de bienestar y relajación. Expertos en masajes, tratamientos faciales y cuidado personal.",
+    social: { facebook: "#", instagram: "#", whatsapp: "#" }
+  });
+
+  React.useEffect(() => {
+    fetch('/api/config?id=footer')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => data && setConfig(prev => ({ ...prev, ...data })))
+      .catch(() => {});
+  }, []);
+
   const sectionTitleClass = "text-lg font-bold mb-4 text-primary-light";
   const linkClass = "text-gray-400 hover:text-white transition-colors duration-200 text-sm";
   const iconLinkClass = "bg-gray-800 p-2 rounded-full hover:bg-primary transition-all duration-300 transform hover:scale-110";
@@ -16,16 +29,16 @@ const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="L-SPA logo" className="h-12 w-auto brightness-110" />
+              <img src={config.logoUrl} alt="L-SPA logo" className="h-12 w-auto brightness-110" />
               <h4 className="text-xl font-bold tracking-tight uppercase">L-SPA</h4>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Tu refugio de bienestar y relajación. Expertos en masajes, tratamientos faciales y cuidado personal.
+              {config.description}
             </p>
             <div className="flex gap-4 pt-2">
-              <a href="#" className={iconLinkClass} aria-label="Facebook"><Facebook size={20} /></a>
-              <a href="#" className={iconLinkClass} aria-label="Instagram"><Instagram size={20} /></a>
-              <a href="#" className={iconLinkClass} aria-label="WhatsApp"><MessageCircle size={20} /></a>
+              <a href={config.social.facebook} className={iconLinkClass} aria-label="Facebook"><Facebook size={20} /></a>
+              <a href={config.social.instagram} className={iconLinkClass} aria-label="Instagram"><Instagram size={20} /></a>
+              <a href={config.social.whatsapp} className={iconLinkClass} aria-label="WhatsApp"><MessageCircle size={20} /></a>
             </div>
           </div>
 
@@ -78,7 +91,8 @@ const Footer: React.FC = () => {
               <li><Link to="/politica-datos" className={linkClass}>Tratamiento de Datos</Link></li>
               <li><Link to="/informacion-reserva" className={linkClass}>Información de Reserva</Link></li>
               <li><Link to="/preguntas-frecuentes" className={linkClass}>Preguntas Frecuentes</Link></li>
-              <li className="pt-2"><Link to="/privacidad" className={linkClass}>Privacidad</Link></li>
+              <li className="pt-2"><Link to="/cookies" className={linkClass}>Cookies</Link></li>
+              <li><Link to="/privacidad" className={linkClass}>Privacidad</Link></li>
             </ul>
           </div>
 

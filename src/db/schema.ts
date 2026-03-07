@@ -48,3 +48,11 @@ export const cartItems = pgTable('cart_items', {
   quantity: integer('quantity').default(1),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
+
+// Configuración general del sitio (Logo, textos, etc)
+export const siteConfig = pgTable('site_config', {
+  id: varchar('id', { length: 50 }).primaryKey(), // 'footer', 'header', etc
+  data: text('data').notNull(), // JSON string con la configuración
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+});
+

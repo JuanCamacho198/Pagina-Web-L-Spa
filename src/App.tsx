@@ -21,6 +21,8 @@ import PoliticasCancelacionView from '@/features/static/CancellationPolicyView';
 import DataPrivacyPolicyView from '@/features/static/DataPrivacyPolicyView';
 import ImportantReservationInfoView from '@/features/static/ImportantReservationInfoView';
 import FaqView from '@/features/static/FaqView';
+import CookiePolicyView from '@/features/static/CookiePolicyView';
+import PrivacyPolicyView from '@/features/static/PrivacyPolicyView';
 
 import ServicesView from '@/features/catalog/ServicesView';
 import CheckoutView from '@/features/booking/CheckoutView';
@@ -71,11 +73,14 @@ export default function App() {
           <Route path="/about-us" element={<AboutView />} />
           <Route path="/cancellation-policies" element={<PoliticasCancelacionView />} />
           <Route path="/data-privacy" element={<DataPrivacyPolicyView />} />
+          <Route path="/politica-datos" element={<Navigate to="/data-privacy" replace />} />
           <Route path="/reservation-info" element={<ImportantReservationInfoView />} />
+          <Route path="/informacion-reserva" element={<Navigate to="/reservation-info" replace />} />
           <Route path="/faq" element={<FaqView />} />
-          <Route path="/login" element={<LoginView />} />
-          <Route path="/register" element={<RegisterView />} />
-          <Route path="/service/:id" element={<ServiceDetailView />} />
+          <Route path="/preguntas-frecuentes" element={<Navigate to="/faq" replace />} />
+          <Route path="/cookies" element={<CookiePolicyView />} />
+          <Route path="/privacidad" element={<PrivacyPolicyView />} />
+          <Route path="/politicas-cancelacion" element={<PoliticasCancelacionView />} />
 
           {/* Bloque condicional para rutas protegidas */}
           {isAuthenticated ? (
