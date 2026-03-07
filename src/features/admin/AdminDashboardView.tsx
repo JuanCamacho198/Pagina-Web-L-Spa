@@ -74,9 +74,13 @@ export default function AdminDashboardView() {
         <Typography variant="h1" className="text-3xl font-bold">Panel de Administración</Typography>
         <div className="flex gap-2">
           <Button variant="outline" onClick={loadData}>Actualizar</Button>
+          <Button variant="outline" onClick={() => window.location.href = '/admin/navbar'}>
+            <Settings size={18} className="mr-2" />
+            Configurar Navbar
+          </Button>
           <Button variant="outline" onClick={() => window.location.href = '/admin/users'}>
             <Users size={18} className="mr-2" />
-            Gestionar Usuarios
+            Usuarios
           </Button>
           <Button onClick={() => window.location.href = '/admin/services/new'}>Nuevo Servicio</Button>
         </div>

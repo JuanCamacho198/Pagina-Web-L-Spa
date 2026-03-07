@@ -37,6 +37,7 @@ import AdminServicesListView from '@/features/admin/AdminServicesListView';
 import AdminUsersListView from '@/features/admin/AdminUsersListView';
 import CreateServiceView from '@/features/admin/CreateServiceView';
 import EditServiceView from '@/features/admin/EditServiceView';
+import NavbarSettingsView from '@/features/admin/NavbarSettingsView';
 
 import { AuthSync } from '@/components/shared/AuthSync';
 
@@ -92,6 +93,7 @@ export default function App() {
               <Route path="/admin/services" element={<AdminServicesListView />} />
               <Route path="/admin/services/new" element={<CreateServiceView />} />
               <Route path="/admin/services/edit/:id" element={<EditServiceView />} />
+              <Route path="/admin/navbar" element={<NavbarSettingsView />} />
             </>
           ) : (
             <>

@@ -83,12 +83,20 @@ export default function NavBar({ user }: NavBarProps) {
             
             {/* Logo */}
             <Link to="/" className="shrink-0 flex items-center group">
-              <div className="flex items-center justify-center mr-3 group-hover:scale-105 transition-transform duration-300">
-                <img src={logo} alt="L-SPA Logo" className="h-10 w-auto" />
-              </div>
-              <span className="text-2xl font-black bg-linear-to-r from-primary to-primary-dark bg-clip-text text-transparent tracking-tighter">
-                L-SPA
-              </span>
+              {showLogo && (
+                <div className="flex items-center justify-center mr-3 group-hover:scale-105 transition-transform duration-300">
+                  <img 
+                    src={logoUrl || logo} 
+                    alt={`${brandText} Logo`} 
+                    className="h-10 w-auto" 
+                  />
+                </div>
+              )}
+              {showText && (
+                <span className="text-2xl font-black bg-linear-to-r from-primary to-primary-dark bg-clip-text text-transparent tracking-tighter uppercase">
+                  {brandText}
+                </span>
+              )}
             </Link>
 
             {/* Desktop Navigation */}
