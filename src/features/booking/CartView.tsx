@@ -19,7 +19,7 @@ export default function CartView() {
     initCart();
   }, []);
 
-  const total = contextCartItems.reduce((sum, item) => sum + (item.Precio || 0), 0);
+  const total = contextCartItems.reduce((sum, item) => sum + (item.servicePrice || 0), 0);
   const itemCount = contextCartItems.length;
 
   const handleRemoveItem = async (itemId: string) => {
@@ -115,8 +115,8 @@ export default function CartView() {
                 >
                   <div className="w-24 h-24 rounded-xl bg-gray-100 overflow-hidden shrink-0">
                     <img 
-                      src={item.imagenURL || '/assets/bannerSpa.avif'} 
-                      alt={item.Nombre}
+                      src={item.imageUrl || '/assets/bannerSpa.avif'} 
+                      alt={item.serviceName}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = '/assets/bannerSpa.avif';
@@ -127,13 +127,13 @@ export default function CartView() {
                   <div className="grow">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="text-lg font-serif text-gray-900 group-hover:text-primary transition-colors">{item.Nombre}</h3>
+                        <h3 className="text-lg font-serif text-gray-900 group-hover:text-primary transition-colors">{item.serviceName}</h3>
                         <div className="flex items-center text-gray-400 text-xs mt-1">
                           <Clock size={12} className="mr-1" />
                           <span>Sesión individual</span>
                         </div>
                       </div>
-                      <span className="text-lg font-medium text-primary">${item.Precio.toLocaleString()}</span>
+                      <span className="text-lg font-medium text-primary">${item.servicePrice.toLocaleString()}</span>
                     </div>
                     
                     <div className="flex items-center justify-between mt-4">

@@ -64,13 +64,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const items: CartItem[] = result.map(item => ({
         id: item.id,
         serviceId: item.serviceId || '',
-        Nombre: item.nombre,
-        Precio: Number(item.precio),
-        Categoria: item.categoria || '',
-        imagenURL: item.imagenUrl || '',
+        serviceName: item.nombre,
+        servicePrice: Number(item.precio),
+        category: item.categoria || '',
+        imageUrl: item.imagenUrl || '',
         quantity: item.quantity || 1,
         addedAt: item.addedAt?.toISOString() || new Date().toISOString(),
-        Duracion: Number(item.duracion || 60)
+        duration: Number(item.duracion || 60)
       }));
 
       setCartItems(items);

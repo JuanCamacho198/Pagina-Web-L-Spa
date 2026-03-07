@@ -48,13 +48,13 @@ export interface CheckoutFormValues {
 export interface CartItem {
   id: string;
   serviceId: string;
-  Nombre: string;
-  Precio: number;
-  Categoria?: string;
-  imagenURL?: string;
+  serviceName: string;
+  servicePrice: number;
+  category?: string;
+  imageUrl?: string;
   quantity?: number;
   addedAt?: string;
-  Duracion?: number;
+  duration?: number;
 }
 
 export interface ServiceFormValues {
