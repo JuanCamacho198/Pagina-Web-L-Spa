@@ -139,7 +139,7 @@ export default function AdminDashboardView() {
       </div>
 
       {/* Recent Appointments Table */}
-      <Card>
+      <Card className="overflow-visible">
         <CardHeader>
           <div className="flex justify-between items-center">
             <Typography variant="h2" className="text-xl font-semibold">Gestión de Reservas</Typography>

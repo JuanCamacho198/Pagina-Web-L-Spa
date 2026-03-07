@@ -114,7 +114,7 @@ export default function AdminUsersListView() {
           </div>
         ) : (
           filteredUsers.map((user) => (
-            <Card key={user.id} className="overflow-hidden">
+            <Card key={user.id} className="overflow-visible">
               <CardContent className="p-0">
                 <div className="flex flex-col sm:flex-row items-center p-4 gap-4">
                   <div className="bg-gray-100 p-3 rounded-full">
