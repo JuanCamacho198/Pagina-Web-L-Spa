@@ -4,12 +4,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { db, cartItems, users } from '../../../db';
 import { eq } from 'drizzle-orm';
-import { fetchServiceById, fetchServices } from '../../../models/servicesModel';
+import { fetchServiceByName, fetchServices } from '../../../models/servicesModel';
 import { Service } from '../../../types';
 import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
 
 const ServiceDetailView = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>(); // 'id' ahora es el slug del nombre
   const { user, isAuthenticated } = useAuth0();
   const [service, setService] = useState<Service | null>(null);
   const [loading, setLoading] = useState(true);
@@ -33,14 +33,15 @@ const ServiceDetailView = () => {
       setLoading(true);
       setError(null);
       try {
-        const fetchedService = await fetchServiceById(id);
+        // Buscamos por nombre (slug) en lugar de UUID
+        const fetchedService = await fetchServiceByName(id);
 
         if (fetchedService) {
           setService(fetchedService);
 
           // Obtener otros servicios sugeridos
           const allServices = await fetchServices();
-          const otrosServicios = allServices.filter(s => s.id !== id);
+          const otrosServicios = allServices.filter(s => s.id !== fetchedService.id);
 
           // Limitar a 3 servicios aleatorios
           const seleccionados = otrosServicios
@@ -85,7 +86,7 @@ const ServiceDetailView = () => {
             serviceId: service.id,
           });
 
-          showNotification(`✅ ${service.Nombre} ha sido añadido al carrito exitosamente`, 'success');
+          showNotification(`✅ ${service.name} ha sido añadido al carrito exitosamente`, 'success');
         } catch (e: any) {
           console.error('Error añadiendo al Carrito', e);
           showNotification('❌ Error al añadir el servicio al carrito. Inténtalo de nuevo.', 'error');
@@ -151,12 +152,12 @@ const ServiceDetailView = () => {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-center text-center md:text-left text-white">
           <div className="flex-1 space-y-4">
              <span className="px-4 py-1.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-bold tracking-widest uppercase">
-               {service.Categoria}
+               {service.category}
              </span>
-             <h1 className="text-4xl md:text-6xl font-black tracking-tight">{service.Nombre}</h1>
+             <h1 className="text-4xl md:text-6xl font-black tracking-tight">{service.name}</h1>
           </div>
           <div className="text-3xl md:text-5xl font-black">
-            {service.Precio.toLocaleString('es-CO', {
+            {Number(service.price || 0).toLocaleString('es-CO', {
               style: 'currency',
               currency: 'COP',
               minimumFractionDigits: 0,
@@ -173,8 +174,8 @@ const ServiceDetailView = () => {
           <div className="lg:col-span-2 space-y-8">
              <div className="bg-white p-4 rounded-[3rem] shadow-2xl border border-white overflow-hidden aspect-video relative group">
                 <img 
-                  src={service.imagenURL} 
-                  alt={service.Nombre} 
+                  src={service.imageUrl || `/assets/${service.imageFileName}`} 
+                  alt={service.name} 
                   className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105"
                 />
              </div>
@@ -182,18 +183,18 @@ const ServiceDetailView = () => {
              <div className="bg-white p-10 md:p-12 rounded-[3rem] shadow-xl border border-gray-100">
                 <h3 className="text-2xl font-black text-gray-900 mb-6">Sobre esta experiencia</h3>
                 <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                  Sumérgete en un oasis de relajación con nuestro exclusivo tratamiento de {service.Nombre.toLowerCase()}. 
+                  Sumérgete en un oasis de relajación con nuestro exclusivo tratamiento de {(service.name || '').toLowerCase()}. 
                   Diseñado para revitalizar cuerpo y mente, esta experiencia combina técnicas ancestrales con lo último en bienestar.
                 </p>
                 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                    <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
                       <Clock className="text-primary" size={24} />
-                      <div className="text-sm font-bold text-gray-700">{service.Duracion} min</div>
+                      <div className="text-sm font-bold text-gray-700">{service.duration} min</div>
                    </div>
                    <div className="flex items-center gap-3 p-4 bg-primary/5 rounded-2xl">
                       <Tag className="text-primary" size={24} />
-                      <div className="text-sm font-bold text-gray-700">{service.Categoria}</div>
+                      <div className="text-sm font-bold text-gray-700">{service.category}</div>
                    </div>
                 </div>
              </div>
@@ -205,7 +206,7 @@ const ServiceDetailView = () => {
                 <div className="text-center">
                    <div className="text-sm text-gray-500 uppercase font-black tracking-widest mb-1">Precio Total</div>
                    <div className="text-4xl font-black text-primary">
-                      {service.Precio.toLocaleString('es-CO', {
+                      {Number(service.price || 0).toLocaleString('es-CO', {
                         style: 'currency',
                         currency: 'COP',
                         minimumFractionDigits: 0,
@@ -252,21 +253,21 @@ const ServiceDetailView = () => {
               <div 
                 key={rec.id} 
                 className="group bg-white rounded-[2.5rem] shadow-lg border border-gray-100 overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-300"
-                onClick={() => navigate(`/servicio/${rec.id}`)}
+                onClick={() => navigate(`/service/${rec.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-')}`)}
               >
                 <div className="h-48 overflow-hidden relative">
                   <img 
-                    src={rec.imagenURL} 
-                    alt={rec.Nombre} 
+                    src={rec.imageUrl || `/assets/${rec.imageFileName}`} 
+                    alt={rec.name} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                   />
                   <div className="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-xs font-bold text-primary shadow-sm">
-                    {rec.Categoria}
+                    {rec.category}
                   </div>
                 </div>
                 <div className="p-6">
-                  <h4 className="text-xl font-black text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{rec.Nombre}</h4>
-                  <p className="text-lg font-bold text-primary">${rec.Precio.toLocaleString()}</p>
+                  <h4 className="text-xl font-black text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{rec.name}</h4>
+                  <p className="text-lg font-bold text-primary">${Number(rec.price || 0).toLocaleString()}</p>
                 </div>
               </div>
             ))}

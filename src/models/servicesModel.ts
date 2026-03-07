@@ -28,22 +28,31 @@ export async function fetchServices(): Promise<Service[]> {
  */
 export async function fetchServiceById(serviceId: string): Promise<Service | null> {
   const result = await db.select().from(services).where(eq(services.id, serviceId)).limit(1);
+  if (result.length === 0) return null;
+  const service = result[0];
+  return {
+    id: service.id,
+    name: service.name,
+    price: Number(service.price),
+    category: service.category || '',
+    imageUrl: service.imageUrl || '',
+    imageFileName: service.imageFileName || '',
+    duration: Number(service.duration || 60)
+  };
+}
+
+/**
+ * Obtiene un servicio por su nombre (slug-friendly).
+ * @param {string} name - El nombre del servicio.
+ * @returns {Promise<Service | null>} El servicio encontrado o null.
+ */
+export async function fetchServiceByName(name: string): Promise<Service | null> {
+  // Buscamos todos y filtramos por slug para evitar problemas con tildes/espacios en la query directa si no está normalizado
+  const all = await fetchServices();
+  const slug = (str: string) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+  const targetSlug = slug(name);
   
-  if (result.length > 0) {
-    const service = result[0];
-    return {
-      id: service.id,
-      name: service.name,
-      price: Number(service.price),
-      category: service.category || '',
-      imageUrl: service.imageUrl || '',
-      imageFileName: service.imageFileName || '',
-      duration: Number(service.duration || 60)
-    };
-  } else {
-    console.warn("No such document in Postgres with ID:", serviceId);
-    return null;
-  }
+  return all.find(s => slug(s.name) === targetSlug) || null;
 }
 
 /**

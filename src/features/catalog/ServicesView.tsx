@@ -14,11 +14,11 @@ export default function ServicesView() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const categories = ['Todos', ...new Set(services.map(service => service.Categoria))];
+  const categories = ['Todos', ...new Set(services.map(service => service.category || 'Sin Categoría'))];
 
   useEffect(() => {
     setIsLoading(true);
-    getAllServices((data: Service[]) => {
+    getAllServices((data: any[]) => {
       setServices(data);
       setIsLoading(false);
     }, (err: string) => {
@@ -27,8 +27,9 @@ export default function ServicesView() {
     });
   }, []);
 
-  const goToServiceDetail = (serviceId: string) => {
-    navigate(`/servicio/${serviceId}`);
+  const goToServiceDetail = (name: string) => {
+    const slug = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+    navigate(`/service/${slug}`);
   };
 
   if (error) {
@@ -45,23 +46,23 @@ export default function ServicesView() {
   let filteredServices = [...services];
 
   if (selectedCategory !== 'Todos') {
-    filteredServices = filteredServices.filter(service => service.Categoria === selectedCategory);
+    filteredServices = filteredServices.filter(service => (service.category || 'Sin Categoría') === selectedCategory);
   }
 
   if (searchTerm) {
     filteredServices = filteredServices.filter(service => 
-      service.Nombre.toLowerCase().includes(searchTerm.toLowerCase())
+      (service.name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
 
   if (sortOption === 'nombre-asc') {
-    filteredServices.sort((a, b) => a.Nombre.localeCompare(b.Nombre));
+    filteredServices.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
   } else if (sortOption === 'nombre-desc') {
-    filteredServices.sort((a, b) => b.Nombre.localeCompare(a.Nombre));
+    filteredServices.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
   } else if (sortOption === 'precio-asc') {
-    filteredServices.sort((a, b) => Number(a.Precio) - Number(b.Precio));
+    filteredServices.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
   } else if (sortOption === 'precio-desc') {
-    filteredServices.sort((a, b) => Number(b.Precio) - Number(a.Precio));
+    filteredServices.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
   }
 
   return (
@@ -139,26 +140,26 @@ export default function ServicesView() {
               <div
                 key={service.id}
                 className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-primary/10 cursor-pointer"
-                onClick={() => goToServiceDetail(service.id)} 
+                onClick={() => goToServiceDetail(service.name)} 
               >
-                <div className="relative h-56 overflow-hidden bg-gray-100">
+                    <div className="relative h-56 overflow-hidden bg-gray-100">
                   <img
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    src={`/assets/${service.imageFileName}`}
-                    alt={service.Nombre}
+                    src={service.imageUrl || `/assets/${service.imageFileName}`}
+                    alt={service.name}
                     loading="lazy"
                   />
                   <div className="absolute top-4 left-4">
                     <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary uppercase tracking-wider shadow-sm">
-                      {service.Categoria}
+                      {service.category}
                     </span>
                   </div>
                 </div>
                 <div className="p-6">
-                  <h2 className="text-lg font-bold text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{service.Nombre}</h2>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{service.name}</h2>
                   <div className="flex items-center justify-between mt-4">
                     <p className="text-xl font-black text-primary">
-                      {service.Precio.toLocaleString('es-CO', {
+                      {Number(service.price || 0).toLocaleString('es-CO', {
                         style: 'currency',
                         currency: 'COP',
                         minimumFractionDigits: 0,
