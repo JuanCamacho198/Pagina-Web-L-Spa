@@ -1,5 +1,13 @@
 import { db, appointments, users, services } from '../db';
 import { eq, and, desc, sql } from 'drizzle-orm';
+import { z } from 'zod';
+
+const appointmentSchema = z.object({
+  auth0Id: z.string().min(1),
+  serviceId: z.string().uuid(),
+  appointmentDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  appointmentTime: z.string().min(1)
+});
 
 export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -43,7 +51,8 @@ export default async function handler(req: any, res: any) {
     }
 
     if (req.method === 'POST') {
-      const { auth0Id, serviceId, appointmentDate, appointmentTime } = req.body;
+      const validatedData = appointmentSchema.parse(req.body);
+      const { auth0Id, serviceId, appointmentDate, appointmentTime } = validatedData;
       const userResult = await db.select({ id: users.id }).from(users).where(eq(users.auth0Id, auth0Id)).limit(1);
       if (userResult.length === 0) throw new Error("Usuario no encontrado.");
 
@@ -59,12 +68,16 @@ export default async function handler(req: any, res: any) {
 
     if (req.method === 'DELETE') {
       const { id } = req.query;
+      if (!id) return res.status(400).json({ error: 'ID es requerido' });
       await db.delete(appointments).where(eq(appointments.id, id));
       return res.status(204).end();
     }
 
     return res.status(405).json({ error: 'Método no permitido' });
   } catch (error: any) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: 'Error de validación', details: error.errors });
+    }
     return res.status(500).json({ error: error.message });
   }
 }

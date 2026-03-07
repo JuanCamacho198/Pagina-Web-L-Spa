@@ -1,0 +1,9 @@
+{
+  "github": {
+    "silent": false
+  },
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "framework": "vite",
+  "regions": ["sfo1"]
+}
