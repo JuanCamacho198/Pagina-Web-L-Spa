@@ -15,8 +15,9 @@ import {
   MessageSquare,
   Info
 } from 'lucide-react';
-import logo from '@assets/logos/LOGO4x-sinfondo.png';
+import logo from '@assets/logos/LOGO.svg';
 import { useCart } from '@context/CartContext';
+import { useNavbarStore } from '@context/NavbarStore';
 import { getAuth0UserById } from '@models/userModel';
 import { cn } from '@/lib/utils';
 
@@ -25,6 +26,7 @@ interface NavBarProps {
 }
 
 export default function NavBar({ user }: NavBarProps) {
+  const { logoUrl, brandText, showLogo, showText } = useNavbarStore();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
