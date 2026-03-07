@@ -1,7 +1,7 @@
 // src/models/userModel.ts
 import { db, users } from "@/db";
 import { eq } from "drizzle-orm";
-import { UserProfile } from "@types";
+import { UserProfile } from "@/types";
 
 /**
  * Guarda (o crea) un perfil de usuario en la base de datos Postgres.

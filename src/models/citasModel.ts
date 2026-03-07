@@ -1,7 +1,7 @@
 // src/models/citasModel.ts
 import { db, appointments, users, services } from '@/db';
 import { eq, desc } from 'drizzle-orm';
-import { Appointment } from '@types';
+import { Appointment } from '@/types';
 
 /**
  * Agrega una cita a la base de datos PostgreSQL.

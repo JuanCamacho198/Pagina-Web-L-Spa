@@ -3,8 +3,8 @@ import {
   getAuth0UserById,
   updateUserData,
   deleteUserData
-} from "@models/userModel";
-import { UserProfile } from "@types";
+} from "@/models/userModel";
+import { UserProfile } from "@/types";
 
 /**
  * Obtiene el perfil del usuario de Postgres usando su ID de Auth0.

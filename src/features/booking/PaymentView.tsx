@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ShieldCheck, CreditCard, Wallet, Smartphone, Landmark, CheckCircle2, ChevronRight, Lock } from 'lucide-react';
-import PaymentSuccessModal from '@features/booking/PaymentSuccessModal';
+import PaymentSuccessModal from '@/features/booking/PaymentSuccessModal';
 
 // --- IMÁGENES (Manteniendo las rutas actuales) ---
 import creditCardImage from '@/assets/epayco-pagos.png';

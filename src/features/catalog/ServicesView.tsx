@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllServices } from '@controllers/servicesController';
-import Footer from '@components/layout/Footer';
+import { getAllServices } from '@/controllers/servicesController';
+import Footer from '@/components/layout/Footer';
 import { Filter, SortAsc, MessageCircle, ArrowRight, Search } from 'lucide-react';
-import { Service } from '@types';
-import { ServiceCardSkeleton } from '@components/ui/Skeleton';
+import { Service } from '@/types';
+import { ServiceCardSkeleton } from '@/components/ui/Skeleton';
 
 export default function ServicesView() {
   const [services, setServices] = useState<Service[]>([]);

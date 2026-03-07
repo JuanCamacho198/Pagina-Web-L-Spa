@@ -1,7 +1,7 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Typography } from '@components/ui/Typography';
+import { Typography } from '@/components/ui/Typography';
 
 interface Step {
   id: number;
