@@ -23,10 +23,33 @@ import { cn } from '@/lib/utils';
 
 interface NavBarProps {
   user: any;
+  previewSettings?: {
+    logoUrl?: string;
+    brandText?: string;
+    showLogo?: boolean;
+    showText?: boolean;
+    logoSize?: number;
+    textSize?: number;
+    logoTextSpacing?: number;
+    fontFamily?: string;
+    customFontUrl?: string;
+  };
 }
 
-export default function NavBar({ user }: NavBarProps) {
-  const { logoUrl, brandText, showLogo, showText, logoSize, textSize, fontFamily, customFontUrl } = useNavbarStore();
+export default function NavBar({ user, previewSettings }: NavBarProps) {
+  const settingsFromStore = useNavbarStore();
+  
+  // Usar settings de preview si existen, si no usar las del store
+  const logoUrl = previewSettings?.logoUrl ?? settingsFromStore.logoUrl;
+  const brandText = previewSettings?.brandText ?? settingsFromStore.brandText;
+  const showLogo = previewSettings?.showLogo ?? settingsFromStore.showLogo;
+  const showText = previewSettings?.showText ?? settingsFromStore.showText;
+  const logoSize = previewSettings?.logoSize ?? settingsFromStore.logoSize;
+  const textSize = previewSettings?.textSize ?? settingsFromStore.textSize;
+  const logoTextSpacing = previewSettings?.logoTextSpacing ?? settingsFromStore.logoTextSpacing;
+  const fontFamily = previewSettings?.fontFamily ?? settingsFromStore.fontFamily;
+  const customFontUrl = previewSettings?.customFontUrl ?? settingsFromStore.customFontUrl;
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -93,7 +116,10 @@ export default function NavBar({ user }: NavBarProps) {
             {/* Logo */}
             <Link to="/" className="shrink-0 flex items-center group">
               {showLogo && (
-                <div className="flex items-center justify-center mr-3 group-hover:scale-105 transition-all duration-300">
+                <div 
+                  className="flex items-center justify-center group-hover:scale-105 transition-all duration-300"
+                  style={{ marginRight: showText ? `${logoTextSpacing}px` : '0px' }}
+                >
                   <img 
                     src={logoUrl || logo} 
                     alt={`${brandText} Logo`} 

@@ -8,6 +8,7 @@ interface NavbarSettings {
   showText: boolean;
   logoSize: number;
   textSize: number;
+  logoTextSpacing: number;
   fontFamily: string;
   customFontUrl: string;
   setLogoUrl: (url: string) => void;
@@ -16,6 +17,7 @@ interface NavbarSettings {
   setShowText: (show: boolean) => void;
   setLogoSize: (size: number) => void;
   setTextSize: (size: number) => void;
+  setLogoTextSpacing: (spacing: number) => void;
   setFontFamily: (font: string) => void;
   setCustomFontUrl: (url: string) => void;
   reset: () => void;
@@ -28,6 +30,7 @@ const DEFAULT_SETTINGS = {
   showText: true,
   logoSize: 40,
   textSize: 24,
+  logoTextSpacing: 12,
   fontFamily: 'sans',
   customFontUrl: '',
 };
@@ -42,6 +45,7 @@ export const useNavbarStore = create<NavbarSettings>()(
       setShowText: (show) => set({ showText: show }),
       setLogoSize: (size) => set({ logoSize: size }),
       setTextSize: (size) => set({ textSize: size }),
+      setLogoTextSpacing: (spacing) => set({ logoTextSpacing: spacing }),
       setFontFamily: (font) => set({ fontFamily: font }),
       setCustomFontUrl: (url) => set({ customFontUrl: url }),
       reset: () => set(DEFAULT_SETTINGS),

@@ -1,33 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavbarStore } from '@context/NavbarStore';
 import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { Typography } from '@components/ui/Typography';
-import { Image, Type, Eye, RefreshCw, Save } from 'lucide-react';
+import { Image, Type, Eye, RefreshCw, Save, CheckCircle, Info } from 'lucide-react';
 import logoLocal from '@assets/logos/LOGO.svg';
 import { cn } from '@/lib/utils';
+import NavBar from '@/components/layout/NavBar';
 
 export default function NavbarSettingsView() {
-  const { 
-    logoUrl, 
-    brandText, 
-    showLogo, 
-    showText,
-    logoSize,
-    textSize,
-    fontFamily,
-    customFontUrl,
-    setLogoUrl,
-    setBrandText,
-    setShowLogo,
-    setShowText,
-    setLogoSize,
-    setTextSize,
-    setFontFamily,
-    setCustomFontUrl,
-    reset
-  } = useNavbarStore();
+  const store = useNavbarStore();
+  const { reset } = store;
+
+  // Estado local para la previsualización (no se guarda hasta pulsar "Guardar")
+  const [localSettings, setLocalSettings] = useState({
+    logoUrl: store.logoUrl,
+    brandText: store.brandText,
+    showLogo: store.showLogo,
+    showText: store.showText,
+    logoSize: store.logoSize,
+    textSize: store.textSize,
+    logoTextSpacing: store.logoTextSpacing,
+    fontFamily: store.fontFamily,
+    customFontUrl: store.customFontUrl,
+  });
+
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleSave = () => {
+    store.setLogoUrl(localSettings.logoUrl);
+    store.setBrandText(localSettings.brandText);
+    store.setShowLogo(localSettings.showLogo);
+    store.setShowText(localSettings.showText);
+    store.setLogoSize(localSettings.logoSize);
+    store.setTextSize(localSettings.textSize);
+    store.setLogoTextSpacing(localSettings.logoTextSpacing);
+    store.setFontFamily(localSettings.fontFamily);
+    store.setCustomFontUrl(localSettings.customFontUrl);
+    
+    setIsSaved(true);
+    setTimeout(() => setIsSaved(false), 3000);
+  };
+
+  const handleReset = () => {
+    reset();
+    const defaults = {
+      logoUrl: '',
+      brandText: 'L-SPA',
+      showLogo: true,
+      showText: true,
+      logoSize: 40,
+      textSize: 24,
+      logoTextSpacing: 12,
+      fontFamily: 'sans',
+      customFontUrl: '',
+    };
+    setLocalSettings(defaults);
+  };
+
+  const updateLocal = (key: string, value: any) => {
+    setLocalSettings(prev => ({ ...prev, [key]: value }));
+  };
 
   const handleFontUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -35,8 +69,8 @@ export default function NavbarSettingsView() {
       const reader = new FileReader();
       reader.onload = (event) => {
         const url = event.target?.result as string;
-        setCustomFontUrl(url);
-        setFontFamily('custom');
+        updateLocal('customFontUrl', url);
+        updateLocal('fontFamily', 'custom');
       };
       reader.readAsDataURL(file);
     }
@@ -44,19 +78,40 @@ export default function NavbarSettingsView() {
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center bg-white/50 backdrop-blur-md p-6 rounded-3xl border border-gray-100 sticky top-0 z-30 shadow-sm">
         <div>
           <Typography variant="h1" className="text-3xl font-black text-gray-900">Configuración del Navbar</Typography>
           <p className="text-gray-500 mt-1">Personaliza el logo y el nombre de tu marca en la barra de navegación.</p>
         </div>
-        <Button 
-          variant="outline" 
-          onClick={reset}
-          className="flex items-center gap-2 border-red-100 text-red-600 hover:bg-red-50 hover:border-red-200"
-        >
-          <RefreshCw size={18} />
-          Restaurar por defecto
-        </Button>
+        <div className="flex gap-3">
+          <Button 
+            variant="outline" 
+            onClick={handleReset}
+            className="flex items-center gap-2 border-red-100 text-red-600 hover:bg-red-50 hover:border-red-200"
+          >
+            <RefreshCw size={18} />
+            Restaurar por defecto
+          </Button>
+          <Button 
+            onClick={handleSave}
+            className={cn(
+              "flex items-center gap-2 transition-all duration-500 min-w-40",
+              isSaved ? "bg-green-500 hover:bg-green-600 ring-4 ring-green-100" : "bg-primary hover:bg-primary-dark"
+            )}
+          >
+            {isSaved ? (
+              <>
+                <CheckCircle size={18} />
+                ¡Cambios Guardados!
+              </>
+            ) : (
+              <>
+                <Save size={18} />
+                Guardar Cambios
+              </>
+            )}
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -78,8 +133,8 @@ export default function NavbarSettingsView() {
                 </label>
                 <Input 
                   placeholder="https://ejemplo.com/logo.png"
-                  value={logoUrl}
-                  onChange={(e) => setLogoUrl(e.target.value)}
+                  value={localSettings.logoUrl}
+                  onChange={(e) => updateLocal('logoUrl', e.target.value)}
                   className="bg-gray-50/50 border-gray-200 focus:bg-white"
                 />
               </div>
@@ -89,8 +144,8 @@ export default function NavbarSettingsView() {
                   <label className="block font-bold text-gray-700 mb-1.5 text-xs">Altura Logo (px)</label>
                   <Input 
                     type="number"
-                    value={logoSize}
-                    onChange={(e) => setLogoSize(Number(e.target.value))}
+                    value={localSettings.logoSize}
+                    onChange={(e) => updateLocal('logoSize', Number(e.target.value))}
                     min="10"
                     max="100"
                     className="bg-gray-50/50 border-gray-200"
@@ -100,8 +155,8 @@ export default function NavbarSettingsView() {
                   <label className="block font-bold text-gray-700 mb-1.5 text-xs">Tamaño Texto (px)</label>
                   <Input 
                     type="number"
-                    value={textSize}
-                    onChange={(e) => setTextSize(Number(e.target.value))}
+                    value={localSettings.textSize}
+                    onChange={(e) => updateLocal('textSize', Number(e.target.value))}
                     min="10"
                     max="60"
                     className="bg-gray-50/50 border-gray-200"
@@ -110,11 +165,26 @@ export default function NavbarSettingsView() {
               </div>
 
               <div>
+                <label className="text-sm font-bold text-gray-700 mb-1.5 flex justify-between items-center">
+                  <span>Espacio Logo - Texto (px)</span>
+                  <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">{localSettings.logoTextSpacing}px</span>
+                </label>
+                <input 
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={localSettings.logoTextSpacing}
+                  onChange={(e) => updateLocal('logoTextSpacing', Number(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                />
+              </div>
+
+              <div>
                 <label className="block text-sm font-bold text-gray-700 mb-1.5">Fuente del Texto</label>
                 <div className="flex flex-col gap-3">
                   <select 
-                    value={fontFamily}
-                    onChange={(e) => setFontFamily(e.target.value as any)}
+                    value={localSettings.fontFamily}
+                    onChange={(e) => updateLocal('fontFamily', e.target.value as any)}
                     className="w-full h-10 px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all font-medium text-sm"
                   >
                     <option value="sans">Sans Serif (Moderna)</option>
@@ -131,7 +201,7 @@ export default function NavbarSettingsView() {
                       onChange={handleFontUpload}
                       className="text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-primary file:text-white hover:file:bg-primary-dark cursor-pointer"
                     />
-                    {customFontUrl && (
+                    {localSettings.customFontUrl && (
                       <p className="text-[10px] text-green-600 mt-2 font-bold flex items-center gap-1">
                         <Save size={10} /> Fuente subida correctamente
                       </p>
@@ -145,8 +215,8 @@ export default function NavbarSettingsView() {
                 <div className="flex gap-2">
                    <Input 
                     placeholder="Ej. L-SPA"
-                    value={brandText}
-                    onChange={(e) => setBrandText(e.target.value)}
+                    value={localSettings.brandText}
+                    onChange={(e) => updateLocal('brandText', e.target.value)}
                     className="bg-gray-50/50 border-gray-200 focus:bg-white font-serif"
                   />
                 </div>
@@ -172,8 +242,8 @@ export default function NavbarSettingsView() {
                 </span>
                 <input 
                   type="checkbox" 
-                  checked={showLogo} 
-                  onChange={(e) => setShowLogo(e.target.checked)}
+                  checked={localSettings.showLogo} 
+                  onChange={(e) => updateLocal('showLogo', e.target.checked)}
                   className="w-5 h-5 accent-primary cursor-pointer"
                 />
               </label>
@@ -187,8 +257,8 @@ export default function NavbarSettingsView() {
                 </span>
                 <input 
                   type="checkbox" 
-                  checked={showText} 
-                  onChange={(e) => setShowText(e.target.checked)}
+                  checked={localSettings.showText} 
+                  onChange={(e) => updateLocal('showText', e.target.checked)}
                   className="w-5 h-5 accent-primary cursor-pointer"
                 />
               </label>
@@ -197,11 +267,11 @@ export default function NavbarSettingsView() {
         </div>
 
         {/* Vista Previa */}
-        <div className="lg:sticky lg:top-24 space-y-6">
+        <div className="lg:sticky lg:top-36 space-y-6">
           <Card className="overflow-hidden border-2 border-primary/20 shadow-xl shadow-primary/5">
             <div className="bg-primary/5 px-6 py-4 border-b border-primary/10 flex justify-between items-center">
                <Typography variant="h3" className="text-sm font-black text-primary uppercase tracking-widest">
-                 Previsualización en tiempo real
+                 Vista Previa (Sin Guardar)
                </Typography>
                <span className="flex gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-400"></span>
@@ -210,56 +280,32 @@ export default function NavbarSettingsView() {
                </span>
             </div>
             
-            <div className="bg-white/40 backdrop-blur-md p-12 flex items-center justify-center min-h-50 border-b border-gray-100">
-               <div className="flex items-center group cursor-default">
-                  {showLogo && (
-                    <div className="flex items-center justify-center mr-3 scale-150 transform transition-transform group-hover:scale-160">
-                      <img 
-                        src={logoUrl || logoLocal} 
-                        alt="Preview Logo" 
-                        style={{ height: `${logoSize}px` }}
-                        className="w-auto" 
-                      />
-                    </div>
-                  )}
-                  {showText && (
-                    <span 
-                      style={{ 
-                        fontSize: `${textSize}px`,
-                        fontFamily: fontFamily === 'custom' ? 'CustomNavbarFont' : fontFamily === 'serif' ? 'serif' : fontFamily === 'mono' ? 'monospace' : 'inherit'
-                      }}
-                      className={cn(
-                        "font-black bg-linear-to-r from-primary to-primary-dark bg-clip-text text-transparent tracking-tighter uppercase ml-2",
-                        fontFamily === 'serif' && "font-serif"
-                      )}
-                    >
-                       {brandText}
-                    </span>
-                  )}
+            <div className="bg-white/40 backdrop-blur-md border-b border-gray-100 min-h-40 overflow-hidden">
+               {/* Usamos el NavBar real pero con los settings locales inyectados */}
+               <div className="pointer-events-none transform scale-90 md:scale-100 origin-center">
+                  <NavBar user={null} previewSettings={localSettings} />
                </div>
             </div>
 
-            <div className="p-6 bg-gray-50 border-t border-gray-100">
-               <div className="flex gap-4">
-                  <div className="flex-1 space-y-2">
-                     <div className="h-2 w-2/3 bg-gray-200 rounded-full"></div>
-                     <div className="h-2 w-full bg-gray-100 rounded-full"></div>
-                  </div>
-                  <div className="h-8 w-8 bg-gray-200 rounded-full"></div>
-               </div>
+            <div className="p-8 bg-gray-50/50 flex flex-col items-center text-center">
+               <div className="w-16 h-1 bg-gray-200 rounded-full mb-6"></div>
+               <Typography variant="h4" className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Diseño del Encabezado</Typography>
+               <p className="text-[10px] text-gray-400 max-w-50 leading-relaxed italic">
+                 "Así es como se verá el encabezado principal de tu sitio web en todas las páginas."
+               </p>
             </div>
           </Card>
 
-          <Card className="p-6 bg-primary text-white overflow-hidden relative group">
-             <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:rotate-12 transition-transform">
-                <Save size={120} />
+          {!isSaved && (
+             <div className="px-6 py-4 bg-amber-50 rounded-2xl border border-amber-100 flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
+                <div className="p-1.5 bg-amber-100 rounded-lg text-amber-600 mt-0.5">
+                   <Info size={16} />
+                </div>
+                <div className="text-xs text-amber-800 font-medium leading-relaxed">
+                   Tienes cambios sin guardar. Los visitantes del sitio no los verán hasta que hagas clic en <span className="font-bold underline">Guardar Cambios</span>.
+                </div>
              </div>
-             <p className="text-sm font-medium opacity-90 mb-2 uppercase tracking-widest">Estado del Guardado</p>
-             <h4 className="text-2xl font-black mb-4 tracking-tight">Cambios Instantáneos</h4>
-             <p className="text-sm text-primary-light leading-relaxed">
-               Tus ajustes se guardan automáticamente en el navegador y se aplican a todo el sitio web de inmediato.
-             </p>
-          </Card>
+          )}
         </div>
       </div>
     </div>
