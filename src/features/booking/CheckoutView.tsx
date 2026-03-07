@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { fetchServiceById } from '@models/servicesModel';
 import { addAppointment } from '@models/citasModel';
 import { useCart } from '@context/CartContext';
-import TimePicker from './TimePicker';
+import TimePicker from '@features/booking/TimePicker';
 import { 
   ChevronLeft, 
   CreditCard, 

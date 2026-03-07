@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
-import { cn } from './Button';
+import { cn } from '@components/ui/Button';
 
 type ToastType = 'success' | 'error' | 'info' | 'warning';
 

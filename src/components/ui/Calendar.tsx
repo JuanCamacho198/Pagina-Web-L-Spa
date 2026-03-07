@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
-import { cn } from './Button';
-import { Typography } from './Typography';
+import { cn } from '@components/ui/Button';
+import { Typography } from '@components/ui/Typography';
 
 interface CalendarProps {
   selectedDate?: string; // YYYY-MM-DD

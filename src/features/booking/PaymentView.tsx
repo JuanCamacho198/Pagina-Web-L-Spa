@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ShieldCheck, CreditCard, Wallet, Smartphone, Landmark, CheckCircle2, ChevronRight, Lock } from 'lucide-react';
-import PaymentSuccessModal from './PaymentSuccessModal';
+import PaymentSuccessModal from '@features/booking/PaymentSuccessModal';
 
 // --- IMÁGENES (Manteniendo las rutas actuales) ---
-import creditCardImage from '../../assets/epayco-pagos.png';
-import pseImage from '../../assets/PSE.png';
-import Nequi from '../../assets/Nequi.png';
-import bancolombia from '../../assets/bancolombia.png';
+import creditCardImage from '@/assets/epayco-pagos.png';
+import pseImage from '@/assets/PSE.png';
+import Nequi from '@/assets/Nequi.png';
+import bancolombia from '@/assets/bancolombia.png';
 
 const AVAILABLE_PAYMENT_METHODS = [
   { id: 'credit_card', name: 'Tarjeta Crédito/Débito', image: creditCardImage, icon: CreditCard },
