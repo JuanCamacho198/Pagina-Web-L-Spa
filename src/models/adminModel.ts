@@ -74,3 +74,43 @@ export async function fetchAdminStats() {
     throw new Error(e.message || "Error al obtener estadísticas.");
   }
 }
+
+/**
+ * Obtiene todos los usuarios para la gestión administrativa.
+ */
+export async function fetchAllUsers() {
+  try {
+    const results = await db.select({
+      id: users.id,
+      firstName: users.firstName,
+      lastName: users.lastName,
+      email: users.email,
+      role: users.role,
+      createdAt: users.createdAt,
+      phone: users.phone,
+    })
+    .from(users)
+    .orderBy(desc(users.createdAt));
+
+    return results;
+  } catch (e: any) {
+    console.error("Error fetching all users:", e);
+    throw new Error(e.message || "Error al obtener todos los usuarios.");
+  }
+}
+
+/**
+ * Actualiza el rol de un usuario.
+ * @param userId - ID del usuario.
+ * @param role - Nuevo rol ('admin', 'employee', 'customer').
+ */
+export async function updateUserRole(userId: string, role: 'admin' | 'employee' | 'customer') {
+  try {
+    await db.update(users)
+      .set({ role })
+      .where(eq(users.id, userId));
+  } catch (e: any) {
+    console.error("Error updating user role:", e);
+    throw new Error(e.message || "Error al actualizar el rol del usuario.");
+  }
+}

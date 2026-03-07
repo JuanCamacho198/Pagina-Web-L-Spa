@@ -34,6 +34,7 @@ import AboutView from '@/features/static/AboutView';
 
 import AdminDashboardView from '@/features/admin/AdminDashboardView';
 import AdminServicesListView from '@/features/admin/AdminServicesListView';
+import AdminUsersListView from '@/features/admin/AdminUsersListView';
 import CreateServiceView from '@/features/admin/CreateServiceView';
 import EditServiceView from '@/features/admin/EditServiceView';
 
@@ -87,6 +88,7 @@ export default function App() {
 
               {/* Rutas de Administración */}
               <Route path="/admin" element={<AdminDashboardView />} />
+              <Route path="/admin/users" element={<AdminUsersListView />} />
               <Route path="/admin/services" element={<AdminServicesListView />} />
               <Route path="/admin/services/new" element={<CreateServiceView />} />
               <Route path="/admin/services/edit/:id" element={<EditServiceView />} />

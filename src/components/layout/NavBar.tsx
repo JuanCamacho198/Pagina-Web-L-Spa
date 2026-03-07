@@ -175,7 +175,7 @@ export default function NavBar({ user }: NavBarProps) {
               ) : (
                 <div className="hidden md:flex items-center gap-3">
                   <button onClick={() => loginWithRedirect()} className="px-5 py-2.5 text-sm font-bold text-gray-700 hover:text-primary transition-colors">
-                    Log in
+                    INICIA SESION
                   </button>
                   <button 
                     onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
