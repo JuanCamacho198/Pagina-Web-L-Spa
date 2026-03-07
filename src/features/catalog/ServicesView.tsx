@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllServices } from '../../controllers/servicesController';
 import Footer from '../../components/layout/Footer';
-import { Filter, SortAsc, MessageCircle, ArrowRight, Loader2, Search } from 'lucide-react';
+import { Filter, SortAsc, MessageCircle, ArrowRight, Search } from 'lucide-react';
 import { Service } from '../../types';
+import { ServiceCardSkeleton } from '../../components/ui/Skeleton';
 
 export default function ServicesView() {
   const [services, setServices] = useState<Service[]>([]);
@@ -130,9 +131,10 @@ export default function ServicesView() {
 
         {/* Grid de Servicios */}
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-24">
-            <Loader2 className="text-primary animate-spin mb-4" size={48} />
-            <p className="text-gray-500 font-medium animate-pulse">Cargando experiencias únicas...</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {[...Array(8)].map((_, i) => (
+              <ServiceCardSkeleton key={i} />
+            ))}
           </div>
         ) : filteredServices.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

@@ -29,6 +29,10 @@ import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Typography } from '../../components/ui/Typography';
 import { Badge } from '../../components/ui/Badge';
+import { Modal } from '../../components/ui/Modal';
+import { useToast } from '../../components/ui/Toast';
+import { fetchAppointments, deleteAppointment } from '../../models/citasModel';
+import { Appointment } from '../../types';
 
 const profileSchema = z.object({
   firstName: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
@@ -43,10 +47,15 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 export default function ProfileView() {
   const { user, logout, isAuthenticated, isLoading: authLoading } = useAuth0();
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loadingCitas, setLoadingCitas] = useState(false);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState<'personal' | 'citas' | 'configuracion'>('personal');
-  const [notification, setNotification] = useState<{message: string, type: 'success' | 'error'} | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [appointmentToDelete, setAppointmentToDelete] = useState<string | null>(null);
+  
+  const { success, error: toastError } = useToast();
   const navigate = useNavigate();
 
   const {
@@ -57,11 +66,6 @@ export default function ProfileView() {
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
   });
-
-  const showNotification = (message: string, type: 'success' | 'error' = 'success') => {
-    setNotification({ message, type });
-    setTimeout(() => setNotification(null), 4000);
-  };
 
   const loadProfile = async () => {
     if (!user?.sub) return;
@@ -75,11 +79,27 @@ export default function ProfileView() {
     }
   };
 
+  const loadAppointments = async () => {
+    if (!user?.sub) return;
+    setLoadingCitas(true);
+    try {
+      const data = await fetchAppointments(user.sub);
+      setAppointments(data);
+    } catch (err: any) {
+      toastError("Error al cargar citas");
+    } finally {
+      setLoadingCitas(false);
+    }
+  };
+
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
       loadProfile();
+      if (activeTab === 'citas') {
+        loadAppointments();
+      }
     }
-  }, [user, isAuthenticated, authLoading]);
+  }, [user, isAuthenticated, authLoading, activeTab]);
 
   useEffect(() => {
     if (profile) {
@@ -99,11 +119,30 @@ export default function ProfileView() {
     try {
       await saveProfileChanges(user.sub, data);
       await loadProfile();
-      showNotification('Perfil actualizado correctamente');
+      success('Perfil actualizado correctamente');
     } catch (err: any) {
-      showNotification(err.message || 'Error al actualizar el perfil', 'error');
+      toastError(err.message || 'Error al actualizar el perfil');
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleCancelClick = (id: string) => {
+    setAppointmentToDelete(id);
+    setIsModalOpen(true);
+  };
+
+  const confirmCancel = async () => {
+    if (!appointmentToDelete) return;
+    try {
+      await deleteAppointment(appointmentToDelete);
+      setAppointments(prev => prev.filter(a => a.id !== appointmentToDelete));
+      success("Cita cancelada con éxito");
+    } catch (err: any) {
+      toastError("No se pudo cancelar la cita");
+    } finally {
+      setIsModalOpen(false);
+      setAppointmentToDelete(null);
     }
   };
 
@@ -208,17 +247,8 @@ export default function ProfileView() {
 
           {/* Main Content Area */}
           <div className="lg:col-span-9">
-            {notification && (
-              <div className={`mb-6 p-4 rounded-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 ${
-                notification.type === 'success' ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-700 border border-red-100'
-              }`}>
-                {notification.type === 'success' ? <CheckCircle2 size={20} /> : <AlertCircle size={20} />}
-                <span className="font-medium">{notification.message}</span>
-              </div>
-            )}
-
             {activeTab === 'personal' && (
-              <Card className="bg-white p-8 rounded-3xl border-none shadow-xl shadow-gray-200/50">
+              <Card className="bg-white p-8 rounded-3xl border-none shadow-xl shadow-gray-200/50 animate-in fade-in slide-in-from-right-4 duration-500">
                 <div className="flex items-center justify-between mb-8">
                   <div>
                     <Typography variant="h3">Información Personal</Typography>
@@ -232,7 +262,7 @@ export default function ProfileView() {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Typography variant="small" className="text-gray-700 ml-1">Nombre</Typography>
+                      <Typography variant="small" className="text-gray-700 ml-1 font-semibold">Nombre</Typography>
                       <Input 
                         {...register('firstName')} 
                         placeholder="Tu nombre" 
@@ -240,7 +270,7 @@ export default function ProfileView() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Typography variant="small" className="text-gray-700 ml-1">Apellido</Typography>
+                      <Typography variant="small" className="text-gray-700 ml-1 font-semibold">Apellido</Typography>
                       <Input 
                         {...register('lastName')} 
                         placeholder="Tu apellido" 
@@ -250,7 +280,7 @@ export default function ProfileView() {
                   </div>
 
                   <div className="space-y-2">
-                    <Typography variant="small" className="text-gray-700 ml-1">Correo Electrónico</Typography>
+                    <Typography variant="small" className="text-gray-700 ml-1 font-semibold">Correo Electrónico</Typography>
                     <Input 
                       {...register('email')} 
                       readOnly 
@@ -263,7 +293,7 @@ export default function ProfileView() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Typography variant="small" className="text-gray-700 ml-1">Teléfono Móvil</Typography>
+                      <Typography variant="small" className="text-gray-700 ml-1 font-semibold">Teléfono Móvil</Typography>
                       <Input 
                         {...register('phone')} 
                         placeholder="+57 321..." 
@@ -271,7 +301,7 @@ export default function ProfileView() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Typography variant="small" className="text-gray-700 ml-1">Fecha de Nacimiento</Typography>
+                      <Typography variant="small" className="text-gray-700 ml-1 font-semibold">Fecha de Nacimiento</Typography>
                       <Input 
                         type="date" 
                         {...register('birthDate')} 
@@ -284,7 +314,7 @@ export default function ProfileView() {
                     <Button 
                       type="submit" 
                       disabled={isSaving}
-                      className="px-10 py-6 rounded-2xl shadow-xl shadow-primary/20 min-w-50"
+                      className="px-10 py-6 rounded-2xl shadow-xl shadow-primary/20 min-w-[200px]"
                     >
                       {isSaving ? (
                         <>
@@ -301,35 +331,89 @@ export default function ProfileView() {
             )}
 
             {activeTab === 'citas' && (
-              <div className="space-y-6">
-                <Card className="p-8 text-center bg-white shadow-xl rounded-3xl border-none">
-                  <div className="w-20 h-20 bg-primary/5 rounded-full flex items-center justify-center text-primary mx-auto mb-6">
-                    <ShoppingBag size={40} />
-                  </div>
-                  <Typography variant="h3">Mis Citas</Typography>
-                  <Typography className="text-gray-500 mb-8 max-w-sm mx-auto">Pronto podrás ver el historial de tus citas y servicios realizados aquí.</Typography>
-                  <Button onClick={() => navigate('/appointments')} variant="outline" className="px-8 border-gray-100">
-                    Ir al Calendario
+              <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
+                <div className="flex items-center justify-between mb-4 px-2">
+                  <Typography variant="h3" className="m-0">Mis Citas</Typography>
+                  <Button onClick={() => navigate('/services')} variant="ghost" size="sm" className="text-primary hover:bg-primary/5 rounded-xl font-bold">
+                    + Nueva Reserva
                   </Button>
-                </Card>
+                </div>
+
+                {loadingCitas ? (
+                    <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
+                      <Loader2 className="animate-spin text-primary mb-4" size={40} />
+                      <p className="text-gray-500 font-medium">Buscando tus reservas...</p>
+                    </div>
+                ) : appointments.length > 0 ? (
+                  <div className="grid gap-4">
+                    {appointments.map((cita) => (
+                      <Card key={cita.id} className="p-6 bg-white border-none shadow-md hover:shadow-lg transition-shadow rounded-3xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                          <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                            <SparkleIcon size={32} />
+                          </div>
+                          <div>
+                            <Typography className="font-bold text-lg md:text-xl m-0 text-gray-900 border-none">{cita.serviceName || 'Servicio de Spa'}</Typography>
+                            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
+                              <span className="text-sm text-gray-500 flex items-center gap-1.5 font-medium">
+                                <Calendar size={14} className="text-primary/60" /> {cita.appointmentDate}
+                              </span>
+                              <span className="text-sm text-gray-500 flex items-center gap-1.5 font-medium">
+                                <Clock size={14} className="text-primary/60" /> {cita.appointmentTime}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 w-full md:w-auto mt-2 md:mt-0 justify-between md:justify-end border-t md:border-t-0 pt-4 md:pt-0">
+                          <Badge className={cn(
+                            "px-4 py-1.5 rounded-full font-bold uppercase tracking-wider text-[10px] border-none",
+                            cita.status === 'pending' ? "bg-amber-100 text-amber-700" : "bg-green-100 text-green-700"
+                          )}>
+                            {cita.status === 'pending' ? 'Pendiente' : 'Confirmada'}
+                          </Badge>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => handleCancelClick(cita.id)}
+                            className="text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl font-bold"
+                          >
+                            Cancelar
+                          </Button>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                ) : (
+                  <Card className="p-12 text-center bg-white shadow-xl rounded-3xl border-none">
+                    <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mx-auto mb-6 border-2 border-dashed border-gray-200">
+                      <ShoppingBag size={48} />
+                    </div>
+                    <Typography variant="h3">Aún no tienes citas</Typography>
+                    <Typography className="text-gray-500 mb-8 max-w-sm mx-auto">Tus próximas experiencias de relajación aparecerán aquí cuando reserves un servicio.</Typography>
+                    <Button onClick={() => navigate('/services')} className="px-10 py-6 rounded-2xl shadow-xl shadow-primary/20">
+                      Explorar Servicios
+                    </Button>
+                  </Card>
+                )}
               </div>
             )}
 
             {activeTab === 'configuracion' && (
-              <Card className="p-8 bg-white shadow-xl rounded-3xl border-none">
+              <Card className="p-8 bg-white shadow-xl rounded-3xl border-none animate-in fade-in slide-in-from-right-4 duration-500">
                 <Typography variant="h3" className="mb-6">Privacidad y Seguridad</Typography>
                 <div className="space-y-4">
                   {[
                     { title: 'Notificaciones por Email', desc: 'Recibe recordatorios de tus citas.', status: true },
                     { title: 'Perfil Público', desc: 'Permite que otros vean tu progreso (Premium).', status: false },
+                    { title: 'Seguridad en dos pasos', desc: 'Protege tu cuenta con verificación adicional.', status: false },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between py-4 border-b border-gray-50 last:border-none">
+                    <div key={i} className="flex items-center justify-between py-6 border-b border-gray-50 last:border-none">
                       <div>
-                        <Typography className="font-bold text-gray-800 m-0">{item.title}</Typography>
+                        <Typography className="font-bold text-gray-800 m-0 text-lg">{item.title}</Typography>
                         <Typography variant="small" className="text-gray-500 mt-1">{item.desc}</Typography>
                       </div>
-                      <div className={`w-12 h-6 rounded-full p-1 cursor-pointer transition-all duration-300 ${item.status ? 'bg-primary' : 'bg-gray-200'}`}>
-                        <div className={`w-4 h-4 bg-white rounded-full transition-transform duration-300 ${item.status ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                      <div className={`w-14 h-8 rounded-full p-1 cursor-pointer transition-all duration-300 ${item.status ? 'bg-primary shadow-inner shadow-primary-dark/20' : 'bg-gray-200'}`}>
+                        <div className={`w-6 h-6 bg-white rounded-full shadow-sm transition-transform duration-300 ${item.status ? 'translate-x-6' : 'translate-x-0'}`}></div>
                       </div>
                     </div>
                   ))}
@@ -337,6 +421,34 @@ export default function ProfileView() {
               </Card>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* Confirmation Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Cancelar Cita"
+        footer={
+          <div className="flex gap-4 w-full">
+            <Button variant="ghost" onClick={() => setIsModalOpen(false)} className="flex-1 rounded-2xl">Mantener Cita</Button>
+            <Button variant="danger" onClick={confirmCancel} className="flex-1 rounded-2xl shadow-lg shadow-red-100">Sí, Cancelar</Button>
+          </div>
+        }
+      >
+        <div className="text-center py-4">
+          <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <AlertCircle size={32} />
+          </div>
+          <Typography variant="h4" className="mb-2">¿Estás seguro?</Typography>
+          <Typography className="text-gray-500">
+            Esta acción no se puede deshacer. Tu espacio quedará disponible para otros clientes.
+          </Typography>
+        </div>
+      </Modal>
+    </div>
+  );
+}
         </div>
       </div>
     </div>

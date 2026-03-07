@@ -5,8 +5,9 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import "./index.css";
 import App from "./App";
 import { CartProvider } from "./context/CartContext";
+import { ToastProvider } from "./components/ui/Toast";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Auth0Provider
       domain={import.meta.env.VITE_AUTH0_DOMAIN}
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       useRefreshTokens={true}
     >
       <CartProvider>
-        <App />
+        <ToastProvider>
+          <App />
+        </ToastProvider>
       </CartProvider>
     </Auth0Provider>
   </React.StrictMode>
