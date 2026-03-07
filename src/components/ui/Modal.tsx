@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 import { Typography } from '@components/ui/Typography';
-import { cn } from '@components/ui/Button';
+import { cn } from '@/lib/utils';
 
 interface ModalProps {
   isOpen: boolean;

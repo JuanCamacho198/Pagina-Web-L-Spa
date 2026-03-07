@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
-import { cn } from '@components/ui/Button';
+import { cn } from '@/lib/utils';
 import { Typography } from '@components/ui/Typography';
 
 interface CalendarProps {
@@ -104,7 +104,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   return (
     <div className="p-6 bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 max-w-sm mx-auto">
       <div className="flex items-center justify-between mb-6">
-        <Typography variant="h5" className="m-0 font-bold text-gray-800">
+        <Typography variant="h4" className="m-0 font-bold text-gray-800">
           {months[currentMonth.getMonth()]} {currentMonth.getFullYear()}
         </Typography>
         <div className="flex gap-2">

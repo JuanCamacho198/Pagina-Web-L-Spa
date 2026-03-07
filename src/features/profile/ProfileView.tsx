@@ -23,7 +23,7 @@ import {
   Edit3
 } from 'lucide-react';
 import { fetchUserProfile, saveProfileChanges } from '@controllers/userController';
-import { UserProfile } from '@types';
+import { UserProfile, Appointment } from '@/types';
 import { Button } from '@components/ui/Button';
 import { Card } from '@components/ui/Card';
 import { Input } from '@components/ui/Input';
@@ -31,8 +31,8 @@ import { Typography } from '@components/ui/Typography';
 import { Badge } from '@components/ui/Badge';
 import { Modal } from '@components/ui/Modal';
 import { useToast } from '@components/ui/Toast';
+import { cn } from '@/lib/utils';
 import { fetchAppointments, deleteAppointment } from '@models/citasModel';
-import { Appointment } from '@types';
 
 const profileSchema = z.object({
   firstName: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
@@ -314,7 +314,7 @@ export default function ProfileView() {
                     <Button 
                       type="submit" 
                       disabled={isSaving}
-                      className="px-10 py-6 rounded-2xl shadow-xl shadow-primary/20 min-w-[200px]"
+                      className="px-10 py-6 rounded-2xl shadow-xl shadow-primary/20 min-w-50"
                     >
                       {isSaving ? (
                         <>
@@ -446,11 +446,6 @@ export default function ProfileView() {
           </Typography>
         </div>
       </Modal>
-    </div>
-  );
-}
-        </div>
-      </div>
     </div>
   );
 }

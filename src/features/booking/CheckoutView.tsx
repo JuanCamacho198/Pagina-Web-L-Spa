@@ -24,15 +24,16 @@ import {
   Package,
   AlertCircle as AlertIcon
 } from 'lucide-react';
-import { CheckoutFormValues } from '@types';
-import { Button } from '@components/ui/Button';
-import { Card } from '@components/ui/Card';
-import { Input } from '@components/ui/Input';
-import { Typography } from '@components/ui/Typography';
 import { Badge } from '@components/ui/Badge';
 import { Stepper } from '@components/ui/Stepper';
 import { Calendar as CustomCalendar } from '@components/ui/Calendar';
 import { useToast } from '@components/ui/Toast';
+import { cn } from '@/lib/utils';
+import { Button } from '@components/ui/Button';
+import { Card } from '@components/ui/Card';
+import { Input } from '@components/ui/Input';
+import { Typography } from '@components/ui/Typography';
+import { CheckoutFormValues } from '@/types';
 
 const checkoutSchema = z.object({
   name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),

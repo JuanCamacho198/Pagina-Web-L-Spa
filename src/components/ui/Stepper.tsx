@@ -1,6 +1,6 @@
 import React from 'react';
 import { Check } from 'lucide-react';
-import { cn } from '@components/ui/Button';
+import { cn } from '@/lib/utils';
 import { Typography } from '@components/ui/Typography';
 
 interface Step {
@@ -36,7 +36,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep, className 
               >
                 {isCompleted ? <Check size={24} strokeWidth={3} /> : step.id}
               </div>
-              <div className="absolute top-14 text-center w-max min-w-[120px] px-2">
+              <div className="absolute top-14 text-center w-max min-w-30 px-2">
                 <Typography 
                   variant="small" 
                   className={cn(
@@ -47,7 +47,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep, className 
                   {step.label}
                 </Typography>
                 {step.description && (
-                  <p className="text-[10px] text-gray-400 leading-tight mt-0.5 max-w-[100px] mx-auto hidden sm:block">
+                  <p className="text-[10px] text-gray-400 leading-tight mt-0.5 max-w-25 mx-auto hidden sm:block">
                     {step.description}
                   </p>
                 )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
-import { cn } from '@components/ui/Button';
+import { cn } from '@/lib/utils';
 
 type ToastType = 'success' | 'error' | 'info' | 'warning';
 
@@ -50,7 +50,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <ToastContext.Provider value={contextValue}>
       {children}
-      <div className="fixed bottom-4 right-4 z-[9999] flex flex-col gap-3 max-w-sm w-full pointer-events-none">
+      <div className="fixed bottom-4 right-4 z-9999 flex flex-col gap-3 max-w-sm w-full pointer-events-none">
         {toasts.map((toast) => (
           <ToastItem key={toast.id} toast={toast} onClose={() => removeToast(toast.id)} />
         ))}
@@ -79,13 +79,13 @@ const ToastItem: React.FC<{ toast: Toast; onClose: () => void }> = ({ toast, onC
       "pointer-events-auto flex items-center gap-3 p-4 border rounded-2xl shadow-lg transition-all animate-in slide-in-from-right",
       bgColors[toast.type]
     )}>
-      <div className="flex-shrink-0">{icons[toast.type]}</div>
+      <div className="shrink-0">{icons[toast.type]}</div>
       <p className="flex-1 text-sm font-medium text-gray-800 leading-tight">
         {toast.message}
       </p>
       <button 
         onClick={onClose}
-        className="flex-shrink-0 p-1 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-black/5"
+        className="shrink-0 p-1 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-black/5"
       >
         <X size={16} />
       </button>
