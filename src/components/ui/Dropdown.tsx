@@ -31,8 +31,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
     <div className={`relative inline-block ${className}`}>
       {/* Trigger Button con popovertarget */}
       <div 
-        // @ts-ignore - Atributo popovertarget es de CSS moderno
-        popovertarget={popoverId}
+        // @ts-ignore - Atributo popoverTarget es el nombre de propiedad React para popovertarget
+        popoverTarget={popoverId}
         style={{ cursor: 'pointer' }}
       >
         {trigger}

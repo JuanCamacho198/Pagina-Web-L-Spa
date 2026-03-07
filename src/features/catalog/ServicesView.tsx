@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllServices } from '@/controllers/servicesController';
 import Footer from '@/components/layout/Footer';
-import { Filter, SortAsc, MessageCircle, ArrowRight, Search } from 'lucide-react';
+import { Filter, SortAsc, MessageCircle, ArrowRight, Search, ChevronDown } from 'lucide-react';
 import { Service } from '@/types';
 import { ServiceCardSkeleton } from '@/components/ui/Skeleton';
+import { SearchBar } from '@/components/ui/SearchBar';
+import { Dropdown } from '@/components/ui/Dropdown';
+import { Button } from '@/components/ui/Button';
 
 export default function ServicesView() {
   const [services, setServices] = useState<Service[]>([]);
@@ -81,14 +84,11 @@ export default function ServicesView() {
         {/* Filtros y Búsqueda */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-12 flex flex-col lg:flex-row gap-6 items-center justify-between">
           
-          <div className="relative w-full lg:max-w-xs">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-            <input 
-              type="text" 
+          <div className="w-full lg:max-w-xs">
+            <SearchBar 
+              value={searchTerm} 
+              onChange={setSearchTerm} 
               placeholder="Buscar servicio..."
-              className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
 
@@ -96,31 +96,43 @@ export default function ServicesView() {
             {/* Categoría */}
             <div className="flex items-center gap-3">
               <Filter size={18} className="text-primary" />
-              <select 
-                className="bg-transparent font-medium text-gray-700 outline-none cursor-pointer hover:text-primary transition-colors pr-8"
-                value={selectedCategory} 
-                onChange={e => setSelectedCategory(e.target.value)}
-              >
-                {categories.map((cat, index) => (
-                  <option key={index} value={cat}>{cat}</option>
-                ))}
-              </select>
+              <Dropdown
+                align="left"
+                trigger={
+                  <Button variant="ghost" size="sm" className="flex gap-2 font-medium text-gray-700">
+                    {selectedCategory}
+                    <ChevronDown size={14} />
+                  </Button>
+                }
+                items={categories.map(cat => ({
+                  label: cat,
+                  onClick: () => setSelectedCategory(cat)
+                }))}
+              />
             </div>
 
             {/* Orden */}
             <div className="flex items-center gap-3 border-l border-gray-200 pl-6">
               <SortAsc size={18} className="text-primary" />
-              <select 
-                className="bg-transparent font-medium text-gray-700 outline-none cursor-pointer hover:text-primary transition-colors pr-8"
-                value={sortOption} 
-                onChange={e => setSortOption(e.target.value)}
-              >
-                <option value="">Ordenar por</option>
-                <option value="nombre-asc">Nombre A-Z</option>
-                <option value="nombre-desc">Nombre Z-A</option>
-                <option value="precio-asc">Precio: Menor a Mayor</option>
-                <option value="precio-desc">Precio: Mayor a Menor</option>
-              </select>
+              <Dropdown
+                align="left"
+                trigger={
+                  <Button variant="ghost" size="sm" className="flex gap-2 font-medium text-gray-700">
+                    {sortOption === 'nombre-asc' ? 'Nombre A-Z' :
+                     sortOption === 'nombre-desc' ? 'Nombre Z-A' :
+                     sortOption === 'precio-asc' ? 'Precio: Menor a Mayor' :
+                     sortOption === 'precio-desc' ? 'Precio: Mayor a Menor' :
+                     'Ordenar por'}
+                    <ChevronDown size={14} />
+                  </Button>
+                }
+                items={[
+                  { label: 'Nombre A-Z', onClick: () => setSortOption('nombre-asc') },
+                  { label: 'Nombre Z-A', onClick: () => setSortOption('nombre-desc') },
+                  { label: 'Precio: Menor a Mayor', onClick: () => setSortOption('precio-asc') },
+                  { label: 'Precio: Mayor a Menor', onClick: () => setSortOption('precio-desc') },
+                ]}
+              />
             </div>
           </div>
 
