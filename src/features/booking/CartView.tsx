@@ -115,11 +115,11 @@ export default function CartView() {
                 >
                   <div className="w-24 h-24 rounded-xl bg-gray-100 overflow-hidden shrink-0">
                     <img 
-                      src={item.imageUrl || '/assets/bannerSpa.avif'} 
+                      src={item.imageUrl || '/src/assets/banners/bannerSpa.avif'} 
                       alt={item.serviceName}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/assets/bannerSpa.avif';
+                        (e.target as HTMLImageElement).src = '/src/assets/banners/bannerSpa.avif';
                       }}
                     />
                   </div>

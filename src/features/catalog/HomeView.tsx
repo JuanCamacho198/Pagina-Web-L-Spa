@@ -48,8 +48,8 @@ function HomeView() {
         <section className="relative h-[80vh] flex items-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img 
-              src="/src/assets/bannerSpa.avif" 
-              alt="L-Spa Banner" 
+              src="/src/assets/banners/bannerSpa.avif" 
+              alt="L-SPA Banner" 
               loading="lazy"
               className="w-full h-full object-cover brightness-50"
             />

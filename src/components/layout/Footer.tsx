@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/logo2.png';
+import logo from '@assets/logos/LOGO4x-sinfondo.png';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, MessageCircle, Mail, Phone, MapPin, Clock } from 'lucide-react';
 
@@ -16,8 +16,8 @@ const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="L-Spa logo" className="h-12 w-auto brightness-110" />
-              <h4 className="text-xl font-bold tracking-tight">L-Spa</h4>
+              <img src={logo} alt="L-SPA logo" className="h-12 w-auto brightness-110" />
+              <h4 className="text-xl font-bold tracking-tight uppercase">L-SPA</h4>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Tu refugio de bienestar y relajación. Expertos en masajes, tratamientos faciales y cuidado personal.

@@ -11,8 +11,8 @@ export default function AboutView() {
       <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="/assets/bannerSpa.avif" 
-            alt="Spa Atmosphere" 
+            src="/src/assets/banners/bannerSpa.avif" 
+            alt="L-SPA Banner" 
             loading="lazy"
             className="w-full h-full object-cover brightness-[0.4]"
           />
@@ -112,7 +112,7 @@ export default function AboutView() {
       {/* CTA Final */}
       <section className="py-24 px-4 text-center">
         <div className="max-w-4xl mx-auto p-12 md:p-20 bg-primary rounded-[3.5rem] shadow-2xl shadow-primary/30 relative overflow-hidden group">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('/assets/bannerSpa.avif')] opacity-20 object-cover scale-150 group-hover:scale-125 transition-transform duration-1000"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('/src/assets/banners/bannerSpa.avif')] opacity-20 object-cover scale-150 group-hover:scale-125 transition-transform duration-1000"></div>
           <div className="relative z-10">
             <h2 className="text-white text-3xl md:text-5xl font-black mb-8 tracking-tight">
               ¿Listo para tu transformación?

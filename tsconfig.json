@@ -24,7 +24,8 @@
       "@types/*": ["types/*"],
       "@context/*": ["context/*"],
       "@controllers/*": ["controllers/*"],
-      "@models/*": ["models/*"]
+      "@models/*": ["models/*"],
+      "@assets/*": ["assets/*"]
     }
   },
   "include": ["src"],

@@ -17,6 +17,7 @@ export default defineConfig({
       '@context': path.resolve(__dirname, './src/context'),
       '@controllers': path.resolve(__dirname, './src/controllers'),
       '@models': path.resolve(__dirname, './src/models'),
+      '@assets': path.resolve(__dirname, './src/assets'),
     },
   },
 })

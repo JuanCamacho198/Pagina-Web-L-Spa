@@ -4,10 +4,10 @@ import { ShieldCheck, CreditCard, Wallet, Smartphone, Landmark, CheckCircle2, Ch
 import PaymentSuccessModal from '@/features/booking/PaymentSuccessModal';
 
 // --- IMÁGENES (Manteniendo las rutas actuales) ---
-import creditCardImage from '@/assets/epayco-pagos.png';
-import pseImage from '@/assets/PSE.png';
-import Nequi from '@/assets/Nequi.png';
-import bancolombia from '@/assets/bancolombia.png';
+import creditCardImage from '@assets/payment/epayco-pagos.png';
+import pseImage from '@assets/payment/PSE.png';
+import Nequi from '@assets/payment/Nequi.png';
+import bancolombia from '@assets/payment/Bancolombia.png';
 
 const AVAILABLE_PAYMENT_METHODS = [
   { id: 'credit_card', name: 'Tarjeta Crédito/Débito', image: creditCardImage, icon: CreditCard },
@@ -145,7 +145,7 @@ export default function PaymentView() {
             </div>
             
             <div className="flex items-center justify-center gap-6 opacity-30">
-                <img src="/assets/epayco-pagos.png" className="h-6 grayscale" alt="Secure" />
+                <img src="/src/assets/payment/epayco-pagos.png" className="h-6 grayscale" alt="Secure" />
                 <div className="h-4 w-px bg-gray-400"></div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-gray-600">Transacción 100% Protegida</p>
             </div>
