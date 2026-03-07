@@ -4,7 +4,7 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Firebase](https://img.shields.io/badge/Firebase-11-FFCA28?logo=firebase&logoColor=white)](https://firebase.google.com/)
+[![Bun](https://img.shields.io/badge/Bun-1.1-black?logo=bun&logoColor=white)](https://bun.sh/)
 
 Plataforma integral para la gestión de servicios de Spa de lujo, diseñada para ofrecer una experiencia de usuario fluida desde el descubrimiento de servicios hasta la reserva y el pago.
 
@@ -12,12 +12,12 @@ Plataforma integral para la gestión de servicios de Spa de lujo, diseñada para
 
 ## 🚀 Características Principales
 
-- **🔐 Autenticación Robusta:** Sistema de registro e inicio de sesión seguro gestionado por Firebase Auth y Auth0.
+- **🔐 Autenticación Robusta:** Sistema de registro e inicio de sesión seguro gestionado por **Auth0**.
 - **📅 Gestión de Citas:** Motor de reservas interactivo con selección de horarios mediante `react-datepicker`.
 - **🛒 Experiencia E-commerce:** Catálogo dinámico de servicios, carrito de compras persistente y flujo de checkout simulado.
-- **🎨 UI Moderna:** Interfaz responsive y elegante construida con Tailwind CSS 4 y componentes atómicos.
-- **⚡ Rendimiento Optimizado:** Arquitectura basada en Vite para tiempos de carga ultrarrápidos y HMR.
-- **🗄️ Persistencia de Datos:** Integración con Neon (PostgreSQL) vía Drizzle ORM para una gestión de datos escalable.
+- **🎨 UI Moderna:** Interfaz responsive y elegante construida con **Tailwind CSS 4** y componentes atómicos.
+- **⚡ Rendimiento Optimizado:** Arquitectura basada en **Vite 6** para tiempos de carga ultrarrápidos y HMR.
+- **🗄️ Persistencia de Datos:** Integración con **Neon (PostgreSQL)** vía **Drizzle ORM** para una gestión de datos escalable y moderna.
 
 ---
 
@@ -26,15 +26,16 @@ Plataforma integral para la gestión de servicios de Spa de lujo, diseñada para
 ### Frontend
 - **Framework:** React 19 (TypeScript)
 - **Bundler:** Vite 6
+- **Package Manager:** Bun
 - **Estilos:** Tailwind CSS 4, Lucide React (iconos)
 - **Estado:** Context API (Cart)
 - **Formularios:** React Hook Form + Zod (validación)
 
 ### Backend & Servicios
-- **Auth:** Firebase Auth / Auth0
+- **Auth:** Auth0
 - **Base de Datos:** Neon Database (Serverless PostgreSQL)
 - **ORM:** Drizzle ORM
-- **Media:** Cloudinary (gestión de imágenes)
+- **Media:** Cloudinary (gestión de imágenes de servicios)
 
 ---
 
@@ -60,22 +61,24 @@ src/
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/usuario/L-SPA.git
+   git clone https://github.com/tu-usuario/L-SPA.git
    cd L-SPA
    ```
 
 2. **Instalar dependencias:**
    ```bash
-   npm install
+   bun install
    ```
 
 3. **Variables de Entorno:**
    Crea un archivo `.env` basado en `.env.example`:
    ```env
-   VITE_FIREBASE_API_KEY=...
-   VITE_FIREBASE_AUTH_DOMAIN=...
    VITE_DATABASE_URL=...
    VITE_CLOUDINARY_CLOUD_NAME=...
+   VITE_CLOUDINARY_API_KEY=...
+   VITE_CLOUDINARY_API_SECRET=...
+   VITE_AUTH0_DOMAIN=...
+   VITE_AUTH0_CLIENT_ID=...
    ```
 
 ---
@@ -84,18 +87,16 @@ src/
 
 | Comando | Descripción |
 | :--- | :--- |
-| `npm run dev` | Inicia el servidor de desarrollo |
-| `npm run build` | Compila la aplicación para producción |
-| `npm run preview` | Previsualiza la compilación localmente |
-| `npm run lint` | Ejecuta ESLint para verificar calidad de código |
+| `bun dev` | Inicia el servidor de desarrollo |
+| `bun run build` | Compila la aplicación para producción |
+| `bun run preview` | Previsualiza la compilación localmente |
+| `bun run lint` | Ejecuta ESLint para verificar calidad de código |
 
 ---
 
-## 👥 Autores
+## 👤 Autor
 
 - **Juan Camacho**
-- **Julian Galeano**
-- **Vanessa Benitez**
 
 ---
 
@@ -104,4 +105,4 @@ src/
 Este proyecto está bajo la licencia [MIT](LICENSE).
 
 ---
-<p align="center">Desarrollado con ❤️ para la industria del bienestar.</p>
+<p align="center">Desarrollado con ❤️ usando Bun y React 19.</p>
