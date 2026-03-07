@@ -4,7 +4,7 @@ import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { Typography } from '@components/ui/Typography';
-import { Image, Type, Eye, RefreshCw, Save, CheckCircle, Info, Layout } from 'lucide-react';
+import { Image, Type, Eye, RefreshCw, Save, CheckCircle, Info, Layout, Facebook, Instagram, MessageCircle } from 'lucide-react';
 import logoLocal from '@assets/logos/LOGO.svg';
 import { cn } from '@/lib/utils';
 import NavBar from '@/components/layout/NavBar';
@@ -31,6 +31,12 @@ export default function NavbarSettingsView() {
   const [footerSettings, setFooterSettings] = useState({
     logoUrl: '',
     description: '',
+    logoSize: 48,
+    social: {
+      facebook: '',
+      instagram: '',
+      whatsapp: '',
+    }
   });
 
   const [isSaved, setIsSaved] = useState(false);
@@ -45,6 +51,8 @@ export default function NavbarSettingsView() {
           setFooterSettings({
             logoUrl: data.value.logoUrl || '',
             description: data.value.description || '',
+            logoSize: data.value.logoSize || 48,
+            social: data.value.social || { facebook: '', instagram: '', whatsapp: '' }
           });
         }
         setIsLoadingFooter(false);
@@ -313,12 +321,27 @@ export default function NavbarSettingsView() {
             </div>
 
             <div className="space-y-4">
-              <div>
-                <label className="text-sm font-bold text-gray-700 mb-1.5 block">Logo del Footer (URL)</label>
+              <div className="flex flex-col">
+                <label className="text-sm font-bold text-gray-700 mb-1.5 flex justify-between items-center">
+                  <span>URL del Logo (Opcional)</span>
+                  <span className="text-[10px] font-medium bg-gray-100 px-2 py-0.5 rounded text-gray-500 uppercase">External URL</span>
+                </label>
                 <Input 
                   placeholder="https://ejemplo.com/footer-logo.png"
                   value={footerSettings.logoUrl}
                   onChange={(e) => setFooterSettings(prev => ({ ...prev, logoUrl: e.target.value }))}
+                  className="bg-gray-50/50 border-gray-200"
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-gray-700 mb-1.5 text-xs">Altura Logo (px)</label>
+                <Input 
+                  type="number"
+                  value={footerSettings.logoSize || 48}
+                  onChange={(e) => setFooterSettings(prev => ({ ...prev, logoSize: Number(e.target.value) }))}
+                  min="20"
+                  max="200"
                   className="bg-gray-50/50 border-gray-200"
                 />
               </div>
@@ -332,6 +355,57 @@ export default function NavbarSettingsView() {
                   rows={4}
                   className="w-full h-24 px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all font-medium text-sm resize-none"
                 />
+              </div>
+
+              <div className="pt-4 border-t border-gray-100 space-y-4">
+                <Typography variant="h4" className="text-sm font-bold text-gray-800">Redes Sociales</Typography>
+                
+                <div className="space-y-3">
+                  <div className="relative">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                      <Facebook size={18} />
+                    </div>
+                    <Input 
+                      placeholder="URL de Facebook"
+                      value={footerSettings.social.facebook}
+                      onChange={(e) => setFooterSettings(prev => ({ 
+                        ...prev, 
+                        social: { ...prev.social, facebook: e.target.value } 
+                      }))}
+                      className="pl-10 bg-gray-50/50 border-gray-200"
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                      <Instagram size={18} />
+                    </div>
+                    <Input 
+                      placeholder="URL de Instagram"
+                      value={footerSettings.social.instagram}
+                      onChange={(e) => setFooterSettings(prev => ({ 
+                        ...prev, 
+                        social: { ...prev.social, instagram: e.target.value } 
+                      }))}
+                      className="pl-10 bg-gray-50/50 border-gray-200"
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                      <MessageCircle size={18} />
+                    </div>
+                    <Input 
+                      placeholder="URL de WhatsApp"
+                      value={footerSettings.social.whatsapp}
+                      onChange={(e) => setFooterSettings(prev => ({ 
+                        ...prev, 
+                        social: { ...prev.social, whatsapp: e.target.value } 
+                      }))}
+                      className="pl-10 bg-gray-50/50 border-gray-200"
+                    />
+                  </div>
+                </div>
               </div>
               
               <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-100 flex items-start gap-3">

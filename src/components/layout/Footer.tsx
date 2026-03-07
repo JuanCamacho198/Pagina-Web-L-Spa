@@ -7,6 +7,12 @@ interface FooterProps {
   previewSettings?: {
     logoUrl?: string;
     description?: string;
+    logoSize?: number;
+    social?: {
+      facebook?: string;
+      instagram?: string;
+      whatsapp?: string;
+    }
   };
 }
 
@@ -14,7 +20,8 @@ const Footer: React.FC<FooterProps> = ({ previewSettings }) => {
   const [config, setConfig] = React.useState({
     logoUrl: logo,
     description: "Tu refugio de bienestar y relajación. Expertos en masajes, tratamientos faciales y cuidado personal.",
-    social: { facebook: "#", instagram: "#", whatsapp: "#" }
+    social: { facebook: "#", instagram: "#", whatsapp: "#" },
+    logoSize: 48
   });
 
   React.useEffect(() => {
@@ -27,7 +34,9 @@ const Footer: React.FC<FooterProps> = ({ previewSettings }) => {
           setConfig(prev => ({ 
             ...prev, 
             logoUrl: data.value.logoUrl || logo, 
-            description: data.value.description || prev.description 
+            description: data.value.description || prev.description,
+            logoSize: data.value.logoSize || 48,
+            social: data.value.social || prev.social
           }));
         }
       })
@@ -38,7 +47,12 @@ const Footer: React.FC<FooterProps> = ({ previewSettings }) => {
   const displayConfig = {
     logoUrl: previewSettings?.logoUrl || config.logoUrl,
     description: previewSettings?.description || config.description,
-    social: config.social
+    logoSize: previewSettings?.logoSize || config.logoSize,
+    social: {
+      facebook: previewSettings?.social?.facebook || config.social.facebook,
+      instagram: previewSettings?.social?.instagram || config.social.instagram,
+      whatsapp: previewSettings?.social?.whatsapp || config.social.whatsapp,
+    }
   };
 
   const sectionTitleClass = "text-lg font-bold mb-4 text-primary-light";
@@ -53,7 +67,12 @@ const Footer: React.FC<FooterProps> = ({ previewSettings }) => {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img src={displayConfig.logoUrl} alt="L-SPA logo" className="h-12 w-auto brightness-110" />
+              <img 
+                src={displayConfig.logoUrl} 
+                alt="L-SPA logo" 
+                className="w-auto brightness-110 object-contain" 
+                style={{ height: `${displayConfig.logoSize}px` }}
+              />
               <h4 className="text-xl font-bold tracking-tight uppercase">L-SPA</h4>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">

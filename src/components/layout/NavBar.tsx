@@ -146,14 +146,18 @@ export default function NavBar({ user, previewSettings }: NavBarProps) {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-10 items-center">
-              <Link to="/home" className={navLinkClass('/home')}>Inicio</Link>
-              <Link to="/services" className={navLinkClass('/services')}>Servicios</Link>
-              <Link to="/contact" className={navLinkClass('/contact')}>Contacto</Link>
+              {!previewSettings && (
+                <>
+                  <Link to="/home" className={navLinkClass('/home')}>Inicio</Link>
+                  <Link to="/services" className={navLinkClass('/services')}>Servicios</Link>
+                  <Link to="/contact" className={navLinkClass('/contact')}>Contacto</Link>
+                </>
+              )}
             </div>
 
             {/* User Actions */}
             <div className="flex items-center gap-3">
-              {isAuthenticated ? (
+              {isAuthenticated && !previewSettings ? (
                 <>
                   <button
                     onClick={() => navigate('/cart')}
@@ -229,82 +233,88 @@ export default function NavBar({ user, previewSettings }: NavBarProps) {
                   </div>
                 </>
               ) : (
-                <div className="hidden md:flex items-center gap-3">
-                  <button onClick={() => loginWithRedirect()} className="px-5 py-2.5 text-sm font-bold text-gray-700 hover:text-primary transition-colors">
-                    INICIA SESION
-                  </button>
-                  <button 
-                    onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
-                    className="px-6 py-2.5 text-sm font-black bg-primary text-white rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95"
-                  >
-                    REGISTRARSE
-                  </button>
-                </div>
+                !previewSettings && (
+                  <div className="hidden md:flex items-center gap-3">
+                    <button onClick={() => loginWithRedirect()} className="px-5 py-2.5 text-sm font-bold text-gray-700 hover:text-primary transition-colors">
+                      INICIA SESION
+                    </button>
+                    <button 
+                      onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
+                      className="px-6 py-2.5 text-sm font-black bg-primary text-white rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95"
+                    >
+                      REGISTRARSE
+                    </button>
+                  </div>
+                )
               )}
 
               {/* Mobile Menu Toggle */}
-              <button 
-                className="md:hidden p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-xl hover:bg-primary/5"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
-              </button>
+              {!previewSettings && (
+                <button 
+                  className="md:hidden p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-xl hover:bg-primary/5"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                  {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+                </button>
+              )}
             </div>
           </div>
         </div>
 
         {/* Mobile Sidebar Menu */}
-        <div className={cn(
-          "fixed inset-0 z-40 md:hidden transition-all duration-500 ease-in-out",
-          mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        )}>
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+        {mobileMenuOpen && !previewSettings && (
           <div className={cn(
-            "absolute right-0 top-0 h-full w-[80%] max-w-sm bg-white shadow-2xl transition-transform duration-500 p-6 flex flex-col",
-            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+            "fixed inset-0 z-40 md:hidden transition-all duration-500 ease-in-out",
+            mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           )}>
-            <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
-               <span className="text-xl font-black text-primary tracking-tighter">MENÚ L-SPA</span>
-               <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-gray-400">
-                 <X size={24} />
-               </button>
-            </div>
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+            <div className={cn(
+              "absolute right-0 top-0 h-full w-[80%] max-w-sm bg-white shadow-2xl transition-transform duration-500 p-6 flex flex-col",
+              mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+            )}>
+              <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
+                 <span className="text-xl font-black text-primary tracking-tighter">MENÚ L-SPA</span>
+                 <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-gray-400">
+                   <X size={24} />
+                 </button>
+              </div>
 
-            <div className="flex flex-col gap-2 grow overflow-y-auto pr-2 custom-scrollbar">
-              <Link to="/home" className={mobileLinkClass('/home')}><Home size={20} /> Inicio</Link>
-              <Link to="/services" className={mobileLinkClass('/services')}><Sparkle size={20} /> Servicios</Link>
-              <Link to="/contact" className={mobileLinkClass('/contact')}><MessageSquare size={20} /> Contacto</Link>
-              
-              <hr className="my-4 border-gray-100" />
-              
-              {isAuthenticated ? (
-                <>
-                  <Link to="/profile" className={mobileLinkClass('/profile')}><UserIcon size={20} /> Mi Perfil</Link>
-                  <Link to="/appointments" className={mobileLinkClass('/appointments')}><Calendar size={20} /> Mis Citas</Link>
-                  <Link to="/about-us" className={mobileLinkClass('/about-us')}><Info size={20} /> Información</Link>
-                  {isAdmin && (
-                    <Link to="/admin" className={cn(mobileLinkClass('/admin'), "text-primary")}><Settings size={20} /> Panel Admin</Link>
-                  )}
-                  <button onClick={handleLogout} className="flex items-center gap-4 px-6 py-4 rounded-2xl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs text-red-500 hover:bg-red-50 mt-auto">
-                    <LogOut size={20} /> Cerrar Sesión
-                  </button>
-                </>
-              ) : (
-                <div className="mt-auto space-y-3">
-                  <button onClick={() => loginWithRedirect()} className="w-full py-4 text-sm font-black text-gray-700 bg-gray-50 rounded-2xl transition-all">
-                    INICIAR SESIÓN
-                  </button>
-                  <button 
-                    onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
-                    className="w-full py-4 text-sm font-black text-white bg-primary rounded-2xl shadow-xl shadow-primary/20 transition-all"
-                  >
-                    CREAR CUENTA
-                  </button>
-                </div>
-              )}
+              <div className="flex flex-col gap-2 grow overflow-y-auto pr-2 custom-scrollbar">
+                <Link to="/home" className={mobileLinkClass('/home')}><Home size={20} /> Inicio</Link>
+                <Link to="/services" className={mobileLinkClass('/services')}><Sparkle size={20} /> Servicios</Link>
+                <Link to="/contact" className={mobileLinkClass('/contact')}><MessageSquare size={20} /> Contacto</Link>
+                
+                <hr className="my-4 border-gray-100" />
+                
+                {isAuthenticated ? (
+                  <>
+                    <Link to="/profile" className={mobileLinkClass('/profile')}><UserIcon size={20} /> Mi Perfil</Link>
+                    <Link to="/appointments" className={mobileLinkClass('/appointments')}><Calendar size={20} /> Mis Citas</Link>
+                    <Link to="/about-us" className={mobileLinkClass('/about-us')}><Info size={20} /> Información</Link>
+                    {isAdmin && (
+                      <Link to="/admin" className={cn(mobileLinkClass('/admin'), "text-primary")}><Settings size={20} /> Panel Admin</Link>
+                    )}
+                    <button onClick={handleLogout} className="flex items-center gap-4 px-6 py-4 rounded-2xl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs text-red-500 hover:bg-red-50 mt-auto">
+                      <LogOut size={20} /> Cerrar Sesión
+                    </button>
+                  </>
+                ) : (
+                  <div className="mt-auto space-y-3">
+                    <button onClick={() => loginWithRedirect()} className="w-full py-4 text-sm font-black text-gray-700 bg-gray-50 rounded-2xl transition-all">
+                      INICIAR SESIÓN
+                    </button>
+                    <button 
+                      onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
+                      className="w-full py-4 text-sm font-black text-white bg-primary rounded-2xl shadow-xl shadow-primary/20 transition-all"
+                    >
+                      CREAR CUENTA
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </nav>
     </>
   );
