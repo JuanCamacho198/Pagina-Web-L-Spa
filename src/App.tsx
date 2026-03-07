@@ -13,7 +13,6 @@ import ProfileView from '@/features/profile/ProfileView';
 import ServiceDetailView from '@/features/catalog/components/ServiceDetailView'; 
 
 // Vistas principales
-import PublicHomeView from '@/features/static/PublicHomeView';
 import LoginView from '@/features/auth/LoginView';
 import RegisterView from '@/features/auth/RegisterView';
 import HomeView from '@/features/catalog/HomeView';
@@ -60,44 +59,26 @@ export default function App() {
         <NavBar user={user} />
         {/* rutas de la aplicación */}
         <Routes>
-          {/* rutas para usuarios NO autenticados */}
-          {!isAuthenticated ? (
+          {/* RUTA HOME UNIFICADA */}
+          <Route path="/" element={<HomeView />} />
+          <Route path="/home" element={<Navigate to="/" replace />} />
+
+          {/* Rutas compartidas (Públicas y Privadas) */}
+          <Route path="/services" element={<ServicesView />} />
+          <Route path="/contact" element={<ContactView />} />
+          <Route path="/about-us" element={<AboutView />} />
+          <Route path="/cancellation-policies" element={<PoliticasCancelacionView />} />
+          <Route path="/data-privacy" element={<DataPrivacyPolicyView />} />
+          <Route path="/reservation-info" element={<ImportantReservationInfoView />} />
+          <Route path="/faq" element={<FaqView />} />
+          <Route path="/login" element={<LoginView />} />
+          <Route path="/register" element={<RegisterView />} />
+          <Route path="/service/:id" element={<ServiceDetailView />} />
+
+          {/* Bloque condicional para rutas protegidas */}
+          {isAuthenticated ? (
             <>
-              {/* RUTAS PÚBLICAS */}
-              <Route path="/" element={<PublicHomeView />} />
-              <Route path="/login" element={<LoginView />} />
-              <Route path="/register" element={<RegisterView />} />
-              <Route path="/services" element={<ServicesView />} />
-              <Route path="/contact" element={<ContactView />} />
-              <Route path="/about-us" element={<AboutView />} />
-              <Route path="/cancellation-policies" element={<PoliticasCancelacionView />} />
-              <Route path="/data-privacy" element={<DataPrivacyPolicyView />} />
-              <Route path="/reservation-info" element={<ImportantReservationInfoView />} />
-              <Route path="/faq" element={<FaqView />} />
-              
-
-              {/* Redirecciona las rutas privadas si el usuario no está autenticado */}
-              <Route path="/checkout" element={<Navigate to="/login" replace />} />
-              <Route path="/appointments" element={<Navigate to="/login" replace />} />
-              <Route path="/payment" element={<Navigate to="/login" replace />} />
-              <Route path="/payment-confirmation" element={<Navigate to="/login" replace />} />
-              <Route path="/cart" element={<Navigate to="/login" replace />} />
-              
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </>
-          ) : (
-            /* Bloque de rutas para usuarios SÍ autenticados */
-            <>
-              {/* RUTAS PRIVADAS */}
-              <Route path="/" element={<Navigate to="/home" replace />} />
-
-              {/* Rutas accesibles solo para usuarios autenticados */}
-              <Route path="/home" element={<HomeView />} />
-              <Route path="/contact" element={<ContactView />} />
-
-              {/* Pasamos el usuario al ProfileView si lo necesita */}
               <Route path="/profile" element={<ProfileView />} />
-              <Route path="/services" element={<ServicesView/>} />
               <Route path="/checkout" element={<CheckoutView />} />
               <Route path="/appointments" element={<CitasView />} />
               <Route path="/payment" element={<PaymentView />} />
@@ -109,18 +90,20 @@ export default function App() {
               <Route path="/admin/services" element={<AdminServicesListView />} />
               <Route path="/admin/services/new" element={<CreateServiceView />} />
               <Route path="/admin/services/edit/:id" element={<EditServiceView />} />
-
-              <Route path="/cancellation-policies" element={<PoliticasCancelacionView />} />
-              <Route path="/data-privacy" element={<DataPrivacyPolicyView />} />
-              <Route path="/reservation-info" element={<ImportantReservationInfoView />} />
-              <Route path="/faq" element={<FaqView />} />
-
-              {/* Cualquier otra ruta no definida en este bloque para autenticados ➔ redirige a /home */}
-              <Route path="*" element={<Navigate to="/home" replace />} />
+            </>
+          ) : (
+            <>
+              {/* Redirecciones para usuarios no autenticados en rutas privadas */}
+              <Route path="/checkout" element={<Navigate to="/login" replace />} />
+              <Route path="/appointments" element={<Navigate to="/login" replace />} />
+              <Route path="/profile" element={<Navigate to="/login" replace />} />
+              <Route path="/cart" element={<Navigate to="/login" replace />} />
+              <Route path="/admin/*" element={<Navigate to="/" replace />} />
             </>
           )}
-          {/* Esta ruta debe estar fuera del bloque condicional de autenticación */}
-          <Route path="/service/:id" element={<ServiceDetailView />} />
+
+          {/* Fallback para cualquier ruta no definida */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes> 
       </Router>
     </CartProvider>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 import Footer from '@components/layout/Footer';
 import { fetchServices } from '@models/servicesModel';
 import { Star, Clock, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -11,6 +12,7 @@ import { Typography } from '@/components/ui/Typography';
 
 function HomeView() {
   const navigate = useNavigate();
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
   const [services, setServices] = useState<Service[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const totalImages = 3;
@@ -79,14 +81,25 @@ function HomeView() {
                 >
                   Ver Servicios
                 </Button>
-                <Button 
-                  variant="outline"
-                  size="lg"
-                  onClick={() => navigate('/about')}
-                  className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 px-8 py-6 text-lg"
-                >
-                  Conócenos
-                </Button>
+                {isAuthenticated ? (
+                  <Button 
+                    variant="outline"
+                    size="lg"
+                    onClick={() => navigate('/about-us')}
+                    className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 px-8 py-6 text-lg"
+                  >
+                    Conócenos
+                  </Button>
+                ) : (
+                  <Button 
+                    variant="outline"
+                    size="lg"
+                    onClick={() => loginWithRedirect()}
+                    className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 px-8 py-6 text-lg font-bold"
+                  >
+                    INICIAR SESIÓN
+                  </Button>
+                )}
               </div>
             </div>
           </div>
