@@ -51,7 +51,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
       {isOpen && (
         <div 
           className={`
-            absolute top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-xl p-1 min-w-[160px] z-[9999]
+            absolute top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-xl p-1 min-w-40 z-9999
             animate-in fade-in zoom-in-95 duration-100
             ${align === 'right' ? 'right-0' : 'left-0'}
           `}
