@@ -1,78 +1,107 @@
-**L-SPA Web**
+# ✨ L-SPA Web
 
-Proyecto frontend para sitio de spa de lujo. Tecnologías: React + Vite + Firebase.
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Firebase](https://img.shields.io/badge/Firebase-11-FFCA28?logo=firebase&logoColor=white)](https://firebase.google.com/)
 
-Descripción corta
-- Interfaz web responsive con navegación pública/privada, autenticación (Firebase), gestión de citas, catálogo de servicios, carrito y flujo de checkout simulado.
+Plataforma integral para la gestión de servicios de Spa de lujo, diseñada para ofrecer una experiencia de usuario fluida desde el descubrimiento de servicios hasta la reserva y el pago.
 
-Tecnologías
-- Frontend: React, Vite
-- Enrutamiento: react-router-dom
-- UI/Utilidades: react-icons, react-datepicker
-- Autenticación / BBDD ligera: Firebase
+---
 
-Características principales
-- Autenticación: registro e inicio de sesión con Firebase Auth
-- Gestión de citas: crear, listar y gestionar citas de usuario
-- Catálogo de servicios: listado y detalles con precios
-- Carrito y Checkout: flujo simulado con confirmación de pago
-- Vistas responsive y componentes reutilizables
+## 🚀 Características Principales
 
-Requisitos
-- Node.js 16+ recomendado (18+ recomendado para entornos modernos)
-- npm, pnpm o yarn
+- **🔐 Autenticación Robusta:** Sistema de registro e inicio de sesión seguro gestionado por Firebase Auth y Auth0.
+- **📅 Gestión de Citas:** Motor de reservas interactivo con selección de horarios mediante `react-datepicker`.
+- **🛒 Experiencia E-commerce:** Catálogo dinámico de servicios, carrito de compras persistente y flujo de checkout simulado.
+- **🎨 UI Moderna:** Interfaz responsive y elegante construida con Tailwind CSS 4 y componentes atómicos.
+- **⚡ Rendimiento Optimizado:** Arquitectura basada en Vite para tiempos de carga ultrarrápidos y HMR.
+- **🗄️ Persistencia de Datos:** Integración con Neon (PostgreSQL) vía Drizzle ORM para una gestión de datos escalable.
 
-Instalación y ejecución
-1) Instalar dependencias
+---
+
+## 🛠️ Stack Tecnológico
+
+### Frontend
+- **Framework:** React 19 (TypeScript)
+- **Bundler:** Vite 6
+- **Estilos:** Tailwind CSS 4, Lucide React (iconos)
+- **Estado:** Context API (Cart)
+- **Formularios:** React Hook Form + Zod (validación)
+
+### Backend & Servicios
+- **Auth:** Firebase Auth / Auth0
+- **Base de Datos:** Neon Database (Serverless PostgreSQL)
+- **ORM:** Drizzle ORM
+- **Media:** Cloudinary (gestión de imágenes)
+
+---
+
+## 📂 Estructura del Proyecto
+
+```bash
+src/
+├── api/          # Configuraciones de API externas
+├── assets/       # Imágenes, iconos y recursos estáticos
+├── components/   # Componentes UI (Atomic Design) y Layouts
+├── context/      # Proveedores de estado global (CartContext)
+├── controllers/  # Lógica de negocio y orquestación
+├── db/           # Configuración de Drizzle y Schemas SQL
+├── features/     # Módulos por dominio (auth, booking, catalog, admin)
+├── lib/          # Utilidades y librerías (Cloudinary, etc.)
+├── models/       # Interacción directa con servicios/BBDD
+└── types/        # Definiciones de tipos TypeScript globales
 ```
-npm install
-```
-2) Ejecutar en desarrollo
-```
-npm run dev
-```
-3) Construir para producción
-```
-npm run build
-```
-4) Previsualizar build local
-```
-npm run preview
-```
-5) Lint
-```
-npm run lint
-```
 
-Configuración de Firebase y variables de entorno
-- El proyecto usa Firebase; la configuración se encuentra en src/firebase/firebaseConfig.js.
-- Crea un proyecto en Firebase (Auth, Firestore si aplica) y sustituye las credenciales en firebaseConfig.js.
-- Opcional: usa variables de entorno prefijadas VITE_ (recomendado).
-- Crea un archivo .env.local en la raíz con las claves VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN, VITE_FIREBASE_PROJECT_ID, VITE_FIREBASE_STORAGE_BUCKET, VITE_FIREBASE_MESSAGING_SENDER_ID, VITE_FIREBASE_APP_ID, VITE_FIREBASE_MEASUREMENT_ID. Copia de .env.example si está disponible.
-- No subas .env.local al repositorio; añádelo a .gitignore.
+---
 
-Estructura del proyecto (relevante)
-- src/(): código fuente
-- src/views/: vistas principales (Home, Login, Services, Citas, Payment, etc.)
-- src/views/components/: componentes reutilizables (NavBar, Footer, Cart, TimePicker, etc.)
-- src/models/: modelos para datos y llamadas a Firebase
-- src/controllers/: lógica de negocio
-- src/firebase/firebaseConfig.js: configuración de Firebase
+## ⚙️ Configuración del Entorno
 
-Contribuciones
-- Respeta las instrucciones de CONTRIBUTING.md (ver guía de aportes)
-- Abre issues o PRs para cambios significativos
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/usuario/L-SPA.git
+   cd L-SPA
+   ```
 
-Licencia
-- MIT. Ver LICENSE en el repositorio
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
 
-Autores
-- Juan Camacho, Julian Galeano, Vanessa Benitez
-- Contacto: abrir un issue en el repositorio o contactar al autor responsable
+3. **Variables de Entorno:**
+   Crea un archivo `.env` basado en `.env.example`:
+   ```env
+   VITE_FIREBASE_API_KEY=...
+   VITE_FIREBASE_AUTH_DOMAIN=...
+   VITE_DATABASE_URL=...
+   VITE_CLOUDINARY_CLOUD_NAME=...
+   ```
 
-Guía de despliegue
-- Preparar entorno con variables de entorno
-- Construir y desplegar en hosting estático (Vercel, Netlify, etc.)
+---
 
-Notas finales
-- Este readme ha sido optimizado para claridad y profesionalidad. Si necesitas, puedo adaptar el tono (más técnico, más comercial) o generar versiones en inglés.
+## 🛠️ Scripts Disponibles
+
+| Comando | Descripción |
+| :--- | :--- |
+| `npm run dev` | Inicia el servidor de desarrollo |
+| `npm run build` | Compila la aplicación para producción |
+| `npm run preview` | Previsualiza la compilación localmente |
+| `npm run lint` | Ejecuta ESLint para verificar calidad de código |
+
+---
+
+## 👥 Autores
+
+- **Juan Camacho**
+- **Julian Galeano**
+- **Vanessa Benitez**
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia [MIT](LICENSE).
+
+---
+<p align="center">Desarrollado con ❤️ para la industria del bienestar.</p>

@@ -84,6 +84,20 @@ export default function CheckoutView() {
   const preferredTime = watch('preferredTime');
 
   useEffect(() => {
+    if (isAuthenticated && user) {
+      if (user.given_name) setValue('name', user.given_name);
+      if (user.family_name) setValue('lastName', user.family_name);
+      if (user.email) setValue('email', user.email);
+      // user.name a veces viene como nombre completo en Auth0
+      if (!user.given_name && user.name) {
+        const parts = user.name.split(' ');
+        if (parts.length > 0) setValue('name', parts[0]);
+        if (parts.length > 1) setValue('lastName', parts.slice(1).join(' '));
+      }
+    }
+  }, [isAuthenticated, user, setValue]);
+
+  useEffect(() => {
     const processItems = async () => {
       setLoading(true);
       setError('');
@@ -134,7 +148,7 @@ export default function CheckoutView() {
          await clearCart();
       }
       
-      navigate('/success');
+      navigate('/payment-confirmation');
     } catch (err: any) {
       setError(err.message || "Ocurrió un error al procesar tu reserva.");
     } finally {
