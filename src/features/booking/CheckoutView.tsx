@@ -297,35 +297,47 @@ export default function CheckoutView() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                    <div className="space-y-4">
-                      <Typography variant="small" className="text-sm font-semibold text-gray-700 ml-1">Selecciona una fecha</Typography>
-                      <CustomCalendar 
-                        selectedDate={preferredDate}
-                        minDate={minDate}
-                        maxDate={maxDate}
-                        onDateSelect={(date) => setValue('preferredDate', date, { shouldValidate: true })}
-                      />
-                      {errors.preferredDate && <Typography variant="small" className="text-red-500 text-xs ml-1">{errors.preferredDate.message}</Typography>}
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <Typography variant="small" className="text-sm font-semibold text-gray-700 ml-1">Selecciona una hora</Typography>
-                      <TimePicker 
-                        selectedDate={preferredDate}
-                        value={preferredTime}
-                        onChange={(val) => setValue('preferredTime', val, { shouldValidate: true })}
-                      />
-                      {errors.preferredTime && <Typography variant="small" className="text-red-500 text-xs mt-1 block">{errors.preferredTime.message}</Typography>}
+                  <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 items-start">
+                    <div className="space-y-6">
+                      <div className="space-y-4">
+                        <Typography variant="small" className="text-sm font-bold text-gray-700 uppercase tracking-widest ml-1 flex items-center gap-2">
+                          <Calendar size={18} className="text-primary" />
+                          Selecciona una fecha
+                        </Typography>
+                        <CustomCalendar 
+                          selectedDate={preferredDate}
+                          minDate={minDate}
+                          maxDate={maxDate}
+                          onDateSelect={(date) => setValue('preferredDate', date, { shouldValidate: true })}
+                        />
+                        {errors.preferredDate && <Typography variant="small" className="text-red-500 text-xs ml-1 font-bold">{errors.preferredDate.message}</Typography>}
+                      </div>
                       
-                      <div className="bg-primary/5 p-4 rounded-2xl border border-primary/10 mt-6">
-                        <div className="flex items-center gap-2 text-primary font-bold mb-1">
-                          <Clock size={16} />
-                          <span className="text-sm uppercase tracking-wider">Tu cita será el:</span>
+                      <div className="space-y-4">
+                        <Typography variant="small" className="text-sm font-bold text-gray-700 uppercase tracking-widest ml-1 flex items-center gap-2">
+                          <Clock size={18} className="text-primary" />
+                          Selecciona la Hora
+                        </Typography>
+                        <TimePicker 
+                          selectedDate={preferredDate}
+                          value={preferredTime}
+                          onChange={(val) => setValue('preferredTime', val, { shouldValidate: true })}
+                        />
+                        {errors.preferredTime && <Typography variant="small" className="text-red-500 text-xs mt-1 block font-bold">{errors.preferredTime.message}</Typography>}
+                        
+                        <div className="bg-primary/5 p-5 rounded-2xl border-2 border-primary/10 mt-6 shadow-sm">
+                          <div className="flex items-center gap-2 text-primary font-black mb-1">
+                            <ShieldCheck size={20} />
+                            <span className="text-xs uppercase tracking-widest">Resumen de tu Visita:</span>
+                          </div>
+                          <p className="text-gray-900 font-bold text-lg">
+                            {preferredDate ? new Date(preferredDate).toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Selecciona una fecha'} 
+                            <span className="text-primary ml-2">{preferredTime ? `a las ${preferredTime}` : ''}</span>
+                          </p>
+                          <p className="text-xs text-gray-500 mt-2 italic">
+                            Por favor, llega 10 minutos antes de tu sesión para mayor comodidad.
+                          </p>
                         </div>
-                        <p className="text-gray-900 font-medium">
-                          {preferredDate || 'Selecciona fecha'} a las {preferredTime || 'Selecciona hora'}
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -333,10 +345,10 @@ export default function CheckoutView() {
                   <Button 
                     type="button" 
                     onClick={validateStep}
-                    className="w-full py-6 text-lg rounded-2xl shadow-lg mt-8"
+                    className="w-full py-6 text-lg rounded-2xl shadow-lg mt-8 font-black uppercase tracking-widest bg-primary hover:bg-primary-dark transition-all"
                   >
                     Siguiente: Finalizar Reserva
-                    <ArrowRight className="ml-2" size={20} />
+                    <ArrowRight className="ml-2" size={20} strokeWidth={3} />
                   </Button>
                 </div>
 

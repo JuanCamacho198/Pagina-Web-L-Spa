@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Clock } from 'lucide-react';
+import { Clock, AlertCircle } from 'lucide-react';
+import { fetchReservedTimes } from '@/models/bookingModel';
+import { cn } from '@/lib/utils';
 
 interface TimePickerProps {
   selectedDate: string;
@@ -16,82 +18,112 @@ export default function TimePicker({
   onChange,
   disabled = false,
 }: TimePickerProps) {
-  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+  const [availableTimes, setAvailableTimes] = useState<{time: string, isReserved: boolean}[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!selectedDate) {
-      setAvailableTimes([]);
-      return;
-    }
+    const loadTimes = async () => {
+      if (!selectedDate) {
+        setAvailableTimes([]);
+        return;
+      }
 
-    const dateObj = new Date(selectedDate);
-    const dayOfWeek = dateObj.getDay();
+      setLoading(true);
+      try {
+        const dateObj = new Date(selectedDate);
+        const dayOfWeek = dateObj.getDay();
 
-    if (dayOfWeek === 0) {
-      // Domingo, no hay horarios disponibles
-      setAvailableTimes([]);
-      return;
-    }
+        if (dayOfWeek === 0) {
+          setAvailableTimes([]);
+          return;
+        }
 
-    // horario laboral, de 9:00 a 18:00
-    const workStartHour = 9;
-    const workEndHour = 18;
+        const reservedTimes = await fetchReservedTimes(selectedDate);
 
-    //la duración del servicio como intervalo
-    const intervalMinutes = durationMinutes;
+        // horario laboral, de 9:00 a 18:00
+        const workStartHour = 9;
+        const workEndHour = 18;
+        const intervalMinutes = durationMinutes;
+        const slots: {time: string, isReserved: boolean}[] = [];
 
-    const slots: string[] = [];
+        const totalWorkMinutes = (workEndHour - workStartHour) * 60;
+        const lastStartMinute = totalWorkMinutes - durationMinutes;
 
-    //iteramos desde la hora inicial hasta la última hora en la que el servicio puede empezar
-    const totalWorkMinutes = (workEndHour - workStartHour) * 60;
-    const lastStartMinute = totalWorkMinutes - durationMinutes;
+        for (let minutesFromStart = 0; minutesFromStart <= lastStartMinute; minutesFromStart += intervalMinutes) {
+          const hour = Math.floor(minutesFromStart / 60) + workStartHour;
+          const minute = minutesFromStart % 60;
 
-    for (let minutesFromStart = 0; minutesFromStart <= lastStartMinute; minutesFromStart += intervalMinutes) {
-      const hour = Math.floor(minutesFromStart / 60) + workStartHour;
-      const minute = minutesFromStart % 60;
+          let displayHour = hour % 12 || 12;
+          const ampm = hour >= 12 ? 'PM' : 'AM';
+          const mm = minute.toString().padStart(2, '0');
+          const timeString = `${displayHour}:${mm} ${ampm}`;
 
-      // Formatear hora en 12h con AM/PM
-      let displayHour = hour % 12 || 12;
-      const ampm = hour >= 12 ? 'PM' : 'AM';
-      const mm = minute.toString().padStart(2, '0');
+          slots.push({
+            time: timeString,
+            isReserved: reservedTimes.includes(timeString)
+          });
+        }
 
-      slots.push(`${displayHour}:${mm} ${ampm}`);
-    }
+        setAvailableTimes(slots);
+      } catch (error) {
+        console.error("Error generating time slots:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    setAvailableTimes(slots);
+    loadTimes();
   }, [selectedDate, durationMinutes]);
 
-  return (
-    <div className="relative">
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-        <Clock size={16} />
+  if (!selectedDate) {
+    return (
+      <div className="p-4 bg-amber-50 border border-amber-100 rounded-xl text-amber-700 flex items-center gap-3 animate-pulse">
+        <AlertCircle size={20} />
+        <p className="text-sm font-medium">Selecciona una fecha para ver horarios disponibles</p>
       </div>
-      <select
-        id="preferredTime"
-        name="preferredTime"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        disabled={disabled || !selectedDate || availableTimes.length === 0}
-        required
-        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none disabled:bg-gray-50 disabled:text-gray-400 font-medium text-gray-700"
-      >
-        <option value="">Selecciona una hora</option>
-        {!selectedDate && (
-          <option disabled>Selecciona una fecha primero</option>
-        )}
-        {selectedDate && availableTimes.length === 0 && (
-          <option disabled>No hay horarios disponibles</option>
-        )}
-        {availableTimes.map((time) => (
-          <option key={time} value={time}>
-            {time}
-          </option>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 animate-pulse">
+        {[...Array(8)].map((_, i) => (
+          <div key={i} className="h-10 bg-gray-100 rounded-lg"></div>
         ))}
-      </select>
-      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
-        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2 text-gray-500 mb-2">
+        <Clock size={16} />
+        <span className="text-sm font-bold uppercase tracking-wider">Horarios Disponibles</span>
+      </div>
+      
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        {availableTimes.length === 0 ? (
+          <p className="col-span-full text-center py-4 text-gray-400 italic">No hay horarios disponibles para este día</p>
+        ) : (
+          availableTimes.map(({ time, isReserved }) => (
+            <button
+              key={time}
+              type="button"
+              disabled={disabled || isReserved}
+              onClick={() => onChange(time)}
+              className={cn(
+                "py-2.5 px-3 rounded-xl border-2 transition-all duration-200 text-sm font-bold",
+                value === time 
+                  ? "border-primary bg-primary text-white shadow-lg shadow-primary/20 scale-105" 
+                  : isReserved 
+                    ? "border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed line-through" 
+                    : "border-gray-100 bg-white text-gray-600 hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
+              )}
+            >
+              {time}
+            </button>
+          ))
+        )}
       </div>
     </div>
   );
