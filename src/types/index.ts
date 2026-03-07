@@ -44,3 +44,25 @@ export interface CheckoutFormValues {
   notes?: string;
   paymentMethod?: string;
 }
+
+export interface CartItem {
+  id: string;
+  serviceId: string;
+  Nombre: string;
+  Precio: number;
+  Categoria?: string;
+  imagenURL?: string;
+  quantity?: number;
+  addedAt?: string;
+  Duracion?: number;
+}
+
+export interface ServiceFormValues {
+  name: string;
+  price: number;
+  duration: number;
+  description?: string;
+  category?: string;
+  image?: FileList;
+  imageUrl?: string;
+}

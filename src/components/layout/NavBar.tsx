@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { getAuth0UserById } from '../../models/userModel';
-import { cn } from '../ui/Button';
+import { cn } from '@/lib/utils';
 
 interface NavBarProps {
   user: any;
@@ -250,8 +250,6 @@ export default function NavBar({ user }: NavBarProps) {
         </div>
       </nav>
     </>
-  );
-}
   );
 }
 

@@ -46,16 +46,19 @@ export async function getAuth0UserById(auth0Id: string): Promise<UserProfile | n
   if (result.length === 0) return null;
   const user = result[0];
   return {
-    uid: user.auth0Id,
+    auth0Id: user.auth0Id,
     id: user.id,
     firstName: user.firstName || '',
     lastName: user.lastName || '',
     email: user.email,
     phone: user.phone || undefined,
     birthDate: user.birthDate || undefined,
-    role: user.role as any
+    role: user.role as any,
+    createdAt: user.createdAt?.toISOString() || new Date().toISOString()
   };
 }
+
+export const getUserById = getAuth0UserById;
 
 /**
  * Actualiza los datos de un usuario en PostgreSQL.
