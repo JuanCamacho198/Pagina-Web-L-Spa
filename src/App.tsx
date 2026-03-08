@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import { CartProvider } from '@/context/CartContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 import NavBar from '@/components/layout/NavBar';
 import ProfileView from '@/features/profile/ProfileView';
 import ServiceDetailView from '@/features/catalog/components/ServiceDetailView'; 
@@ -58,12 +59,13 @@ export default function App() {
     );
   }
 
-  return (
+return (
     // se envolvio toda la aplicación con CartProvider para que cualquier componente pueda usar useCart
-    <CartProvider>
-      <Router>
-        <AuthSync />
-        <NavBar user={user} />
+    <ThemeProvider>
+      <CartProvider>
+        <Router>
+          <AuthSync />
+          <NavBar user={user} />
         {/* rutas de la aplicación */}
         <Routes>
           {/* RUTA HOME UNIFICADA */}
@@ -119,10 +121,11 @@ export default function App() {
             </>
           )}
 
-          {/* Fallback para cualquier ruta no definida */}
+{/* Fallback para cualquier ruta no definida */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes> 
       </Router>
     </CartProvider>
-  ); 
+    </ThemeProvider>
+  );
 }

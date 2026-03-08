@@ -8,9 +8,24 @@
   --color-accent: #D99B9B;
 }
 
+/* Dark mode variables */
+.dark {
+  --color-gray-50: #1f2937;
+  --color-gray-100: #374151;
+  --color-gray-200: #4b5563;
+  --color-gray-300: #6b7280;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #d1d5db;
+  --color-gray-900: #f9fafb;
+}
+
 @layer base {
   body {
     @apply antialiased text-gray-900 bg-gray-50 bg-fixed;
+  }
+  
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
   }
 }
 

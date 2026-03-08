@@ -2,16 +2,27 @@ import { Service } from '@/types';
 
 const API_URL = '/api/services';
 
+// In-memory cache for services
+let servicesCache: Service[] | null = null;
+let servicesCacheTime: number = 0;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 /**
  * Obtiene todos los servicios desde la API serverless.
+ * Usa cache en memoria para mejorar rendimiento.
  * @returns {Promise<Service[]>} Lista de servicios mapeada al formato de la UI.
  */
-export async function fetchServices(): Promise<Service[]> {
+export async function fetchServices(forceRefresh = false): Promise<Service[]> {
+  // Return cached data if available and not expired
+  if (!forceRefresh && servicesCache && Date.now() - servicesCacheTime < CACHE_DURATION) {
+    return servicesCache;
+  }
+  
   const response = await fetch(API_URL);
   if (!response.ok) throw new Error('Error al cargar servicios');
   const data = await response.json();
   
-  return data.map((service: any) => ({
+  const services = data.map((service: any) => ({
     id: service.id,
     name: service.name,
     price: Number(service.price),
@@ -20,6 +31,21 @@ export async function fetchServices(): Promise<Service[]> {
     imageFileName: service.imageFileName || '',
     duration: Number(service.duration || 60)
   }));
+  
+  // Update cache
+  servicesCache = services;
+  servicesCacheTime = Date.now();
+  
+  return services;
+}
+
+/**
+ * Invalida el cache de servicios.
+ * Llamar esta función cuando se crean/actualizan/eliminan servicios.
+ */
+export function invalidateServicesCache() {
+  servicesCache = null;
+  servicesCacheTime = 0;
 }
 
 /**

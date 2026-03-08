@@ -13,11 +13,14 @@ import {
   Menu, 
   X,
   MessageSquare,
-  Info
+  Info,
+  Moon,
+  Sun
 } from 'lucide-react';
 import logo from '@assets/logos/LOGO.svg';
 import { useCart } from '@context/CartContext';
 import { useNavbarStore } from '@context/NavbarStore';
+import { useTheme } from '@context/ThemeContext';
 import { getAuth0UserById } from '@models/userModel';
 import { cn } from '@/lib/utils';
 
@@ -60,22 +63,38 @@ export default function NavBar({ user, previewSettings }: NavBarProps) {
       }).catch(err => console.error("Error cargando fuente personalizada:", err));
     }
   }, [customFontUrl]);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const { cartCount } = useCart();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const { logout, loginWithRedirect, isAuthenticated } = useAuth0();
 
+  // Cache key for admin role
+  const ADMIN_ROLE_CACHE_KEY = 'lspa_admin_role';
+
   useEffect(() => {
     const checkAdminRole = async () => {
       if (isAuthenticated && user?.sub) {
+        // Try to get from cache first for immediate display
+        const cachedRole = localStorage.getItem(ADMIN_ROLE_CACHE_KEY);
+        if (cachedRole) {
+          setIsAdmin(cachedRole === 'admin');
+        }
+        
         try {
           const dbUser = await getAuth0UserById(user.sub);
-          setIsAdmin(dbUser?.role === 'admin');
+          const isAdminUser = dbUser?.role === 'admin';
+          setIsAdmin(isAdminUser);
+          // Cache the role
+          localStorage.setItem(ADMIN_ROLE_CACHE_KEY, dbUser?.role || 'customer');
         } catch (error) {
           console.error("Error verificando rol de admin:", error);
-          setIsAdmin(false);
+          // Keep cached value or default to false
+          if (!cachedRole) {
+            setIsAdmin(false);
+          }
         }
       } else {
         setIsAdmin(false);
@@ -157,8 +176,19 @@ export default function NavBar({ user, previewSettings }: NavBarProps) {
 
             {/* User Actions */}
             <div className="flex items-center gap-3">
-              {isAuthenticated && !previewSettings ? (
+{isAuthenticated && !previewSettings ? (
                 <>
+                  {/* Theme Toggle */}
+                  {!previewSettings && (
+                    <button
+                      onClick={toggleTheme}
+                      className="p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-xl hover:bg-primary/5"
+                      title={theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
+                    >
+                      {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
+                    </button>
+                  )}
+
                   <button
                     onClick={() => navigate('/cart')}
                     className="relative p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-xl hover:bg-primary/5 group"
@@ -279,10 +309,19 @@ export default function NavBar({ user, previewSettings }: NavBarProps) {
                  </button>
               </div>
 
-              <div className="flex flex-col gap-2 grow overflow-y-auto pr-2 custom-scrollbar">
+<div className="flex flex-col gap-2 grow overflow-y-auto pr-2 custom-scrollbar">
                 <Link to="/home" className={mobileLinkClass('/home')}><Home size={20} /> Inicio</Link>
                 <Link to="/services" className={mobileLinkClass('/services')}><Sparkle size={20} /> Servicios</Link>
                 <Link to="/contact" className={mobileLinkClass('/contact')}><MessageSquare size={20} /> Contacto</Link>
+                
+                {/* Theme Toggle - Mobile */}
+                <button 
+                  onClick={() => { toggleTheme(); setMobileMenuOpen(false); }}
+                  className={mobileLinkClass('')}
+                >
+                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />} 
+                  {theme === 'dark' ? 'Modo Claro' : 'Modo Oscuro'}
+                </button>
                 
                 <hr className="my-4 border-gray-100" />
                 
