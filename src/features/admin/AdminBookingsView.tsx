@@ -161,7 +161,7 @@ export default function AdminBookingsView() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <Card className="bg-gradient-to-br from-blue-50 to-blue-100/50 border-blue-100">
+        <Card className="bg-linear-to-br from-blue-50 to-blue-100/50 border-blue-100">
           <CardContent className="pt-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-500 rounded-lg text-white">
@@ -175,7 +175,7 @@ export default function AdminBookingsView() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-yellow-50 to-yellow-100/50 border-yellow-100">
+        <Card className="bg-linear-to-br from-yellow-50 to-yellow-100/50 border-yellow-100">
           <CardContent className="pt-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-yellow-500 rounded-lg text-white">
@@ -189,7 +189,7 @@ export default function AdminBookingsView() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-50 to-green-100/50 border-green-100">
+        <Card className="bg-linear-to-br from-green-50 to-green-100/50 border-green-100">
           <CardContent className="pt-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-green-500 rounded-lg text-white">
@@ -203,7 +203,7 @@ export default function AdminBookingsView() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-indigo-50 to-indigo-100/50 border-indigo-100">
+        <Card className="bg-linear-to-br from-indigo-50 to-indigo-100/50 border-indigo-100">
           <CardContent className="pt-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-indigo-500 rounded-lg text-white">
@@ -217,7 +217,7 @@ export default function AdminBookingsView() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100/50 border-emerald-100">
+        <Card className="bg-linear-to-br from-emerald-50 to-emerald-100/50 border-emerald-100">
           <CardContent className="pt-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-emerald-500 rounded-lg text-white">
@@ -252,7 +252,7 @@ export default function AdminBookingsView() {
               {statusFilters.map(filter => (
                 <Button
                   key={filter.value}
-                  variant={statusFilter === filter.value ? 'default' : 'outline'}
+                  variant={statusFilter === filter.value ? 'primary' : 'outline'}
                   size="sm"
                   onClick={() => setStatusFilter(filter.value)}
                   className="text-xs"

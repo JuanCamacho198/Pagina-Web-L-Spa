@@ -34,6 +34,7 @@ import ContactView from '@/features/static/ContactView';
 import AboutView from '@/features/static/AboutView';
 
 import AdminDashboardView from '@/features/admin/AdminDashboardView';
+import AdminBookingsView from '@/features/admin/AdminBookingsView';
 import AdminServicesListView from '@/features/admin/AdminServicesListView';
 import AdminUsersListView from '@/features/admin/AdminUsersListView';
 import CreateServiceView from '@/features/admin/CreateServiceView';
@@ -97,6 +98,7 @@ export default function App() {
 {/* Rutas de Administración */}
               <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<AdminDashboardView />} />
+                <Route path="bookings" element={<AdminBookingsView />} />
                 <Route path="users" element={<AdminUsersListView />} />
                 <Route path="services" element={<AdminServicesListView />} />
                 <Route path="services/new" element={<CreateServiceView />} />
