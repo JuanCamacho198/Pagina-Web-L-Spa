@@ -4,11 +4,9 @@ import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { Input } from '@components/ui/Input';
 import { Typography } from '@components/ui/Typography';
-import { Image, Type, Eye, RefreshCw, Save, CheckCircle, Info, Layout, Facebook, Instagram, MessageCircle } from 'lucide-react';
-import logoLocal from '@assets/logos/LOGO.svg';
+import { Image, Type, Eye, RefreshCw, Save, CheckCircle, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import NavBar from '@/components/layout/NavBar';
-import Footer from '@/components/layout/Footer';
 
 export default function NavbarSettingsView() {
   const store = useNavbarStore();
@@ -27,38 +25,7 @@ export default function NavbarSettingsView() {
     customFontUrl: store.customFontUrl,
   });
 
-  // Estado para el Footer
-  const [footerSettings, setFooterSettings] = useState({
-    logoUrl: '',
-    description: '',
-    logoSize: 48,
-    social: {
-      facebook: '',
-      instagram: '',
-      whatsapp: '',
-    }
-  });
-
   const [isSaved, setIsSaved] = useState(false);
-  const [isLoadingFooter, setIsLoadingFooter] = useState(true);
-
-  // Cargar configuración del footer al iniciar
-  useEffect(() => {
-    fetch('/api/config?id=footer')
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.value) {
-          setFooterSettings({
-            logoUrl: data.value.logoUrl || '',
-            description: data.value.description || '',
-            logoSize: data.value.logoSize || 48,
-            social: data.value.social || { facebook: '', instagram: '', whatsapp: '' }
-          });
-        }
-        setIsLoadingFooter(false);
-      })
-      .catch(() => setIsLoadingFooter(false));
-  }, []);
 
   const handleSave = async () => {
     // Guardar Navbar Store
@@ -71,20 +38,6 @@ export default function NavbarSettingsView() {
     store.setLogoTextSpacing(localSettings.logoTextSpacing);
     store.setFontFamily(localSettings.fontFamily);
     store.setCustomFontUrl(localSettings.customFontUrl);
-    
-    // Guardar Footer Config en API
-    try {
-      await fetch('/api/config', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: 'footer',
-          value: footerSettings
-        })
-      });
-    } catch (error) {
-      console.error('Error saving footer config:', error);
-    }
     
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 3000);
@@ -312,147 +265,45 @@ export default function NavbarSettingsView() {
             </div>
           </Card>
 
-          <Card className="p-6 border-gray-100 shadow-sm animate-in fade-in slide-in-from-left-2 delay-150">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-primary/10 rounded-lg text-primary">
-                <Layout size={24} />
+          {/* Info Card */}
+          <Card className="p-6 border-gray-100 shadow-sm bg-blue-50/50">
+            <div className="flex items-start gap-3">
+              <div className="p-1 bg-blue-100 rounded text-blue-600 mt-0.5">
+                <Info size={14} />
               </div>
-              <Typography variant="h3" className="text-lg font-bold">Configuración del Footer</Typography>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex flex-col">
-                <label className="text-sm font-bold text-gray-700 mb-1.5 flex justify-between items-center">
-                  <span>URL del Logo (Opcional)</span>
-                  <span className="text-[10px] font-medium bg-gray-100 px-2 py-0.5 rounded text-gray-500 uppercase">External URL</span>
-                </label>
-                <Input 
-                  placeholder="https://ejemplo.com/footer-logo.png"
-                  value={footerSettings.logoUrl}
-                  onChange={(e) => setFooterSettings(prev => ({ ...prev, logoUrl: e.target.value }))}
-                  className="bg-gray-50/50 border-gray-200"
-                />
-              </div>
-
-              <div>
-                <label className="block font-bold text-gray-700 mb-1.5 text-xs">Altura Logo (px)</label>
-                <Input 
-                  type="number"
-                  value={footerSettings.logoSize || 48}
-                  onChange={(e) => setFooterSettings(prev => ({ ...prev, logoSize: Number(e.target.value) }))}
-                  min="20"
-                  max="200"
-                  className="bg-gray-50/50 border-gray-200"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-bold text-gray-700 mb-1.5 block">Descripción de la Marca (Footer)</label>
-                <textarea 
-                  placeholder="Ej. Los mejores servicios de SPA y cuidado personal en un solo lugar."
-                  value={footerSettings.description}
-                  onChange={(e) => setFooterSettings(prev => ({ ...prev, description: e.target.value }))}
-                  rows={4}
-                  className="w-full h-24 px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all font-medium text-sm resize-none"
-                />
-              </div>
-
-              <div className="pt-4 border-t border-gray-100 space-y-4">
-                <Typography variant="h4" className="text-sm font-bold text-gray-800">Redes Sociales</Typography>
-                
-                <div className="space-y-3">
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <Facebook size={18} />
-                    </div>
-                    <Input 
-                      placeholder="URL de Facebook"
-                      value={footerSettings.social.facebook}
-                      onChange={(e) => setFooterSettings(prev => ({ 
-                        ...prev, 
-                        social: { ...prev.social, facebook: e.target.value } 
-                      }))}
-                      className="pl-10 bg-gray-50/50 border-gray-200"
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <Instagram size={18} />
-                    </div>
-                    <Input 
-                      placeholder="URL de Instagram"
-                      value={footerSettings.social.instagram}
-                      onChange={(e) => setFooterSettings(prev => ({ 
-                        ...prev, 
-                        social: { ...prev.social, instagram: e.target.value } 
-                      }))}
-                      className="pl-10 bg-gray-50/50 border-gray-200"
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <MessageCircle size={18} />
-                    </div>
-                    <Input 
-                      placeholder="URL de WhatsApp"
-                      value={footerSettings.social.whatsapp}
-                      onChange={(e) => setFooterSettings(prev => ({ 
-                        ...prev, 
-                        social: { ...prev.social, whatsapp: e.target.value } 
-                      }))}
-                      className="pl-10 bg-gray-50/50 border-gray-200"
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-100 flex items-start gap-3">
-                 <div className="p-1 bg-blue-100 rounded text-blue-600">
-                    <Info size={14} />
-                 </div>
-                 <p className="text-[11px] text-blue-800 font-medium leading-tight">
-                    El footer se actualiza globalmente en todas las páginas del sitio.
-                 </p>
+              <div className="text-xs text-blue-700">
+                <p className="font-semibold mb-1">Notas</p>
+                :<ul className="space-y-1">
+                  <li>• Configura el Footer en la página <span className="font-bold">Footer</span></li>
+                  <li>• Configura las Redes Sociales en <span className="font-bold">Redes Sociales</span></li>
+                </ul>
               </div>
             </div>
           </Card>
         </div>
 
         {/* Vista Previa */}
-        <div className="lg:sticky lg:top-36 space-y-6">
+        <div className="lg:sticky lg:top-6 space-y-6">
           <Card className="overflow-hidden border-2 border-primary/20 shadow-xl shadow-primary/5">
-            <div className="bg-primary/5 px-6 py-4 border-b border-primary/10 flex justify-between items-center">
+            <div className="bg-primary/5 px-6 py-3 border-b border-primary/10 flex justify-between items-center">
                <Typography variant="h3" className="text-sm font-black text-primary uppercase tracking-widest">
-                 Vista Previa (Sin Guardar)
+                 Vista Previa Navbar
                </Typography>
                <span className="flex gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-400"></span>
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+                 <span className="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                 <span className="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                 <span className="w-2.5 h-2.5 rounded-full bg-green-400"></span>
                </span>
             </div>
             
-            <div className="bg-white/40 backdrop-blur-md border-b border-gray-100 min-h-40 overflow-hidden">
-               {/* Usamos el NavBar real pero con los settings locales inyectados */}
-               <div className="pointer-events-none transform scale-90 md:scale-100 origin-center">
+            <div className="bg-white p-4 border-b border-gray-100">
+               <div className="pointer-events-none">
                   <NavBar user={null} previewSettings={localSettings} />
                </div>
             </div>
 
-            <div className="bg-white/40 backdrop-blur-md border-t border-gray-100 overflow-hidden">
-               <div className="pointer-events-none transform scale-75 origin-top">
-                  <Footer previewSettings={footerSettings} />
-               </div>
-            </div>
-
-            <div className="p-8 bg-gray-50/50 flex flex-col items-center text-center">
-               <div className="w-16 h-1 bg-gray-200 rounded-full mb-6"></div>
-               <Typography variant="h4" className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Diseño del Encabezado</Typography>
-               <p className="text-[10px] text-gray-400 max-w-50 leading-relaxed italic">
-                 "Así es como se verá el encabezado principal de tu sitio web en todas las páginas."
-               </p>
+            <div className="p-4 bg-gray-50 text-center">
+               <p className="text-xs text-gray-400">Vista previa del navbar en tu sitio</p>
             </div>
           </Card>
 

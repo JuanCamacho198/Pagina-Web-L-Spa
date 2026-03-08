@@ -39,6 +39,8 @@ import AdminUsersListView from '@/features/admin/AdminUsersListView';
 import CreateServiceView from '@/features/admin/CreateServiceView';
 import EditServiceView from '@/features/admin/EditServiceView';
 import NavbarSettingsView from '@/features/admin/NavbarSettingsView';
+import FooterSettingsView from '@/features/admin/FooterSettingsView';
+import SocialLinksView from '@/features/admin/SocialLinksView';
 import AdminLayout from '@/features/admin/AdminLayout';
 
 import { AuthSync } from '@/components/shared/AuthSync';
@@ -100,8 +102,8 @@ export default function App() {
                 <Route path="services/new" element={<CreateServiceView />} />
                 <Route path="services/edit/:id" element={<EditServiceView />} />
                 <Route path="navbar" element={<NavbarSettingsView />} />
-                <Route path="footer" element={<div>Footer Settings</div>} />
-                <Route path="bookings" element={<div>Bookings</div>} />
+                <Route path="footer" element={<FooterSettingsView />} />
+                <Route path="social" element={<SocialLinksView />} />
               </Route>
             </>
           ) : (

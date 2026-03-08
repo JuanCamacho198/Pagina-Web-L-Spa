@@ -7,7 +7,9 @@ import {
   Users, 
   Settings, 
   ChevronLeft,
-  Sparkles
+  Sparkles,
+  Link,
+  Layout
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -35,7 +37,17 @@ const navItems = [
   { 
     label: 'Navbar', 
     href: '/admin/navbar', 
-    icon: Settings 
+    icon: Layout 
+  },
+  { 
+    label: 'Footer', 
+    href: '/admin/footer', 
+    icon: LayoutDashboard 
+  },
+  { 
+    label: 'Redes Sociales', 
+    href: '/admin/social', 
+    icon: Link 
   },
 ];
 
