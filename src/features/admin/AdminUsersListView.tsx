@@ -79,15 +79,14 @@ export default function AdminUsersListView() {
     );
   }
 
-  return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+return (
+    <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <Typography variant="h1" className="text-3xl font-bold flex items-center gap-2">
-            <Users size={32} />
+          <Typography variant="h1" className="text-2xl font-bold">
             Gestión de Usuarios
           </Typography>
-          <Typography variant="h1" className="text-gray-500 mt-1">
+          <Typography className="text-gray-500 mt-1">
             Administra los roles y personal del spa.
           </Typography>
         </div>

@@ -10,7 +10,8 @@ import {
   MoreVertical,
   Filter,
   UserPlus,
-  ChevronDown
+  ChevronDown,
+  RotateCcw
 } from 'lucide-react';
 import { fetchAllAppointments, updateAppointmentStatus, fetchAdminStats } from '@/models/adminModel';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
@@ -68,24 +69,8 @@ export default function AdminDashboardView() {
 
   if (loading) return <div className="p-8 text-center">Cargando dashboard...</div>;
 
-  return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
-      <div className="flex justify-between items-center">
-        <Typography variant="h1" className="text-3xl font-bold">Panel de Administración</Typography>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={loadData}>Actualizar</Button>
-          <Button variant="outline" onClick={() => window.location.href = '/admin/navbar'}>
-            <Settings size={18} className="mr-2" />
-            Configurar Navbar
-          </Button>
-          <Button variant="outline" onClick={() => window.location.href = '/admin/users'}>
-            <Users size={18} className="mr-2" />
-            Usuarios
-          </Button>
-          <Button onClick={() => window.location.href = '/admin/services/new'}>Nuevo Servicio</Button>
-        </div>
-      </div>
-
+return (
+    <div className="space-y-8">
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
@@ -142,12 +127,17 @@ export default function AdminDashboardView() {
         </Card>
       </div>
 
-      {/* Recent Appointments Table */}
+{/* Recent Appointments Table */}
       <Card className="overflow-visible">
         <CardHeader>
           <div className="flex justify-between items-center">
             <Typography variant="h2" className="text-xl font-semibold">Gestión de Reservas</Typography>
-            <Button variant="ghost" size="sm">Ver todas</Button>
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm" onClick={loadData} className="flex items-center gap-2">
+                <RotateCcw size={14} />
+                Actualizar
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>

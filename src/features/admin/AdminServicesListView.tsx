@@ -40,15 +40,12 @@ export default function AdminServicesListView() {
 
   if (loading) return <div className="p-8 text-center">Cargando servicios...</div>;
 
-  return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="sm" onClick={() => navigate('/admin')}>
-          <ArrowLeft size={20} />
-        </Button>
-        <Typography variant="h1" className="text-3xl font-bold">Gestión de Servicios</Typography>
-        <Button className="ml-auto" onClick={() => navigate('/admin/services/new')}>
-          <Plus size={20} className="mr-2" /> Nuevo Servicio
+return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <Typography variant="h1" className="text-2xl font-bold">Gestión de Servicios</Typography>
+        <Button onClick={() => navigate('/admin/services/new')}>
+          <Plus size={18} className="mr-2" /> Nuevo Servicio
         </Button>
       </div>
 

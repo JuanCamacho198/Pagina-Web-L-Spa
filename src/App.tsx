@@ -4,7 +4,6 @@ import {
   Routes,
   Route,
   Navigate,
-  useNavigate,
 } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import { CartProvider } from '@/context/CartContext';
@@ -40,6 +39,7 @@ import AdminUsersListView from '@/features/admin/AdminUsersListView';
 import CreateServiceView from '@/features/admin/CreateServiceView';
 import EditServiceView from '@/features/admin/EditServiceView';
 import NavbarSettingsView from '@/features/admin/NavbarSettingsView';
+import AdminLayout from '@/features/admin/AdminLayout';
 
 import { AuthSync } from '@/components/shared/AuthSync';
 
@@ -92,13 +92,17 @@ export default function App() {
               <Route path="/payment-confirmation" element={<SuccessView />} />
               <Route path="/cart" element={<CartView />} />
 
-              {/* Rutas de Administración */}
-              <Route path="/admin" element={<AdminDashboardView />} />
-              <Route path="/admin/users" element={<AdminUsersListView />} />
-              <Route path="/admin/services" element={<AdminServicesListView />} />
-              <Route path="/admin/services/new" element={<CreateServiceView />} />
-              <Route path="/admin/services/edit/:id" element={<EditServiceView />} />
-              <Route path="/admin/navbar" element={<NavbarSettingsView />} />
+{/* Rutas de Administración */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<AdminDashboardView />} />
+                <Route path="users" element={<AdminUsersListView />} />
+                <Route path="services" element={<AdminServicesListView />} />
+                <Route path="services/new" element={<CreateServiceView />} />
+                <Route path="services/edit/:id" element={<EditServiceView />} />
+                <Route path="navbar" element={<NavbarSettingsView />} />
+                <Route path="footer" element={<div>Footer Settings</div>} />
+                <Route path="bookings" element={<div>Bookings</div>} />
+              </Route>
             </>
           ) : (
             <>
