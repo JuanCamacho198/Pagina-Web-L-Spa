@@ -8,6 +8,17 @@ import { ServiceCardSkeleton } from '@/components/ui/Skeleton';
 import { SearchBar } from '@/components/ui/SearchBar';
 import { Dropdown } from '@/components/ui/Dropdown';
 import { Button } from '@/components/ui/Button';
+import CloudinaryImage from '@/components/CloudinaryImage';
+
+const isCloudinaryUrl = (url: string): boolean => {
+  return url?.includes('cloudinary.com') || url?.startsWith('https://res.cloudinary.com');
+};
+
+const extractPublicId = (url: string): string | null => {
+  if (!url) return null;
+  const match = url.match(/upload\/(?:v\d+\/)?(.+?)(?:\.|_)/);
+  return match ? match[1] : null;
+};
 
 export default function ServicesView() {
   const [services, setServices] = useState<Service[]>([]);
@@ -156,13 +167,22 @@ export default function ServicesView() {
                 className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-primary/50 dark:border-gray-700 cursor-pointer"
                 onClick={() => goToServiceDetail(service.name)} 
               >
-                    <div className="relative h-56 overflow-hidden bg-gray-100">
-                  <img
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    src={service.imageUrl || `/assets/${service.imageFileName}`}
-                    alt={service.name}
-                    loading="lazy"
-                  />
+                <div className="relative h-56 overflow-hidden bg-gray-100">
+                  {service.imageUrl && isCloudinaryUrl(service.imageUrl) ? (
+                    <CloudinaryImage
+                      publicId={extractPublicId(service.imageUrl) || ''}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      options={{ width: 400, height: 224, crop: 'fill' }}
+                      alt={service.name}
+                    />
+                  ) : (
+                    <img
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      src={service.imageUrl || `/assets/${service.imageFileName}`}
+                      alt={service.name}
+                      loading="lazy"
+                    />
+                  )}
                   <div className="absolute top-4 left-4">
                     <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary uppercase tracking-wider shadow-sm">
                       {service.category}

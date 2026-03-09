@@ -8,6 +8,17 @@ import { fetchServiceByName, fetchServices } from '../../../models/servicesModel
 import { Service } from '../../../types';
 import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import CloudinaryImage from '../../../components/CloudinaryImage';
+
+const isCloudinaryUrl = (url: string): boolean => {
+  return url?.includes('cloudinary.com') || url?.startsWith('https://res.cloudinary.com');
+};
+
+const extractPublicId = (url: string): string | null => {
+  if (!url) return null;
+  const match = url.match(/upload\/(?:v\d+\/)?(.+?)(?:\.|_)/);
+  return match ? match[1] : null;
+};
 
 const ServiceDetailView = () => {
   const { id } = useParams<{ id: string }>(); // 'id' ahora es el slug del nombre
@@ -182,12 +193,21 @@ const ServiceDetailView = () => {
           {/* Imagen y Características */}
           <div className="lg:col-span-2 space-y-8">
              <div className="bg-white p-4 rounded-[3rem] shadow-2xl border border-white overflow-hidden aspect-video relative group">
-                <img 
-                  src={service.imageUrl || `/assets/${service.imageFileName}`} 
-                  alt={service.name} 
-                  className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105"
-                />
-             </div>
+                 {service.imageUrl && isCloudinaryUrl(service.imageUrl) ? (
+                   <CloudinaryImage
+                     publicId={extractPublicId(service.imageUrl) || ''}
+                     className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105"
+                     options={{ width: 1200, height: 675, crop: 'fill' }}
+                     alt={service.name}
+                   />
+                 ) : (
+                   <img 
+                     src={service.imageUrl || `/assets/${service.imageFileName}`} 
+                     alt={service.name} 
+                     className="w-full h-full object-cover rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105"
+                   />
+                 )}
+              </div>
 
              <div className="bg-white p-10 md:p-12 rounded-[3rem] shadow-xl border border-gray-100">
                 <h3 className="text-2xl font-black text-gray-900 mb-6">Sobre esta experiencia</h3>
@@ -265,11 +285,20 @@ const ServiceDetailView = () => {
                 onClick={() => navigate(`/service/${rec.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-')}`)}
               >
                 <div className="h-48 overflow-hidden relative">
-                  <img 
-                    src={rec.imageUrl || `/assets/${rec.imageFileName}`} 
-                    alt={rec.name} 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
-                  />
+                  {rec.imageUrl && isCloudinaryUrl(rec.imageUrl) ? (
+                    <CloudinaryImage
+                      publicId={extractPublicId(rec.imageUrl) || ''}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      options={{ width: 400, height: 192, crop: 'fill' }}
+                      alt={rec.name}
+                    />
+                  ) : (
+                    <img 
+                      src={rec.imageUrl || `/assets/${rec.imageFileName}`} 
+                      alt={rec.name} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                    />
+                  )}
                   <div className="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-xs font-bold text-primary shadow-sm">
                     {rec.category}
                   </div>
