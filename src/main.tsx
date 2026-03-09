@@ -7,6 +7,7 @@ import "./index.css";
 import App from "./App";
 import { CartProvider } from "@context/CartContext";
 import { ToastProvider } from "@components/ui/Toast";
+import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -21,8 +22,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     >
       <CartProvider>
         <ToastProvider>
-          <App />
-          <Analytics />
+          <HelmetProvider>
+            <App />
+            <Analytics />
+          </HelmetProvider>
         </ToastProvider>
       </CartProvider>
 

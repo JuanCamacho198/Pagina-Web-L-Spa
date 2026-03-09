@@ -196,7 +196,7 @@ export default function ServicesView() {
             <p className="text-gray-500">Intenta ajustar tus filtros o tu búsqueda.</p>
             <button 
               onClick={() => { setSelectedCategory('Todos'); setSearchTerm(''); setSortOption(''); }}
-              className="mt-6 text-primary font-semibold hover:underline"
+              className="mt-6 font-semibold hover:underline text-primary"
             >
               Limpiar todos los filtros
             </button>

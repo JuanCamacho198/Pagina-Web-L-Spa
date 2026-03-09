@@ -7,6 +7,7 @@ import { eq } from 'drizzle-orm';
 import { fetchServiceByName, fetchServices } from '../../../models/servicesModel';
 import { Service } from '../../../types';
 import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 const ServiceDetailView = () => {
   const { id } = useParams<{ id: string }>(); // 'id' ahora es el slug del nombre
@@ -130,6 +131,14 @@ const ServiceDetailView = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
+      <Helmet>
+        <title>{service.name} - Luxury Spa Medellín</title>
+        <meta name="description" content={`Disfruta de nuestro servicio de ${service.name}. Un oasis de relajación en Medellín.`} />
+        <meta property="og:title" content={`${service.name} - Luxury Spa`} />
+        <meta property="og:description" content={`Reserva hoy tu ${service.name} y experimenta el mejor spa en Medellín.`} />
+        {service.imageUrl && <meta property="og:image" content={service.imageUrl} />}
+      </Helmet>
+
       {/* Notificaciones */}
       {notification && (
         <div className="fixed top-24 right-4 z-50 animate-in slide-in-from-right duration-300">
