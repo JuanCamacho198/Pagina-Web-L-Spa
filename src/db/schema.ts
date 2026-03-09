@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, decimal, integer, timestamp, varchar, date, time, pgEnum } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, decimal, integer, timestamp, varchar, date, time, pgEnum, uniqueIndex } from 'drizzle-orm/pg-core';
 
 // Definición de los Roles
 export const userRoleEnum = pgEnum('user_role', ['admin', 'employee', 'customer']);
@@ -56,3 +56,16 @@ export const siteConfig = pgTable('site_config', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 });
 
+// Definición de la Tabla de Reseñas (Reviews)
+export const reviews = pgTable('reviews', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  serviceId: uuid('service_id').notNull().references(() => services.id, { onDelete: 'cascade' }),
+  rating: integer('rating').notNull(),
+  comment: text('comment'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => {
+  return {
+    user_service_idx: uniqueIndex('user_service_review_idx').on(table.userId, table.serviceId),
+  };
+});
