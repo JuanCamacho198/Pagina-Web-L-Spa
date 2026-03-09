@@ -25,22 +25,17 @@ export const getOptimizedUrl = (
 
   if (width) transformations.push(`w_${width}`);
   if (height) transformations.push(`h_${height}`);
-  if (quality === 'auto') {
-    transformations.push('q_auto');
-  } else if (quality) {
-    transformations.push(`q_${quality}`);
-  }
-  if (format === 'auto') {
-    transformations.push('f_auto');
-  } else if (format) {
-    transformations.push(`f_${format}`);
-  }
+  
+  // Force f_auto and q_auto
+  transformations.push('q_auto');
+  transformations.push('f_auto');
+
   if (crop) transformations.push(`c_${crop}`);
 
   const transformationString = transformations.join(',');
 
-  return cloudinary.url(publicId, {
-    transformation: transformationString ? [transformationString] : undefined,
+  return (cloudinary as any).url(publicId, {
+    transformation: transformationString || undefined,
     secure: true,
   });
 };
