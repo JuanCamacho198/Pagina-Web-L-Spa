@@ -44,6 +44,7 @@ import NavbarSettingsView from '@/features/admin/NavbarSettingsView';
 import FooterSettingsView from '@/features/admin/FooterSettingsView';
 import SocialLinksView from '@/features/admin/SocialLinksView';
 import AdminLayout from '@/features/admin/AdminLayout';
+import AdminRoute from '@/components/shared/AdminRoute';
 
 import { AuthSync } from '@/components/shared/AuthSync';
 
@@ -97,17 +98,19 @@ return (
               <Route path="/payment-confirmation" element={<SuccessView />} />
               <Route path="/cart" element={<CartView />} />
 
-{/* Rutas de Administración */}
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<AdminDashboardView />} />
-                <Route path="bookings" element={<AdminBookingsView />} />
-                <Route path="users" element={<AdminUsersListView />} />
-                <Route path="services" element={<AdminServicesListView />} />
-                <Route path="services/new" element={<CreateServiceView />} />
-                <Route path="services/edit/:id" element={<EditServiceView />} />
-                <Route path="navbar" element={<NavbarSettingsView />} />
-                <Route path="footer" element={<FooterSettingsView />} />
-                <Route path="social" element={<SocialLinksView />} />
+{/* Rutas de Administración Protegidas por Rol */}
+              <Route element={<AdminRoute />}>
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<AdminDashboardView />} />
+                  <Route path="bookings" element={<AdminBookingsView />} />
+                  <Route path="users" element={<AdminUsersListView />} />
+                  <Route path="services" element={<AdminServicesListView />} />
+                  <Route path="services/new" element={<CreateServiceView />} />
+                  <Route path="services/edit/:id" element={<EditServiceView />} />
+                  <Route path="navbar" element={<NavbarSettingsView />} />
+                  <Route path="footer" element={<FooterSettingsView />} />
+                  <Route path="social" element={<SocialLinksView />} />
+                </Route>
               </Route>
             </>
           ) : (
