@@ -4,7 +4,41 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./src/assets/logos/LOGO4x-sinfondo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>L-Spa</title>
+    <title>L-Spa - Luxury Spa en Medellín</title>
+    <!-- JSON-LD for LocalBusiness -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HealthAndBeautyBusiness",
+        "name": "L-Spa",
+        "image": "https://l-spa.com/assets/logos/LOGO4x-sinfondo.png",
+        "@id": "https://l-spa.com",
+        "url": "https://l-spa.com",
+        "telephone": "+573003208295",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Zona Central",
+          "addressLocality": "Medellín",
+          "addressRegion": "ANTIOQUIA",
+          "postalCode": "050001",
+          "addressCountry": "CO"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 6.2442,
+          "longitude": -75.5812
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+          ],
+          "opens": "08:00",
+          "closes": "20:00"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
