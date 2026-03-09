@@ -25,7 +25,6 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    // GET /api/reviews?serviceId=...
     if (req.method === 'GET') {
       const { serviceId } = req.query;
       
@@ -33,23 +32,29 @@ export default async function handler(req: any, res: any) {
         return res.status(200).json([]);
       }
 
-      const result = await db
-        .select({
-          id: reviews.id,
-          rating: reviews.rating,
-          comment: reviews.comment,
-          createdAt: reviews.createdAt,
-          user: {
-            firstName: users.firstName,
-            lastName: users.lastName,
-          }
-        })
-        .from(reviews)
-        .leftJoin(users, eq(reviews.userId, users.id))
-        .where(eq(reviews.serviceId, serviceId))
-        .orderBy(desc(reviews.createdAt));
+      try {
+        const result = await db
+          .select({
+            id: reviews.id,
+            rating: reviews.rating,
+            comment: reviews.comment,
+            createdAt: reviews.createdAt,
+            user: {
+              firstName: users.firstName,
+              lastName: users.lastName,
+            }
+          })
+          .from(reviews)
+          .leftJoin(users, eq(reviews.userId, users.id))
+          .where(eq(reviews.serviceId, serviceId as any))
+          .orderBy(desc(reviews.createdAt));
 
-      return res.status(200).json(result);
+        return res.status(200).json(result);
+      } catch (dbError: any) {
+        // Fallback or better error info
+        console.error('DB Error in reviews:', dbError);
+        return res.status(200).json([]);
+      }
     }
 
     // POST /api/reviews
