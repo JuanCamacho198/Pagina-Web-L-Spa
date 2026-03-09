@@ -24,7 +24,7 @@ const extractPublicId = (url: string): string | null => {
 };
 
 const ServiceDetailView = () => {
-  const { id } = useParams<{ id: string }>(); // 'id' ahora es el slug del nombre
+  const { slug: routeSlug } = useParams<{ slug: string }>(); // Cambiado de 'id' a 'slug' para coincidir con la ruta
   const { user, isAuthenticated } = useAuth0();
   const [service, setService] = useState<Service | null>(null);
   const [loading, setLoading] = useState(true);
@@ -49,12 +49,18 @@ const ServiceDetailView = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!id) return;
+      console.log('Fetching data for slug:', routeSlug);
+      if (!routeSlug) {
+        setError('No se proporcionó un identificador de servicio.');
+        setLoading(false);
+        return;
+      }
+      
       setLoading(true);
       setError(null);
       try {
         // Buscamos por nombre (slug) en lugar de UUID
-        const fetchedService = await fetchServiceByName(id);
+        const fetchedService = await fetchServiceByName(routeSlug);
 
         if (fetchedService) {
           setService(fetchedService);
@@ -70,6 +76,7 @@ const ServiceDetailView = () => {
 
           setRecommendedServices(seleccionados);
         } else {
+          console.error('Service not found for slug:', routeSlug);
           setError('Servicio no encontrado.');
         }
       } catch (err: any) {
@@ -81,7 +88,7 @@ const ServiceDetailView = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, [routeSlug]);
 
   const handleAddToCart = async () => { 
     if (service) {

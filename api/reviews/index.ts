@@ -30,7 +30,7 @@ export default async function handler(req: any, res: any) {
       const { serviceId } = req.query;
       
       if (!serviceId) {
-        return res.status(400).json({ error: 'serviceId es requerido' });
+        return res.status(200).json([]);
       }
 
       const result = await db
