@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 const appointmentSchema = z.object({
   auth0Id: z.string().min(1),
-  serviceId: z.string().uuid(),
+  serviceId: z.uuid(),
   appointmentDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   appointmentTime: z.string().min(1)
 });
