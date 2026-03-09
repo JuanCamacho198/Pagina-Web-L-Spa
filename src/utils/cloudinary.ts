@@ -27,8 +27,8 @@ export const getOptimizedUrl = (
   if (height) transformations.push(`h_${height}`);
   
   // Force f_auto and q_auto
-  transformations.push('q_auto');
-  transformations.push('f_auto');
+  transformations.push(`q_${quality || 'auto'}`);
+  transformations.push(`f_${format || 'auto'}`);
 
   if (crop) transformations.push(`c_${crop}`);
 
