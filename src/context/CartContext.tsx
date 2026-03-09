@@ -1,7 +1,5 @@
 // src/context/CartContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { db, cartItems as dbCartItems, users, services } from '../db';
-import { eq, and } from 'drizzle-orm';
 import { useAuth0 } from "@auth0/auth0-react";
 import { CartItem } from '../types';
 
@@ -36,47 +34,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       if (!user?.sub) return;
 
-      // Obtener el ID del usuario en Postgres
-      const userResult = await db.select({ id: users.id })
-        .from(users)
-        .where(eq(users.auth0Id, user.sub))
-        .limit(1);
+      const response = await fetch(`/api/users/cart?auth0Id=${user.sub}`);
+      if (!response.ok) throw new Error('Error al cargar carrito');
+      
+      const result = await response.json();
 
-      if (userResult.length === 0) return;
-      const userId = userResult[0].id;
-
-      // Join para traer datos del servicio en el carrito
-      const result = await db.select({
-        id: dbCartItems.id,
-        serviceId: dbCartItems.serviceId,
-        nombre: services.name,
-        precio: services.price,
-        categoria: services.category,
-        imagenUrl: services.imageUrl,
-        duracion: services.duration,
-        quantity: dbCartItems.quantity,
-        addedAt: dbCartItems.createdAt
-      })
-      .from(dbCartItems)
-      .innerJoin(services, eq(dbCartItems.serviceId, services.id))
-      .where(eq(dbCartItems.userId, userId));
-
-      const items: CartItem[] = result.map(item => ({
+      const items: CartItem[] = result.map((item: any) => ({
         id: item.id,
         serviceId: item.serviceId || '',
-        serviceName: item.nombre,
-        servicePrice: Number(item.precio),
-        category: item.categoria || '',
-        imageUrl: item.imagenUrl || '',
+        serviceName: item.serviceName,
+        servicePrice: Number(item.servicePrice),
+        category: item.category || '',
+        imageUrl: item.imageUrl || '',
         quantity: item.quantity || 1,
-        addedAt: item.addedAt?.toISOString() || new Date().toISOString(),
-        duration: Number(item.duracion || 60)
+        addedAt: item.createdAt || new Date().toISOString(),
+        duration: Number(item.duration || 60)
       }));
 
       setCartItems(items);
       setCartCount(items.length);
     } catch (error) {
-      console.error("Error al cargar el carrito desde Postgres:", error);
+      console.error("Error al cargar el carrito:", error);
     }
   };
 
@@ -84,17 +62,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!user?.sub) return;
 
     try {
-      const userResult = await db.select({ id: users.id })
-        .from(users)
-        .where(eq(users.auth0Id, user.sub))
-        .limit(1);
-
-      if (userResult.length > 0) {
-        const userId = userResult[0].id;
-        await db.delete(dbCartItems).where(eq(dbCartItems.userId, userId));
-        setCartItems([]);
-        setCartCount(0);
-      }
+      await fetch(`/api/users/cart?auth0Id=${user.sub}&all=true`, {
+        method: 'DELETE'
+      });
+      setCartItems([]);
+      setCartCount(0);
     } catch (error) {
       console.error("Error al vaciar el carrito:", error);
     }
@@ -102,7 +74,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const removeItem = async (itemId: string) => {
     try {
-      await db.delete(dbCartItems).where(eq(dbCartItems.id, itemId));
+      await fetch(`/api/users/cart?id=${itemId}`, {
+        method: 'DELETE'
+      });
       const updatedItems = cartItems.filter(item => item.id !== itemId);
       setCartItems(updatedItems);
       setCartCount(updatedItems.length);

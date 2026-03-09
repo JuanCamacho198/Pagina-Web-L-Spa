@@ -4,8 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/fetcher';
-import { db, cartItems, users } from '../../../db';
-import { eq } from 'drizzle-orm';
 import { Service } from '../../../types';
 import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
@@ -68,28 +66,27 @@ const ServiceDetailView = () => {
       if (isAuthenticated && user?.sub) {
         setIsAddingToCart(true);
         try {
-          // Buscamos el ID del usuario en Postgres por auth0Id
-          const userResult = await db.select({ id: users.id })
-            .from(users)
-            .where(eq(users.auth0Id, user.sub))
-            .limit(1);
-
-          if (userResult.length === 0) {
-            throw new Error("Usuario no encontrado en la base de datos.");
-          }
-
-          const userId = userResult[0].id;
-
-          // Añadir al carrito en Postgres
-          await db.insert(cartItems).values({
-            userId: userId,
-            serviceId: service.id,
+          // Usar la API en lugar de acceder directamente a la DB desde el cliente
+          const response = await fetch('/api/users/cart', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              serviceId: service.id,
+              auth0Id: user.sub
+            })
           });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Error al añadir al carrito.");
+          }
 
           showNotification(`✅ ${service.name} ha sido añadido al carrito exitosamente`, 'success');
         } catch (e: any) {
           console.error('Error añadiendo al Carrito', e);
-          showNotification('❌ Error al añadir el servicio al carrito. Inténtalo de nuevo.', 'error');
+          showNotification(`❌ ${e.message || 'Error al añadir el servicio al carrito.'}`, 'error');
         } finally {
           setIsAddingToCart(false);
         }
