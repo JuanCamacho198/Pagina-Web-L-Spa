@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import { fetcher } from '@/lib/fetcher';
 import StarRating from '../../../components/ui/StarRating';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -20,34 +21,12 @@ interface ReviewListProps {
 }
 
 const ReviewList: React.FC<ReviewListProps> = ({ serviceId }) => {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data: reviews = [], error, isLoading } = useSWR<Review[]>(
+    serviceId ? `/api/reviews?serviceId=${serviceId}` : null,
+    fetcher
+  );
 
-  const fetchReviews = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`/api/reviews?serviceId=${serviceId}`);
-      if (!response.ok) {
-        throw new Error('Error al cargar las reseñas');
-      }
-      const data = await response.json();
-      setReviews(data);
-    } catch (err: any) {
-      console.error('Error fetching reviews:', err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (serviceId) {
-      fetchReviews();
-    }
-  }, [serviceId]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex justify-center p-8">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
@@ -58,7 +37,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ serviceId }) => {
   if (error) {
     return (
       <div className="p-4 bg-red-50 text-red-700 rounded-2xl text-center">
-        {error}
+        {error.message || 'Error al cargar las reseñas'}
       </div>
     );
   }

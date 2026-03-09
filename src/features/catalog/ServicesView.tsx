@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllServices } from '@/controllers/servicesController';
+import useSWR from 'swr';
+import { fetcher } from '@/lib/fetcher';
 import Footer from '@/components/layout/Footer';
 import { Filter, SortAsc, MessageCircle, ArrowRight, Search, ChevronDown } from 'lucide-react';
 import { Service } from '@/types';
@@ -21,37 +22,52 @@ const extractPublicId = (url: string): string | null => {
 };
 
 export default function ServicesView() {
-  const [services, setServices] = useState<Service[]>([]);
-  const [error, setError] = useState('');
+  const { data: services = [], error, isLoading } = useSWR<Service[]>('/api/services', fetcher);
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [sortOption, setSortOption] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const categories = ['Todos', ...new Set(services.map(service => service.category || 'Sin Categoría'))];
-
-  useEffect(() => {
-    setIsLoading(true);
-    getAllServices((data: any[]) => {
-      setServices(data);
-      setIsLoading(false);
-    }, (err: string) => {
-      setError(err);
-      setIsLoading(false);
-    });
-  }, []);
+  const categories = useMemo(() => {
+    return ['Todos', ...new Set(services.map(service => service.category || 'Sin Categoría'))];
+  }, [services]);
 
   const goToServiceDetail = (name: string) => {
     const slug = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
     navigate(`/service/${slug}`);
   };
 
+  const filteredServices = useMemo(() => {
+    let result = [...services];
+
+    if (selectedCategory !== 'Todos') {
+      result = result.filter(service => (service.category || 'Sin Categoría') === selectedCategory);
+    }
+
+    if (searchTerm) {
+      result = result.filter(service => 
+        (service.name || '').toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (sortOption === 'nombre-asc') {
+      result.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+    } else if (sortOption === 'nombre-desc') {
+      result.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+    } else if (sortOption === 'precio-asc') {
+      result.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
+    } else if (sortOption === 'precio-desc') {
+      result.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
+    }
+
+    return result;
+  }, [services, selectedCategory, searchTerm, sortOption]);
+
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center bg-red-50 p-8 rounded-2xl border border-red-100 max-w-md">
-          <p className="text-red-600 font-medium mb-4">Error al cargar servicios: {error}</p>
+          <p className="text-red-600 font-medium mb-4">Error al cargar servicios: {error.message || 'Error desconocido'}</p>
           <button onClick={() => window.location.reload()} className="btn btn-primary">Reintentar</button>
         </div>
       </div>

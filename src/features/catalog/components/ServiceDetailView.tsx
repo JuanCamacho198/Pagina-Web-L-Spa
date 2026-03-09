@@ -1,13 +1,15 @@
 // src/features/catalog/components/ServiceDetailView.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import useSWR from 'swr';
+import { fetcher } from '@/lib/fetcher';
 import { db, cartItems, users } from '../../../db';
 import { eq } from 'drizzle-orm';
-import { fetchServiceByName, fetchServices } from '../../../models/servicesModel';
 import { Service } from '../../../types';
 import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { ServiceDetailSkeleton } from '@/components/ui/Skeleton';
 import CloudinaryImage from '../../../components/CloudinaryImage';
 import JsonLd from '../../../components/JsonLd';
 import ReviewList from './ReviewList';
@@ -24,71 +26,42 @@ const extractPublicId = (url: string): string | null => {
 };
 
 const ServiceDetailView = () => {
-  const { slug: routeSlug } = useParams<{ slug: string }>(); // Cambiado de 'id' a 'slug' para coincidir con la ruta
+  const { slug: routeSlug } = useParams<{ slug: string }>();
   const { user, isAuthenticated } = useAuth0();
-  const [service, setService] = useState<Service | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [recommendedServices, setRecommendedServices] = useState<Service[]>([]);
+  const navigate = useNavigate();
+
+  // SWR para obtener el servicio por slug
+  const { data: service, error: serviceError, isLoading: serviceLoading } = useSWR<Service>(
+    routeSlug ? `/api/services?name=${routeSlug}` : null,
+    fetcher
+  );
+
+  // SWR para obtener todos los servicios (para recomendaciones)
+  const { data: allServices = [] } = useSWR<Service[]>('/api/services', fetcher);
+
   const [notification, setNotification] = useState<{ message: string; type: string } | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [reviewKey, setReviewKey] = useState(0); // Para forzar el refresco de las reseñas
-  const navigate = useNavigate();
+  const [reviewKey, setReviewKey] = useState(0);
+
+  const recommendedServices = useMemo(() => {
+    if (!service || allServices.length === 0) return [];
+    
+    return allServices
+      .filter(s => s.id !== service.id)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
+  }, [service, allServices]);
 
   const handleReviewSubmitted = () => {
     setReviewKey(prev => prev + 1);
   };
 
-  // Función para mostrar notificaciones
   const showNotification = (message: string, type = 'success') => {
     setNotification({ message, type });
     setTimeout(() => {
       setNotification(null);
     }, 4000);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log('Fetching data for slug:', routeSlug);
-      if (!routeSlug) {
-        setError('No se proporcionó un identificador de servicio.');
-        setLoading(false);
-        return;
-      }
-      
-      setLoading(true);
-      setError(null);
-      try {
-        // Buscamos por nombre (slug) en lugar de UUID
-        const fetchedService = await fetchServiceByName(routeSlug);
-
-        if (fetchedService) {
-          setService(fetchedService);
-
-          // Obtener otros servicios sugeridos
-          const allServices = await fetchServices();
-          const otrosServicios = allServices.filter(s => s.id !== fetchedService.id);
-
-          // Limitar a 3 servicios aleatorios
-          const seleccionados = otrosServicios
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 3);
-
-          setRecommendedServices(seleccionados);
-        } else {
-          console.error('Service not found for slug:', routeSlug);
-          setError('Servicio no encontrado.');
-        }
-      } catch (err: any) {
-        console.error('Error al obtener el servicio:', err);
-        setError('Error al cargar el servicio.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [routeSlug]);
 
   const handleAddToCart = async () => { 
     if (service) {
@@ -131,22 +104,21 @@ const ServiceDetailView = () => {
     }
   };
 
-  if (loading) {
+  if (serviceLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
-        <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-4 text-gray-500 font-medium">Cargando detalles del servicio...</p>
+      <div className="min-h-screen bg-gray-50 pt-20">
+        <ServiceDetailSkeleton />
       </div>
     );
   }
 
-  if (error || !service) {
+  if (serviceError || !service) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
         <div className="bg-white p-8 rounded-3xl shadow-xl text-center max-w-md">
           <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">¡Vaya! Algo salió mal</h2>
-          <p className="text-gray-500 mb-6">{error || 'No se ha seleccionado ningún servicio.'}</p>
+          <p className="text-gray-500 mb-6">{serviceError?.message || 'No se ha seleccionado ningún servicio o el servicio no existe.'}</p>
           <button onClick={() => navigate('/services')} className="btn btn-primary w-full">
             Ver otros servicios
           </button>
