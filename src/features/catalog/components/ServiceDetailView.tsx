@@ -6,7 +6,7 @@ import { db, cartItems, users } from '../../../db';
 import { eq } from 'drizzle-orm';
 import { fetchServiceByName, fetchServices } from '../../../models/servicesModel';
 import { Service } from '../../../types';
-import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
+import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import CloudinaryImage from '../../../components/CloudinaryImage';
 import JsonLd from '../../../components/JsonLd';
@@ -319,7 +319,6 @@ return (
                 </div>
 
                 <div className="pt-6 border-t border-gray-100 flex items-center gap-2 text-primary font-bold justify-center">
-                   <ShieldCheck size={20} />
                    <span className="text-sm">Transacción 100% Segura</span>
                 </div>
              </div>
