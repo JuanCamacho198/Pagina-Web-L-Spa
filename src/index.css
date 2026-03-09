@@ -8,20 +8,23 @@
   --color-accent: #D99B9B;
 }
 
-/* Dark mode variables */
+/* Dark mode variable overrides for Grays */
 .dark {
-  --color-gray-50: #1f2937;
-  --color-gray-100: #374151;
-  --color-gray-200: #4b5563;
-  --color-gray-300: #6b7280;
-  --color-gray-400: #9ca3af;
-  --color-gray-500: #d1d5db;
-  --color-gray-900: #f9fafb;
+  --color-gray-50: #0B0D11;
+  --color-gray-100: #111827;
+  --color-gray-200: #1F2937;
+  --color-gray-300: #374151;
+  --color-gray-400: #4B5563;
+  --color-gray-500: #9CA3AF;
+  --color-gray-600: #D1D5DB;
+  --color-gray-700: #E5E7EB;
+  --color-gray-800: #F3F4F6;
+  --color-gray-900: #F9FAFB;
 }
 
 @layer base {
   body {
-    @apply antialiased text-gray-900 bg-gray-50 bg-fixed;
+    @apply antialiased text-gray-800 bg-gray-50 bg-fixed transition-colors duration-300;
   }
   
   .dark body {
@@ -40,17 +43,11 @@
     @apply bg-secondary text-primary shadow-sm hover:bg-secondary/80 hover:-translate-y-0.5 active:translate-y-0 active:scale-95;
   }
   .card {
-    @apply bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100/50 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/20;
-  }
-  .dark .card {
-    @apply bg-gray-800/80 border-gray-700/50 hover:border-primary/40;
+    @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100/50 dark:border-gray-700/50 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/20;
   }
   
   /* Skeleton Loader */
   .skeleton {
-    @apply animate-pulse bg-gray-200/80 rounded-md;
-  }
-  .dark .skeleton {
-    @apply bg-gray-700/80;
+    @apply animate-pulse bg-gray-200/80 dark:bg-gray-700/80 rounded-md;
   }
 }

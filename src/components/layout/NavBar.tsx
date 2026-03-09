@@ -182,7 +182,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                   {!previewSettings && (
                     <button
                       onClick={toggleTheme}
-                      className="p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-xl hover:bg-primary/5"
+                      className="p-2.5 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-all duration-300 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10"
                       title={theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
                     >
                       {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}

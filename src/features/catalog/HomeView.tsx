@@ -70,7 +70,7 @@ function HomeView() {
                 Un oasis de relajación en Medellín
               </Typography>
               
-              <Typography variant="lead" className="text-gray-200! mb-10 max-w-lg">
+              <Typography variant="lead" className="text-white! mb-10 max-w-lg drop-shadow-md">
                 Descubre una experiencia única de bienestar y belleza. Reserva hoy y consiéntete como nunca antes.
               </Typography>
 
@@ -115,12 +115,12 @@ function HomeView() {
                 { icon: <Clock className="text-primary" />, title: "Tu Tiempo", desc: "Flexibilidad horaria para adaptarnos a tu ritmo de vida." },
                 { icon: <MapPin className="text-primary" />, title: "Ubicación Ideal", desc: "Un refugio de paz en el corazón de Medellín." }
               ].map((item, i) => (
-                <Card key={i} className="flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-300 p-8 border-none shadow-xl shadow-gray-200/50">
+                <Card key={i} className="flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-300 p-8 border-none shadow-xl shadow-gray-200/50 dark:shadow-black/50 bg-white dark:bg-gray-800">
                   <div className="mb-6 p-4 bg-primary/5 rounded-2xl group-hover:bg-primary/10 transition-colors">
                     {React.cloneElement(item.icon as React.ReactElement, { size: 32 } as any)}
                   </div>
-                  <Typography variant="h4" className="mb-3 text-gray-800">{item.title}</Typography>
-                  <Typography className="text-gray-500 text-sm leading-relaxed mt-0">{item.desc}</Typography>
+                  <Typography variant="h4" className="mb-3 text-gray-800 dark:text-gray-100">{item.title}</Typography>
+                  <Typography className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mt-0">{item.desc}</Typography>
                 </Card>
               ))}
             </div>
@@ -183,7 +183,7 @@ function HomeView() {
               <div className="flex justify-between items-end mb-12">
                 <div>
                   <Typography variant="h2" className="text-gray-900 dark:text-white border-none">Nuestros Servicios</Typography>
-                  <Typography className="text-gray-500 mt-2">Experiencias diseñadas para tu renovación total.</Typography>
+                  <Typography className="text-gray-500 dark:text-gray-400 mt-2">Experiencias diseñadas para tu renovación total.</Typography>
                 </div>
                 <Button variant="outline" onClick={() => navigate('/services')}>Ver todos</Button>
               </div>
@@ -208,8 +208,8 @@ function HomeView() {
                         <Clock size={14} className="text-gray-400" />
                         <Typography variant="small" className="text-gray-400">{service.duration} min</Typography>
                       </div>
-                      <Typography variant="h4" className="mb-2 text-gray-800">{service.name}</Typography>
-                      <Typography className="text-gray-500 text-sm line-clamp-2 mt-0 mb-6">
+                      <Typography variant="h4" className="mb-2 text-gray-800 dark:text-gray-100">{service.name}</Typography>
+                      <Typography className="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 mt-0 mb-6">
                         {service.description}
                       </Typography>
                       <Button 
