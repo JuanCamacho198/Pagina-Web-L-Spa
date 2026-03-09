@@ -116,14 +116,14 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     "text-sm font-bold uppercase tracking-widest transition-all duration-300 relative py-2 px-1",
     location.pathname === path 
       ? "text-primary after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full" 
-      : "text-gray-500 hover:text-primary"
+      : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light"
   );
 
   const mobileLinkClass = (path: string) => cn(
     "flex items-center gap-4 px-6 py-4 rounded-2xl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs",
     location.pathname === path 
       ? "bg-primary text-white shadow-lg shadow-primary/20" 
-      : "text-gray-500 hover:bg-primary/5 hover:text-primary"
+      : "text-gray-700 dark:text-gray-200 hover:bg-primary/5 dark:hover:bg-primary/20 hover:text-primary dark:hover:text-primary-light"
   );
 
   return (
@@ -222,7 +222,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                     </button>
 
                     {menuOpen && (
-                      <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50 overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300">
+                      <div className="absolute right-0 mt-3 w-56 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 py-2 z-50 overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300">
                         <div className="px-4 py-3 mb-2 border-b border-gray-50">
                           <p className="text-xs font-black text-primary uppercase tracking-widest mb-0.5">Bienvenido</p>
                           <p className="text-sm font-bold text-gray-900 truncate">{user?.name || user?.email}</p>
@@ -299,7 +299,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
           )}>
             <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
             <div className={cn(
-              "absolute right-0 top-0 h-full w-[80%] max-w-sm bg-white shadow-2xl transition-transform duration-500 p-6 flex flex-col",
+              "absolute right-0 top-0 h-full w-[80%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-500 p-6 flex flex-col",
               mobileMenuOpen ? "translate-x-0" : "translate-x-full"
             )}>
               <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">

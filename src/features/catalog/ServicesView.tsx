@@ -210,9 +210,9 @@ export default function ServicesView() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12 text-white">
           <div className="max-w-xl text-center md:text-left">
             <h3 className="text-3xl font-bold mb-6">Reserva en segundos por WhatsApp</h3>
-            <div className="space-y-4 text-white/90">
+            <div className="space-y-4 text-white">
               <p className="flex items-center gap-3 justify-center md:justify-start">
-                <span className="w-2 h-2 bg-white rounded-full"></span>
+                <span className="w-2.5 h-2.5 bg-secondary rounded-full shadow-sm"></span>
                 Atención personalizada e inmediata
               </p>
               <p className="flex items-center gap-3 justify-center md:justify-start">
@@ -226,7 +226,7 @@ export default function ServicesView() {
             </div>
           </div>
           
-          <div className="flex flex-col items-center gap-4 bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 shadow-2xl">
+          <div className="flex flex-col items-center gap-4 bg-white/10 dark:bg-gray-800/20 backdrop-blur-md p-8 rounded-3xl border border-white/20 dark:border-gray-700/50 shadow-2xl">
             <MessageCircle size={48} className="animate-bounce" />
             <div className="text-center">
               <p className="text-sm font-medium opacity-80 mb-1">Escríbenos al</p>
