@@ -28,7 +28,7 @@ export default async function handler(req: any, res: any) {
 
   try {
     if (req.method === 'GET') {
-      const { id } = req.query;
+      const { id, name } = req.query;
       
       if (id) {
         const result = await db.select().from(services).where(eq(services.id, id)).limit(1);
@@ -39,6 +39,20 @@ export default async function handler(req: any, res: any) {
       }
 
       const allServices = await db.select().from(services);
+
+      if (name) {
+        const normalizedQuery = (name as string).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+        const result = allServices.find(s => {
+          const normalizedName = s.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+          return normalizedName === normalizedQuery;
+        });
+        
+        if (!result) {
+          return res.status(404).json({ error: 'Servicio no encontrado' });
+        }
+        return res.status(200).json(result);
+      }
+
       return res.status(200).json(allServices);
     }
 
