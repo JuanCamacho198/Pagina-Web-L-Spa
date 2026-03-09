@@ -9,6 +9,7 @@ import { Service } from '../../../types';
 import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import CloudinaryImage from '../../../components/CloudinaryImage';
+import JsonLd from '../../../components/JsonLd';
 
 const isCloudinaryUrl = (url: string): boolean => {
   return url?.includes('cloudinary.com') || url?.startsWith('https://res.cloudinary.com');
@@ -140,8 +141,61 @@ const ServiceDetailView = () => {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+return (
+    <>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "L-Spa",
+        "image": "https://l-spa.com/logo.png",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Medellín",
+          "addressRegion": "Antioquia",
+          "addressCountry": "CO"
+        },
+        "telephone": "+57-300-123-4567",
+        "priceRange": "$$",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "20:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday", "Sunday"],
+            "opens": "10:00",
+            "closes": "18:00"
+          }
+        ]
+      }} />
+      
+      {service && <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": service.name,
+        "description": `Disfruta de nuestro servicio de ${service.name}. Un oasis de relajación en Medellín.`,
+        "provider": {
+          "@type": "LocalBusiness",
+          "name": "L-Spa",
+          "image": "https://l-spa.com/logo.png"
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": "Medellín"
+        },
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": service.price,
+          "priceCurrency": "COP"
+        },
+        "serviceType": service.category,
+        "duration": `PT${service.duration}M`
+      }} />}
+      
+      <div className="min-h-screen bg-gray-50 pb-20">
       <Helmet>
         <title>{service.name} - Luxury Spa Medellín</title>
         <meta name="description" content={`Disfruta de nuestro servicio de ${service.name}. Un oasis de relajación en Medellín.`} />
@@ -313,6 +367,7 @@ const ServiceDetailView = () => {
         </section>
       </div>
     </div>
+    </>
   );
 };
 

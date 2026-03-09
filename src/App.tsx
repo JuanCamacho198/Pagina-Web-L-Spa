@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -34,19 +34,26 @@ import CartView from '@/features/booking/CartView';
 import ContactView from '@/features/static/ContactView';
 import AboutView from '@/features/static/AboutView';
 
-import AdminDashboardView from '@/features/admin/AdminDashboardView';
-import AdminBookingsView from '@/features/admin/AdminBookingsView';
-import AdminServicesListView from '@/features/admin/AdminServicesListView';
-import AdminUsersListView from '@/features/admin/AdminUsersListView';
-import CreateServiceView from '@/features/admin/CreateServiceView';
-import EditServiceView from '@/features/admin/EditServiceView';
-import NavbarSettingsView from '@/features/admin/NavbarSettingsView';
-import FooterSettingsView from '@/features/admin/FooterSettingsView';
-import SocialLinksView from '@/features/admin/SocialLinksView';
-import AdminLayout from '@/features/admin/AdminLayout';
-import AdminRoute from '@/components/shared/AdminRoute';
-
 import { AuthSync } from '@/components/shared/AuthSync';
+import ErrorBoundary from '@/components/ErrorBoundary';
+
+const AdminLayout = lazy(() => import('@/features/admin/AdminLayout'));
+const AdminDashboardView = lazy(() => import('@/features/admin/AdminDashboardView'));
+const AdminBookingsView = lazy(() => import('@/features/admin/AdminBookingsView'));
+const AdminServicesListView = lazy(() => import('@/features/admin/AdminServicesListView'));
+const AdminUsersListView = lazy(() => import('@/features/admin/AdminUsersListView'));
+const CreateServiceView = lazy(() => import('@/features/admin/CreateServiceView'));
+const EditServiceView = lazy(() => import('@/features/admin/EditServiceView'));
+const NavbarSettingsView = lazy(() => import('@/features/admin/NavbarSettingsView'));
+const FooterSettingsView = lazy(() => import('@/features/admin/FooterSettingsView'));
+const SocialLinksView = lazy(() => import('@/features/admin/SocialLinksView'));
+const AdminRoute = lazy(() => import('@/components/shared/AdminRoute'));
+
+const AdminLoadingSpinner = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+  </div>
+);
 
 export default function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -99,7 +106,7 @@ return (
               <Route path="/cart" element={<CartView />} />
 
 {/* Rutas de Administración Protegidas por Rol */}
-              <Route element={<AdminRoute />}>
+              <Route element={<ErrorBoundary><Suspense fallback={<AdminLoadingSpinner />}><AdminRoute /></Suspense></ErrorBoundary>}>
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route index element={<AdminDashboardView />} />
                   <Route path="bookings" element={<AdminBookingsView />} />
