@@ -82,6 +82,7 @@ return (
 
           {/* Rutas compartidas (Públicas y Privadas) */}
           <Route path="/services" element={<ServicesView />} />
+          <Route path="/service/:slug" element={<ServiceDetailView />} />
           <Route path="/contact" element={<ContactView />} />
           <Route path="/about-us" element={<AboutView />} />
           <Route path="/cancellation-policies" element={<PoliticasCancelacionView />} />

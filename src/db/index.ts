@@ -13,7 +13,16 @@ if (!connectionString) {
 const client = neon(connectionString);
 
 // Instancia de base de datos Drizzle con el esquema tipado
-export const db = drizzle(client, { schema });
+export const db = drizzle(client, { 
+  schema,
+  logger: false 
+});
+
+// Configuración opcional para suprimir advertencias en el navegador de Neon
+// @ts-ignore
+if (typeof window !== 'undefined') {
+  (client as any).disableWarningInBrowsers = true;
+}
 
 // Exportar todo el esquema para conveniencia
 export * from './schema';
