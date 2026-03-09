@@ -10,6 +10,8 @@ import { ShoppingCart, Calendar, Clock, Tag, X, CheckCircle2, AlertCircle, Spark
 import { Helmet } from 'react-helmet-async';
 import CloudinaryImage from '../../../components/CloudinaryImage';
 import JsonLd from '../../../components/JsonLd';
+import ReviewList from './ReviewList';
+import ReviewForm from './ReviewForm';
 
 const isCloudinaryUrl = (url: string): boolean => {
   return url?.includes('cloudinary.com') || url?.startsWith('https://res.cloudinary.com');
@@ -30,7 +32,12 @@ const ServiceDetailView = () => {
   const [recommendedServices, setRecommendedServices] = useState<Service[]>([]);
   const [notification, setNotification] = useState<{ message: string; type: string } | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [reviewKey, setReviewKey] = useState(0); // Para forzar el refresco de las reseñas
   const navigate = useNavigate();
+
+  const handleReviewSubmitted = () => {
+    setReviewKey(prev => prev + 1);
+  };
 
   // Función para mostrar notificaciones
   const showNotification = (message: string, type = 'success') => {
@@ -364,8 +371,31 @@ return (
             ))}
           </div>
         </section>
+
+        {/* Sección de Reseñas */}
+        <section className="mt-32 pt-16 border-t border-gray-100">
+           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+              <div>
+                 <h3 className="text-3xl font-black text-gray-900 mb-4 flex items-center gap-4">
+                    Reseñas de Clientes
+                 </h3>
+                 <p className="text-lg text-gray-500 mb-10 font-medium">
+                    Lo que nuestros visitantes opinan sobre su experiencia en L-Spa.
+                 </p>
+                 <ReviewList key={reviewKey} serviceId={service.id} />
+              </div>
+              
+              <div className="sticky top-28">
+                 <ReviewForm 
+                    serviceId={service.id} 
+                    onReviewSubmitted={handleReviewSubmitted} 
+                 />
+              </div>
+           </div>
+        </section>
       </div>
     </div>
+
     </>
   );
 };
