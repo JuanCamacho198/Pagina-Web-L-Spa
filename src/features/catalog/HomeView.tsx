@@ -42,7 +42,7 @@ function HomeView() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
       <main className="grow">
         
         {/* Hero Section */}
@@ -70,7 +70,7 @@ function HomeView() {
                 Un oasis de relajación en Medellín
               </Typography>
               
-              <Typography variant="lead" className="text-gray-300 mb-10 max-w-lg">
+              <Typography variant="lead" className="text-gray-200! mb-10 max-w-lg">
                 Descubre una experiencia única de bienestar y belleza. Reserva hoy y consiéntete como nunca antes.
               </Typography>
 
@@ -128,10 +128,10 @@ function HomeView() {
         </section>
 
         {/* Carousel Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white dark:bg-gray-900">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <Typography variant="h2" className="text-gray-900 border-none mb-4">Nuestras Instalaciones</Typography>
+              <Typography variant="h2" className="text-gray-900 dark:text-white border-none mb-4">Nuestras Instalaciones</Typography>
               <div className="h-1.5 w-20 bg-primary mx-auto rounded-full"></div>
             </div>
 
@@ -182,7 +182,7 @@ function HomeView() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between items-end mb-12">
                 <div>
-                  <Typography variant="h2" className="text-gray-900 border-none">Nuestros Servicios</Typography>
+                  <Typography variant="h2" className="text-gray-900 dark:text-white border-none">Nuestros Servicios</Typography>
                   <Typography className="text-gray-500 mt-2">Experiencias diseñadas para tu renovación total.</Typography>
                 </div>
                 <Button variant="outline" onClick={() => navigate('/services')}>Ver todos</Button>

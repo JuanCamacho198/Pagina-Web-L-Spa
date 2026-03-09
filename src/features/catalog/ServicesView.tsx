@@ -70,7 +70,7 @@ export default function ServicesView() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
       <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full grow">
         
         <header className="text-center mb-16 animate-in fade-in slide-in-from-top-4 duration-700">
@@ -82,7 +82,7 @@ export default function ServicesView() {
         </header>
 
         {/* Filtros y Búsqueda */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-12 flex flex-col lg:flex-row gap-6 items-center justify-between">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-12 flex flex-col lg:flex-row gap-6 items-center justify-between">
           
           <div className="w-full lg:max-w-xs">
             <SearchBar 
@@ -153,7 +153,7 @@ export default function ServicesView() {
             {filteredServices.map(service => (
               <div
                 key={service.id}
-                className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-primary/10 cursor-pointer"
+                className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-primary/50 dark:border-gray-700 cursor-pointer"
                 onClick={() => goToServiceDetail(service.name)} 
               >
                     <div className="relative h-56 overflow-hidden bg-gray-100">
@@ -210,7 +210,7 @@ export default function ServicesView() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12 text-white">
           <div className="max-w-xl text-center md:text-left">
             <h3 className="text-3xl font-bold mb-6">Reserva en segundos por WhatsApp</h3>
-            <div className="space-y-4 text-primary-light/90">
+            <div className="space-y-4 text-white/90">
               <p className="flex items-center gap-3 justify-center md:justify-start">
                 <span className="w-2 h-2 bg-white rounded-full"></span>
                 Atención personalizada e inmediata
