@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /payment
+Disallow: /profile
+Allow: /
+
+Sitemap: https://luxuryspa.com/sitemap.xml
