@@ -35,30 +35,49 @@ export default async function handler(req: any, res: any) {
     if (req.method === 'GET') {
       const { id, name } = req.query;
       
-      if (id) {
-        const result = await db.select().from(services).where(eq(services.id, id)).limit(1);
-        if (result.length === 0) {
-          return res.status(404).json({ error: 'Servicio no encontrado' });
-        }
-        return res.status(200).json(result[0]);
-      }
+      try {
+        // Obtenemos solo las columnas que sabemos que existen con certeza en la DB remota
+        // para evitar errores si las nuevas columnas no se han propagado correctamente
+        const result = await db.select({
+          id: services.id,
+          name: services.name,
+          description: services.description,
+          price: services.price,
+          category: services.category,
+          imageUrl: services.imageUrl,
+          imageFileName: services.imageFileName,
+          duration: services.duration,
+          createdAt: services.createdAt
+        }).from(services);
 
-      const allServices = await db.select().from(services);
-
-      if (name) {
-        const normalizedQuery = (name as string).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
-        const result = allServices.find(s => {
-          const normalizedName = s.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
-          return normalizedName === normalizedQuery;
-        });
-        
-        if (!result) {
-          return res.status(404).json({ error: 'Servicio no encontrado' });
+        if (id) {
+          const service = result.find(s => s.id === id);
+          if (!service) return res.status(404).json({ error: 'Servicio no encontrado' });
+          return res.status(200).json(service);
         }
+
+        if (name) {
+          const normalizedQuery = (name as string).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+          const service = result.find(s => {
+            const normalizedName = s.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+            return normalizedName === normalizedQuery;
+          });
+          
+          if (!service) return res.status(404).json({ error: 'Servicio no encontrado' });
+          return res.status(200).json(service);
+        }
+
         return res.status(200).json(result);
+      } catch (dbError: any) {
+        console.error('DATABASE SELECT ERROR:', dbError);
+        // Si falla por columnas inexistentes, intentamos un select genérico
+        try {
+          const fallback = await db.select().from(services);
+          return res.status(200).json(fallback);
+        } catch (innerError) {
+          return res.status(500).json({ error: 'Error en la base de datos', details: dbError.message });
+        }
       }
-
-      return res.status(200).json(allServices);
     }
 
     if (req.method === 'POST') {
@@ -106,10 +125,14 @@ export default async function handler(req: any, res: any) {
 
     return res.status(405).json({ error: 'Método no permitido' });
   } catch (error: any) {
+    console.error('--- API ERROR LOG ---');
+    console.error('Path:', req.url);
+    console.error('Method:', req.method);
+    console.error('Error:', error);
     if (error instanceof z.ZodError) {
+      console.error('Zod Details:', JSON.stringify(error.cause, null, 2));
       return res.status(400).json({ error: 'Error de validación', details: error.cause });
     }
-    console.error(error);
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message, stack: process.env.NODE_ENV === 'development' ? error.stack : undefined });
   }
 }
