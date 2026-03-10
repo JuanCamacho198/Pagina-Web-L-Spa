@@ -13,7 +13,7 @@ const serviceSchema = z.object({
   idealFor: z.string().optional().nullable(),
   benefits: z.string().optional().nullable(),
   contraindications: z.string().optional().nullable(),
-  intensity: z.coerce.number().int().min(1).max(5).optional().nullable()
+  intensity: z.preprocess((val) => (val === '' || val === null ? undefined : val), z.coerce.number().int().min(1).max(5).optional())
 });
 
 export default async function handler(req: any, res: any) {

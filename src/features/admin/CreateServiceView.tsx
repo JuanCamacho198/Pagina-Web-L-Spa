@@ -36,8 +36,8 @@ const serviceSchema = z.object({
   includes: z.string().optional(),
   idealFor: z.string().optional(),
   benefits: z.string().optional(),
-  contraindications: z.string().optional(),
-  intensity: z.coerce.number().min(1).max(5).default(3),
+  contraindications: z.string().optional().or(z.literal('')),
+  intensity: z.preprocess((val) => (val === '' || val === null ? undefined : val), z.coerce.number().min(1).max(5).optional()),
 });
 
 const CATEGORIES = [
@@ -96,7 +96,7 @@ export default function CreateServiceView() {
         idealFor: (data as any).idealFor || '',
         benefits: (data as any).benefits || '',
         contraindications: (data as any).contraindications || '',
-        intensity: Number((data as any).intensity || 3)
+        intensity: (data as any).intensity ? Number((data as any).intensity) : null
       });
       
       setSuccess(true);
@@ -240,6 +240,7 @@ export default function CreateServiceView() {
                         {...register('intensity' as any)}
                         className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-hidden focus:ring-4 focus:ring-primary/10 transition-all bg-white text-gray-700"
                       >
+                        <option value="">No especificado</option>
                         {[1,2,3,4,5].map(i => <option key={i} value={i}>Nivel {i}</option>)}
                       </select>
                     </div>

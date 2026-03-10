@@ -35,8 +35,8 @@ const serviceSchema = z.object({
   includes: z.string().optional(),
   idealFor: z.string().optional(),
   benefits: z.string().optional(),
-  contraindications: z.string().optional(),
-  intensity: z.coerce.number().min(1).max(5).default(3),
+  contraindications: z.string().optional().or(z.literal('')),
+  intensity: z.preprocess((val) => (val === '' || val === null ? undefined : val), z.coerce.number().min(1).max(5).optional()),
 });
 
 const CATEGORIES = [
@@ -74,7 +74,7 @@ export default function EditServiceView() {
           idealFor: (service as any).idealFor || '',
           benefits: (service as any).benefits || '',
           contraindications: (service as any).contraindications || '',
-          intensity: (service as any).intensity || 3
+          intensity: (service as any).intensity ?? ''
         });
       } else {
         toast.error("Servicio no encontrado");
@@ -210,6 +210,7 @@ export default function EditServiceView() {
                         {...register('intensity')}
                         className="w-full h-10 px-3 rounded-md border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all bg-white"
                       >
+                        <option value="">No especificado</option>
                         {[1,2,3,4,5].map(i => <option key={i} value={i}>Nivel {i}</option>)}
                       </select>
                     </div>
