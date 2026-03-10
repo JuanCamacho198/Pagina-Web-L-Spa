@@ -14,6 +14,10 @@ import {
   UploadCloud,
   CheckCircle2,
   AlertCircle as AlertIcon,
+  HelpCircle,
+  AlertTriangle,
+  Zap,
+  List
 } from 'lucide-react';
 import { createService } from '@/models/servicesModel';
 import { ServiceFormValues } from '@/types';
@@ -29,6 +33,11 @@ const serviceSchema = z.object({
   duration: z.coerce.number().int().positive('La duración debe ser en minutos'),
   category: z.string().min(1, 'La categoría es obligatoria'),
   imageUrl: z.string().url('Debe ser una URL válida de imagen').optional().or(z.literal('')),
+  includes: z.string().optional(),
+  idealFor: z.string().optional(),
+  benefits: z.string().optional(),
+  contraindications: z.string().optional(),
+  intensity: z.coerce.number().min(1).max(5).default(3),
 });
 
 const CATEGORIES = [
@@ -82,7 +91,12 @@ export default function CreateServiceView() {
         price: data.price,
         category: data.category,
         imageUrl: data.imageUrl || 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80',
-        duration: data.duration
+        duration: data.duration,
+        includes: (data as any).includes || '',
+        idealFor: (data as any).idealFor || '',
+        benefits: (data as any).benefits || '',
+        contraindications: (data as any).contraindications || '',
+        intensity: Number((data as any).intensity || 3)
       });
       
       setSuccess(true);
@@ -176,6 +190,60 @@ export default function CreateServiceView() {
                     placeholder="60"
                     error={errors.duration?.message}
                   />
+                </div>
+
+                <div className="pt-6 border-t border-gray-100 space-y-6">
+                  <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-primary" />
+                    Información Profesional Extra
+                  </h3>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-semibold text-gray-700 ml-1 flex items-center gap-2">
+                      <List size={16} className="text-primary" /> ¿Qué incluye? (Una por línea)
+                    </label>
+                    <textarea 
+                      {...register('includes' as any)}
+                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 resize-none font-sans text-sm"
+                      rows={3}
+                      placeholder="Ej: Aceites esenciales&#10;Música ambiental&#10;Bebida de cortesía"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Input
+                      label="Ideal para..."
+                      icon={<HelpCircle size={18} />}
+                      {...register('idealFor' as any)}
+                      placeholder="Ej: Personas con estrés"
+                    />
+                    <Input
+                      label="Beneficios destacados"
+                      icon={<CheckCircle2 size={18} />}
+                      {...register('benefits' as any)}
+                      placeholder="Ej: Relajación profunda"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Input
+                      label="Contraindicaciones"
+                      icon={<AlertTriangle size={18} className="text-orange-500" />}
+                      {...register('contraindications' as any)}
+                      placeholder="Ej: Embarazo, lesiones"
+                    />
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-semibold text-gray-700 ml-1 flex items-center gap-2">
+                        <Zap size={16} className="text-yellow-500" /> Intensidad (1-5)
+                      </label>
+                      <select 
+                        {...register('intensity' as any)}
+                        className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-hidden focus:ring-4 focus:ring-primary/10 transition-all bg-white text-gray-700"
+                      >
+                        {[1,2,3,4,5].map(i => <option key={i} value={i}>Nivel {i}</option>)}
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>

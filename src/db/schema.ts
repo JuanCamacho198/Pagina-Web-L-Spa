@@ -26,6 +26,11 @@ export const services = pgTable('services', {
   imageUrl: text('image_url'),
   imageFileName: text('image_filename'),
   duration: integer('duration').default(60), // en minutos
+  includes: text('includes'), // Lista de lo que incluye (separada por saltos de línea)
+  idealFor: text('ideal_for'), // Para quién es ideal
+  benefits: text('benefits'),  // Beneficios del servicio
+  contraindications: text('contraindications'), // Contraindicaciones
+  intensity: integer('intensity').default(3), // Nivel de intensidad (1-5)
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
 

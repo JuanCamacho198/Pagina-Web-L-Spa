@@ -8,7 +8,12 @@ const serviceSchema = z.object({
   price: z.coerce.number().positive(),
   category: z.string().min(1),
   imageUrl: z.string().url().optional().nullable().or(z.literal('')),
-  duration: z.coerce.number().int().min(5)
+  duration: z.coerce.number().int().min(5),
+  includes: z.string().optional().nullable(),
+  idealFor: z.string().optional().nullable(),
+  benefits: z.string().optional().nullable(),
+  contraindications: z.string().optional().nullable(),
+  intensity: z.coerce.number().int().min(1).max(5).optional().nullable()
 });
 
 export default async function handler(req: any, res: any) {
@@ -58,14 +63,19 @@ export default async function handler(req: any, res: any) {
 
     if (req.method === 'POST') {
       const validatedData = serviceSchema.parse(req.body);
-      const { name, description, price, category, imageUrl, duration } = validatedData;
+      const { name, description, price, category, imageUrl, duration, includes, idealFor, benefits, contraindications, intensity } = validatedData as any;
       const result = await db.insert(services).values({
         name,
         description,
         price: price.toString(),
         category,
         imageUrl,
-        duration
+        duration,
+        includes,
+        idealFor,
+        benefits,
+        contraindications,
+        intensity
       }).returning();
       return res.status(201).json(result[0]);
     }

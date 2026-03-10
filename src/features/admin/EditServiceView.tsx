@@ -11,7 +11,12 @@ import {
   Clock, 
   FileText,
   Save,
-  Loader2
+  Loader2,
+  CheckCircle,
+  HelpCircle,
+  AlertTriangle,
+  Zap,
+  List
 } from 'lucide-react';
 import { fetchServiceById, updateService } from '@/models/servicesModel';
 import { Button } from '@/components/ui/Button';
@@ -27,6 +32,11 @@ const serviceSchema = z.object({
   duration: z.coerce.number().int().positive('La duración debe ser en minutos'),
   category: z.string().min(1, 'La categoría es obligatoria'),
   imageUrl: z.string().url('Debe ser una URL válida').or(z.literal('')),
+  includes: z.string().optional(),
+  idealFor: z.string().optional(),
+  benefits: z.string().optional(),
+  contraindications: z.string().optional(),
+  intensity: z.coerce.number().min(1).max(5).default(3),
 });
 
 const CATEGORIES = [
@@ -59,7 +69,12 @@ export default function EditServiceView() {
           price: service.price,
           duration: service.duration,
           category: service.category,
-          imageUrl: service.imageUrl
+          imageUrl: service.imageUrl,
+          includes: (service as any).includes || '',
+          idealFor: (service as any).idealFor || '',
+          benefits: (service as any).benefits || '',
+          contraindications: (service as any).contraindications || '',
+          intensity: (service as any).intensity || 3
         });
       } else {
         toast.error("Servicio no encontrado");
@@ -146,9 +161,58 @@ export default function EditServiceView() {
                     <FileText className="absolute left-3 top-3 text-gray-400" size={18} />
                     <textarea 
                       {...register('description')}
-                      className="w-full min-h-32 pl-10 pr-3 py-2 rounded-md border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all"
+                      className="w-full min-h-32 pl-10 pr-3 py-2 rounded-md border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all font-sans"
                       placeholder="Describe los beneficios del servicio..."
                     />
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-gray-100 space-y-4">
+                  <Typography variant="h3" className="text-lg font-semibold">Información Profesional Extra</Typography>
+                  
+                  <div>
+                    <label className="text-sm font-medium mb-1 flex items-center gap-2">
+                      <List size={16} className="text-primary" /> ¿Qué incluye? (Una por línea)
+                    </label>
+                    <textarea 
+                      {...register('includes')}
+                      className="w-full min-h-24 px-3 py-2 rounded-md border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all font-sans text-sm"
+                      placeholder="Ej: Aceites esenciales&#10;Música ambiental&#10;Bebida de cortesía"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-1 flex items-center gap-2">
+                      <HelpCircle size={16} className="text-primary" /> Ideal para...
+                    </label>
+                    <Input {...register('idealFor')} placeholder="Ej: Personas con estrés, ansiedad, tensión muscular" />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-1 flex items-center gap-2">
+                      <CheckCircle size={16} className="text-primary" /> Beneficios destacados
+                    </label>
+                    <Input {...register('benefits')} placeholder="Ej: Relajación profunda, mejora de circulación" />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium mb-1 flex items-center gap-2">
+                        <AlertTriangle size={16} className="text-orange-500" /> Contraindicaciones
+                      </label>
+                      <Input {...register('contraindications')} placeholder="Ej: Embarazo, fracturas recientes" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium mb-1 flex items-center gap-2">
+                        <Zap size={16} className="text-yellow-500" /> Intensidad (1-5)
+                      </label>
+                      <select 
+                        {...register('intensity')}
+                        className="w-full h-10 px-3 rounded-md border border-gray-200 focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all bg-white"
+                      >
+                        {[1,2,3,4,5].map(i => <option key={i} value={i}>Nivel {i}</option>)}
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>

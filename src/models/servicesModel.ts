@@ -25,11 +25,17 @@ export async function fetchServices(forceRefresh = false): Promise<Service[]> {
   const services = data.map((service: any) => ({
     id: service.id,
     name: service.name,
+    description: service.description || '',
     price: Number(service.price),
     category: service.category || '',
     imageUrl: service.imageUrl || '',
     imageFileName: service.imageFileName || '',
-    duration: Number(service.duration || 60)
+    duration: Number(service.duration || 60),
+    includes: service.includes || '',
+    idealFor: service.idealFor || '',
+    benefits: service.benefits || '',
+    contraindications: service.contraindications || '',
+    intensity: Number(service.intensity || 3)
   }));
   
   // Update cache
@@ -61,11 +67,17 @@ export async function fetchServiceById(serviceId: string): Promise<Service | nul
   return {
     id: service.id,
     name: service.name,
+    description: service.description || '',
     price: Number(service.price),
     category: service.category || '',
     imageUrl: service.imageUrl || '',
     imageFileName: service.imageFileName || '',
-    duration: Number(service.duration || 60)
+    duration: Number(service.duration || 60),
+    includes: service.includes || '',
+    idealFor: service.idealFor || '',
+    benefits: service.benefits || '',
+    contraindications: service.contraindications || '',
+    intensity: Number(service.intensity || 3)
   };
 }
 

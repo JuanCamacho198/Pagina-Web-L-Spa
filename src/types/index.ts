@@ -9,6 +9,12 @@ export interface Service {
   imageUrl?: string;
   imageFileName?: string;
   duration: number;
+  // Campos extra profesionales
+  includes?: string;
+  idealFor?: string;
+  benefits?: string;
+  contraindications?: string;
+  intensity?: number;
 }
 
 export interface UserProfile {

@@ -262,7 +262,61 @@ return (
                       <Tag className="text-primary" size={24} />
                       <div className="text-sm font-bold text-gray-700">{service.category}</div>
                    </div>
+                   {service.intensity && (
+                     <div className="flex items-center gap-3 p-4 bg-yellow-50 rounded-2xl">
+                        <Sparkles className="text-yellow-600" size={24} />
+                        <div className="text-sm font-bold text-gray-700">Intensidad {service.intensity}/5</div>
+                     </div>
+                   )}
                 </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12 pt-10 border-t border-gray-100">
+                  {/* Incluye */}
+                  {service.includes && (
+                    <div className="space-y-4">
+                      <h4 className="text-xl font-black text-gray-900 flex items-center gap-2">
+                        <CheckCircle2 className="text-primary" size={24} /> Esta experiencia incluye:
+                      </h4>
+                      <ul className="space-y-3">
+                        {service.includes.split('\n').filter(line => line.trim() !== '').map((item, index) => (
+                          <li key={index} className="flex items-start gap-3 text-gray-600 font-medium">
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0"></span>
+                            {item.trim()}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Ideal para */}
+                  {service.idealFor && (
+                    <div className="space-y-4">
+                      <h4 className="text-xl font-black text-gray-900 flex items-center gap-2">
+                        <Sparkles className="text-primary" size={24} /> Ideal para:
+                      </h4>
+                      <p className="text-gray-600 font-medium leading-relaxed bg-primary/5 p-6 rounded-4xl border border-primary/10">
+                        {service.idealFor}
+                      </p>
+                      
+                      {service.benefits && (
+                        <div className="mt-6 space-y-2">
+                          <h5 className="font-bold text-gray-900">Beneficios destacados:</h5>
+                          <p className="text-gray-600 text-sm">{service.benefits}</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {service.contraindications && (
+                   <div className="mt-12 p-6 bg-orange-50 rounded-4xl border border-orange-100 flex items-start gap-4">
+                      <AlertCircle className="text-orange-500 shrink-0" size={24} />
+                      <div>
+                        <h4 className="font-bold text-orange-900 mb-1">Nota de seguridad:</h4>
+                        <p className="text-orange-800 text-sm font-medium">{service.contraindications}</p>
+                      </div>
+                   </div>
+                )}
              </div>
           </div>
 
