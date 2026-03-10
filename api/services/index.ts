@@ -36,19 +36,7 @@ export default async function handler(req: any, res: any) {
       const { id, name } = req.query;
       
       try {
-        // Obtenemos solo las columnas que sabemos que existen con certeza en la DB remota
-        // para evitar errores si las nuevas columnas no se han propagado correctamente
-        const result = await db.select({
-          id: services.id,
-          name: services.name,
-          description: services.description,
-          price: services.price,
-          category: services.category,
-          imageUrl: services.imageUrl,
-          imageFileName: services.imageFileName,
-          duration: services.duration,
-          createdAt: services.createdAt
-        }).from(services);
+        const result = await db.select().from(services);
 
         if (id) {
           const service = result.find(s => s.id === id);
@@ -70,13 +58,7 @@ export default async function handler(req: any, res: any) {
         return res.status(200).json(result);
       } catch (dbError: any) {
         console.error('DATABASE SELECT ERROR:', dbError);
-        // Si falla por columnas inexistentes, intentamos un select genérico
-        try {
-          const fallback = await db.select().from(services);
-          return res.status(200).json(fallback);
-        } catch (innerError) {
-          return res.status(500).json({ error: 'Error en la base de datos', details: dbError.message });
-        }
+        return res.status(500).json({ error: 'Error en la base de datos', details: dbError.message });
       }
     }
 

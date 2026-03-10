@@ -97,10 +97,9 @@ export default function ServicesView() {
       <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full grow">
 
         <header className="text-center mb-16 animate-in fade-in slide-in-from-top-4 duration-700">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">Nuestros Servicios</h1>
-          <div className="h-1.5 w-24 bg-primary mx-auto rounded-full mb-6"></div>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Disfruta de nuestros tratamientos diseñados para tu relajación total.
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">Nuestros Servicios</h1>
+            <div className="h-1.5 w-24 bg-primary mx-auto rounded-full mb-6"></div>
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           </p>
         </header>
 
@@ -202,7 +201,7 @@ export default function ServicesView() {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h2 className="text-lg font-bold text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{service.name}</h2>
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 truncate group-hover:text-primary transition-colors">{service.name}</h2>
                   <div className="flex items-center justify-between mt-4">
                     <p className="text-xl font-black text-primary">
                       {Number(service.price || 0).toLocaleString('es-CO', {
@@ -224,7 +223,7 @@ export default function ServicesView() {
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-50 rounded-full mb-6 text-gray-300">
               <Search size={40} />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">No encontramos resultados</h3>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">No encontramos resultados</h3>
             <p className="text-gray-500">Intenta ajustar tus filtros o tu búsqueda.</p>
             <button
               onClick={() => { setSelectedCategory('Todos'); setSearchTerm(''); setSortOption(''); }}

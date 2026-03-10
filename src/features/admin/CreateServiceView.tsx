@@ -162,12 +162,12 @@ export default function CreateServiceView() {
                 />
 
                 <div className="space-y-1.5">
-                  <label className="text-sm font-semibold text-gray-700 ml-1">Descripción</label>
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Descripción</label>
                   <textarea
                     {...register('description')}
                     placeholder="Describe los beneficios..."
                     rows={4}
-                    className={`w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 resize-none ${errors.description ? 'border-red-500' : ''}`}
+                      className={`w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 dark:text-gray-200 resize-none ${errors.description ? 'border-red-500' : ''}`}
                   />
                   {errors.description && <p className="text-xs text-red-500 ml-1 font-medium">{errors.description.message}</p>}
                 </div>
@@ -199,12 +199,12 @@ export default function CreateServiceView() {
                   </h3>
 
                   <div className="space-y-1.5">
-                    <label className="text-sm font-semibold text-gray-700 ml-1 flex items-center gap-2">
+                    <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1 flex items-center gap-2">
                       <List size={16} className="text-primary" /> ¿Qué incluye? (Una por línea)
                     </label>
                     <textarea 
                       {...register('includes' as any)}
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 resize-none font-sans text-sm"
+                      className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 dark:text-gray-200 resize-none font-sans text-sm"
                       rows={3}
                       placeholder="Ej: Aceites esenciales&#10;Música ambiental&#10;Bebida de cortesía"
                     />
@@ -233,7 +233,7 @@ export default function CreateServiceView() {
                       placeholder="Ej: Embarazo, lesiones"
                     />
                     <div className="space-y-1.5">
-                      <label className="text-sm font-semibold text-gray-700 ml-1 flex items-center gap-2">
+                      <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1 flex items-center gap-2">
                         <Zap size={16} className="text-yellow-500" /> Intensidad (1-5)
                       </label>
                       <select 

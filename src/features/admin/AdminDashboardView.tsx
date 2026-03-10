@@ -80,8 +80,8 @@ return (
                 <CalendarIcon size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Total Citas</p>
-                <p className="text-2xl font-bold">{stats?.totalAppointments || 0}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Citas</p>
+                <p className="text-2xl font-bold dark:text-white">{stats?.totalAppointments || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -89,12 +89,12 @@ return (
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-green-100 rounded-full text-green-600">
+              <div className="p-3 bg-green-100 dark:bg-green-900/40 rounded-full text-green-600 dark:text-green-400">
                 <Users size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Clientes</p>
-                <p className="text-2xl font-bold">{stats?.totalUsers || 0}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Clientes</p>
+                <p className="text-2xl font-bold dark:text-white">{stats?.totalUsers || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -102,12 +102,12 @@ return (
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-purple-100 rounded-full text-purple-600">
+              <div className="p-3 bg-purple-100 dark:bg-purple-900/40 rounded-full text-purple-600 dark:text-purple-400">
                 <Settings size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Servicios</p>
-                <p className="text-2xl font-bold">{stats?.totalServices || 0}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Servicios</p>
+                <p className="text-2xl font-bold dark:text-white">{stats?.totalServices || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -115,12 +115,12 @@ return (
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-amber-100 rounded-full text-amber-600">
+              <div className="p-3 bg-amber-100 dark:bg-amber-900/40 rounded-full text-amber-600 dark:text-amber-400">
                 <TrendingUp size={24} />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Ingresos Est.</p>
-                <p className="text-2xl font-bold">${stats?.estimatedRevenue || 0}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Ingresos Est.</p>
+                <p className="text-2xl font-bold dark:text-white">${stats?.estimatedRevenue || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -144,33 +144,33 @@ return (
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="py-4 font-medium text-gray-500">Cliente</th>
-                  <th className="py-4 font-medium text-gray-500">Servicio</th>
-                  <th className="py-4 font-medium text-gray-500">Fecha/Hora</th>
-                  <th className="py-4 font-medium text-gray-500">Estado</th>
-                  <th className="py-4 font-medium text-gray-500 text-right">Acciones</th>
+                <tr className="border-b border-gray-100 dark:border-gray-700">
+                  <th className="py-4 font-medium text-gray-500 dark:text-gray-400">Cliente</th>
+                  <th className="py-4 font-medium text-gray-500 dark:text-gray-400">Servicio</th>
+                  <th className="py-4 font-medium text-gray-500 dark:text-gray-400">Fecha/Hora</th>
+                  <th className="py-4 font-medium text-gray-500 dark:text-gray-400">Estado</th>
+                  <th className="py-4 font-medium text-gray-500 dark:text-gray-400 text-right">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
                 {appointments.slice(0, 10).map((appt) => (
-                  <tr key={appt.id} className="hover:bg-gray-50/50 transition-colors">
+                  <tr key={appt.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors">
                     <td className="py-4">
                       <div className="flex flex-col">
-                        <span className="font-medium text-gray-900">{appt.userName}</span>
-                        <span className="text-xs text-gray-500">{appt.userEmail}</span>
+                        <span className="font-medium text-gray-900 dark:text-white">{appt.userName}</span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">{appt.userEmail}</span>
                       </div>
                     </td>
                     <td className="py-4">
                       <div className="flex flex-col">
-                        <span className="text-gray-900">{appt.serviceName}</span>
+                        <span className="text-gray-900 dark:text-white">{appt.serviceName}</span>
                         <span className="text-xs text-primary font-medium">${appt.servicePrice}</span>
                       </div>
                     </td>
                     <td className="py-4">
                       <div className="flex flex-col">
-                        <span className="text-gray-900">{new Date(appt.appointmentDate).toLocaleDateString()}</span>
-                        <span className="text-xs text-gray-500">{appt.appointmentTime}</span>
+                        <span className="text-gray-900 dark:text-white">{new Date(appt.appointmentDate).toLocaleDateString()}</span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">{appt.appointmentTime}</span>
                       </div>
                     </td>
                     <td className="py-4">

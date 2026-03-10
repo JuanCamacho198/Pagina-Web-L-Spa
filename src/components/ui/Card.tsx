@@ -9,7 +9,7 @@ export const Card = ({ className, hoverable, children, ...props }: CardProps) =>
   return (
     <div
       className={cn(
-        'bg-white rounded-2xl border border-gray-100 shadow-sm overflow-visible',
+        'bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-visible',
         hoverable && 'transition-all hover:shadow-md hover:border-primary/20',
         className
       )}
@@ -21,7 +21,7 @@ export const Card = ({ className, hoverable, children, ...props }: CardProps) =>
 };
 
 export const CardHeader = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('p-6 border-b border-gray-50', className)} {...props}>
+  <div className={cn('p-6 border-b border-gray-50 dark:border-gray-700', className)} {...props}>
     {children}
   </div>
 );
