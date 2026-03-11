@@ -12,9 +12,9 @@
 		Heart,
 		MoveRight
 	} from 'lucide-svelte';
-	import * as Button from '$lib/components/Button.svelte';
-	import * as Typography from '$lib/components/Typography.svelte';
-	import * as Badge from '$lib/components/Badge.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Typography from '$lib/components/Typography.svelte';
+	import Badge from '$lib/components/Badge.svelte';
 	import { cn } from '$lib/utils/cn';
 
 	let { data } = $props();
