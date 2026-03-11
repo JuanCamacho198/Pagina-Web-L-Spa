@@ -46,20 +46,6 @@
     info: Info,
     warning: AlertTriangle,
   };
-
-  const colors = {
-    success: 'bg-emerald-50 border-emerald-100 text-emerald-800 shadow-emerald-100',
-    error: 'bg-rose-50 border-rose-100 text-rose-800 shadow-rose-100',
-    info: 'bg-sky-50 border-sky-100 text-sky-800 shadow-sky-100',
-    warning: 'bg-amber-50 border-amber-100 text-amber-800 shadow-amber-100',
-  };
-
-  const iconColors = {
-    success: 'text-emerald-500',
-    error: 'text-rose-500',
-    info: 'text-sky-500',
-    warning: 'text-amber-500',
-  };
 </script>
 
 <div class="fixed bottom-6 right-6 z-200 flex flex-col gap-3 max-w-95 w-full pointer-events-none">
@@ -70,13 +56,26 @@
       out:fade={{ duration: 200 }}
       class={cn(
         "pointer-events-auto flex items-start gap-4 p-4 border rounded-3xl shadow-2xl backdrop-blur-sm transition-all relative overflow-hidden",
-        colors[t.type]
+        t.type === 'success' ? 'bg-emerald-50 border-emerald-100 text-emerald-800 shadow-emerald-100' :
+        t.type === 'error' ? 'bg-rose-50 border-rose-100 text-rose-800 shadow-rose-100' :
+        t.type === 'info' ? 'bg-sky-50 border-sky-100 text-sky-800 shadow-sky-100' :
+        'bg-amber-50 border-amber-100 text-amber-800 shadow-amber-100'
       )}
     >
       <!-- Accent Line -->
-      <div class={cn("absolute left-0 top-0 bottom-0 w-1.5", iconColors[t.type].replace('text', 'bg'))}></div>
+      <div class={cn("absolute left-0 top-0 bottom-0 w-1.5", 
+        t.type === 'success' ? 'bg-emerald-500' :
+        t.type === 'error' ? 'bg-rose-500' :
+        t.type === 'info' ? 'bg-sky-500' :
+        'bg-amber-500'
+      )}></div>
 
-      <div class={cn("shrink-0 mt-0.5", iconColors[t.type])}>
+      <div class={cn("shrink-0 mt-0.5", 
+        t.type === 'success' ? 'text-emerald-500' :
+        t.type === 'error' ? 'text-rose-500' :
+        t.type === 'info' ? 'text-sky-500' :
+        'text-amber-500'
+      )}>
         {#if icons[t.type]}
           {@const Icon = icons[t.type]}
           <Icon size={24} strokeWidth={2.5} />
@@ -94,6 +93,7 @@
 
       <button 
         onclick={() => removeToast(t.id)}
+        aria-label="Cerrar notificación"
         class="shrink-0 p-1.5 text-black/20 hover:text-black/60 rounded-xl hover:bg-black/5 transition-all active:scale-90"
       >
         <X size={18} />

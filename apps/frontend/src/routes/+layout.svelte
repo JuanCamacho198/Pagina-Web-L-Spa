@@ -1,7 +1,7 @@
 <script lang="ts">
   import '../app.css';
   import Button from '$components/Button.svelte';
-  import { Toaster } from '$components/Toast.svelte';
+  import Toaster from '$components/Toast.svelte';
   import Footer from '$components/Footer.svelte';  import { onMount } from 'svelte';
   import { initAuth, isAuthenticated, user, isLoading, login, logout } from '$lib/auth';
   import { cart, cartCount } from '$lib/cart';
@@ -108,7 +108,7 @@
   <Footer />
 </div>
 
-<Toast />
+<Toaster />
 
 <style>
   :global(.text-primary) {

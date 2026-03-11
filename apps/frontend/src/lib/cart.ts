@@ -29,6 +29,9 @@ const createCartStore = () => {
 		 * Load cart from API if authenticated, else from localStorage
 		 */
 		load: async () => {
+			// Skip SSR
+			if (typeof window === 'undefined') return;
+
 			const isAuth = get(isAuthenticated);
 			if (isAuth) {
 				try {
