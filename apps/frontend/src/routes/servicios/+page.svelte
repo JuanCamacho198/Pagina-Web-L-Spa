@@ -52,23 +52,6 @@
 
 <div class="min-h-screen bg-white/50 flex flex-col pt-12">
 	<section class="max-w-7xl mx-auto px-6 lg:px-8 w-full pb-24">
-		<!-- Header -->
-		<header class="text-center mb-16 space-y-4">
-			<div
-				class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 text-primary text-xs font-black uppercase tracking-widest border border-primary/10 mb-2"
-			>
-				<Sparkles size={14} class="animate-pulse" />
-				Experiencias Exclusivas
-			</div>
-			<Typography variant="h1" class="text-gray-900 mb-0! font-black tracking-tighter sm:text-6xl">
-				Nuestros Servicios
-			</Typography>
-			<div class="h-2 w-32 bg-primary mx-auto rounded-full mt-6 shadow-lg shadow-primary/20"></div>
-			<p class="text-gray-500 max-w-2xl mx-auto font-medium text-lg pt-4 leading-relaxed">
-				Descubre un santuario de paz y relajación diseñado para restaurar tu bienestar y equilibrio personal.
-			</p>
-		</header>
-
 		<!-- Filters -->
 		<div
 			class="bg-white/80 backdrop-blur-2xl rounded-[40px] shadow-2xl shadow-primary/5 border border-white/50 p-8 mb-16 flex flex-col lg:flex-row gap-8 items-center justify-between transition-all hover:shadow-primary/10"

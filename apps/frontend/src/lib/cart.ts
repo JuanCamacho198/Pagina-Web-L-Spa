@@ -63,6 +63,7 @@ const createCartStore = () => {
 		 * Add item to cart and sync
 		 */
 		addItem: async (item: Omit<CartItem, 'id' | 'quantity'>) => {
+			let currentItems: CartItem[] = [];
 			update((items) => {
 				const existing = items.find((i) => i.serviceId === item.serviceId);
 				let newItems;
@@ -74,6 +75,7 @@ const createCartStore = () => {
 					newItems = [...items, { ...item, id: crypto.randomUUID(), quantity: 1 }];
 				}
 				
+				currentItems = newItems;
 				// Sync to local storage immediately
 				localStorage.setItem('lspa_cart', JSON.stringify(newItems));
 				return newItems;
@@ -88,12 +90,42 @@ const createCartStore = () => {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
-							Authorization: `Bearer ${token}`
+							'Authorization': `Bearer ${token}`
 						},
-						body: JSON.stringify({ items: get({ subscribe }) })
+						body: JSON.stringify({ items: currentItems })
 					});
 				} catch (e) {
-					console.error('Failed to sync cart to API');
+					console.error('Failed to sync cart to API', e);
+				}
+			}
+		},
+
+		updateQuantity: async (serviceId: string, quantity: number) => {
+			let currentItems: CartItem[] = [];
+			update((items) => {
+				const newItems = items.map((i) =>
+					i.serviceId === serviceId ? { ...i, quantity: Math.max(1, quantity) } : i
+				);
+				currentItems = newItems;
+				localStorage.setItem('lspa_cart', JSON.stringify(newItems));
+				return newItems;
+			});
+
+			// Sync to API if authenticated
+			const isAuth = get(isAuthenticated);
+			if (isAuth) {
+				try {
+					const token = await getToken();
+					await fetch(`${PUBLIC_API_URL}/cart`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+						},
+						body: JSON.stringify({ items: currentItems })
+					});
+				} catch (e) {
+					console.error('Failed to sync cart quantity to API', e);
 				}
 			}
 		},
@@ -101,26 +133,32 @@ const createCartStore = () => {
 		/**
 		 * Remove item from cart
 		 */
-		removeItem: (serviceId: string) => {
+		removeItem: async (serviceId: string) => {
+			let currentItems: CartItem[] = [];
 			update((items) => {
 				const newItems = items.filter((i) => i.serviceId !== serviceId);
+				currentItems = newItems;
 				localStorage.setItem('lspa_cart', JSON.stringify(newItems));
 				return newItems;
 			});
-			// API sync would follow same pattern as addItem
-		},
 
-		/**
-		 * Update quantity
-		 */
-		updateQuantity: (serviceId: string, quantity: number) => {
-			update((items) => {
-				const newItems = items.map((i) =>
-					i.serviceId === serviceId ? { ...i, quantity: Math.max(1, quantity) } : i
-				);
-				localStorage.setItem('lspa_cart', JSON.stringify(newItems));
-				return newItems;
-			});
+			// Sync to API if authenticated
+			const isAuth = get(isAuthenticated);
+			if (isAuth) {
+				try {
+					const token = await getToken();
+					await fetch(`${PUBLIC_API_URL}/cart`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${token}`
+						},
+						body: JSON.stringify({ items: currentItems })
+					});
+				} catch (e) {
+					console.error('Failed to sync cart removal to API', e);
+				}
+			}
 		},
 
 		/**
