@@ -9,6 +9,7 @@ build/
 
 # SvelteKit
 .svelte-kit/
+apps/frontend/.svelte-kit
 
 # Vercel
 .vercel/
