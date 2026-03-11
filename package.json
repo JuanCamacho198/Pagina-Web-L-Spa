@@ -1,6 +1,10 @@
 {
   "name": "l-spa",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
