@@ -143,7 +143,7 @@
 					Limpiar Filtros
 				</Button>
 			</div>
-		{if}
+		{/if}
 	</section>
 </div>
 
