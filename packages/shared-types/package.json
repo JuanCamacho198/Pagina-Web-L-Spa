@@ -7,6 +7,11 @@
     "zod": "^3.23.8"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./services": "./src/services.ts",
+    "./appointments": "./src/appointments.ts",
+    "./config": "./src/config.ts",
+    "./reviews": "./src/reviews.ts",
+    "./users": "./src/users.ts"
   }
 }
