@@ -34,7 +34,7 @@
 				Tu Selección de Lujo
 			</div>
 			<h1 class="text-6xl md:text-8xl font-black text-gray-900 tracking-tighter leading-[0.85] uppercase">
-				CARRITO DE <br /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-dark to-primary italic">BIENESTAR</span>
+				CARRITO DE <br /> <span class="text-transparent bg-clip-text bg-linear-to-r from-primary via-primary-dark to-primary italic">BIENESTAR</span>
 			</h1>
 		</header>
 
@@ -61,7 +61,7 @@
 							class="bg-white p-8 rounded-[40px] shadow-2xl shadow-primary/5 border border-gray-100 flex flex-col md:flex-row items-center gap-10 group"
 						>
 							<!-- Image -->
-							<div class="w-40 h-40 rounded-[32px] overflow-hidden shrink-0 border-4 border-gray-50 group-hover:border-primary/20 transition-colors">
+							<div class="w-40 h-40 rounded-4xl overflow-hidden shrink-0 border-4 border-gray-50 group-hover:border-primary/20 transition-colors">
 								<img src={item.image} alt={item.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
 							</div>
 
@@ -135,7 +135,7 @@
 							
 							<Button 
 								onclick={handleCheckout} 
-								class="w-full py-8 rounded-[32px] font-black text-sm uppercase tracking-[0.3em] shadow-2xl shadow-primary/30 group/btn bg-white text-gray-900 hover:bg-primary hover:text-white transition-all duration-500"
+								class="w-full py-8 rounded-4xl font-black text-sm uppercase tracking-[0.3em] shadow-2xl shadow-primary/30 group/btn bg-white text-gray-900 hover:bg-primary hover:text-white transition-all duration-500"
 							>
 								<span class="flex items-center gap-4">
 									PROCEDER AL PAGO
@@ -152,7 +152,7 @@
 							{ icon: Sparkles, label: 'Ritual Personalizado' },
 							{ icon: ShieldCheck, label: 'Garantía L-SPA Elite' }
 						] as badge}
-							<div class="bg-white p-6 rounded-[32px] border border-gray-100 flex items-center gap-4 opacity-70 hover:opacity-100 transition-opacity group">
+							<div class="bg-white p-6 rounded-4xl border border-gray-100 flex items-center gap-4 opacity-70 hover:opacity-100 transition-opacity group">
 								<div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-primary/60 group-hover:bg-primary group-hover:text-white transition-all">
 									<badge.icon size={18} />
 								</div>

@@ -68,7 +68,7 @@
               <span class="text-[10px] font-black uppercase tracking-widest text-gray-600">{$user?.nickname || $user?.name}</span>
             </button>
             
-            <div class="absolute right-0 top-full mt-4 w-64 bg-white rounded-[32px] shadow-2xl border border-gray-100 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 scale-95 group-hover:scale-100 z-[100]">
+            <div class="absolute right-0 top-full mt-4 w-64 bg-white rounded-4xl shadow-2xl border border-gray-100 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 scale-95 group-hover:scale-100 z-50">
               <div class="p-6 border-b border-gray-50 mb-3 text-center">
                  <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Tu Cuenta Premium</p>
                  <p class="text-sm font-black text-gray-900 truncate">{$user?.email}</p>
@@ -101,7 +101,7 @@
     </div>
   </header>
 
-  <main class="flex-grow bg-white">
+  <main class="grow bg-white">
     {@render children?.()}
   </main>
 
