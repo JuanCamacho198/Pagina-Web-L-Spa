@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 const userSchema = z.object({
   auth0Id: z.string().min(1),
-  email: z.string().email(),
+  email: z.email(),
   name: z.string().min(2).optional(),
   role: z.enum(['admin', 'employee', 'customer']).default('customer')
 });

@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 const cartItemSchema = z.object({
   auth0Id: z.string().min(1),
-  serviceId: z.string().uuid(),
+  serviceId: z.uuid(),
   quantity: z.number().int().positive().optional().default(1)
 });
 

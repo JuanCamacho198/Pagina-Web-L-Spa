@@ -3,8 +3,8 @@ import { eq, and, desc } from 'drizzle-orm';
 import { z } from 'zod';
 
 const reviewSchema = z.object({
-  userId: z.string().uuid(),
-  serviceId: z.string().uuid(),
+  userId: z.uuid(),
+  serviceId: z.uuid(),
   rating: z.number().int().min(1).max(5),
   comment: z.string().optional().nullable(),
 });

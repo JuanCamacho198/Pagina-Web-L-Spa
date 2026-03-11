@@ -7,7 +7,7 @@ const serviceSchema = z.object({
   description: z.string().optional().nullable(),
   price: z.coerce.number().positive(),
   category: z.string().min(1),
-  imageUrl: z.string().url().optional().nullable().or(z.literal('')),
+  imageUrl: z.url().optional().nullable().or(z.literal('')),
   duration: z.coerce.number().int().min(5),
   includes: z.string().optional().nullable(),
   idealFor: z.string().optional().nullable(),
