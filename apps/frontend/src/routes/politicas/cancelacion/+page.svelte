@@ -67,7 +67,7 @@
 					Normativa y Compromiso
 				</div>
 				<h1 class="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] uppercase">
-					Políticas de <br /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-light via-white to-primary-light/60 italic">Reserva</span>
+					Políticas de <br /> <span class="text-transparent bg-clip-text bg-linear-to-r from-primary-light via-white to-primary-light/60 italic">Reserva</span>
 				</h1>
 				<p class="text-xl text-gray-400 max-w-2xl font-medium leading-relaxed">
 					Nuestra transparencia es la base de tu confianza. Lee atentamente nuestras normas de funcionamiento para garantizarte la mejor experiencia de lujo.

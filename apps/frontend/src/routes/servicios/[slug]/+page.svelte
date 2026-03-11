@@ -216,7 +216,7 @@
 			<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
 				<div class="max-w-xl">
 					<div class="h-1.5 w-16 bg-primary rounded-full mb-6"></div>
-					<Typography variant="h2" class="text-gray-900 !mb-4 font-black tracking-tighter sm:text-5xl leading-none">
+					<Typography variant="h2" class="text-gray-900 mb-4! font-black tracking-tighter sm:text-5xl leading-none">
 						Te puede interesar
 					</Typography>
 					<p class="text-gray-500 font-medium">Otras experiencias exclusivas diseñadas para elevar tu bienestar.</p>

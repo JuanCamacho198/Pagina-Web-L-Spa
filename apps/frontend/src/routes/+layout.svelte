@@ -1,8 +1,7 @@
 <script lang="ts">
   import '../app.css';
   import Button from '$components/Button.svelte';
-  import Toast from '$components/Toast.svelte';
-  import { onMount } from 'svelte';
+  import Toast from '$components/Toast.svelte';  import Footer from '$components/Footer.svelte';  import { onMount } from 'svelte';
   import { initAuth, isAuthenticated, user, isLoading, login, logout } from '$lib/auth';
   import { cart, cartCount } from '$lib/cart';
   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';
@@ -105,66 +104,7 @@
     {@render children?.()}
   </main>
 
-  <footer class="bg-gray-900 pt-32 pb-20 px-6 overflow-hidden relative">
-    <!-- Footer Decor -->
-    <div class="absolute bottom-0 right-0 p-32 opacity-10 rotate-12 pointer-events-none scale-150">
-      <ShieldCheck size={500} class="text-white" />
-    </div>
-
-    <div class="max-w-7xl mx-auto relative z-10">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-32">
-        <div class="space-y-10">
-          <div class="flex items-center gap-4">
-             <div class="w-12 h-12 bg-white text-gray-900 rounded-2xl flex items-center justify-center font-black">L</div>
-             <span class="text-3xl font-black tracking-tighter text-white uppercase italic">SPA</span>
-          </div>
-          <p class="text-primary-light/60 font-medium text-lg leading-relaxed max-w-xs">
-            Un refugio de paz y lujo en el corazón de El Poblado. Donde el bienestar se encuentra con la excelencia.
-          </p>
-        </div>
-
-        <div class="space-y-8">
-          <h4 class="text-primary-light text-xs font-black uppercase tracking-[0.3em]">Nuestros Servicios</h4>
-          <ul class="space-y-6">
-            {#each ['Masajes de Lujo', 'Rituales Ancestrales', 'Tratamientos Faciales', 'Experiencias Duo'] as service}
-              <li><a href="/servicios" class="text-white/50 hover:text-white transition-colors text-sm font-bold uppercase tracking-widest">{service}</a></li>
-            {/each}
-          </ul>
-        </div>
-
-        <div class="space-y-8">
-          <h4 class="text-primary-light text-xs font-black uppercase tracking-[0.3em]">Información Legal</h4>
-          <ul class="space-y-6 text-white/50 text-sm font-bold uppercase tracking-widest">
-            <li><a href="/politicas/privacidad" class="hover:text-white transition-colors">Privacidad</a></li>
-            <li><a href="/politicas/cookies" class="hover:text-white transition-colors">Cookies</a></li>
-            <li><a href="/politicas/cancelacion" class="hover:text-white transition-colors">Reservas</a></li>
-          </ul>
-        </div>
-
-        <div class="space-y-8">
-          <h4 class="text-primary-light text-xs font-black uppercase tracking-[0.3em]">Boletín VIP</h4>
-          <div class="flex flex-col gap-6">
-            <p class="text-white/40 text-[10px] font-black uppercase tracking-widest">Suscríbete para recibir ofertas exclusivas.</p>
-            <div class="flex p-2 bg-white/5 rounded-3xl border border-white/10">
-              <input type="email" placeholder="email@luxury.com" class="bg-transparent border-none outline-none text-white px-6 w-full text-sm font-bold" />
-              <button class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-gray-900 hover:scale-105 transition-transform">
-                <ShieldCheck size={20} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-20 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
-        <p class="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">© 2026 L-SPA MEDELLÍN. TODOS LOS DERECHOS RESERVADOS.</p>
-        <div class="flex gap-10 opacity-30">
-          <Heart size={16} class="text-white" />
-          <ShieldCheck size={16} class="text-white" />
-          <Settings size={16} class="text-white" />
-        </div>
-      </div>
-    </div>
-  </footer>
+  <Footer />
 </div>
 
 <Toast />
