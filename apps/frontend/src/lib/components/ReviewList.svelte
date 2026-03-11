@@ -4,6 +4,7 @@
   import Typography from './Typography.svelte';
   import Skeleton from './Skeleton.svelte';
   import { User, MessageSquare, Calendar } from 'lucide-svelte';
+  import { PUBLIC_API_URL } from '$env/static/public';
 
   interface Review {
     id: string;
@@ -23,9 +24,10 @@
   let isLoading = $state(true);
 
   const fetchReviews = async () => {
+    if (typeof window === 'undefined') return;
     isLoading = true;
     try {
-      const response = await fetch(`http://localhost:3000/api/reviews?serviceId=${serviceId}`);
+      const response = await fetch(`${PUBLIC_API_URL}/reviews/${serviceId}`);
       if (response.ok) {
         reviews = await response.json();
       }

@@ -10,6 +10,7 @@
   }
 
   let { 
+    id = `input-${Math.random().toString(36).substring(2, 9)}`,
     label, 
     error, 
     icon, 
@@ -21,7 +22,7 @@
 
 <div class="w-full space-y-1.5">
   {#if label}
-    <label class="text-sm font-semibold text-gray-700 ml-1">
+    <label for={id} class="text-sm font-semibold text-gray-700 ml-1">
       {label}
     </label>
   {/if}
@@ -32,6 +33,7 @@
       </div>
     {/if}
     <input
+      id={id}
       class={cn(
         'w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700',
         icon && 'pl-10',
