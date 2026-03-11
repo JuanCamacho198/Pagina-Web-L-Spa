@@ -66,7 +66,7 @@
 				Explora tus dudas
 			</div>
 			<h1 class="text-6xl md:text-8xl font-black text-gray-900 tracking-tighter leading-[0.85] uppercase">
-				PREGUNTAS <br /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-dark to-primary italic">FRECUENTES</span>
+				PREGUNTAS <br /> <span class="text-transparent bg-clip-text bg-linear-to-r from-primary via-primary-dark to-primary italic">FRECUENTES</span>
 			</h1>
 			<p class="text-xl text-gray-500 font-medium max-w-xl mx-auto leading-relaxed">
 				Todo lo que necesitas saber antes de sumergirte en la experiencia L-SPA.

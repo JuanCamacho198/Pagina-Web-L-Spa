@@ -60,7 +60,7 @@
 				<Sparkles size={14} class="animate-pulse" />
 				Experiencias Exclusivas
 			</div>
-			<Typography variant="h1" class="text-gray-900 !mb-0 font-black tracking-tighter sm:text-6xl">
+			<Typography variant="h1" class="text-gray-900 mb-0! font-black tracking-tighter sm:text-6xl">
 				Nuestros Servicios
 			</Typography>
 			<div class="h-2 w-32 bg-primary mx-auto rounded-full mt-6 shadow-lg shadow-primary/20"></div>

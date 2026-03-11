@@ -58,7 +58,7 @@
 				alt="L-SPA Luxury Environment" 
 				class="w-full h-full object-cover brightness-[0.45] saturate-[0.8]"
 			/>
-			<div class="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/60"></div>
+			<div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60"></div>
 		</div>
 		
 		<div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-white text-center sm:text-left w-full">
@@ -71,7 +71,7 @@
 				<div class="space-y-6">
 					<h1 class="text-6xl sm:text-8xl md:text-9xl font-black leading-[0.85] tracking-tighter drop-shadow-2xl">
 						REINVENTA <br />
-						<span class="text-transparent bg-clip-text bg-linear-to-r from-primary-light via-white to-primary-light/60">TU CALMA</span>
+						<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-light via-white to-primary-light/60">TU CALMA</span>
 					</h1>
 					<p class="text-xl sm:text-2xl font-medium text-gray-300 max-w-2xl leading-relaxed drop-shadow-lg">
 						Un refugio exclusivo de relajación en el corazón de Medellín. Sumérgete en un viaje sensorial diseñado para tu renovación total.

@@ -160,7 +160,7 @@
 						<!-- Step 1: Personal Data -->
 						<div class="space-y-8 animate-in fade-in slide-in-from-bottom duration-500">
 							<div class="space-y-2">
-								<Typography variant="h2" class="text-3xl font-black text-gray-900 tracking-tight leading-none uppercase tracking-widest text-xs text-primary mb-2 block">Paso 01</Typography>
+								<Typography variant="h2" class="text-3xl font-black text-gray-900 tracking-tight leading-none uppercase tracking-wides mb-2 block">Paso 01</Typography>
 								<Typography variant="h2" class="text-3xl font-black text-gray-900 tracking-tight leading-none">Tus Datos Personales</Typography>
 								<p class="text-gray-400 font-medium text-sm">Necesitamos esta información para confirmar tu identidad en el spa.</p>
 							</div>

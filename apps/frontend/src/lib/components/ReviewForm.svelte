@@ -11,7 +11,7 @@
     onSubmitted: () => void;
   }
 
-  let { serviceId, onSubmitted }: Props = $props();
+  let { serviceId, onSubmitted } = $props<Props>();
   
   let rating = $state(0);
   let comment = $state('');

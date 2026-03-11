@@ -76,7 +76,7 @@
 					<CalendarIcon size={14} />
 					Agenda Personal
 				</div>
-				<Typography variant="h1" class="text-gray-900 !mb-0 font-black tracking-tighter sm:text-6xl leading-none">
+				<Typography variant="h1" class="text-gray-900 mb-0! font-black tracking-tighter sm:text-6xl leading-none">
 					Mis Reservas
 				</Typography>
 				<p class="text-gray-500 font-medium text-lg max-w-xl">

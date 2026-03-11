@@ -13,7 +13,7 @@
     class: className = '', 
     children,
     ...rest 
-  }: Props = $props();
+  } = $props<Props>();
 
   const variants = {
     default: 'bg-primary/10 text-primary border-primary/20',

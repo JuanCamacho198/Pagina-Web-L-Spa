@@ -12,7 +12,7 @@
     class: className = '', 
     children,
     ...rest 
-  }: Props = $props();
+  } = $props<Props>();
 </script>
 
 <div

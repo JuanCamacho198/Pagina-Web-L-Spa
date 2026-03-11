@@ -17,7 +17,7 @@
     class?: string;
   }
 
-  let { trigger, items, align = 'right', class: className = '' }: Props = $props();
+  let { trigger, items, align = 'right', class: className = '' } = $props<Props>();
 
   let isOpen = $state(false);
   let dropdownRef = $state<HTMLDivElement | null>(null);

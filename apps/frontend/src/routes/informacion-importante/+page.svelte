@@ -62,7 +62,7 @@
 						Guía de Protocolos
 					</div>
 					<h1 class="text-6xl md:text-8xl font-black text-gray-900 tracking-tighter leading-[0.85] uppercase">
-						INFORMACIÓN <br /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-700 to-amber-900 italic">PARA TU VISITA</span>
+						INFORMACIÓN <br /> <span class="text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-amber-700 to-amber-900 italic">PARA TU VISITA</span>
 					</h1>
 					<p class="text-xl text-gray-500 font-medium leading-relaxed max-w-2xl">
 						Queremos que cada segundo en nuestro santuario sea perfecto. Por favor, lee estas recomendaciones para garantizar una experiencia de paz absoluta.

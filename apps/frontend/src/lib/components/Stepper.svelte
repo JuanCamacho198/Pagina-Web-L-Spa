@@ -15,7 +15,7 @@
     class?: string;
   }
 
-  let { steps, currentStep, class: className = "" }: Props = $props();
+  let { steps, currentStep, class: className = "" } = $props<Props>();
 </script>
 
 <div class={cn("w-full flex items-center justify-between relative", className)}>
@@ -44,18 +44,18 @@
         {/if}
       </div>
 
-      <div class="absolute top-16 text-center w-max min-w-[120px] px-2">
+      <div class="absolute top-16 text-center w-max min-w-30 px-2">
         <Typography 
           variant="small" 
           class={cn(
-            "font-bold !mb-0 transition-all duration-300 uppercase tracking-wider text-[11px]",
+            "font-bold mb-0! transition-all duration-300 uppercase tracking-wider text-[11px]",
             isActive || isCompleted ? "text-primary opacity-100 translate-y-0" : "text-gray-400 opacity-40 translate-y-1"
           )}
         >
           {step.label}
         </Typography>
         {#if step.description}
-          <p class="text-[9px] font-medium text-gray-400 leading-tight mt-1 max-w-[100px] mx-auto hidden sm:block opacity-60">
+          <p class="text-[9px] font-medium text-gray-400 leading-tight mt-1 max-w-25 mx-auto hidden sm:block opacity-60">
             {step.description}
           </p>
         {/if}

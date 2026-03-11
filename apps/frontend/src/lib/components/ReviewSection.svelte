@@ -7,7 +7,7 @@
     serviceId: string;
   }
 
-  let { serviceId }: Props = $props();
+  let { serviceId } = $props<Props>();
   let refreshTrigger = $state(0);
 
   const handleReviewSubmitted = () => {

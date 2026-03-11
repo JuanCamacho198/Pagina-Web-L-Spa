@@ -138,7 +138,7 @@
 						</div>
 					</div>
 
-					<Typography variant="h1" class="text-gray-900 !mb-6 font-black tracking-tighter sm:text-7xl leading-none">
+					<Typography variant="h1" class="text-gray-900 mb-6! font-black tracking-tighter sm:text-7xl leading-none">
 						{service.name}
 					</Typography>
 					

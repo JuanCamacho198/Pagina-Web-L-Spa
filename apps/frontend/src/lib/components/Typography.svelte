@@ -15,7 +15,7 @@
     class: className = '', 
     children,
     ...rest 
-  }: Props = $props();
+  } = $props<Props>();
 
   const variants = {
     h1: 'text-4xl font-extrabold tracking-tight lg:text-5xl text-gray-900',

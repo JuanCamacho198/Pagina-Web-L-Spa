@@ -48,7 +48,7 @@
 				<Lock size={14} />
 				Pago Seguro Encriptado
 			</div>
-			<Typography variant="h1" class="text-gray-900 !mb-0 font-black tracking-tighter sm:text-6xl leading-none">
+			<Typography variant="h1" class="text-gray-900 mb-0! font-black tracking-tighter sm:text-6xl leading-none">
 				Finaliza tu Reserva
 			</Typography>
 			<p class="text-gray-500 font-medium text-lg max-w-xl mx-auto">
@@ -130,7 +130,7 @@
 							</div>
 						</div>
 
-						<div class="w-full md:w-[380px] space-y-8">
+						<div class="w-full md:w-95 space-y-8">
 							<div class="bg-gray-50/50 rounded-[40px] p-8 border border-gray-50 space-y-6">
 								<div class="flex items-center gap-4 opacity-30 grayscale hover:grayscale-0 transition-all cursor-default scale-90">
 									<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="h-5" />

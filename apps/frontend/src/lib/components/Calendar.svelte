@@ -10,7 +10,7 @@
     maxDate?: string;
   }
 
-  let { selectedDate, onDateSelect, minDate, maxDate }: Props = $props();
+  let { selectedDate, onDateSelect, minDate, maxDate } = $props<Props>();
 
   let currentMonth = $state(new Date());
 
