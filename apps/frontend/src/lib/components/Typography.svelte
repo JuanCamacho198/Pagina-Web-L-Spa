@@ -27,7 +27,7 @@
     small: 'text-sm font-medium leading-none text-gray-500',
   };
 
-  const tag = as || (['h1', 'h2', 'h3', 'h4'].includes(variant) ? variant : 'p');
+  let tag = $derived(as || (['h1', 'h2', 'h3', 'h4'].includes(variant) ? variant : 'p'));
 </script>
 
 <svelte:element

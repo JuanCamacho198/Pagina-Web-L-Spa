@@ -134,7 +134,7 @@
         ] as item}
           <div class="flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-300 p-8 rounded-[3rem] bg-white dark:bg-gray-800 shadow-2xl shadow-primary/5">
             <div class="mb-6 p-5 bg-primary/5 rounded-2xl group-hover:bg-primary group-hover:text-white transition-all duration-500">
-              <svelte:component this={item.icon} size={32} class="transition-colors" />
+              <item.icon size={32} class="transition-colors" />
             </div>
             <h4 class="text-xl font-black mb-3 text-gray-800 dark:text-gray-100 uppercase tracking-widest">{item.title}</h4>
             <p class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-relaxed mt-0">{item.desc}</p>
@@ -162,7 +162,7 @@
                 loading="lazy"
                 class="w-full h-full object-cover"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               <div class="absolute bottom-16 left-16 text-white max-w-xl">
                  <p class="text-primary-light font-black uppercase tracking-[0.4em] mb-4 text-xs">Premium Wellness</p>
                  <h3 class="text-4xl font-black uppercase tracking-tighter">Ambiente de Paz y Renovación</h3>
@@ -173,12 +173,14 @@
 
         <button
           onclick={handlePrev}
+          aria-label="Imagen anterior"
           class="absolute left-10 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/10 backdrop-blur-xl text-white hover:bg-primary transition-all opacity-0 group-hover:opacity-100 shadow-2xl border border-white/20 flex items-center justify-center translate-x-10 group-hover:translate-x-0 group-hover:duration-500"
         >
           <ChevronLeft size={32} />
         </button>
         <button
           onclick={handleNext}
+          aria-label="Siguiente imagen"
           class="absolute right-10 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/10 backdrop-blur-xl text-white hover:bg-primary transition-all opacity-0 group-hover:opacity-100 shadow-2xl border border-white/20 flex items-center justify-center -translate-x-10 group-hover:translate-x-0 group-hover:duration-500"
         >
           <ChevronRight size={32} />
@@ -188,8 +190,9 @@
           {#each Array(totalImages) as _, i}
             <button
               onclick={() => activeIndex = i}
+              aria-label="Ir a la imagen {i + 1}"
               class="h-1.5 rounded-full transition-all duration-500 {activeIndex === i ? 'w-16 bg-primary' : 'w-4 bg-white/30 hover:bg-white/50'}"
-            />
+            ></button>
           {/each}
         </div>
       </div>

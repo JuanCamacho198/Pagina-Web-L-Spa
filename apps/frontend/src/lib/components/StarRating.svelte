@@ -27,7 +27,12 @@
   };
 </script>
 
-<div class="flex items-center gap-1.5" onmouseleave={() => !readonly && (hoverRating = 0)}>
+<div 
+  role="group" 
+  aria-label="Calificación con estrellas" 
+  class="flex items-center gap-1.5" 
+  onmouseleave={() => !readonly && (hoverRating = 0)}
+>
   {#each Array(maxRating) as _, index}
     {@const starValue = index + 1}
     {@const isActive = starValue <= (hoverRating || rating)}
@@ -42,7 +47,7 @@
         readonly ? 'cursor-default' : 'cursor-pointer hover:scale-125 active:scale-95 focus:ring-4 focus:ring-amber-100 rounded-full p-0.5',
         isActive && !readonly && "scale-110"
       )}
-      aria-label="Calificar con {starValue} estrellas"
+      aria-label="Calificar con {starValue} de {maxRating} estrellas"
     >
       <Star
         size={size}
