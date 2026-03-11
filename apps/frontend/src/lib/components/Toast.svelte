@@ -77,8 +77,10 @@
       <div class={cn("absolute left-0 top-0 bottom-0 w-1.5", iconColors[t.type].replace('text', 'bg'))}></div>
 
       <div class={cn("shrink-0 mt-0.5", iconColors[t.type])}>
-        {@const Icon = icons[t.type]}
-        <Icon size={24} strokeWidth={2.5} />
+        {#if icons[t.type]}
+          {@const Icon = icons[t.type]}
+          <Icon size={24} strokeWidth={2.5} />
+        {/if}
       </div>
       
       <div class="flex-1">

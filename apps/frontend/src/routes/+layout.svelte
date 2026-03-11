@@ -167,15 +167,6 @@
   </footer>
 </div>
 
-      </div>
-      <div>
-        <h4 class="font-bold text-xs uppercase tracking-widest mb-4">Contacto</h4>
-        <p class="text-sm text-gray-600">Calle X, Ciudad Y<br>Tel: +123 456 789</p>
-      </div>
-    </div>
-  </footer>
-</div>
-
 <Toast />
 
 <style>
