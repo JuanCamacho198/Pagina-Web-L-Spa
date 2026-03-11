@@ -2,7 +2,7 @@
   import '../app.css';
   import Button from '$components/Button.svelte';
   import Toast from '$components/Toast.svelte';
-  import { onMount, setContext } from 'svelte';
+  import { onMount } from 'svelte';
   import { initAuth, isAuthenticated, user, isLoading, login, logout } from '$lib/auth';
   import { cart, cartCount } from '$lib/cart';
   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';

@@ -48,6 +48,8 @@ export async function initAuth() {
 		}
 	} catch (error) {
 		console.error('Auth0 initialization failed:', error);
+		// Ensure loading state is turned off on error
+		isLoading.set(false);
 	} finally {
 		isLoading.set(false);
 	}
