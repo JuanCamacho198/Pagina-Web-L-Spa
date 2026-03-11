@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Mail, MapPin, Send, MessageCircle, Phone, Clock, ShieldCheck, Sparkles } from 'lucide-svelte';
-	import Button from '$components/Button.svelte';
-	import Typography from '$components/Typography.svelte';
-	import { toast } from '$components/Toast.svelte';
+	import { cn } from '$lib/utils/cn';
+	import Button from '$lib/components/Button.svelte';
+	import Typography from '$lib/components/Typography.svelte';
+	import { toast } from '$lib/components/Toast.svelte';
 
 	let isSubmitting = $state(false);
 	
@@ -55,7 +56,7 @@
 	<!-- Hero Section -->
 	<section class="bg-primary pt-40 pb-32 px-6 relative overflow-hidden">
 		<!-- Decor -->
-		<div class="absolute top-0 right-0 w-[800px] h-[800px] bg-white opacity-[0.03] rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+		<div class="absolute top-0 right-0 w-200 h-200 bg-white opacity-[0.03] rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
 		<div class="absolute bottom-0 left-0 w-64 h-64 bg-black opacity-5 rounded-full -translate-x-1/2 translate-y-1/2"></div>
 		
 		<div class="max-w-7xl mx-auto text-center relative z-10 space-y-8 animate-in fade-in slide-in-from-top-12 duration-1000">
@@ -64,7 +65,7 @@
 				Canales de Atención
 			</div>
 			<h1 class="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.85]">
-				ESTAMOS PARA <br /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-light via-white to-primary-light/60">ESCUCHARTE</span>
+				ESTAMOS PARA <br /> <span class="text-transparent bg-clip-text bg-linear-to-r from-primary-light via-white to-primary-light/60">ESCUCHARTE</span>
 			</h1>
 			<p class="text-xl text-primary-light/90 max-w-2xl mx-auto font-medium leading-relaxed">
 				¿Tienes dudas o quieres agendar una experiencia personalizada? Nuestro equipo de expertos está listo para asesorarte en tu viaje de bienestar.
@@ -117,7 +118,7 @@
 
 			<!-- Form & Map -->
 			<div class="lg:col-span-8 space-y-12">
-				<div id="map" class="bg-white p-6 rounded-[56px] shadow-2xl shadow-primary/5 border border-gray-100 overflow-hidden h-[500px] relative group">
+				<div id="map" class="bg-white p-6 rounded-[56px] shadow-2xl shadow-primary/5 border border-gray-100 overflow-hidden h-125 relative group">
 					<iframe
 						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d891.3024654937047!2d-75.56598343906558!3d6.208142145211063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e442829c522fdb3%3A0x5abdd43099235c76!2sCra.%2036%20%238a-40%2C%20El%20Poblado%2C%20Medell%C3%ADn%2C%20El%20Poblado%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1727018084186!5m2!1ses-419!2sco"
 						class="w-full h-full rounded-[40px] grayscale hover:grayscale-0 transition-all duration-1000"
@@ -143,8 +144,9 @@
 						<form onsubmit={handleSubmit} class="space-y-8">
 							<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 								<div class="space-y-3">
-									<label class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">Tu Nombre</label>
+									<label for="name" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">Tu Nombre</label>
 									<input 
+										id="name"
 										required
 										type="text" 
 										class="w-full px-8 py-5 bg-gray-50 border-none rounded-3xl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900" 
@@ -152,8 +154,9 @@
 									/>
 								</div>
 								<div class="space-y-3">
-									<label class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">Correo Electrónico</label>
+									<label for="email" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">Correo Electrónico</label>
 									<input 
+										id="email"
 										required
 										type="email" 
 										class="w-full px-8 py-5 bg-gray-50 border-none rounded-3xl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900" 
@@ -163,11 +166,12 @@
 							</div>
 							
 							<div class="space-y-3">
-								<label class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">¿En qué podemos ayudarte?</label>
+								<label for="message" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">¿En qué podemos ayudarte?</label>
 								<textarea 
+									id="message"
 									required
 									rows={5} 
-									class="w-full px-8 py-6 bg-gray-50 border-none rounded-[32px] ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900 resize-none" 
+									class="w-full px-8 py-6 bg-gray-50 border-none rounded-4xl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900 resize-none" 
 									placeholder="Describe tu consulta..."
 								></textarea>
 							</div>
@@ -175,7 +179,7 @@
 							<Button 
 								type="submit"
 								disabled={isSubmitting}
-								class="w-full py-7 rounded-[32px] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 group disabled:opacity-50"
+								class="w-full py-7 rounded-4xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 group disabled:opacity-50"
 							>
 								{#if isSubmitting}
 									<div class="flex items-center gap-3">

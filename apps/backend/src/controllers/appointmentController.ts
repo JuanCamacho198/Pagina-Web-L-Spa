@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { zodValidator } from '@hono/zod-validator';
+import { zValidator } from '@hono/zod-validator';
 import { appointmentSchema, appointmentStatusEnum } from '@l-spa/shared-types';
 import { AppointmentService } from '../services/AppointmentService';
 
@@ -21,7 +21,7 @@ appointments.get('/user/:auth0Id', async (c) => {
 });
 
 // Create a new appointment
-appointments.post('/', zodValidator('json', appointmentSchema), async (c) => {
+appointments.post('/', zValidator('json', appointmentSchema), async (c) => {
   const { auth0Id, serviceId, appointmentDate, appointmentTime } = c.req.valid('json');
   if (!auth0Id) return c.json({ error: 'auth0Id es requerido' }, 400);
 
@@ -39,7 +39,7 @@ appointments.post('/', zodValidator('json', appointmentSchema), async (c) => {
 });
 
 // Update appointment status
-appointments.patch('/:id/status', zodValidator('json', appointmentStatusEnum), async (c) => {
+appointments.patch('/:id/status', zValidator('json', appointmentStatusEnum), async (c) => {
   const id = c.req.param('id');
   const status = c.req.valid('json');
 

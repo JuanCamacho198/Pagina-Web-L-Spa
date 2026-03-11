@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Target, Eye, ShieldCheck, Heart, Sparkles, Coffee, ChevronRight, Award, MapPin } from 'lucide-svelte';
-	import Button from '$components/Button.svelte';
-	import Typography from '$components/Typography.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Typography from '$lib/components/Typography.svelte';
 	import { cn } from '$lib/utils/cn';
 
 	const pillars = [
@@ -40,7 +40,7 @@
 				alt="L-SPA Essence" 
 				class="w-full h-full object-cover brightness-[0.4] saturate-[0.8]"
 			/>
-			<div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-white"></div>
+			<div class="absolute inset-0 bg-linear-to-b from-transparent via-primary/10 to-white"></div>
 		</div>
 		
 		<div class="relative z-10 text-center px-6 max-w-4xl space-y-8 animate-in fade-in zoom-in duration-1000">
@@ -50,7 +50,7 @@
 			</div>
 			
 			<h1 class="text-6xl md:text-8xl font-black text-white leading-none tracking-tighter drop-shadow-2xl">
-				NUESTRA <br /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-light via-white to-primary-light/60">ESENCIA</span>
+				NUESTRA <br /> <span class="text-transparent bg-clip-text bg-linear-to-r from-primary-light via-white to-primary-light/60">ESENCIA</span>
 			</h1>
 			
 			<p class="text-xl md:text-2xl text-gray-200 font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-lg">
@@ -69,7 +69,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
 			<!-- Media Side (Abstract Decor) -->
 			<div class="relative order-2 lg:order-1 flex justify-center lg:justify-start">
-				<div class="relative w-full max-w-md aspect-[4/5] bg-gray-50 rounded-[64px] overflow-hidden shadow-2xl shadow-primary/10 border border-gray-100">
+				<div class="relative w-full max-w-md aspect-4/5 bg-gray-50 rounded-[64px] overflow-hidden shadow-2xl shadow-primary/10 border border-gray-100">
 					<img 
 						src="/src/assets/banners/bannerSpa.avif" 
 						alt="L-SPA Interior" 
@@ -136,7 +136,7 @@
 		<div class="max-w-7xl mx-auto">
 			<div class="text-center space-y-6 mb-24">
 				<h2 class="text-xs font-black uppercase tracking-[0.5em] text-primary-light">Nuestros Pilares</h2>
-				<p class="text-5xl md:text-7xl font-black tracking-tighter leading-none">FUNDAMENTOS DE <br /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-light to-white">LA EXPERIENCIA</span></p>
+				<p class="text-5xl md:text-7xl font-black tracking-tighter leading-none">FUNDAMENTOS DE <br /> <span class="text-transparent bg-clip-text bg-linear-to-r from-primary-light to-white">LA EXPERIENCIA</span></p>
 			</div>
 
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
@@ -145,8 +145,8 @@
 						<div class={cn("h-20 w-20 rounded-3xl flex items-center justify-center mb-10 shadow-2xl transition-all duration-500 group-hover:rotate-12 group-hover:scale-110", "bg-white/5")}>
 							<pillar.icon size={40} strokeWidth={2.5} class={pillar.color} />
 						</div>
-						<h4 class="text-2xl font-black mb-4 tracking-tight uppercase tracking-widest text-xs text-primary-light">{pillar.title}</h4>
-						<p class="text-lg text-gray-400 font-medium leading-relaxed group-hover:text-white transition-colors uppercase tracking-tight text-sm">
+						<h4 class="text-2xl font-black mb-4 tracking-tight uppercase text-primary-light">{pillar.title}</h4>
+						<p class="text-lg text-gray-400 font-medium leading-relaxed group-hover:text-white transition-colors uppercase tracking-tight">
 							{pillar.desc}
 						</p>
 					</div>

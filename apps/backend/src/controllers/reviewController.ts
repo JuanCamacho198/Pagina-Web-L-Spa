@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { zodValidator } from '@hono/zod-validator';
+import { zValidator } from '@hono/zod-validator';
 import { reviewSchema } from '@l-spa/shared-types';
 import { ReviewService } from '../services/ReviewService';
 
@@ -14,7 +14,7 @@ reviews.get('/:serviceId', async (c) => {
 });
 
 // Create a new review
-reviews.post('/', zodValidator('json', reviewSchema), async (c) => {
+reviews.post('/', zValidator('json', reviewSchema), async (c) => {
   const { userId, serviceId, rating, comment } = c.req.valid('json');
 
   try {

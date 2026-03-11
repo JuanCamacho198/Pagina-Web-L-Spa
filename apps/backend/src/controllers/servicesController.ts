@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { zodValidator } from '@hono/zod-validator';
+import { zValidator } from '@hono/zod-validator';
 import { serviceSchema } from '@l-spa/shared-types';
 import { ServiceService } from '../services/ServiceService';
 
@@ -18,13 +18,13 @@ services.get('/:id', async (c) => {
   return c.json(service);
 });
 
-services.post('/', zodValidator('json', serviceSchema), async (c) => {
+services.post('/', zValidator('json', serviceSchema), async (c) => {
   const data = c.req.valid('json');
   const result = await serviceService.createService(data);
   return c.json(result, 201);
 });
 
-services.put('/:id', zodValidator('json', serviceSchema.partial()), async (c) => {
+services.put('/:id', zValidator('json', serviceSchema.partial()), async (c) => {
   const id = c.req.param('id');
   const data = c.req.valid('json');
   const result = await serviceService.updateService(id, data);

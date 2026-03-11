@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { zodValidator } from '@hono/zod-validator';
+import { zValidator } from '@hono/zod-validator';
 import { userSyncSchema, userUpdateSchema, cartItemSchema } from '@l-spa/shared-types';
 import { UserService } from '../services/UserService';
 
@@ -15,14 +15,14 @@ users.get('/:auth0Id', async (c) => {
 });
 
 // Sync User Profile (Upsert)
-users.post('/sync', zodValidator('json', userSyncSchema), async (c) => {
+users.post('/sync', zValidator('json', userSyncSchema), async (c) => {
   const data = c.req.valid('json');
   const result = await userService.syncUser(data);
   return c.json(result);
 });
 
 // Update User Profile
-users.put('/:auth0Id', zodValidator('json', userUpdateSchema.partial()), async (c) => {
+users.put('/:auth0Id', zValidator('json', userUpdateSchema.partial()), async (c) => {
   const auth0Id = c.req.param('auth0Id');
   const updates = c.req.valid('json');
   const result = await userService.updateUser(auth0Id, updates);
@@ -43,7 +43,7 @@ users.get('/:auth0Id/cart', async (c) => {
 });
 
 // Add to Cart
-users.post('/cart', zodValidator('json', cartItemSchema), async (c) => {
+users.post('/cart', zValidator('json', cartItemSchema), async (c) => {
   const { auth0Id, serviceId, quantity } = c.req.valid('json');
   if (!auth0Id) return c.json({ error: 'auth0Id es requerido' }, 400);
   

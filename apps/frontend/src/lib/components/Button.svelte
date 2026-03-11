@@ -6,6 +6,7 @@
     variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
     size?: 'sm' | 'md' | 'lg';
     isLoading?: boolean;
+    href?: string;
     children?: any;
   }
 
