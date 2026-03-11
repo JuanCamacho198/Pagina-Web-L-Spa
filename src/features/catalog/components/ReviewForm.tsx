@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import StarRating from '../../../components/ui/StarRating';
 import { MessageSquare, Send, CheckCircle2, AlertCircle } from 'lucide-react';
-import { db, users } from '../../../db';
-import { eq } from 'drizzle-orm';
 
 interface ReviewFormProps {
   serviceId: string;
@@ -27,18 +25,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ serviceId, onReviewSubmitted })
       }
 
       try {
-        const userResult = await db.select({ id: users.id })
-          .from(users)
-          .where(eq(users.auth0Id, user.sub))
-          .limit(1);
-
-        if (userResult.length === 0) {
-          setIsEligible(false);
-          setCheckingEligibility(false);
-          return;
-        }
-
-        const userId = userResult[0].id;
         const response = await fetch(`/api/appointments?auth0Id=${user.sub}`);
         if (response.ok) {
           const appointments = await response.json();
@@ -67,12 +53,12 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ serviceId, onReviewSubmitted })
 
     setIsSubmitting(true);
     try {
-      const userResult = await db.select({ id: users.id })
-        .from(users)
-        .where(eq(users.auth0Id, user!.sub!))
-        .limit(1);
+      // Obtenemos el ID del usuario desde la API
+      const userResponse = await fetch(`/api/users?auth0Id=${user!.sub!}`);
+      if (!userResponse.ok) throw new Error('Error al obtener datos del usuario');
+      const userResult = await userResponse.json();
       
-      const userId = userResult[0].id;
+      const userId = userResult.id;
 
       const response = await fetch('/api/reviews', {
         method: 'POST',
@@ -162,7 +148,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ serviceId, onReviewSubmitted })
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="¿Qué tal fue tu experiencia?..."
-            className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all min-h-[120px]"
+            className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all min-h-30"
           />
         </div>
 

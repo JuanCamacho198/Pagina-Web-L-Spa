@@ -1,29 +1,18 @@
 // src/models/adminModel.ts
-import { db, appointments, users, services } from '@/db';
-import { eq, desc, sql } from 'drizzle-orm';
+import { UserProfile } from "@/types";
+
+const API_APPOINTMENTS = '/api/appointments';
+const API_USERS = '/api/users';
+const API_STATS = '/api/config?id=stats'; // O el endpoint que tengas para stats
 
 /**
  * Obtiene todas las citas para el administrador, incluyendo información del usuario y del servicio.
  */
 export async function fetchAllAppointments() {
   try {
-    const results = await db.select({
-      id: appointments.id,
-      appointmentDate: appointments.appointmentDate,
-      appointmentTime: appointments.appointmentTime,
-      status: appointments.status,
-      createdAt: appointments.createdAt,
-      userName: sql<string>`${users.firstName} || ' ' || ${users.lastName}`,
-      userEmail: users.email,
-      serviceName: services.name,
-      servicePrice: services.price,
-    })
-    .from(appointments)
-    .innerJoin(users, eq(appointments.userId, users.id))
-    .innerJoin(services, eq(appointments.serviceId, services.id))
-    .orderBy(desc(appointments.appointmentDate), desc(appointments.appointmentTime));
-
-    return results;
+    const response = await fetch(API_APPOINTMENTS);
+    if (!response.ok) throw new Error('Error al obtener citas');
+    return await response.json();
   } catch (e: any) {
     console.error("Error fetching all appointments:", e);
     throw new Error(e.message || "Error al obtener todas las citas.");
@@ -37,9 +26,13 @@ export async function fetchAllAppointments() {
  */
 export async function updateAppointmentStatus(appointmentId: string, status: string) {
   try {
-    await db.update(appointments)
-      .set({ status })
-      .where(eq(appointments.id, appointmentId));
+    const response = await fetch(API_APPOINTMENTS, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: appointmentId, status })
+    });
+    if (!response.ok) throw new Error('Error al actualizar estado');
+    return await response.json();
   } catch (e: any) {
     console.error("Error updating appointment status:", e);
     throw new Error(e.message || "Error al actualizar el estado de la cita.");
@@ -51,24 +44,9 @@ export async function updateAppointmentStatus(appointmentId: string, status: str
  */
 export async function fetchAdminStats() {
   try {
-    const totalAppointments = await db.select({ count: sql<number>`count(*)` }).from(appointments);
-    const totalUsers = await db.select({ count: sql<number>`count(*)` }).from(users).where(eq(users.role, 'customer'));
-    const totalServices = await db.select({ count: sql<number>`count(*)` }).from(services);
-    
-    // Ingresos estimados de citas completadas
-    const revenue = await db.select({ 
-      sum: sql<number>`sum(CAST(${services.price} AS DECIMAL))` 
-    })
-    .from(appointments)
-    .innerJoin(services, eq(appointments.serviceId, services.id))
-    .where(eq(appointments.status, 'completed'));
-
-    return {
-      totalAppointments: totalAppointments[0].count,
-      totalUsers: totalUsers[0].count,
-      totalServices: totalServices[0].count,
-      estimatedRevenue: revenue[0].sum || 0
-    };
+    const response = await fetch(API_STATS);
+    if (!response.ok) throw new Error('Error al obtener estadísticas');
+    return await response.json();
   } catch (e: any) {
     console.error("Error fetching admin stats:", e);
     throw new Error(e.message || "Error al obtener estadísticas.");
@@ -80,19 +58,9 @@ export async function fetchAdminStats() {
  */
 export async function fetchAllUsers() {
   try {
-    const results = await db.select({
-      id: users.id,
-      firstName: users.firstName,
-      lastName: users.lastName,
-      email: users.email,
-      role: users.role,
-      createdAt: users.createdAt,
-      phone: users.phone,
-    })
-    .from(users)
-    .orderBy(desc(users.createdAt));
-
-    return results;
+    const response = await fetch(API_USERS);
+    if (!response.ok) throw new Error('Error al obtener usuarios');
+    return await response.json();
   } catch (e: any) {
     console.error("Error fetching all users:", e);
     throw new Error(e.message || "Error al obtener todos los usuarios.");
@@ -106,9 +74,13 @@ export async function fetchAllUsers() {
  */
 export async function updateUserRole(userId: string, role: 'admin' | 'employee' | 'customer') {
   try {
-    await db.update(users)
-      .set({ role })
-      .where(eq(users.id, userId));
+    const response = await fetch(API_USERS, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: userId, role })
+    });
+    if (!response.ok) throw new Error('Error al actualizar rol');
+    return await response.json();
   } catch (e: any) {
     console.error("Error updating user role:", e);
     throw new Error(e.message || "Error al actualizar el rol del usuario.");
