@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import * as schema from '../src/db/schema';
 
 // Utilizar process.env para Node.js (Vercel Serverless)
-const connectionString = process.env.DATABASE_URL || process.env.VITE_DATABASE_URL;
+const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
   throw new Error('DATABASE_URL no está definida');
