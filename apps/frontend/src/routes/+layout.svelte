@@ -1,6 +1,7 @@
 <script lang="ts">
   import '../app.css';
   import Button from '$components/Button.svelte';
+  import Toast from '$components/Toast.svelte';
   
   let { data, children } = $props();
 </script>
@@ -55,6 +56,8 @@
     </div>
   </footer>
 </div>
+
+<Toast />
 
 <style>
   :global(.text-primary) {
