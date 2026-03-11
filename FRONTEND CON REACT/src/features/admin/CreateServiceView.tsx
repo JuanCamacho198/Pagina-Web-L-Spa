@@ -287,7 +287,7 @@ export default function CreateServiceView() {
                 </h3>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="aspect-square w-full bg-gray-50 rounded-4xlxl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center overflow-hidden relative group">
+                <div className="aspect-square w-full bg-gray-50 rounded-4xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center overflow-hidden relative group">
                   {imagePreview ? (
                     <>
                       <img src={imagePreview} alt="Preview" className="w-full h-full object-cover transition-transform group-hover:scale-110" />

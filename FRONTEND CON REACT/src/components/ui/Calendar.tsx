@@ -102,7 +102,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   }
 
   return (
-    <div className="p-6 bg-white rounded-4xlxl shadow-xl shadow-gray-200/50 border border-gray-100 max-w-sm mx-auto">
+    <div className="p-6 bg-white rounded-4xl shadow-xl shadow-gray-200/50 border border-gray-100 max-w-sm mx-auto">
       <div className="flex items-center justify-between mb-6">
         <Typography variant="h4" className="m-0 font-bold text-gray-800">
           {months[currentMonth.getMonth()]} {currentMonth.getFullYear()}

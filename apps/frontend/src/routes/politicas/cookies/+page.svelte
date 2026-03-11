@@ -26,7 +26,7 @@
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 			<!-- Essential -->
 			<div class="bg-white p-12 rounded-[56px] shadow-2xl shadow-primary/5 border border-gray-100 space-y-8 group hover:-translate-y-2 transition-transform duration-500">
-				<div class="w-16 h-16 rounded-4xlxl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm">
+				<div class="w-16 h-16 rounded-4xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm">
 					<Settings size={32} strokeWidth={2.5} />
 				</div>
 				<div class="space-y-4">
@@ -43,7 +43,7 @@
 				<div class="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-125 transition-transform duration-1000">
 					<PieChart size={200} />
 				</div>
-				<div class="w-16 h-16 rounded-4xlxl bg-white/10 text-primary-light flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
+				<div class="w-16 h-16 rounded-4xl bg-white/10 text-primary-light flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
 					<PieChart size={32} strokeWidth={2.5} />
 				</div>
 				<div class="space-y-4">

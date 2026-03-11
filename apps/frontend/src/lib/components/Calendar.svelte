@@ -76,10 +76,10 @@
   let startOffset = $derived(startDayOfMonth(currentMonth));
 </script>
 
-<div class="p-4 bg-white rounded-4xlxl shadow-xl border border-gray-100 max-w-sm mx-auto">
+<div class="p-4 bg-white rounded-4xl shadow-xl border border-gray-100 max-w-sm mx-auto">
   <div class="flex items-center justify-between mb-6">
     <div class="flex items-center gap-3">
-      <div class="h-10 w-10 rounded-4xlxl bg-primary/10 flex items-center justify-center text-primary">
+      <div class="h-10 w-10 rounded-4xl bg-primary/10 flex items-center justify-center text-primary">
         <CalendarIcon size={20} strokeWidth={2.5} />
       </div>
       <div>
@@ -94,13 +94,13 @@
     <div class="flex gap-2">
       <button
         onclick={prevMonth}
-        class="h-10 w-10 flex items-center justify-center rounded-4xlxl hover:bg-gray-50 border border-gray-100 transition-all active:scale-90"
+        class="h-10 w-10 flex items-center justify-center rounded-4xl hover:bg-gray-50 border border-gray-100 transition-all active:scale-90"
       >
         <ChevronLeft size={20} class="text-gray-600" />
       </button>
       <button
         onclick={nextMonth}
-        class="h-10 w-10 flex items-center justify-center rounded-4xlxl hover:bg-gray-50 border border-gray-100 transition-all active:scale-90"
+        class="h-10 w-10 flex items-center justify-center rounded-4xl hover:bg-gray-50 border border-gray-100 transition-all active:scale-90"
       >
         <ChevronRight size={20} class="text-gray-600" />
       </button>
@@ -132,7 +132,7 @@
         onclick={() => handleDateClick(d)}
         disabled={disabled}
         class={cn(
-          "h-10 w-10 rounded-4xlxl flex items-center justify-center text-sm transition-all font-medium relative focus:outline-none",
+          "h-10 w-10 rounded-4xl flex items-center justify-center text-sm transition-all font-medium relative focus:outline-none",
           selected 
             ? "bg-primary text-white font-bold shadow-lg shadow-primary/30 scale-105 z-10" 
             : "hover:bg-primary/10 text-gray-700 active:scale-95",

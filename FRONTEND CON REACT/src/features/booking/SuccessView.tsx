@@ -30,7 +30,7 @@ export default function SuccessView() {
           <CheckCircle2 size={48} className="text-green-500" />
         </div>
         <h1 className="text-3xl font-black text-gray-900 mb-6">¡Pago Confirmado!</h1>
-        <div className="bg-gray-50 rounded-4xlxl p-8 mb-10 text-left border border-gray-100 space-y-4">
+        <div className="bg-gray-50 rounded-4xl p-8 mb-10 text-left border border-gray-100 space-y-4">
           {totalAmount && (
             <div className="flex justify-between items-center border-b pb-4 border-gray-200">
               <span className="text-gray-500 font-bold uppercase text-xs">Monto Total</span>
@@ -45,10 +45,10 @@ export default function SuccessView() {
           )}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Link to="/citas" className="flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-primary text-primary font-black rounded-4xlxl hover:bg-primary/5 transition-all">
+          <Link to="/citas" className="flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-primary text-primary font-black rounded-4xl hover:bg-primary/5 transition-all">
             <Calendar size={20} /> Mis citas
           </Link>
-          <Link to="/" className="flex items-center justify-center gap-2 px-8 py-4 bg-primary text-white font-black rounded-4xlxl hover:bg-primary-dark transition-all shadow-lg shadow-primary/20">
+          <Link to="/" className="flex items-center justify-center gap-2 px-8 py-4 bg-primary text-white font-black rounded-4xl hover:bg-primary-dark transition-all shadow-lg shadow-primary/20">
             <Home size={20} /> Inicio
           </Link>
         </div>

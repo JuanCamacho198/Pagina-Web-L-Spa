@@ -44,12 +44,12 @@ export default function AboutView() {
                 En <strong className="text-gray-900">L-Spa</strong>, nos dedicamos a ofrecer un servicio integral de calidad en relajación, vitalidad, belleza y salud. Nuestra prioridad es la satisfacción total a través de una atención personalizada y eficiente que trasciende lo convencional.
               </p>
               <div className="grid grid-cols-2 gap-6">
-                <div className="p-4 bg-gray-50 rounded-4xlxl border border-gray-100 flex items-start gap-3">
+                <div className="p-4 bg-gray-50 rounded-4xl border border-gray-100 flex items-start gap-3">
                   <ShieldCheck className="text-primary shrink-0" size={20} />
                   <span className="text-sm font-bold text-gray-700">Calidad Certificada</span>
         
                 </div>
-                <div className="p-4 bg-gray-50 rounded-4xlxl border border-gray-100 flex items-start gap-3">
+                <div className="p-4 bg-gray-50 rounded-4xl border border-gray-100 flex items-start gap-3">
                   <Heart className="text-primary shrink-0" size={20} />
                   <span className="text-sm font-bold text-gray-700">Pasión por el Detalle</span>
                 </div>
@@ -103,7 +103,7 @@ export default function AboutView() {
               }
             ].map((v, i) => (
               <div key={i} className="bg-white p-8 rounded-4xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-                <div className="w-14 h-14 bg-primary/10 rounded-4xlxl flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all">
+                <div className="w-14 h-14 bg-primary/10 rounded-4xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all">
                   <v.icon size={28} />
                 </div>
                 <h4 className="text-xl font-black text-gray-900 mb-3">{v.title}</h4>
@@ -124,13 +124,13 @@ export default function AboutView() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button 
                   onClick={() => navigate('/contacto')}
-                  className="px-10 py-5 bg-white text-primary font-black rounded-4xlxl hover:scale-105 transition-transform shadow-xl"
+                  className="px-10 py-5 bg-white text-primary font-black rounded-4xl hover:scale-105 transition-transform shadow-xl"
                 >
                   Contáctanos Ahora
                 </button>
                 <button 
                   onClick={() => navigate('/services')}
-                  className="px-10 py-5 bg-primary-dark text-white font-black rounded-4xlxl border-2 border-white/20 hover:bg-white/10 transition-colors"
+                  className="px-10 py-5 bg-primary-dark text-white font-black rounded-4xl border-2 border-white/20 hover:bg-white/10 transition-colors"
                 >
                   Explorar Servicios
                 </button>

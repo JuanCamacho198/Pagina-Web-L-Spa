@@ -28,7 +28,7 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return this.props.fallback || (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="bg-white p-8 rounded-4xlxl shadow-xl text-center max-w-md">
+          <div className="bg-white p-8 rounded-4xl shadow-xl text-center max-w-md">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Algo salió mal</h2>
             <p className="text-gray-500 mb-6">Error al cargar el módulo de administración.</p>
             <button

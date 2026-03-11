@@ -123,7 +123,7 @@
 			onclick={() => history.back()}
 			class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-all font-bold text-sm mb-12 group uppercase tracking-widest"
 		>
-			<div class="h-10 w-10 flex items-center justify-center rounded-4xlxl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
+			<div class="h-10 w-10 flex items-center justify-center rounded-4xl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
 				<ChevronLeft size={20} />
 			</div>
 			Regresar
@@ -143,7 +143,7 @@
 					{#each steps as step, i}
 						<div class="flex flex-col items-center gap-4">
 							<div class={cn(
-								"w-10 h-10 rounded-4xlxl flex items-center justify-center font-black transition-all duration-500 ring-8 ring-white",
+								"w-10 h-10 rounded-4xl flex items-center justify-center font-black transition-all duration-500 ring-8 ring-white",
 								currentStep >= i ? "bg-primary text-white scale-110 shadow-xl shadow-primary/20" : "bg-white text-gray-300 border border-gray-100 shadow-sm"
 							)}>
 								{step.id}
@@ -174,7 +174,7 @@
 											type="text" 
 											bind:value={formData.name} 
 											placeholder="Ej. Juan"
-											class={cn("w-full pl-12 pr-6 py-4 rounded-4xlxl bg-gray-50 border-none ring-1 transition-all outline-none", errors.name ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
+											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.name ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
 								</div>
@@ -186,7 +186,7 @@
 											type="text" 
 											bind:value={formData.lastName}
 											placeholder="Ej. Camacho"
-											class={cn("w-full pl-12 pr-6 py-4 rounded-4xlxl bg-gray-50 border-none ring-1 transition-all outline-none", errors.lastName ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
+											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.lastName ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
 								</div>
@@ -198,7 +198,7 @@
 											type="email" 
 											bind:value={formData.email}
 											placeholder="juan@ejemplo.com"
-											class={cn("w-full pl-12 pr-6 py-4 rounded-4xlxl bg-gray-50 border-none ring-1 transition-all outline-none", errors.email ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
+											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.email ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
 								</div>
@@ -210,7 +210,7 @@
 											type="tel" 
 											bind:value={formData.phone}
 											placeholder="+57 321..."
-											class={cn("w-full pl-12 pr-6 py-4 rounded-4xlxl bg-gray-50 border-none ring-1 transition-all outline-none", errors.phone ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
+											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.phone ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
 								</div>
@@ -222,7 +222,7 @@
 											type="text" 
 											bind:value={formData.userCC}
 											placeholder="123456789"
-											class={cn("w-full pl-12 pr-6 py-4 rounded-4xlxl bg-gray-50 border-none ring-1 transition-all outline-none", errors.userCC ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
+											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.userCC ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
 								</div>
@@ -244,7 +244,7 @@
 										type="date" 
 										bind:value={formData.preferredDate}
 										min={new Date().toISOString().split('T')[0]}
-										class="w-full p-4 rounded-4xlxl bg-gray-50 border-none ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none"
+										class="w-full p-4 rounded-4xl bg-gray-50 border-none ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none"
 									/>
 								</div>
 								
@@ -255,7 +255,7 @@
 											<button 
 												onclick={() => formData.preferredTime = time}
 												class={cn(
-													"py-3 rounded-4xlxl font-black text-xs transition-all duration-300 border uppercase tracking-widest",
+													"py-3 rounded-4xl font-black text-xs transition-all duration-300 border uppercase tracking-widest",
 													formData.preferredTime === time 
 														? "bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-105" 
 														: "bg-white text-gray-500 border-gray-100 hover:border-primary/30"
@@ -279,7 +279,7 @@
 
 							<div class="bg-gray-50/50 rounded-[40px] p-8 border border-gray-100 space-y-6">
 								<div class="flex items-center gap-6 pb-6 border-b border-gray-100">
-									<div class="h-16 w-16 bg-white rounded-4xlxl flex items-center justify-center text-primary shadow-sm">
+									<div class="h-16 w-16 bg-white rounded-4xl flex items-center justify-center text-primary shadow-sm">
 										<User size={32} />
 									</div>
 									<div class="grow">
@@ -289,7 +289,7 @@
 								</div>
 
 								<div class="flex items-center gap-6 pb-6 border-b border-gray-100">
-									<div class="h-16 w-16 bg-white rounded-4xlxl flex items-center justify-center text-primary shadow-sm">
+									<div class="h-16 w-16 bg-white rounded-4xl flex items-center justify-center text-primary shadow-sm">
 										<CalendarIcon size={32} />
 									</div>
 									<div class="grow">
@@ -303,7 +303,7 @@
 									<textarea 
 										bind:value={formData.notes}
 										placeholder="¿Alguna petición especial?"
-										class="w-full p-6 rounded-4xlxl bg-white border-none ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none min-h-[120px]"
+										class="w-full p-6 rounded-4xl bg-white border-none ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none min-h-[120px]"
 									></textarea>
 								</div>
 							</div>
@@ -315,7 +315,7 @@
 						{#if currentStep > 0}
 							<button 
 								onclick={prevStep}
-								class="px-8 py-4 rounded-4xlxl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-primary transition-colors flex items-center gap-2"
+								class="px-8 py-4 rounded-4xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-primary transition-colors flex items-center gap-2"
 							>
 								<ChevronLeft size={16} />
 								Atrás
@@ -327,7 +327,7 @@
 						{#if currentStep < 2}
 							<Button 
 								onclick={validateStep}
-								class="px-12 py-4 rounded-4xlxl font-black uppercase tracking-widest shadow-xl shadow-primary/20"
+								class="px-12 py-4 rounded-4xl font-black uppercase tracking-widest shadow-xl shadow-primary/20"
 							>
 								Continuar
 								<ArrowRight size={18} class="ml-2" />
@@ -363,8 +363,8 @@
 					
 					<div class="space-y-6 mb-10 relative z-10">
 						{#each data.itemsToCheckout as item}
-							<div class="flex items-center gap-4 bg-gray-50/50 p-4 rounded-4xlxl border border-gray-50 group/item hover:bg-white transition-all shadow-sm">
-								<div class="w-14 h-14 rounded-4xlxl ring-1 ring-gray-100 overflow-hidden shrink-0">
+							<div class="flex items-center gap-4 bg-gray-50/50 p-4 rounded-4xl border border-gray-50 group/item hover:bg-white transition-all shadow-sm">
+								<div class="w-14 h-14 rounded-4xl ring-1 ring-gray-100 overflow-hidden shrink-0">
 									<img src={item.imageUrl || '/src/assets/banners/bannerSpa.avif'} alt={item.serviceName || item.name} class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" />
 								</div>
 								<div class="grow">
@@ -383,7 +383,7 @@
 					</div>
 
 					<div class="space-y-4 relative z-10">
-						<div class="flex items-center gap-4 bg-emerald-50 p-5 rounded-4xlxl border border-emerald-100/50 group/shield">
+						<div class="flex items-center gap-4 bg-emerald-50 p-5 rounded-4xl border border-emerald-100/50 group/shield">
 							<ShieldCheck class="text-emerald-500 shrink-0 group-hover/shield:scale-110 transition-transform" size={24} />
 							<div class="space-y-1">
 								<p class="text-[10px] font-black uppercase tracking-widest text-emerald-800">Garantía L-SPA</p>

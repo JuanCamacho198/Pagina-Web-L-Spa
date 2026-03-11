@@ -21,7 +21,7 @@
 			href="/servicios"
 			class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-all font-bold text-sm mb-1 group uppercase tracking-widest"
 		>
-			<div class="h-10 w-10 flex items-center justify-center rounded-4xlxl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
+			<div class="h-10 w-10 flex items-center justify-center rounded-4xl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
 				<ChevronLeft size={20} />
 			</div>
 			Seguir explorando
@@ -73,7 +73,7 @@
 								</div>
 								
 								<div class="flex items-center justify-center md:justify-start gap-8">
-									<div class="flex items-center gap-4 bg-gray-50 p-2 rounded-4xlxl border border-gray-100">
+									<div class="flex items-center gap-4 bg-gray-50 p-2 rounded-4xl border border-gray-100">
 										<button 
 											onclick={() => cart.updateQuantity(item.serviceId, item.quantity - 1)}
 											class="w-8 h-8 rounded-4xll bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
@@ -96,7 +96,7 @@
 							<!-- Remove -->
 							<button 
 								onclick={() => cart.removeItem(item.serviceId)}
-								class="p-4 rounded-4xlxl bg-gray-50 text-gray-300 hover:bg-rose-50 hover:text-rose-500 transition-all group-hover:scale-105"
+								class="p-4 rounded-4xl bg-gray-50 text-gray-300 hover:bg-rose-50 hover:text-rose-500 transition-all group-hover:scale-105"
 							>
 								<Trash2 size={24} />
 							</button>

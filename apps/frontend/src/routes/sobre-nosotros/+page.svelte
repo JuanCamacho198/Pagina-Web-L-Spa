@@ -79,7 +79,7 @@
 				</div>
 				<!-- Floating Badges -->
 				<div class="absolute -top-10 -right-10 bg-white p-8 rounded-[40px] shadow-2xl shadow-primary/10 border border-gray-100 flex flex-col items-center gap-4 animate-in slide-in-from-right duration-1000">
-					<div class="h-16 w-16 bg-primary rounded-4xlxl flex items-center justify-center text-white">
+					<div class="h-16 w-16 bg-primary rounded-4xl flex items-center justify-center text-white">
 						<Eye size={32} />
 					</div>
 					<div class="text-center">
@@ -105,7 +105,7 @@
 
 				<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
 					<div class="p-8 bg-gray-50/50 rounded-[40px] border border-gray-100 flex items-start gap-6 group hover:bg-white hover:shadow-xl transition-all duration-500">
-						<div class="h-12 w-12 bg-white rounded-4xlxl flex items-center justify-center text-primary shadow-sm group-hover:scale-110 transition-transform">
+						<div class="h-12 w-12 bg-white rounded-4xl flex items-center justify-center text-primary shadow-sm group-hover:scale-110 transition-transform">
 							<ShieldCheck size={24} />
 						</div>
 						<div class="space-y-1">
@@ -114,7 +114,7 @@
 						</div>
 					</div>
 					<div class="p-8 bg-gray-50/50 rounded-[40px] border border-gray-100 flex items-start gap-6 group hover:bg-white hover:shadow-xl transition-all duration-500">
-						<div class="h-12 w-12 bg-white rounded-4xlxl flex items-center justify-center text-primary shadow-sm group-hover:scale-110 transition-transform">
+						<div class="h-12 w-12 bg-white rounded-4xl flex items-center justify-center text-primary shadow-sm group-hover:scale-110 transition-transform">
 							<Heart size={24} />
 						</div>
 						<div class="space-y-1">
@@ -142,7 +142,7 @@
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
 				{#each pillars as pillar}
 					<div class="bg-white/5 backdrop-blur-3xl p-12 rounded-[56px] border border-white/10 group hover:bg-white/10 hover:-translate-y-4 transition-all duration-700">
-						<div class={cn("h-20 w-20 rounded-4xlxl flex items-center justify-center mb-10 shadow-2xl transition-all duration-500 group-hover:rotate-12 group-hover:scale-110", "bg-white/5")}>
+						<div class={cn("h-20 w-20 rounded-4xl flex items-center justify-center mb-10 shadow-2xl transition-all duration-500 group-hover:rotate-12 group-hover:scale-110", "bg-white/5")}>
 							<pillar.icon size={40} strokeWidth={2.5} class={pillar.color} />
 						</div>
 						<h4 class="text-2xl font-black mb-4 tracking-tight uppercase text-primary-light">{pillar.title}</h4>

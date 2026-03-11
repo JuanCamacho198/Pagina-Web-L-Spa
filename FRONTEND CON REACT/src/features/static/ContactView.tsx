@@ -22,7 +22,7 @@ export default function ContactView() {
           {/* Contact Cards */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white dark:bg-gray-800 p-8 rounded-[2.5rem] shadow-xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center group hover:bg-primary transition-colors duration-500">
-              <div className="w-16 h-16 bg-primary/10 rounded-4xlxl flex items-center justify-center text-primary mb-6 group-hover:bg-white/20 group-hover:text-white transition-all">
+              <div className="w-16 h-16 bg-primary/10 rounded-4xl flex items-center justify-center text-primary mb-6 group-hover:bg-white/20 group-hover:text-white transition-all">
                 <Mail size={32} />
               </div>
               <h3 className="text-xl font-black text-gray-900 mb-2 group-hover:text-white">Correo Electrónico</h3>
@@ -32,7 +32,7 @@ export default function ContactView() {
             </div>
 
             <div className="bg-white dark:bg-gray-800 p-8 rounded-[2.5rem] shadow-xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center group hover:bg-green-500 transition-colors duration-500">
-              <div className="w-16 h-16 bg-green-50 rounded-4xlxl flex items-center justify-center text-green-500 mb-6 group-hover:bg-white/20 group-hover:text-white transition-all">
+              <div className="w-16 h-16 bg-green-50 rounded-4xl flex items-center justify-center text-green-500 mb-6 group-hover:bg-white/20 group-hover:text-white transition-all">
                 <MessageCircle size={32} />
               </div>
               <h3 className="text-xl font-black text-gray-900 mb-2 group-hover:text-white">WhatsApp</h3>
@@ -47,7 +47,7 @@ export default function ContactView() {
             </div>
 
             <div className="bg-white dark:bg-gray-800 p-8 rounded-[2.5rem] shadow-xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-amber-50 rounded-4xlxl flex items-center justify-center text-amber-600 mb-6">
+              <div className="w-16 h-16 bg-amber-50 rounded-4xl flex items-center justify-center text-amber-600 mb-6">
                 <MapPin size={32} />
               </div>
               <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2">Ubicación</h3>
@@ -75,17 +75,17 @@ export default function ContactView() {
                 <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-black text-gray-700 dark:text-gray-300 uppercase tracking-wider">Nombre Completo</label>
-                    <input type="text" className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700 border-none rounded-4xlxl focus:ring-2 focus:ring-primary transition-all font-medium text-gray-900 dark:text-white" placeholder="Ej. Juan Pérez" />
+                    <input type="text" className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700 border-none rounded-4xl focus:ring-2 focus:ring-primary transition-all font-medium text-gray-900 dark:text-white" placeholder="Ej. Juan Pérez" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-black text-gray-700 dark:text-gray-300 uppercase tracking-wider">Email</label>
-                    <input type="email" className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700 border-none rounded-4xlxl focus:ring-2 focus:ring-primary transition-all font-medium text-gray-900 dark:text-white" placeholder="juan@ejemplo.com" />
+                    <input type="email" className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700 border-none rounded-4xl focus:ring-2 focus:ring-primary transition-all font-medium text-gray-900 dark:text-white" placeholder="juan@ejemplo.com" />
                   </div>
                   <div className="md:col-span-2 space-y-2">
                     <label className="text-sm font-black text-gray-700 dark:text-gray-300 uppercase tracking-wider">Mensaje</label>
-                    <textarea rows={4} className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700 border-none rounded-4xlxl focus:ring-2 focus:ring-primary transition-all font-medium text-gray-900 dark:text-white resize-none" placeholder="¿En qué podemos ayudarte?"></textarea>
+                    <textarea rows={4} className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-700 border-none rounded-4xl focus:ring-2 focus:ring-primary transition-all font-medium text-gray-900 dark:text-white resize-none" placeholder="¿En qué podemos ayudarte?"></textarea>
                   </div>
-                  <button className="md:col-span-2 py-5 bg-primary text-white font-black rounded-4xlxl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20">
+                  <button className="md:col-span-2 py-5 bg-primary text-white font-black rounded-4xl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20">
                     Enviar Información
                   </button>
                 </form>

@@ -11,7 +11,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   variant = 'rectangular' 
 }) => {
   const variantClasses = {
-    rectangular: 'rounded-4xlxl',
+    rectangular: 'rounded-4xl',
     circular: 'rounded-full',
     text: 'rounded-md h-4 w-full',
   };
@@ -29,8 +29,8 @@ export const Skeleton: React.FC<SkeletonProps> = ({
 
 export const ServiceCardSkeleton: React.FC = () => {
   return (
-    <div className="bg-white p-5 rounded-4xlxl shadow-sm border border-gray-100 flex flex-col gap-4">
-      <Skeleton className="h-48 w-full rounded-4xlxl" />
+    <div className="bg-white p-5 rounded-4xl shadow-sm border border-gray-100 flex flex-col gap-4">
+      <Skeleton className="h-48 w-full rounded-4xl" />
       <div className="space-y-3">
         <Skeleton variant="text" className="w-3/4 h-6" />
         <Skeleton variant="text" className="w-full h-4" />
@@ -49,7 +49,7 @@ export const ServiceDetailSkeleton: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="grid lg:grid-cols-2 gap-12">
         {/* Left column - Image */}
-        <div className="relative aspect-square md:aspect-4/3 rounded-4xlxl overflow-hidden shadow-lg border border-gray-100">
+        <div className="relative aspect-square md:aspect-4/3 rounded-4xl overflow-hidden shadow-lg border border-gray-100">
           <Skeleton className="w-full h-full" />
         </div>
 
@@ -87,7 +87,7 @@ export const ServiceDetailSkeleton: React.FC = () => {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="p-6 bg-gray-50/50 rounded-4xlxl space-y-4">
+            <div key={i} className="p-6 bg-gray-50/50 rounded-4xl space-y-4">
               <div className="flex items-center gap-3">
                 <Skeleton variant="circular" className="w-10 h-10" />
                 <div className="space-y-2">

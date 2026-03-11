@@ -61,7 +61,7 @@ export default function CancellationPolicyView() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {sections.map((section, idx) => (
               <div key={idx} className="p-8 rounded-[2.5rem] border border-gray-100 bg-white hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 group">
-                <div className="w-14 h-14 bg-gray-50 rounded-4xlxl flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                <div className="w-14 h-14 bg-gray-50 rounded-4xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
                   <section.icon size={28} />
                 </div>
                 <h3 className="text-xl font-black text-gray-900 mb-4 tracking-tight">{section.title}</h3>
@@ -79,7 +79,7 @@ export default function CancellationPolicyView() {
                   </ul>
                 )}
                 {section.highlight && (
-                  <div className="mt-4 p-4 bg-primary/5 rounded-4xlxl border-l-4 border-primary italic text-sm font-bold text-primary-dark">
+                  <div className="mt-4 p-4 bg-primary/5 rounded-4xl border-l-4 border-primary italic text-sm font-bold text-primary-dark">
                     {section.highlight}
                   </div>
                 )}

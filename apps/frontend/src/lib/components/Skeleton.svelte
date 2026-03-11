@@ -9,7 +9,7 @@
   let { class: className = '', variant = 'rectangular' } = $props<Props>();
 
   const variantClasses = {
-    rectangular: 'rounded-4xlxl',
+    rectangular: 'rounded-4xl',
     circular: 'rounded-full',
     text: 'rounded-md h-4 w-full',
   };

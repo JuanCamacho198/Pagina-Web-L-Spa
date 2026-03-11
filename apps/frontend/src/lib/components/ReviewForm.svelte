@@ -61,7 +61,7 @@
 <form onsubmit={handleSubmit} class="space-y-10 group">
   <div class="space-y-6">
     <div class="flex items-center gap-4">
-      <div class="h-10 w-10 rounded-4xlxl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-primary transform group-hover:rotate-12 transition-transform duration-500">
+      <div class="h-10 w-10 rounded-4xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-primary transform group-hover:rotate-12 transition-transform duration-500">
         <Sparkles size={20} />
       </div>
       <div>
@@ -87,7 +87,7 @@
           <textarea
             bind:value={comment}
             placeholder="Comparte los detalles de tu experiencia..."
-            class="w-full min-h-40 p-6 rounded-4xlxl bg-gray-50 border-2 border-transparent focus:border-primary/20 focus:bg-white focus:outline-none transition-all duration-300 font-medium text-gray-700 resize-none shadow-inner"
+            class="w-full min-h-40 p-6 rounded-4xl bg-gray-50 border-2 border-transparent focus:border-primary/20 focus:bg-white focus:outline-none transition-all duration-300 font-medium text-gray-700 resize-none shadow-inner"
             required
           ></textarea>
           <div class="absolute right-6 bottom-6 h-1 w-10 bg-primary/20 rounded-full transition-all group-focus-within/field:w-20 group-focus-within/field:bg-primary opacity-20"></div>
@@ -102,7 +102,7 @@
 
   <Button
     type="submit"
-    class="w-full py-6 rounded-4xlxl font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:shadow-primary/40 active:scale-95 transition-all duration-300 group-hover:-translate-y-1"
+    class="w-full py-6 rounded-4xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:shadow-primary/40 active:scale-95 transition-all duration-300 group-hover:-translate-y-1"
     isLoading={isSubmitting}
   >
     Publicar Experiencia

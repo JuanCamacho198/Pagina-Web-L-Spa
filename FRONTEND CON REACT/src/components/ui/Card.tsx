@@ -9,7 +9,7 @@ export const Card = ({ className, hoverable, children, ...props }: CardProps) =>
   return (
     <div
       className={cn(
-        'bg-white dark:bg-gray-800 rounded-4xlxl border border-gray-100 dark:border-gray-700 shadow-sm overflow-visible',
+        'bg-white dark:bg-gray-800 rounded-4xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-visible',
         hoverable && 'transition-all hover:shadow-md hover:border-primary/20',
         className
       )}

@@ -80,7 +80,7 @@ export default function CartView() {
         </div>
 
         {contextCartItems.length === 0 ? (
-          <div className="bg-white rounded-4xlxl shadow-sm border border-gray-100 p-12 text-center">
+          <div className="bg-white rounded-4xl shadow-sm border border-gray-100 p-12 text-center">
             <div className="bg-primary/5 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
               <ShoppingBag size={40} className="text-primary/40" />
             </div>
@@ -111,7 +111,7 @@ export default function CartView() {
               {contextCartItems.map((item) => (
                 <div 
                   key={item.id} 
-                  className="bg-white rounded-4xlxl p-4 shadow-sm border border-gray-100 flex items-center gap-4 group hover:shadow-md transition-shadow"
+                  className="bg-white rounded-4xl p-4 shadow-sm border border-gray-100 flex items-center gap-4 group hover:shadow-md transition-shadow"
                 >
                   <div className="w-24 h-24 rounded-4xll bg-gray-100 overflow-hidden shrink-0">
                     <img 
@@ -159,7 +159,7 @@ export default function CartView() {
             </div>
 
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-4xlxl p-6 shadow-sm border border-gray-100 sticky top-28">
+              <div className="bg-white rounded-4xl p-6 shadow-sm border border-gray-100 sticky top-28">
                 <h2 className="text-xl font-serif text-gray-900 mb-6">Resumen de reserva</h2>
                 
                 <div className="space-y-4 mb-8">

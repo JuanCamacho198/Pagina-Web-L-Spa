@@ -36,7 +36,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ serviceId }) => {
 
   if (error) {
     return (
-      <div className="p-4 bg-red-50 text-red-700 rounded-4xlxl text-center">
+      <div className="p-4 bg-red-50 text-red-700 rounded-4xl text-center">
         {error.message || 'Error al cargar las reseñas'}
       </div>
     );
@@ -56,7 +56,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ serviceId }) => {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center gap-6 p-6 bg-white rounded-4xlxl border border-gray-100 shadow-sm">
+      <div className="flex items-center gap-6 p-6 bg-white rounded-4xl border border-gray-100 shadow-sm">
         <div className="text-center">
           <div className="text-5xl font-black text-primary">{averageRating.toFixed(1)}</div>
           <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Puntuación</div>
