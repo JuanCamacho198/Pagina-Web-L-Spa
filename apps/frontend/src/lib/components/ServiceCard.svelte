@@ -3,8 +3,10 @@
   import StarRating from './StarRating.svelte';
   import Button from './Button.svelte';
   import Badge from './Badge.svelte';
-  import { ArrowRight, Clock, Banknote } from 'lucide-svelte';
+  import { ArrowRight, Clock, Banknote, ShoppingBag, Check } from 'lucide-svelte';
   import type { Service } from '@l-spa/shared-types/services';
+  import { cart } from '$lib/cart';
+  import { toast } from './Toast.svelte';
 
   interface Props {
     service: Service;
@@ -12,6 +14,25 @@
   }
 
   let { service, class: className = '' }: Props = $props();
+
+  let isAdded = $state(false);
+
+  const handleAddToCart = () => {
+    cart.addItem({
+      serviceId: service.id,
+      slug: slugify(service.name),
+      name: service.name,
+      price: Number(service.price),
+      image: service.image_url || ''
+    });
+    
+    isAdded = true;
+    toast.success(`${service.name} añadido al carrito`);
+    
+    setTimeout(() => {
+      isAdded = false;
+    }, 2000);
+  };
 
   const slugify = (name: string) => 
     name.toLowerCase()
@@ -81,13 +102,36 @@
         <span class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Desde</span>
         <span class="text-xl font-black text-gray-900">${service.price}</span>
       </div>
-      <Button 
-        href="/servicios/{slugify(service.name)}"
-        class="rounded-2xl px-6 py-3 font-bold shadow-xl shadow-primary/10 group-hover:shadow-primary/20"
-      >
-        Detalles
-        <ArrowRight size={18} class="ml-2 group-hover:translate-x-1 transition-transform" />
-      </Button>
+      
+      <div class="flex items-center gap-2">
+        <button 
+          onclick={handleAddToCart}
+          disabled={isAdded}
+          class={cn(
+            "p-3 rounded-2xl border transition-all duration-300",
+            isAdded 
+              ? "bg-emerald-50 border-emerald-100 text-emerald-500 scale-95" 
+              : "bg-gray-50 border-gray-100 text-gray-400 hover:bg-primary/5 hover:border-primary/20 hover:text-primary"
+          )}
+          aria-label="Añadir al carrito"
+        >
+          {#if isAdded}
+            <div class="animate-in zoom-in duration-300">
+               <Check size={20} strokeWidth={3} />
+            </div>
+          {:else}
+            <ShoppingBag size={20} strokeWidth={2.5} />
+          {/if}
+        </button>
+
+        <Button 
+          href="/servicios/{slugify(service.name)}"
+          class="rounded-2xl px-6 py-3 font-bold shadow-xl shadow-primary/10 group-hover:shadow-primary/20"
+        >
+          Detalles
+          <ArrowRight size={18} class="ml-2 group-hover:translate-x-1 transition-transform" />
+        </Button>
+      </div>
     </div>
   </div>
 </div>
