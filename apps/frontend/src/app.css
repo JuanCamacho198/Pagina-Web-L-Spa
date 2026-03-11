@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #8C1B58;
+  --color-primary-light: #BF3F7F;
+  --color-primary-dark: #590E35;
+  --color-secondary: #F2D7D9;
+  --color-accent: #D99B9B;
+}
+
 :root {
   --primary-color: #8C1B58;
   --primary-light: #BF3F7F;
@@ -9,7 +17,7 @@
 }
 
 body {
-  @apply antialiased text-gray-900 bg-white;
+  @apply antialiased bg-white;
 }
 
 .btn {
