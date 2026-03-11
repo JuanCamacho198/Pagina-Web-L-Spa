@@ -3,19 +3,20 @@
   import Button from '$components/Button.svelte';
   import Toaster from '$components/Toast.svelte';
   import Footer from '$components/Footer.svelte';  import { onMount } from 'svelte';
-  import { initAuth, isAuthenticated, user, isLoading, login, logout } from '$lib/auth';
+  import { authClient } from '$lib/auth-client';
   import { cart, cartCount } from '$lib/cart';
   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';
   
   let { data, children } = $props();
+  const session = authClient.useSession();
 
   onMount(() => {
-    initAuth();
+    // Auth logic is now handled by Better Auth Client
   });
 
-  // Load cart when authentication status changes
+  // Load cart when session changes
   $effect(() => {
-    if (!$isLoading) {
+    if (!session.isPending) {
       cart.load();
     }
   });
@@ -58,20 +59,20 @@
           {/if}
         </a>
 
-        {#if $isLoading}
+        {#if $session.isPending}
           <div class="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
-        {:else if $isAuthenticated}
+        {:else if $session.data}
           <!-- User Profile Dropdown -->
           <div class="relative group">
             <button class="flex items-center gap-3 p-1.5 pr-4 bg-gray-50 rounded-full hover:bg-white border border-transparent hover:border-gray-100 transition-all shadow-sm">
-              <img src={$user?.picture} alt={$user?.name} class="w-8 h-8 rounded-full border border-white shadow-sm" />
-              <span class="text-[10px] font-black uppercase tracking-widest text-gray-600">{$user?.nickname || $user?.name}</span>
+              <img src={$session.data.user.image || `https://ui-avatars.com/api/?name=${$session.data.user.name}`} alt={$session.data.user.name} class="w-8 h-8 rounded-full border border-white shadow-sm" />
+              <span class="text-[10px] font-black uppercase tracking-widest text-gray-600">{$session.data.user.name}</span>
             </button>
             
             <div class="absolute right-0 top-full mt-4 w-64 bg-white rounded-4xl shadow-2xl border border-gray-100 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 scale-95 group-hover:scale-100 z-50">
               <div class="p-6 border-b border-gray-50 mb-3 text-center">
                  <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Tu Cuenta Premium</p>
-                 <p class="text-sm font-black text-gray-900 truncate">{$user?.email}</p>
+                 <p class="text-sm font-black text-gray-900 truncate">{$session.data.user.email}</p>
               </div>
               <div class="space-y-1">
                 <a href="/perfil" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 hover:text-primary rounded-2xl transition-all">
@@ -83,14 +84,14 @@
                 <a href="/favoritos" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 hover:text-primary rounded-2xl transition-all">
                   <Heart size={16} /> Favoritos
                 </a>
-                <button onclick={logout} class="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 rounded-2xl transition-all">
+                <button onclick={() => authClient.signOut()} class="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 rounded-2xl transition-all">
                   <LogOut size={16} /> Cerrar Sesión
                 </button>
               </div>
             </div>
           </div>
         {:else}
-          <button onclick={login} class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600 hover:text-primary transition-colors px-6">
+          <button onclick={() => authClient.signIn.social({ provider: 'google' })} class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600 hover:text-primary transition-colors px-6">
             LOGIN
           </button>
           <Button href="/servicios" class="hidden sm:flex px-8 rounded-full shadow-lg shadow-primary/20">

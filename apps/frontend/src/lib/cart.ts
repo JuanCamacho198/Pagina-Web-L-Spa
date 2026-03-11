@@ -1,5 +1,5 @@
 import { writable, derived, get } from 'svelte/store';
-import { user, isAuthenticated, getToken } from './auth';
+import { authClient } from './auth-client';
 import { PUBLIC_API_URL } from '$env/static/public';
 
 /**
@@ -32,13 +32,12 @@ const createCartStore = () => {
 			// Skip SSR
 			if (typeof window === 'undefined') return;
 
-			const isAuth = get(isAuthenticated);
-			if (isAuth) {
+			const session = await authClient.getSession();
+			if (session.data) {
 				try {
-					const token = await getToken();
 					const response = await fetch(`${PUBLIC_API_URL}/cart`, {
 						headers: {
-							Authorization: `Bearer ${token}`
+							// Better Auth handles session via cookies by default
 						}
 					});
 					if (response.ok) {
