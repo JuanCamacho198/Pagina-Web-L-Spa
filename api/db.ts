@@ -44,6 +44,14 @@ export const appointments = pgTable('appointments', {
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
 
+export const cartItems = pgTable('cart_items', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  serviceId: uuid('service_id').references(() => services.id, { onDelete: 'cascade' }),
+  quantity: integer('quantity').default(1),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+});
+
 export const reviews = pgTable('reviews', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
@@ -70,5 +78,5 @@ if (!connectionString) {
 
 const client = neon(connectionString);
 export const db = drizzle(client, { 
-    schema: { users, services, appointments, reviews, siteConfig } 
+    schema: { users, services, appointments, reviews, siteConfig, cartItems } 
 });
