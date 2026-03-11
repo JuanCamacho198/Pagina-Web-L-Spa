@@ -87,7 +87,7 @@
           <textarea
             bind:value={comment}
             placeholder="Comparte los detalles de tu experiencia..."
-            class="w-full min-h-[160px] p-6 rounded-[24px] bg-gray-50 border-2 border-transparent focus:border-primary/20 focus:bg-white focus:outline-none transition-all duration-300 font-medium text-gray-700 resize-none shadow-inner"
+            class="w-full min-h-40 p-6 rounded-3xl bg-gray-50 border-2 border-transparent focus:border-primary/20 focus:bg-white focus:outline-none transition-all duration-300 font-medium text-gray-700 resize-none shadow-inner"
             required
           ></textarea>
           <div class="absolute right-6 bottom-6 h-1 w-10 bg-primary/20 rounded-full transition-all group-focus-within/field:w-20 group-focus-within/field:bg-primary opacity-20"></div>
@@ -102,7 +102,7 @@
 
   <Button
     type="submit"
-    class="w-full py-6 rounded-[24px] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:shadow-primary/40 active:scale-95 transition-all duration-300 group-hover:-translate-y-1"
+    class="w-full py-6 rounded-3xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:shadow-primary/40 active:scale-95 transition-all duration-300 group-hover:-translate-y-1"
     isLoading={isSubmitting}
   >
     Publicar Experiencia

@@ -327,7 +327,7 @@
 						{#if currentStep < 2}
 							<Button 
 								onclick={validateStep}
-								class="px-12 py-4 rounded-[24px] font-black uppercase tracking-widest shadow-xl shadow-primary/20"
+								class="px-12 py-4 rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-primary/20"
 							>
 								Continuar
 								<ArrowRight size={18} class="ml-2" />

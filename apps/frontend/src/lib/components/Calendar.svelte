@@ -83,7 +83,7 @@
         <CalendarIcon size={20} strokeWidth={2.5} />
       </div>
       <div>
-        <Typography variant="h4" class="text-gray-900 !mb-0 font-bold">
+        <Typography variant="h4" class="text-gray-900 mb-0! font-bold">
           {months[currentMonth.getMonth()]}
         </Typography>
         <Typography variant="small" class="text-gray-400 font-medium">

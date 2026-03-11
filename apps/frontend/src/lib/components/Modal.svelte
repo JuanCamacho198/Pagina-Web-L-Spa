@@ -46,7 +46,7 @@
 </script>
 
 {#if isOpen}
-  <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 sm:pb-24">
+  <div class="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 sm:pb-24">
     <!-- Overlay -->
     <div 
       class="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity animate-in fade-in duration-300"
@@ -57,12 +57,12 @@
     <!-- Modal Content -->
     <div 
       class={cn(
-        "relative w-full bg-white shadow-2xl rounded-[32px] overflow-hidden transition-all transform animate-in fade-in zoom-in-95 duration-200",
+        "relative w-full bg-white shadow-2xl rounded-4xl overflow-hidden transition-all transform animate-in fade-in zoom-in-95 duration-200",
         sizeClasses[size]
       )}
     >
       <div class="flex items-center justify-between p-6 sm:px-8 border-b border-gray-100">
-        <Typography variant="h4" class="!mb-0 font-bold text-gray-900">
+        <Typography variant="h4" class="mb-0! font-bold text-gray-900">
           {title}
         </Typography>
         <button 

@@ -102,22 +102,22 @@
 
 				<!-- Stats Chips -->
 				<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-					<div class="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm text-center group hover:bg-primary/5 transition-all flex flex-col items-center">
+					<div class="bg-white p-6 rounded-4xl border border-gray-100 shadow-sm text-center group hover:bg-primary/5 transition-all flex flex-col items-center">
 						<Clock class="text-primary mb-3" size={24} />
 						<span class="block text-xl font-black text-gray-900 leading-none">{service.duration}</span>
 						<span class="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-2">minutos</span>
 					</div>
-					<div class="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm text-center group hover:bg-primary/5 transition-all flex flex-col items-center">
+					<div class="bg-white p-6 rounded-4xl border border-gray-100 shadow-sm text-center group hover:bg-primary/5 transition-all flex flex-col items-center">
 						<Award class="text-primary mb-3" size={24} />
 						<span class="block text-xl font-black text-gray-900 leading-none">Elite</span>
 						<span class="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-2">Categoría</span>
 					</div>
-					<div class="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm text-center group hover:bg-primary/5 transition-all flex flex-col items-center">
+					<div class="bg-white p-6 rounded-4xl border border-gray-100 shadow-sm text-center group hover:bg-primary/5 transition-all flex flex-col items-center">
 						<ShieldCheck class="text-primary mb-3" size={24} />
 						<span class="block text-xl font-black text-gray-900 leading-none">Cert.</span>
 						<span class="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-2">Seguridad</span>
 					</div>
-					<div class="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm text-center group hover:bg-primary/5 transition-all flex flex-col items-center">
+					<div class="bg-white p-6 rounded-4xl border border-gray-100 shadow-sm text-center group hover:bg-primary/5 transition-all flex flex-col items-center">
 						<MapPin class="text-primary mb-3" size={24} />
 						<span class="block text-xl font-black text-gray-900 leading-none">Spa</span>
 						<span class="text-[9px] font-black uppercase tracking-widest text-gray-400 mt-2">Ubicación</span>

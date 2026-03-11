@@ -47,7 +47,7 @@
 <div class="space-y-8">
   {#if isLoading}
     {#each Array(3) as _}
-        <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm animate-pulse">
+        <div class="bg-white p-8 rounded-4xl border border-gray-100 shadow-sm animate-pulse">
             <div class="flex items-center gap-4 mb-4">
                 <Skeleton variant="circular" class="w-12 h-12" />
                 <div class="space-y-2 flex-1">
@@ -68,7 +68,7 @@
   {:else}
     <div class="grid grid-cols-1 gap-6">
       {#each reviews as review (review.id)}
-        <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-500 group">
+        <div class="bg-white p-8 rounded-4xl border border-gray-100 shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-500 group">
           <div class="flex items-center justify-between gap-4 mb-6">
             <div class="flex items-center gap-4">
               <div class="h-14 w-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 border border-primary/10">

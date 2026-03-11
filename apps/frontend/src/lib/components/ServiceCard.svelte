@@ -42,7 +42,7 @@
 </script>
 
 <div class={cn(
-  "group relative bg-white rounded-[32px] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full",
+  "group relative bg-white rounded-4xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full",
   className
 )}>
   <!-- Image Container -->

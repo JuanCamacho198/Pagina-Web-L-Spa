@@ -116,7 +116,7 @@
 		<!-- Support CTA -->
 		<div class="bg-gray-900 rounded-[64px] p-12 md:p-20 text-center relative overflow-hidden group">
 			<div class="absolute inset-0 opacity-20 pointer-events-none">
-				<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary rounded-full blur-[120px] group-hover:scale-110 transition-transform duration-1000"></div>
+				<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-primary rounded-full blur-[120px] group-hover:scale-110 transition-transform duration-1000"></div>
 			</div>
 
 			<div class="relative z-10 space-y-10">

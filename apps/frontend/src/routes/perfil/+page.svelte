@@ -108,7 +108,7 @@
 						] as item}
 							<button 
 								onclick={item.action}
-								class="p-8 rounded-[32px] border border-gray-50 flex items-start gap-6 hover:bg-gray-50 hover:border-primary/20 transition-all text-left group"
+								class="p-8 rounded-4xl border border-gray-50 flex items-start gap-6 hover:bg-gray-50 hover:border-primary/20 transition-all text-left group"
 							>
 								<div class="p-4 rounded-2xl {item.danger ? 'bg-rose-50 text-rose-500' : 'bg-gray-50 text-gray-400 group-hover:bg-primary group-hover:text-white'} transition-all duration-500">
 									<item.icon size={24} />

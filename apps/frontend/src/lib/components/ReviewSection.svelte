@@ -33,7 +33,7 @@
 
       <!-- Review Form -->
       <div class="lg:col-span-5 sticky top-32">
-        <div class="bg-gray-50/50 rounded-[32px] p-8 border border-gray-100 shadow-inner">
+        <div class="bg-gray-50/50 rounded-4xl p-8 border border-gray-100 shadow-inner">
           <ReviewForm {serviceId} onSubmitted={handleReviewSubmitted} />
         </div>
       </div>

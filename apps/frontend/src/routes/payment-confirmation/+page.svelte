@@ -77,7 +77,7 @@
 							{/if}
 
 							<div class={cn(
-								"w-16 h-16 rounded-[24px] flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-sm",
+								"w-16 h-16 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-sm",
 								selectedMethod === method.id ? "bg-primary text-white" : "bg-gray-100 text-gray-400 group-hover:bg-primary/5 group-hover:text-primary"
 							)}>
 								<method.icon size={32} />
@@ -110,11 +110,11 @@
 							</div>
 
 							<div class="space-y-4">
-								<div class="flex justify-between items-center bg-gray-50/50 p-6 rounded-[32px] border border-gray-50 group hover:bg-white transition-all shadow-sm">
+								<div class="flex justify-between items-center bg-gray-50/50 p-6 rounded-4xl border border-gray-50 group hover:bg-white transition-all shadow-sm">
 									<span class="text-[10px] font-black uppercase tracking-widest text-gray-400">Concepto</span>
 									<span class="text-sm font-black text-gray-800 tracking-tight">Servicios de Bienestar L-SPA</span>
 								</div>
-								<div class="flex justify-between items-center bg-gray-50/50 p-6 rounded-[32px] border border-gray-50 group hover:bg-white transition-all shadow-sm">
+								<div class="flex justify-between items-center bg-gray-50/50 p-6 rounded-4xl border border-gray-50 group hover:bg-white transition-all shadow-sm">
 									<span class="text-[10px] font-black uppercase tracking-widest text-gray-400">Método de Pago</span>
 									<span class="text-sm font-black text-primary tracking-tight uppercase tracking-widest text-[10px]">{selectedMethod}</span>
 								</div>
@@ -146,7 +146,7 @@
 							<Button 
 								onclick={handlePayment}
 								disabled={isProcessing}
-								class="w-full py-7 rounded-[32px] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 hover:shadow-primary/50 group shrink-0"
+								class="w-full py-7 rounded-4xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 hover:shadow-primary/50 group shrink-0"
 							>
 								{#if isProcessing}
 									<Loader2 size={24} class="animate-spin mr-3" />

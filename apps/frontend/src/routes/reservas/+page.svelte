@@ -85,7 +85,7 @@
 			</div>
 			
 			<div class="flex items-center gap-6">
-				<div class="bg-white p-6 rounded-[32px] border border-gray-100 shadow-xl shadow-primary/5 flex items-center gap-5 transition-all hover:scale-105">
+				<div class="bg-white p-6 rounded-4xl border border-gray-100 shadow-xl shadow-primary/5 flex items-center gap-5 transition-all hover:scale-105">
 					<div class="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-primary/30">
 						{appointments.length}
 					</div>
@@ -94,7 +94,7 @@
 						<span class="text-gray-900 font-bold text-lg">Sesiones</span>
 					</div>
 				</div>
-				<Button href="/servicios" class="rounded-[24px] px-8 py-5 font-black uppercase tracking-widest shadow-2xl shadow-primary/20">
+				<Button href="/servicios" class="rounded-3xl px-8 py-5 font-black uppercase tracking-widest shadow-2xl shadow-primary/20">
 					<Plus size={20} class="mr-2" />
 					Nuevo
 				</Button>
@@ -103,12 +103,12 @@
 
 		{#if error}
 			<div class="bg-white rounded-[40px] p-20 text-center shadow-2xl shadow-rose-100/50 border border-rose-50 max-w-2xl mx-auto animate-in fade-in zoom-in duration-500">
-				<div class="w-24 h-24 bg-rose-50 rounded-[32px] flex items-center justify-center mx-auto mb-8 text-rose-500">
+				<div class="w-24 h-24 bg-rose-50 rounded-4xl flex items-center justify-center mx-auto mb-8 text-rose-500">
 					<AlertCircle size={48} />
 				</div>
 				<Typography variant="h2" class="text-gray-900 font-black mb-4 tracking-tight">¡Vaya! Tenemos un problema</Typography>
 				<p class="text-gray-500 font-medium mb-12 text-lg leading-relaxed">{error}</p>
-				<Button onclick={() => window.location.reload()} class="rounded-[24px] px-10 py-5">Intentar de nuevo</Button>
+				<Button onclick={() => window.location.reload()} class="rounded-3xl px-10 py-5">Intentar de nuevo</Button>
 			</div>
 		{:else if appointments.length === 0}
 			<div class="bg-white rounded-[40px] p-32 text-center shadow-2xl shadow-primary/5 border border-gray-100 animate-in fade-in zoom-in duration-700">
@@ -119,7 +119,7 @@
 				<p class="text-gray-500 max-w-md mx-auto mb-12 text-lg font-medium leading-relaxed">
 					Tómate un descanso. Explora nuestras experiencias exclusivas y reserva tu próximo momento de paz.
 				</p>
-				<Button href="/servicios" class="rounded-[24px] px-12 py-6 text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/30">
+				<Button href="/servicios" class="rounded-3xl px-12 py-6 text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/30">
 					Explorar Servicios
 				</Button>
 			</div>

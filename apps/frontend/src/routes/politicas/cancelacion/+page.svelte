@@ -56,8 +56,8 @@
 	<header class="bg-gray-900 pt-40 pb-32 px-6 relative overflow-hidden">
 		<!-- Decor -->
 		<div class="absolute inset-0 opacity-10 pointer-events-none overflow-hidden">
-			<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
-			<div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary rounded-full blur-[100px] -translate-x-1/2 translate-y-1/2"></div>
+			<div class="absolute top-0 right-0 w-150 h-150 bg-primary rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
+			<div class="absolute bottom-0 left-0 w-100 h-100  bg-primary rounded-full blur-[100px] -translate-x-1/2 translate-y-1/2"></div>
 		</div>
 
 		<div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-end justify-between gap-12">
@@ -112,7 +112,7 @@
 					{/if}
 
 					{#if section.highlight}
-						<div class="mt-4 p-6 bg-primary/5 rounded-[32px] border-l-4 border-primary italic text-[11px] font-black text-primary leading-tight flex gap-4 items-start">
+						<div class="mt-4 p-6 bg-primary/5 rounded-4xl border-l-4 border-primary italic text-[11px] font-black text-primary leading-tight flex gap-4 items-start">
 							<Info size={16} class="shrink-0 mt-0.5" />
 							{section.highlight.toUpperCase()}
 						</div>

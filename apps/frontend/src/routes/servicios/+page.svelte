@@ -79,7 +79,7 @@
 
 			<div class="flex flex-wrap gap-4 w-full lg:w-auto items-center justify-center lg:justify-end">
 				<!-- Category -->
-				<div class="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-[24px] border border-gray-100">
+				<div class="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-3xl border border-gray-100">
 					<Filter size={20} class="text-primary" />
 					<Dropdown
 						align="right"
@@ -95,7 +95,7 @@
 				</div>
 
 				<!-- Sort -->
-				<div class="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-[24px] border border-gray-100">
+				<div class="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-3xl border border-gray-100">
 					<SortAsc size={20} class="text-primary" />
 					<Dropdown
 						align="right"
