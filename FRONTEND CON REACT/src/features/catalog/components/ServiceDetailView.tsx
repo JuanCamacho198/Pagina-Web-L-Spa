@@ -112,7 +112,7 @@ const ServiceDetailView = () => {
   if (serviceError || !service) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
-        <div className="bg-white p-8 rounded-3xl shadow-xl text-center max-w-md">
+        <div className="bg-white p-8 rounded-4xlxl shadow-xl text-center max-w-md">
           <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">¡Vaya! Algo salió mal</h2>
           <p className="text-gray-500 mb-6">{serviceError?.message || 'No se ha seleccionado ningún servicio o el servicio no existe.'}</p>
@@ -190,7 +190,7 @@ return (
       {/* Notificaciones */}
       {notification && (
         <div className="fixed top-24 right-4 z-50 animate-in slide-in-from-right duration-300">
-          <div className={`flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border ${
+          <div className={`flex items-center gap-3 px-6 py-4 rounded-4xlxl shadow-2xl border ${
             notification.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 
             notification.type === 'warning' ? 'bg-amber-50 border-amber-200 text-amber-800' : 
             'bg-red-50 border-red-200 text-red-800'
@@ -254,16 +254,16 @@ return (
                 </p>
                 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
+                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-4xlxl">
                       <Clock className="text-primary" size={24} />
                       <div className="text-sm font-bold text-gray-700">{service.duration} min</div>
                    </div>
-                   <div className="flex items-center gap-3 p-4 bg-primary/5 rounded-2xl">
+                   <div className="flex items-center gap-3 p-4 bg-primary/5 rounded-4xlxl">
                       <Tag className="text-primary" size={24} />
                       <div className="text-sm font-bold text-gray-700">{service.category}</div>
                    </div>
                    {service.intensity && (
-                     <div className="flex items-center gap-3 p-4 bg-yellow-50 rounded-2xl">
+                     <div className="flex items-center gap-3 p-4 bg-yellow-50 rounded-4xlxl">
                         <Sparkles className="text-yellow-600" size={24} />
                         <div className="text-sm font-bold text-gray-700">Intensidad {service.intensity}/5</div>
                      </div>
@@ -337,7 +337,7 @@ return (
                 <div className="space-y-4 pt-4">
                    <button 
                     onClick={handleBuyNow}
-                    className="w-full py-5 bg-primary text-white font-black rounded-2xl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20 flex items-center justify-center gap-3"
+                    className="w-full py-5 bg-primary text-white font-black rounded-4xlxl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20 flex items-center justify-center gap-3"
                    >
                      <Calendar size={22} />
                      Reservar Ahora
@@ -346,7 +346,7 @@ return (
                    <button 
                     onClick={handleAddToCart}
                     disabled={isAddingToCart}
-                    className="w-full py-5 border-2 border-primary text-primary font-black rounded-2xl hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50"
+                    className="w-full py-5 border-2 border-primary text-primary font-black rounded-4xlxl hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50"
                    >
                      {isAddingToCart ? (
                        <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>

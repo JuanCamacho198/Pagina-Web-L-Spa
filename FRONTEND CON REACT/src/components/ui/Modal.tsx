@@ -59,7 +59,7 @@ export const Modal: React.FC<ModalProps> = ({
       <div 
         ref={modalRef}
         className={cn(
-          "relative w-full bg-white shadow-2xl rounded-3xl overflow-hidden transition-all transform animate-in fade-in zoom-in duration-200",
+          "relative w-full bg-white shadow-2xl rounded-4xlxl overflow-hidden transition-all transform animate-in fade-in zoom-in duration-200",
           sizeClasses[size]
         )}
       >

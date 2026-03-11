@@ -65,7 +65,7 @@ export default function FaqView() {
           {faqs.map((faq, idx) => (
             <div 
               key={idx} 
-              className={`bg-white rounded-3xl border transition-all duration-300 overflow-hidden ${
+              className={`bg-white rounded-4xlxl border transition-all duration-300 overflow-hidden ${
                 openIndex === idx ? 'border-primary shadow-xl shadow-primary/5' : 'border-gray-100 shadow-sm hover:border-gray-200'
               }`}
             >
@@ -74,7 +74,7 @@ export default function FaqView() {
                 className="w-full p-6 md:p-8 flex items-center justify-between text-left group"
               >
                 <div className="flex items-center gap-4">
-                  <div className={`p-3 rounded-xl transition-colors ${openIndex === idx ? 'bg-primary text-white' : 'bg-gray-50 text-gray-400 group-hover:text-primary'}`}>
+                  <div className={`p-3 rounded-4xll transition-colors ${openIndex === idx ? 'bg-primary text-white' : 'bg-gray-50 text-gray-400 group-hover:text-primary'}`}>
                     <faq.icon size={20} />
                   </div>
                   <span className={`text-lg font-black tracking-tight transition-colors ${openIndex === idx ? 'text-gray-900' : 'text-gray-700'}`}>
@@ -100,7 +100,7 @@ export default function FaqView() {
            <div className="absolute top-0 left-0 w-full h-full bg-primary/5 pointer-events-none"></div>
            <h3 className="text-2xl font-black mb-4 tracking-tight">¿No encontraste lo que buscabas?</h3>
            <p className="text-gray-400 font-medium mb-8">Nuestro equipo de soporte está disponible vía WhatsApp para ayudarte.</p>
-           <button className="px-8 py-4 bg-primary text-white font-black rounded-2xl hover:scale-105 transition-transform shadow-lg shadow-primary/20">
+           <button className="px-8 py-4 bg-primary text-white font-black rounded-4xlxl hover:scale-105 transition-transform shadow-lg shadow-primary/20">
              Hablar con un Asesor
            </button>
         </div>

@@ -85,7 +85,7 @@
 						class="w-full p-8 md:p-10 flex items-center justify-between text-left group transition-all"
 					>
 						<div class="flex items-center gap-6 md:gap-8">
-							<div class="w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 {openIndex === idx ? 'bg-primary text-white rotate-6' : faq.color + ' group-hover:scale-110 shadow-sm'}">
+							<div class="w-16 h-16 rounded-4xlxl flex items-center justify-center transition-all duration-500 {openIndex === idx ? 'bg-primary text-white rotate-6' : faq.color + ' group-hover:scale-110 shadow-sm'}">
 								<faq.icon size={28} strokeWidth={2.5} />
 							</div>
 							<div class="space-y-1">
@@ -120,7 +120,7 @@
 			</div>
 
 			<div class="relative z-10 space-y-10">
-				<div class="w-20 h-20 bg-white/10 rounded-3xl mx-auto flex items-center justify-center text-primary-light">
+				<div class="w-20 h-20 bg-white/10 rounded-4xlxl mx-auto flex items-center justify-center text-primary-light">
 					<MessageCircle size={40} />
 				</div>
 				<div class="space-y-4">

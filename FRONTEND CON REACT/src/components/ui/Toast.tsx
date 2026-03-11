@@ -76,7 +76,7 @@ const ToastItem: React.FC<{ toast: Toast; onClose: () => void }> = ({ toast, onC
 
   return (
     <div className={cn(
-      "pointer-events-auto flex items-center gap-3 p-4 border rounded-2xl shadow-lg transition-all animate-in slide-in-from-right",
+      "pointer-events-auto flex items-center gap-3 p-4 border rounded-4xlxl shadow-lg transition-all animate-in slide-in-from-right",
       bgColors[toast.type]
     )}>
       <div className="shrink-0">{icons[toast.type]}</div>

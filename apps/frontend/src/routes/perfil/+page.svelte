@@ -44,7 +44,7 @@
 									<Camera size={40} class="text-white" />
 								</div>
 							</div>
-							<div class="absolute -bottom-4 -right-4 w-14 h-14 bg-primary text-white rounded-2xl flex items-center justify-center shadow-xl">
+							<div class="absolute -bottom-4 -right-4 w-14 h-14 bg-primary text-white rounded-4xlxl flex items-center justify-center shadow-xl">
 								<ShieldCheck size={28} />
 							</div>
 						</div>
@@ -78,7 +78,7 @@
 				<div class="bg-gray-900 p-10 md:px-20 grid grid-cols-1 md:grid-cols-3 gap-12">
 					{#each profileStats as stat}
 						<div class="flex items-center gap-6 group/stat">
-							<div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-primary-light group-hover/stat:bg-primary group-hover/stat:text-white transition-all duration-500">
+							<div class="w-16 h-16 bg-white/5 rounded-4xlxl flex items-center justify-center text-primary-light group-hover/stat:bg-primary group-hover/stat:text-white transition-all duration-500">
 								<stat.icon size={24} />
 							</div>
 							<div>
@@ -110,7 +110,7 @@
 								onclick={item.action}
 								class="p-8 rounded-4xl border border-gray-50 flex items-start gap-6 hover:bg-gray-50 hover:border-primary/20 transition-all text-left group"
 							>
-								<div class="p-4 rounded-2xl {item.danger ? 'bg-rose-50 text-rose-500' : 'bg-gray-50 text-gray-400 group-hover:bg-primary group-hover:text-white'} transition-all duration-500">
+								<div class="p-4 rounded-4xlxl {item.danger ? 'bg-rose-50 text-rose-500' : 'bg-gray-50 text-gray-400 group-hover:bg-primary group-hover:text-white'} transition-all duration-500">
 									<item.icon size={24} />
 								</div>
 								<div>

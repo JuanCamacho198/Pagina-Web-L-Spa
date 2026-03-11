@@ -61,7 +61,7 @@ export default function AdminLayout() {
         {/* Logo Area */}
         <div className="h-20 flex items-center px-6 border-b border-gray-100 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-linear-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
+            <div className="w-10 h-10 rounded-4xll bg-linear-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -83,7 +83,7 @@ export default function AdminLayout() {
                 key={item.href}
                 to={item.href}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group",
+                  "flex items-center gap-3 px-4 py-3 rounded-4xll text-sm font-medium transition-all duration-200 group",
                   isActive 
                     ? "bg-linear-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 text-orange-700 dark:text-orange-400 shadow-sm border border-orange-100 dark:border-orange-900/30" 
                     : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white"
@@ -104,7 +104,7 @@ export default function AdminLayout() {
         
         {/* Footer */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-100 dark:border-gray-700">
-          <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-50/50 dark:bg-gray-900/50">
+          <div className="flex items-center gap-3 px-4 py-3 rounded-4xll bg-gray-50/50 dark:bg-gray-900/50">
             <div className="w-8 h-8 rounded-full bg-linear-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
               <span className="text-xs font-bold text-gray-600 dark:text-gray-300">A</span>
             </div>
@@ -134,7 +134,7 @@ export default function AdminLayout() {
             </div>
 
             <div className="flex items-center gap-4">
-              <button className="p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+              <button className="p-2 rounded-4xll text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                 <Settings className="w-5 h-5" />
               </button>
             </div>

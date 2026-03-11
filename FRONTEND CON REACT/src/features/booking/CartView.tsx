@@ -80,7 +80,7 @@ export default function CartView() {
         </div>
 
         {contextCartItems.length === 0 ? (
-          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-12 text-center">
+          <div className="bg-white rounded-4xlxl shadow-sm border border-gray-100 p-12 text-center">
             <div className="bg-primary/5 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
               <ShoppingBag size={40} className="text-primary/40" />
             </div>
@@ -111,9 +111,9 @@ export default function CartView() {
               {contextCartItems.map((item) => (
                 <div 
                   key={item.id} 
-                  className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-4 group hover:shadow-md transition-shadow"
+                  className="bg-white rounded-4xlxl p-4 shadow-sm border border-gray-100 flex items-center gap-4 group hover:shadow-md transition-shadow"
                 >
-                  <div className="w-24 h-24 rounded-xl bg-gray-100 overflow-hidden shrink-0">
+                  <div className="w-24 h-24 rounded-4xll bg-gray-100 overflow-hidden shrink-0">
                     <img 
                       src={item.imageUrl || '/src/assets/banners/bannerSpa.avif'} 
                       alt={item.serviceName}
@@ -159,7 +159,7 @@ export default function CartView() {
             </div>
 
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 sticky top-28">
+              <div className="bg-white rounded-4xlxl p-6 shadow-sm border border-gray-100 sticky top-28">
                 <h2 className="text-xl font-serif text-gray-900 mb-6">Resumen de reserva</h2>
                 
                 <div className="space-y-4 mb-8">
@@ -181,14 +181,14 @@ export default function CartView() {
                 <div className="space-y-3">
                   <button
                     onClick={handleCheckout}
-                    className="w-full bg-primary hover:bg-primary-dark text-white py-4 rounded-xl font-medium transition-all shadow-md hover:shadow-lg flex items-center justify-center group"
+                    className="w-full bg-primary hover:bg-primary-dark text-white py-4 rounded-4xll font-medium transition-all shadow-md hover:shadow-lg flex items-center justify-center group"
                   >
                     Proceder al pago
                     <CreditCard size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </button>
                   <button
                     onClick={() => navigate('/services')}
-                    className="w-full bg-white border border-gray-200 text-gray-600 py-3 rounded-xl font-medium hover:bg-gray-50 transition-all flex items-center justify-center"
+                    className="w-full bg-white border border-gray-200 text-gray-600 py-3 rounded-4xll font-medium hover:bg-gray-50 transition-all flex items-center justify-center"
                   >
                     Seguir explorando
                   </button>

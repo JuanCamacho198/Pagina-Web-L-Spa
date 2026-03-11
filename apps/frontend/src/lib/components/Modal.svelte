@@ -67,7 +67,7 @@
         </Typography>
         <button 
           onclick={onClose}
-          class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-2xl transition-all active:scale-90"
+          class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-4xlxl transition-all active:scale-90"
         >
           <X size={24} />
         </button>

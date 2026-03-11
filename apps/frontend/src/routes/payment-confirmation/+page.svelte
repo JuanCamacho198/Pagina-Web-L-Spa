@@ -77,7 +77,7 @@
 							{/if}
 
 							<div class={cn(
-								"w-16 h-16 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-sm",
+								"w-16 h-16 rounded-4xlxl flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-sm",
 								selectedMethod === method.id ? "bg-primary text-white" : "bg-gray-100 text-gray-400 group-hover:bg-primary/5 group-hover:text-primary"
 							)}>
 								<method.icon size={32} />

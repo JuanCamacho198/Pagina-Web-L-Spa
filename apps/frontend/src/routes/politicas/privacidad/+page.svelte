@@ -28,7 +28,7 @@
 				<!-- Section 1 -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-12 h-12 rounded-4xlxl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
 							<Eye size={24} />
 						</div>
 					</div>
@@ -46,7 +46,7 @@
 				<!-- Section 2 -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-12 h-12 rounded-4xlxl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
 							<FileText size={24} />
 						</div>
 					</div>
@@ -64,7 +64,7 @@
 				<!-- Section 3 -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-12 h-12 rounded-4xlxl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
 							<Lock size={24} />
 						</div>
 					</div>

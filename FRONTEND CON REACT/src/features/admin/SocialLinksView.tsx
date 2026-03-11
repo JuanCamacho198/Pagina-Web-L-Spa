@@ -79,7 +79,7 @@ export default function SocialLinksView() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/50 backdrop-blur-md p-6 rounded-3xl border border-gray-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/50 backdrop-blur-md p-6 rounded-4xlxl border border-gray-100 shadow-sm">
         <div>
           <Typography variant="h1" className="text-2xl font-bold text-gray-900">Redes Sociales</Typography>
           <p className="text-gray-500 mt-1">Configura los enlaces a tus redes sociales.</p>
@@ -243,7 +243,7 @@ export default function SocialLinksView() {
       </div>
 
       {!isSaved && (settings.facebook || settings.instagram || settings.whatsapp) && (
-        <div className="px-6 py-4 bg-amber-50 rounded-2xl border border-amber-100 flex items-start gap-3">
+        <div className="px-6 py-4 bg-amber-50 rounded-4xlxl border border-amber-100 flex items-start gap-3">
           <div className="p-1.5 bg-amber-100 rounded-lg text-amber-600 mt-0.5">
             <LinkIcon size={16} />
           </div>

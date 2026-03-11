@@ -157,7 +157,7 @@ export default function ProfileView() {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
-        <Card className="max-w-md w-full p-8 text-center bg-white shadow-xl rounded-3xl">
+        <Card className="max-w-md w-full p-8 text-center bg-white shadow-xl rounded-4xlxl">
           <Typography variant="h2" className="mb-4">Tu Sesión ha expirado</Typography>
           <Typography className="mb-8 text-gray-500">Por favor, inicia sesión para ver tu perfil.</Typography>
           <Button onClick={() => navigate('/login')} className="w-full py-6">Iniciar Sesión</Button>
@@ -173,14 +173,14 @@ export default function ProfileView() {
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="relative group">
-              <div className="w-32 h-32 rounded-3xl bg-linear-to-r from-primary/10 to-primary/20 flex items-center justify-center text-primary overflow-hidden shadow-inner transform group-hover:scale-105 transition-all duration-300">
+              <div className="w-32 h-32 rounded-4xlxl bg-linear-to-r from-primary/10 to-primary/20 flex items-center justify-center text-primary overflow-hidden shadow-inner transform group-hover:scale-105 transition-all duration-300">
                 {user?.picture ? (
                   <img src={user.picture} alt={user.name} className="w-full h-full object-cover" />
                 ) : (
                   <UserIcon size={64} className="opacity-40" />
                 )}
               </div>
-              <div className="absolute -bottom-2 -right-2 bg-white p-2 rounded-xl shadow-lg text-primary border border-gray-50 transform hover:scale-110 transition-transform cursor-pointer">
+              <div className="absolute -bottom-2 -right-2 bg-white p-2 rounded-4xll shadow-lg text-primary border border-gray-50 transform hover:scale-110 transition-transform cursor-pointer">
                 <Edit3 size={18} />
               </div>
             </div>
@@ -210,7 +210,7 @@ export default function ProfileView() {
             </div>
 
             <div className="flex gap-3">
-              <Button variant="outline" className="rounded-2xl border-gray-200" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+              <Button variant="outline" className="rounded-4xlxl border-gray-200" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
                 <LogOut size={18} className="mr-2" />
                 Cerrar Sesión
               </Button>
@@ -232,7 +232,7 @@ export default function ProfileView() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`w-full flex items-center gap-3 px-6 py-4 rounded-2xl transition-all duration-300 ${
+                className={`w-full flex items-center gap-3 px-6 py-4 rounded-4xlxl transition-all duration-300 ${
                   activeTab === tab.id 
                   ? 'bg-primary text-white shadow-lg shadow-primary/30 font-bold translate-x-1' 
                   : 'text-gray-500 hover:bg-white hover:text-primary border border-transparent'
@@ -248,13 +248,13 @@ export default function ProfileView() {
           {/* Main Content Area */}
           <div className="lg:col-span-9">
             {activeTab === 'personal' && (
-              <Card className="bg-white p-8 rounded-3xl border-none shadow-xl shadow-gray-200/50 animate-in fade-in slide-in-from-right-4 duration-500">
+              <Card className="bg-white p-8 rounded-4xlxl border-none shadow-xl shadow-gray-200/50 animate-in fade-in slide-in-from-right-4 duration-500">
                 <div className="flex items-center justify-between mb-8">
                   <div>
                     <Typography variant="h3">Información Personal</Typography>
                     <Typography className="text-gray-500 mt-1">Mantén tus datos actualizados para una mejor experiencia.</Typography>
                   </div>
-                  <div className="p-3 bg-primary/5 rounded-2xl text-primary">
+                  <div className="p-3 bg-primary/5 rounded-4xlxl text-primary">
                     <Edit3 size={24} />
                   </div>
                 </div>
@@ -314,7 +314,7 @@ export default function ProfileView() {
                     <Button 
                       type="submit" 
                       disabled={isSaving}
-                      className="px-10 py-6 rounded-2xl shadow-xl shadow-primary/20 min-w-50"
+                      className="px-10 py-6 rounded-4xlxl shadow-xl shadow-primary/20 min-w-50"
                     >
                       {isSaving ? (
                         <>
@@ -334,22 +334,22 @@ export default function ProfileView() {
               <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
                 <div className="flex items-center justify-between mb-4 px-2">
                   <Typography variant="h3" className="m-0">Mis Citas</Typography>
-                  <Button onClick={() => navigate('/services')} variant="ghost" size="sm" className="text-primary hover:bg-primary/5 rounded-xl font-bold">
+                  <Button onClick={() => navigate('/services')} variant="ghost" size="sm" className="text-primary hover:bg-primary/5 rounded-4xll font-bold">
                     + Nueva Reserva
                   </Button>
                 </div>
 
                 {loadingCitas ? (
-                    <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
+                    <div className="flex flex-col items-center justify-center py-20 bg-white rounded-4xlxl shadow-sm border border-gray-100">
                       <Loader2 className="animate-spin text-primary mb-4" size={40} />
                       <p className="text-gray-500 font-medium">Buscando tus reservas...</p>
                     </div>
                 ) : appointments.length > 0 ? (
                   <div className="grid gap-4">
                     {appointments.map((cita) => (
-                      <Card key={cita.id} className="p-6 bg-white border-none shadow-md hover:shadow-lg transition-shadow rounded-3xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                      <Card key={cita.id} className="p-6 bg-white border-none shadow-md hover:shadow-lg transition-shadow rounded-4xlxl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
-                          <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                          <div className="w-16 h-16 bg-primary/10 rounded-4xlxl flex items-center justify-center text-primary">
                             <SparkleIcon size={32} />
                           </div>
                           <div>
@@ -375,7 +375,7 @@ export default function ProfileView() {
                             variant="ghost" 
                             size="sm" 
                             onClick={() => handleCancelClick(cita.id)}
-                            className="text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl font-bold"
+                            className="text-red-500 hover:bg-red-50 hover:text-red-600 rounded-4xll font-bold"
                           >
                             Cancelar
                           </Button>
@@ -384,13 +384,13 @@ export default function ProfileView() {
                     ))}
                   </div>
                 ) : (
-                  <Card className="p-12 text-center bg-white shadow-xl rounded-3xl border-none">
+                  <Card className="p-12 text-center bg-white shadow-xl rounded-4xlxl border-none">
                     <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mx-auto mb-6 border-2 border-dashed border-gray-200">
                       <ShoppingBag size={48} />
                     </div>
                     <Typography variant="h3">Aún no tienes citas</Typography>
                     <Typography className="text-gray-500 mb-8 max-w-sm mx-auto">Tus próximas experiencias de relajación aparecerán aquí cuando reserves un servicio.</Typography>
-                    <Button onClick={() => navigate('/services')} className="px-10 py-6 rounded-2xl shadow-xl shadow-primary/20">
+                    <Button onClick={() => navigate('/services')} className="px-10 py-6 rounded-4xlxl shadow-xl shadow-primary/20">
                       Explorar Servicios
                     </Button>
                   </Card>
@@ -399,7 +399,7 @@ export default function ProfileView() {
             )}
 
             {activeTab === 'configuracion' && (
-              <Card className="p-8 bg-white shadow-xl rounded-3xl border-none animate-in fade-in slide-in-from-right-4 duration-500">
+              <Card className="p-8 bg-white shadow-xl rounded-4xlxl border-none animate-in fade-in slide-in-from-right-4 duration-500">
                 <Typography variant="h3" className="mb-6">Privacidad y Seguridad</Typography>
                 <div className="space-y-4">
                   {[
@@ -431,8 +431,8 @@ export default function ProfileView() {
         title="Cancelar Cita"
         footer={
           <div className="flex gap-4 w-full">
-            <Button variant="ghost" onClick={() => setIsModalOpen(false)} className="flex-1 rounded-2xl">Mantener Cita</Button>
-            <Button variant="danger" onClick={confirmCancel} className="flex-1 rounded-2xl shadow-lg shadow-red-100">Sí, Cancelar</Button>
+            <Button variant="ghost" onClick={() => setIsModalOpen(false)} className="flex-1 rounded-4xlxl">Mantener Cita</Button>
+            <Button variant="danger" onClick={confirmCancel} className="flex-1 rounded-4xlxl shadow-lg shadow-red-100">Sí, Cancelar</Button>
           </div>
         }
       >

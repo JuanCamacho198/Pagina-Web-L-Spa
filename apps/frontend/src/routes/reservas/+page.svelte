@@ -86,7 +86,7 @@
 			
 			<div class="flex items-center gap-6">
 				<div class="bg-white p-6 rounded-4xl border border-gray-100 shadow-xl shadow-primary/5 flex items-center gap-5 transition-all hover:scale-105">
-					<div class="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-primary/30">
+					<div class="w-14 h-14 bg-primary rounded-4xlxl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-primary/30">
 						{appointments.length}
 					</div>
 					<div>
@@ -94,7 +94,7 @@
 						<span class="text-gray-900 font-bold text-lg">Sesiones</span>
 					</div>
 				</div>
-				<Button href="/servicios" class="rounded-3xl px-8 py-5 font-black uppercase tracking-widest shadow-2xl shadow-primary/20">
+				<Button href="/servicios" class="rounded-4xlxl px-8 py-5 font-black uppercase tracking-widest shadow-2xl shadow-primary/20">
 					<Plus size={20} class="mr-2" />
 					Nuevo
 				</Button>
@@ -108,7 +108,7 @@
 				</div>
 				<Typography variant="h2" class="text-gray-900 font-black mb-4 tracking-tight">¡Vaya! Tenemos un problema</Typography>
 				<p class="text-gray-500 font-medium mb-12 text-lg leading-relaxed">{error}</p>
-				<Button onclick={() => window.location.reload()} class="rounded-3xl px-10 py-5">Intentar de nuevo</Button>
+				<Button onclick={() => window.location.reload()} class="rounded-4xlxl px-10 py-5">Intentar de nuevo</Button>
 			</div>
 		{:else if appointments.length === 0}
 			<div class="bg-white rounded-[40px] p-32 text-center shadow-2xl shadow-primary/5 border border-gray-100 animate-in fade-in zoom-in duration-700">
@@ -119,7 +119,7 @@
 				<p class="text-gray-500 max-w-md mx-auto mb-12 text-lg font-medium leading-relaxed">
 					Tómate un descanso. Explora nuestras experiencias exclusivas y reserva tu próximo momento de paz.
 				</p>
-				<Button href="/servicios" class="rounded-3xl px-12 py-6 text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/30">
+				<Button href="/servicios" class="rounded-4xlxl px-12 py-6 text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/30">
 					Explorar Servicios
 				</Button>
 			</div>
@@ -130,15 +130,15 @@
 					<div class="bg-white rounded-[40px] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col group self-start hover:-translate-y-2">
 						<div class="p-10 grow">
 							<div class="flex justify-between items-start mb-8">
-								<Badge class={cn("rounded-2xl px-4 py-2 font-black uppercase tracking-widest text-[10px] border-none shadow-sm", status.color)}>
+								<Badge class={cn("rounded-4xlxl px-4 py-2 font-black uppercase tracking-widest text-[10px] border-none shadow-sm", status.color)}>
 									{status.label}
 								</Badge>
 								{#if status.status === 'completada'}
-									<div class="h-10 w-10 flex items-center justify-center rounded-2xl bg-emerald-50 text-emerald-500">
+									<div class="h-10 w-10 flex items-center justify-center rounded-4xlxl bg-emerald-50 text-emerald-500">
 										<CheckCircle2 size={24} />
 									</div>
 								{:else if status.status === 'hoy'}
-									<div class="h-10 w-10 flex items-center justify-center rounded-2xl bg-amber-50 text-amber-500 animate-pulse">
+									<div class="h-10 w-10 flex items-center justify-center rounded-4xlxl bg-amber-50 text-amber-500 animate-pulse">
 										<Sparkles size={24} />
 									</div>
 								{/if}
@@ -193,7 +193,7 @@
 							
 							<a 
 								href="/servicios"
-								class="h-10 w-10 flex items-center justify-center rounded-2xl bg-white border border-gray-100 text-primary shadow-sm hover:scale-110 active:scale-90 transition-all"
+								class="h-10 w-10 flex items-center justify-center rounded-4xlxl bg-white border border-gray-100 text-primary shadow-sm hover:scale-110 active:scale-90 transition-all"
 							>
 								<ChevronRight size={22} strokeWidth={2.5} />
 							</a>
@@ -221,8 +221,8 @@
 		</p>
 	</div>
 	{#snippet footer()}
-		<Button variant="ghost" onclick={() => (modalId = null)} class="rounded-2xl font-black uppercase tracking-widest">No, mantener</Button>
-		<Button onclick={handleCancel} isLoading={cancelingId !== null} class="rounded-2xl px-8 bg-rose-500 hover:bg-rose-600 shadow-rose-200 font-black uppercase tracking-widest">Sí, cancelar</Button>
+		<Button variant="ghost" onclick={() => (modalId = null)} class="rounded-4xlxl font-black uppercase tracking-widest">No, mantener</Button>
+		<Button onclick={handleCancel} isLoading={cancelingId !== null} class="rounded-4xlxl px-8 bg-rose-500 hover:bg-rose-600 shadow-rose-200 font-black uppercase tracking-widest">Sí, cancelar</Button>
 	{/snippet}
 </Modal>
 

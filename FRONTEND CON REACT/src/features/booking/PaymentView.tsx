@@ -76,7 +76,7 @@ export default function PaymentView() {
           <div className="lg:col-span-3 space-y-6">
             <div className="bg-white rounded-[2.5rem] p-8 shadow-xl shadow-gray-200/50 border border-gray-100">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+                <div className="w-10 h-10 bg-primary/10 rounded-4xll flex items-center justify-center text-primary">
                   <Lock size={20} />
                 </div>
                 <div>
@@ -93,7 +93,7 @@ export default function PaymentView() {
                 {AVAILABLE_PAYMENT_METHODS.map((method) => (
                   <label
                     key={method.id}
-                    className={`relative flex items-center p-5 rounded-2xl border-2 cursor-pointer transition-all duration-300 group ${
+                    className={`relative flex items-center p-5 rounded-4xlxl border-2 cursor-pointer transition-all duration-300 group ${
                       selectedPaymentMethod === method.id 
                       ? 'border-primary bg-primary/5 shadow-md animate-in zoom-in-95 duration-200' 
                       : 'border-gray-100 bg-white hover:border-gray-200'
@@ -110,7 +110,7 @@ export default function PaymentView() {
                       }}
                     />
                     <div className="flex items-center gap-4 w-full">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+                      <div className={`w-12 h-12 rounded-4xll flex items-center justify-center transition-colors ${
                         selectedPaymentMethod === method.id ? 'bg-primary text-white' : 'bg-gray-50 text-gray-400'
                       }`}>
                         <method.icon size={24} />
@@ -130,7 +130,7 @@ export default function PaymentView() {
               </div>
 
               {error && (
-                <div className="mt-6 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-bold border border-red-100 animate-bounce">
+                <div className="mt-6 p-4 bg-red-50 text-red-600 rounded-4xlxl text-sm font-bold border border-red-100 animate-bounce">
                   {error}
                 </div>
               )}
@@ -175,15 +175,15 @@ export default function PaymentView() {
                   </div>
                </div>
                
-               <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
+               <div className="p-4 bg-white/5 rounded-4xlxl border border-white/10">
                   <p className="text-[10px] leading-relaxed text-gray-400 font-bold uppercase tracking-tighter">
                     Al proceder con el pago, aceptas nuestras <span className="text-primary">Políticas de Cancelación</span> y <span className="text-primary">Privacidad de Datos</span>.
                   </p>
                </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border border-gray-100 flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center text-green-600">
+            <div className="bg-white rounded-4xlxl p-6 border border-gray-100 flex items-center gap-4">
+              <div className="w-12 h-12 bg-green-50 rounded-4xlxl flex items-center justify-center text-green-600">
                 <ShieldCheck size={24} />
               </div>
               <div>

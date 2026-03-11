@@ -220,7 +220,7 @@ export default function EditServiceView() {
 
               <div className="space-y-4">
                 <label className="text-sm font-medium mb-1 block">Imagen del Servicio</label>
-                <div className="aspect-video rounded-xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center bg-gray-50 overflow-hidden relative group">
+                <div className="aspect-video rounded-4xll border-2 border-dashed border-gray-200 flex flex-col items-center justify-center bg-gray-50 overflow-hidden relative group">
                   {imageUrl ? (
                     <img src={imageUrl} className="w-full h-full object-cover" alt="Preview" />
                   ) : (

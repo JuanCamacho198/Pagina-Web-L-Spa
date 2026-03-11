@@ -17,7 +17,7 @@
 
 <div
   class={cn(
-    'bg-white rounded-2xl border border-gray-100 shadow-sm overflow-visible',
+    'bg-white rounded-4xlxl border border-gray-100 shadow-sm overflow-visible',
     hoverable && 'transition-all hover:shadow-md hover:border-primary/20',
     className
   )}

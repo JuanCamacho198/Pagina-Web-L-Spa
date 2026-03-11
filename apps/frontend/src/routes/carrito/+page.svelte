@@ -21,7 +21,7 @@
 			href="/servicios"
 			class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-all font-bold text-sm mb-1 group uppercase tracking-widest"
 		>
-			<div class="h-10 w-10 flex items-center justify-center rounded-2xl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
+			<div class="h-10 w-10 flex items-center justify-center rounded-4xlxl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
 				<ChevronLeft size={20} />
 			</div>
 			Seguir explorando
@@ -73,17 +73,17 @@
 								</div>
 								
 								<div class="flex items-center justify-center md:justify-start gap-8">
-									<div class="flex items-center gap-4 bg-gray-50 p-2 rounded-2xl border border-gray-100">
+									<div class="flex items-center gap-4 bg-gray-50 p-2 rounded-4xlxl border border-gray-100">
 										<button 
 											onclick={() => cart.updateQuantity(item.serviceId, item.quantity - 1)}
-											class="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
+											class="w-8 h-8 rounded-4xll bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
 										>
 											<Minus size={14} />
 										</button>
 										<span class="text-sm font-black w-4 text-center">{item.quantity}</span>
 										<button 
 											onclick={() => cart.updateQuantity(item.serviceId, item.quantity + 1)}
-											class="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
+											class="w-8 h-8 rounded-4xll bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
 										>
 											<Plus size={14} />
 										</button>
@@ -96,7 +96,7 @@
 							<!-- Remove -->
 							<button 
 								onclick={() => cart.removeItem(item.serviceId)}
-								class="p-4 rounded-2xl bg-gray-50 text-gray-300 hover:bg-rose-50 hover:text-rose-500 transition-all group-hover:scale-105"
+								class="p-4 rounded-4xlxl bg-gray-50 text-gray-300 hover:bg-rose-50 hover:text-rose-500 transition-all group-hover:scale-105"
 							>
 								<Trash2 size={24} />
 							</button>
@@ -153,7 +153,7 @@
 							{ icon: ShieldCheck, label: 'Garantía L-SPA Elite' }
 						] as badge}
 							<div class="bg-white p-6 rounded-4xl border border-gray-100 flex items-center gap-4 opacity-70 hover:opacity-100 transition-opacity group">
-								<div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-primary/60 group-hover:bg-primary group-hover:text-white transition-all">
+								<div class="w-10 h-10 rounded-4xll bg-gray-50 flex items-center justify-center text-primary/60 group-hover:bg-primary group-hover:text-white transition-all">
 									<badge.icon size={18} />
 								</div>
 								<span class="text-[9px] font-black uppercase tracking-widest text-gray-500 group-hover:text-gray-900 transition-colors">{badge.label}</span>

@@ -85,7 +85,7 @@
 							card.hover
 						)}
 					>
-						<div class={cn("w-20 h-20 rounded-3xl flex items-center justify-center mb-8 transition-all duration-500 group-hover:bg-white/20 group-hover:text-white group-hover:scale-110 shadow-sm", card.color)}>
+						<div class={cn("w-20 h-20 rounded-4xlxl flex items-center justify-center mb-8 transition-all duration-500 group-hover:bg-white/20 group-hover:text-white group-hover:scale-110 shadow-sm", card.color)}>
 							<card.icon size={36} strokeWidth={2.5} />
 						</div>
 						<h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-2 group-hover:text-white transition-colors">{card.title}</h3>
@@ -149,7 +149,7 @@
 										id="name"
 										required
 										type="text" 
-										class="w-full px-8 py-5 bg-gray-50 border-none rounded-3xl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900" 
+										class="w-full px-8 py-5 bg-gray-50 border-none rounded-4xlxl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900" 
 										placeholder="Ej. Juan Pérez" 
 									/>
 								</div>
@@ -159,7 +159,7 @@
 										id="email"
 										required
 										type="email" 
-										class="w-full px-8 py-5 bg-gray-50 border-none rounded-3xl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900" 
+										class="w-full px-8 py-5 bg-gray-50 border-none rounded-4xlxl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900" 
 										placeholder="juan@ejemplo.com" 
 									/>
 								</div>

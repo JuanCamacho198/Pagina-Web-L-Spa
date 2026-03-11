@@ -80,7 +80,7 @@ export default function FooterSettingsView() {
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/50 backdrop-blur-md p-6 rounded-3xl border border-gray-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/50 backdrop-blur-md p-6 rounded-4xlxl border border-gray-100 shadow-sm">
         <div>
           <Typography variant="h1" className="text-2xl font-bold text-gray-900">Configuración del Footer</Typography>
           <p className="text-gray-500 mt-1">Personaliza la sección inferior de tu sitio web.</p>
@@ -160,7 +160,7 @@ export default function FooterSettingsView() {
                   value={settings.description}
                   onChange={(e) => updateSetting('description', e.target.value)}
                   rows={4}
-                  className="w-full px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none"
+                  className="w-full px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-4xll focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none"
                 />
                 <span className="text-xs text-gray-400 mt-1">Aparece debajo del logo en el footer</span>
               </div>
@@ -202,7 +202,7 @@ export default function FooterSettingsView() {
           </Card>
 
           {!isSaved && (settings.logoUrl || settings.description) && (
-            <div className="mt-4 px-4 py-3 bg-amber-50 rounded-2xl border border-amber-100 flex items-start gap-3">
+            <div className="mt-4 px-4 py-3 bg-amber-50 rounded-4xlxl border border-amber-100 flex items-start gap-3">
               <div className="p-1 bg-amber-100 rounded-lg text-amber-600 mt-0.5">
                 <Layout size={14} />
               </div>

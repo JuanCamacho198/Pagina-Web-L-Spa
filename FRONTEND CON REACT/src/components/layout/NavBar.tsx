@@ -120,7 +120,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   );
 
   const mobileLinkClass = (path: string) => cn(
-    "flex items-center gap-4 px-6 py-4 rounded-2xl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs",
+    "flex items-center gap-4 px-6 py-4 rounded-4xlxl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs",
     location.pathname === path 
       ? "bg-primary text-white shadow-lg shadow-primary/20" 
       : "text-gray-700 dark:text-gray-200 hover:bg-primary/5 dark:hover:bg-primary/20 hover:text-primary dark:hover:text-primary-light"
@@ -182,7 +182,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                   {!previewSettings && (
                     <button
                       onClick={toggleTheme}
-                      className="p-2.5 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-all duration-300 rounded-xl hover:bg-primary/5 dark:hover:bg-primary/10"
+                      className="p-2.5 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-all duration-300 rounded-4xll hover:bg-primary/5 dark:hover:bg-primary/10"
                       title={theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
                     >
                       {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
@@ -191,7 +191,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
                   <button
                     onClick={() => navigate('/cart')}
-                    className="relative p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-xl hover:bg-primary/5 group"
+                    className="relative p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-4xll hover:bg-primary/5 group"
                   >
                     <ShoppingCart size={22} className="group-hover:scale-110 transition-transform" />
                     {cartCount > 0 && (
@@ -205,11 +205,11 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                     <button
                       onClick={() => setMenuOpen(!menuOpen)}
                       className={cn(
-                        "p-1 rounded-2xl flex items-center gap-2 border-2 transition-all duration-300 hover:shadow-md",
+                        "p-1 rounded-4xlxl flex items-center gap-2 border-2 transition-all duration-300 hover:shadow-md",
                         menuOpen ? "border-primary bg-primary/5 shadow-inner" : "border-gray-100 bg-white"
                       )}
                     >
-                      <div className="w-8 h-8 rounded-xl bg-gray-100 overflow-hidden">
+                      <div className="w-8 h-8 rounded-4xll bg-gray-100 overflow-hidden">
                         {user?.picture ? (
                           <img src={user.picture} alt="" className="w-full h-full object-cover" />
                         ) : (
@@ -222,7 +222,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                     </button>
 
                     {menuOpen && (
-                      <div className="absolute right-0 mt-3 w-56 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 py-2 z-50 overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300">
+                      <div className="absolute right-0 mt-3 w-56 bg-white dark:bg-gray-800 rounded-4xlxl shadow-2xl border border-gray-100 dark:border-gray-700 py-2 z-50 overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300">
                         <div className="px-4 py-3 mb-2 border-b border-gray-50">
                           <p className="text-xs font-black text-primary uppercase tracking-widest mb-0.5">Bienvenido</p>
                           <p className="text-sm font-bold text-gray-900 truncate">{user?.name || user?.email}</p>
@@ -270,7 +270,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                     </button>
                     <button 
                       onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
-                      className="px-6 py-2.5 text-sm font-black bg-primary text-white rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95"
+                      className="px-6 py-2.5 text-sm font-black bg-primary text-white rounded-4xll shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95"
                     >
                       REGISTRARSE
                     </button>
@@ -281,7 +281,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
               {/* Mobile Menu Toggle */}
               {!previewSettings && (
                 <button 
-                  className="md:hidden p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-xl hover:bg-primary/5"
+                  className="md:hidden p-2.5 text-gray-500 hover:text-primary transition-all duration-300 rounded-4xll hover:bg-primary/5"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
                   {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -333,18 +333,18 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                     {isAdmin && (
                       <Link to="/admin" className={cn(mobileLinkClass('/admin'), "text-primary")}><Settings size={20} /> Panel Admin</Link>
                     )}
-                    <button onClick={handleLogout} className="flex items-center gap-4 px-6 py-4 rounded-2xl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs text-red-500 hover:bg-red-50 mt-auto">
+                    <button onClick={handleLogout} className="flex items-center gap-4 px-6 py-4 rounded-4xlxl w-full text-left transition-all duration-300 font-bold uppercase tracking-wider text-xs text-red-500 hover:bg-red-50 mt-auto">
                       <LogOut size={20} /> Cerrar Sesión
                     </button>
                   </>
                 ) : (
                   <div className="mt-auto space-y-3">
-                    <button onClick={() => loginWithRedirect()} className="w-full py-4 text-sm font-black text-gray-700 bg-gray-50 rounded-2xl transition-all">
+                    <button onClick={() => loginWithRedirect()} className="w-full py-4 text-sm font-black text-gray-700 bg-gray-50 rounded-4xlxl transition-all">
                       INICIAR SESIÓN
                     </button>
                     <button 
                       onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
-                      className="w-full py-4 text-sm font-black text-white bg-primary rounded-2xl shadow-xl shadow-primary/20 transition-all"
+                      className="w-full py-4 text-sm font-black text-white bg-primary rounded-4xlxl shadow-xl shadow-primary/20 transition-all"
                     >
                       CREAR CUENTA
                     </button>

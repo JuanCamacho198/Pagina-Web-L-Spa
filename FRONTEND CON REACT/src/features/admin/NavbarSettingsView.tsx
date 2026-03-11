@@ -78,7 +78,7 @@ export default function NavbarSettingsView() {
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center bg-white/50 backdrop-blur-md p-6 rounded-3xl border border-gray-100 sticky top-0 z-30 shadow-sm">
+      <div className="flex justify-between items-center bg-white/50 backdrop-blur-md p-6 rounded-4xlxl border border-gray-100 sticky top-0 z-30 shadow-sm">
         <div>
           <Typography variant="h1" className="text-3xl font-black text-gray-900">Configuración del Navbar</Typography>
           <p className="text-gray-500 mt-1">Personaliza el logo y el nombre de tu marca en la barra de navegación.</p>
@@ -185,7 +185,7 @@ export default function NavbarSettingsView() {
                   <select 
                     value={localSettings.fontFamily}
                     onChange={(e) => updateLocal('fontFamily', e.target.value as any)}
-                    className="w-full h-10 px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all font-medium text-sm"
+                    className="w-full h-10 px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-4xll focus:outline-hidden focus:ring-2 focus:ring-primary/20 transition-all font-medium text-sm"
                   >
                     <option value="sans">Sans Serif (Moderna)</option>
                     <option value="serif">Serif (Elegante/Clásica)</option>
@@ -193,7 +193,7 @@ export default function NavbarSettingsView() {
                     <option value="custom">Personalizada (Subida)</option>
                   </select>
                   
-                  <div className="p-4 bg-primary/5 rounded-2xl border border-primary/10">
+                  <div className="p-4 bg-primary/5 rounded-4xlxl border border-primary/10">
                     <label className="block text-xs font-black text-primary uppercase tracking-widest mb-2">Subir fuente propia (.ttf, .otf, .woff)</label>
                     <input 
                       type="file" 
@@ -233,7 +233,7 @@ export default function NavbarSettingsView() {
             </div>
             
             <div className="space-y-3">
-              <label className="flex items-center justify-between p-3 rounded-xl border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors group">
+              <label className="flex items-center justify-between p-3 rounded-4xll border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors group">
                 <span className="flex items-center gap-3">
                   <span className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
                     <Image size={20} />
@@ -248,7 +248,7 @@ export default function NavbarSettingsView() {
                 />
               </label>
 
-              <label className="flex items-center justify-between p-3 rounded-xl border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors group">
+              <label className="flex items-center justify-between p-3 rounded-4xll border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors group">
                 <span className="flex items-center gap-3">
                   <span className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
                     <Type size={20} />
@@ -308,7 +308,7 @@ export default function NavbarSettingsView() {
           </Card>
 
           {!isSaved && (
-             <div className="px-6 py-4 bg-amber-50 rounded-2xl border border-amber-100 flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
+             <div className="px-6 py-4 bg-amber-50 rounded-4xlxl border border-amber-100 flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
                 <div className="p-1.5 bg-amber-100 rounded-lg text-amber-600 mt-0.5">
                    <Info size={16} />
                 </div>

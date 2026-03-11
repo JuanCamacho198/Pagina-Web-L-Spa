@@ -116,7 +116,7 @@ function HomeView() {
                 { icon: <MapPin className="text-primary" />, title: "Ubicación Ideal", desc: "Un refugio de paz en el corazón de Medellín." }
               ].map((item, i) => (
                 <Card key={i} className="flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-300 p-8 border-none shadow-xl shadow-gray-200/50 dark:shadow-black/50 bg-white dark:bg-gray-800">
-                  <div className="mb-6 p-4 bg-primary/5 rounded-2xl group-hover:bg-primary/10 transition-colors">
+                  <div className="mb-6 p-4 bg-primary/5 rounded-4xlxl group-hover:bg-primary/10 transition-colors">
                     {React.cloneElement(item.icon as React.ReactElement, { size: 32 } as any)}
                   </div>
                   <Typography variant="h4" className="mb-3 text-gray-800 dark:text-gray-100">{item.title}</Typography>
@@ -135,7 +135,7 @@ function HomeView() {
               <div className="h-1.5 w-20 bg-primary mx-auto rounded-full"></div>
             </div>
 
-            <div className="relative group overflow-hidden rounded-3xl shadow-2xl border-none">
+            <div className="relative group overflow-hidden rounded-4xlxl shadow-2xl border-none">
               <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
                 {[1, 2, 3].map((num) => (
                   <div key={num} className="min-w-full h-80 sm:h-100 md:h-137.5 relative">
@@ -190,7 +190,7 @@ function HomeView() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {services.slice(0, 3).map((service) => (
-                  <Card key={service.id} className="overflow-hidden group border-none shadow-lg hover:shadow-2xl transition-all duration-300 rounded-3xl">
+                  <Card key={service.id} className="overflow-hidden group border-none shadow-lg hover:shadow-2xl transition-all duration-300 rounded-4xlxl">
                     <div className="h-64 overflow-hidden relative">
                       <img 
                         src={service.imageUrl || '/placeholder-spa.jpg'} 
@@ -214,7 +214,7 @@ function HomeView() {
                       </Typography>
                       <Button 
                         variant="secondary" 
-                        className="w-full rounded-2xl group-hover:bg-primary group-hover:text-white transition-colors"
+                        className="w-full rounded-4xlxl group-hover:bg-primary group-hover:text-white transition-colors"
                         onClick={() => navigate(`/services`)}
                       >
                         Reservar Ahora

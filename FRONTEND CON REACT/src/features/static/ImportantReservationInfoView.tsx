@@ -64,7 +64,7 @@ export default function ImportantReservationInfoView() {
                     {i + 1}
                   </div>
                   <div className="flex flex-col gap-4">
-                    <div className="w-12 h-12 bg-gray-900 text-white rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300">
+                    <div className="w-12 h-12 bg-gray-900 text-white rounded-4xll flex items-center justify-center transition-transform group-hover:scale-110 duration-300">
                       <p.icon size={22} />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 tracking-tight">{p.title}</h3>
@@ -77,7 +77,7 @@ export default function ImportantReservationInfoView() {
             </div>
 
             <div className="mt-20 p-8 bg-gray-50 rounded-[2.5rem] border border-dashed border-gray-300 flex flex-col md:flex-row items-center gap-6">
-               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-amber-600 shadow-sm shrink-0">
+               <div className="w-16 h-16 bg-white rounded-4xlxl flex items-center justify-center text-amber-600 shadow-sm shrink-0">
                   <Wine size={32} />
                </div>
                <p className="text-gray-600 font-medium italic text-center md:text-left">

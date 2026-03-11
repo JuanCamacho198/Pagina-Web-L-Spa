@@ -167,7 +167,7 @@ export default function CreateServiceView() {
                     {...register('description')}
                     placeholder="Describe los beneficios..."
                     rows={4}
-                      className={`w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 dark:text-gray-200 resize-none ${errors.description ? 'border-red-500' : ''}`}
+                      className={`w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-4xll px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 dark:text-gray-200 resize-none ${errors.description ? 'border-red-500' : ''}`}
                   />
                   {errors.description && <p className="text-xs text-red-500 ml-1 font-medium">{errors.description.message}</p>}
                 </div>
@@ -204,7 +204,7 @@ export default function CreateServiceView() {
                     </label>
                     <textarea 
                       {...register('includes' as any)}
-                      className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 dark:text-gray-200 resize-none font-sans text-sm"
+                      className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-4xll px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 dark:text-gray-200 resize-none font-sans text-sm"
                       rows={3}
                       placeholder="Ej: Aceites esenciales&#10;Música ambiental&#10;Bebida de cortesía"
                     />
@@ -238,7 +238,7 @@ export default function CreateServiceView() {
                       </label>
                       <select 
                         {...register('intensity' as any)}
-                        className="w-full h-11 px-4 rounded-xl border border-gray-200 focus:outline-hidden focus:ring-4 focus:ring-primary/10 transition-all bg-white text-gray-700"
+                        className="w-full h-11 px-4 rounded-4xll border border-gray-200 focus:outline-hidden focus:ring-4 focus:ring-primary/10 transition-all bg-white text-gray-700"
                       >
                         <option value="">No especificado</option>
                         {[1,2,3,4,5].map(i => <option key={i} value={i}>Nivel {i}</option>)}
@@ -287,7 +287,7 @@ export default function CreateServiceView() {
                 </h3>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="aspect-square w-full bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center overflow-hidden relative group">
+                <div className="aspect-square w-full bg-gray-50 rounded-4xlxl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center overflow-hidden relative group">
                   {imagePreview ? (
                     <>
                       <img src={imagePreview} alt="Preview" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
@@ -318,7 +318,7 @@ export default function CreateServiceView() {
             </Card>
 
             {error && (
-              <div className="bg-red-50 border border-red-100 p-4 rounded-xl flex items-start gap-3 text-red-700">
+              <div className="bg-red-50 border border-red-100 p-4 rounded-4xll flex items-start gap-3 text-red-700">
                 <AlertIcon className="w-5 h-5 shrink-0" />
                 <p className="text-sm font-medium">{error}</p>
               </div>

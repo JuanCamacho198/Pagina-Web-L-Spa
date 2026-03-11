@@ -124,7 +124,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ serviceId, onReviewSubmitted })
       </h3>
 
       {notification && (
-        <div className={`mb-6 p-4 rounded-2xl flex items-center gap-3 font-medium ${
+        <div className={`mb-6 p-4 rounded-4xlxl flex items-center gap-3 font-medium ${
           notification.type === 'success' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'
         }`}>
           {notification.type === 'success' ? <CheckCircle2 size={20} /> : <AlertCircle size={20} />}
@@ -148,14 +148,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ serviceId, onReviewSubmitted })
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="¿Qué tal fue tu experiencia?..."
-            className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all min-h-30"
+            className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-4xlxl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all min-h-30"
           />
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting || rating === 0}
-          className="w-full py-4 bg-primary text-white font-black rounded-2xl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20 flex items-center justify-center gap-3 disabled:opacity-50 disabled:transform-none"
+          className="w-full py-4 bg-primary text-white font-black rounded-4xlxl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20 flex items-center justify-center gap-3 disabled:opacity-50 disabled:transform-none"
         >
           {isSubmitting ? (
             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

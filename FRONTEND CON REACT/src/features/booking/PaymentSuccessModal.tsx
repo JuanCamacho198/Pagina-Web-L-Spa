@@ -42,7 +42,7 @@ export default function PaymentSuccessModal({ show, onClose, totalAmount }: Paym
 
         <button 
           onClick={onClose}
-          className="w-full py-5 bg-primary text-white font-black rounded-2xl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20"
+          className="w-full py-5 bg-primary text-white font-black rounded-4xlxl hover:bg-primary-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20"
         >
           Entendido
         </button>

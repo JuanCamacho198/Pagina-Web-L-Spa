@@ -222,13 +222,13 @@ export default function CheckoutView() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Form Side */}
           <div className="lg:col-span-7 space-y-8">
-            <Card className="p-8 border-none shadow-xl shadow-gray-200/50 rounded-3xl">
+            <Card className="p-8 border-none shadow-xl shadow-gray-200/50 rounded-4xlxl">
               <form onSubmit={handleSubmit(onCheckoutSubmit)} className="space-y-6">
                 
                 {/* Paso 1: Datos Personales */}
                 <div className={cn("space-y-6", currentStep !== 0 && "hidden")}>
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="p-3 bg-primary/10 rounded-2xl text-primary font-bold text-xl">01</div>
+                    <div className="p-3 bg-primary/10 rounded-4xlxl text-primary font-bold text-xl">01</div>
                     <div>
                       <Typography variant="h3" className="m-0">Datos Personales</Typography>
                       <Typography variant="small" className="text-gray-500 font-medium">Información para tu cita</Typography>
@@ -280,7 +280,7 @@ export default function CheckoutView() {
                   <Button 
                     type="button" 
                     onClick={validateStep}
-                    className="w-full py-6 text-lg rounded-2xl shadow-lg mt-8"
+                    className="w-full py-6 text-lg rounded-4xlxl shadow-lg mt-8"
                   >
                     Siguiente: Elegir Horario
                     <ArrowRight className="ml-2" size={20} />
@@ -290,7 +290,7 @@ export default function CheckoutView() {
                 {/* Paso 2: Programación */}
                 <div className={cn("space-y-6", currentStep !== 1 && "hidden")}>
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="p-3 bg-primary/10 rounded-2xl text-primary font-bold text-xl">02</div>
+                    <div className="p-3 bg-primary/10 rounded-4xlxl text-primary font-bold text-xl">02</div>
                     <div>
                       <Typography variant="h3" className="m-0">Programación</Typography>
                       <Typography variant="small" className="text-gray-500">¿Cuándo deseas tu servicio?</Typography>
@@ -325,7 +325,7 @@ export default function CheckoutView() {
                         />
                         {errors.preferredTime && <Typography variant="small" className="text-red-500 text-xs mt-1 block font-bold">{errors.preferredTime.message}</Typography>}
                         
-                        <div className="bg-primary/5 p-5 rounded-2xl border-2 border-primary/10 mt-6 shadow-sm">
+                        <div className="bg-primary/5 p-5 rounded-4xlxl border-2 border-primary/10 mt-6 shadow-sm">
                           <div className="flex items-center gap-2 text-primary font-black mb-1">
                             <ShieldCheck size={20} />
                             <span className="text-xs uppercase tracking-widest">Resumen de tu Visita:</span>
@@ -345,7 +345,7 @@ export default function CheckoutView() {
                   <Button 
                     type="button" 
                     onClick={validateStep}
-                    className="w-full py-6 text-lg rounded-2xl shadow-lg mt-8 font-black uppercase tracking-widest bg-primary hover:bg-primary-dark transition-all"
+                    className="w-full py-6 text-lg rounded-4xlxl shadow-lg mt-8 font-black uppercase tracking-widest bg-primary hover:bg-primary-dark transition-all"
                   >
                     Siguiente: Finalizar Reserva
                     <ArrowRight className="ml-2" size={20} strokeWidth={3} />
@@ -355,14 +355,14 @@ export default function CheckoutView() {
                 {/* Paso 3: Confirmación Final */}
                 <div className={cn("space-y-6", currentStep !== 2 && "hidden")}>
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="p-3 bg-primary/10 rounded-2xl text-primary font-bold text-xl">03</div>
+                    <div className="p-3 bg-primary/10 rounded-4xlxl text-primary font-bold text-xl">03</div>
                     <div>
                       <Typography variant="h3" className="m-0">Confirma tu Reserva</Typography>
                       <Typography variant="small" className="text-gray-500 font-medium">Último paso antes de tu relajación</Typography>
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 p-6 rounded-3xl space-y-4 border border-gray-100">
+                  <div className="bg-gray-50 p-6 rounded-4xlxl space-y-4 border border-gray-100">
                     <div className="flex justify-between border-b border-gray-200 pb-3">
                       <span className="text-gray-500">Cliente</span>
                       <span className="font-bold">{watch('name')} {watch('lastName')}</span>
@@ -371,7 +371,7 @@ export default function CheckoutView() {
                       <span className="text-gray-500">Servicio</span>
                       <span className="font-bold">{itemsToCheckout[0]?.name} {itemsToCheckout.length > 1 && `(+${itemsToCheckout.length - 1})`}</span>
                     </div>
-                    <div className="flex justify-between items-center bg-white p-4 rounded-2xl border border-primary/20">
+                    <div className="flex justify-between items-center bg-white p-4 rounded-4xlxl border border-primary/20">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                           <Clock size={20} />
@@ -396,7 +396,7 @@ export default function CheckoutView() {
                     <Button 
                       type="submit" 
                       disabled={isSubmitting}
-                      className="w-full py-8 text-xl rounded-2xl shadow-2xl shadow-primary/30"
+                      className="w-full py-8 text-xl rounded-4xlxl shadow-2xl shadow-primary/30"
                     >
                       {isSubmitting ? (
                         <>
@@ -424,8 +424,8 @@ export default function CheckoutView() {
             <Typography variant="h3">Resumen del Pedido</Typography>
             <div className="space-y-4">
               {itemsToCheckout.map((item) => (
-                <Card key={item.id} className="p-4 border-none shadow-lg rounded-2xl bg-white flex gap-4 overflow-hidden group">
-                  <div className="w-24 h-24 rounded-xl overflow-hidden shrink-0">
+                <Card key={item.id} className="p-4 border-none shadow-lg rounded-4xlxl bg-white flex gap-4 overflow-hidden group">
+                  <div className="w-24 h-24 rounded-4xll overflow-hidden shrink-0">
                     <img 
                       src={item.imageUrl || '/placeholder-spa.jpg'} 
                       alt={item.name} 
@@ -446,7 +446,7 @@ export default function CheckoutView() {
               ))}
             </div>
 
-            <Card className="p-8 bg-linear-to-br from-gray-900 to-gray-800 text-white rounded-3xl border-none shadow-2xl">
+            <Card className="p-8 bg-linear-to-br from-gray-900 to-gray-800 text-white rounded-4xlxl border-none shadow-2xl">
               <div className="space-y-4 border-b border-white/10 pb-6 mb-6">
                 <div className="flex justify-between items-center opacity-80">
                   <Typography className="m-0 text-white">Subtotal</Typography>
@@ -461,7 +461,7 @@ export default function CheckoutView() {
                 <Typography variant="h2" className="m-0 text-white border-none">Total</Typography>
                 <Typography variant="h2" className="m-0 text-primary-light border-none">${total}</Typography>
               </div>
-              <div className="p-4 bg-white/5 rounded-2xl flex items-center gap-3 text-sm opacity-60">
+              <div className="p-4 bg-white/5 rounded-4xlxl flex items-center gap-3 text-sm opacity-60">
                 <ShieldCheck size={18} />
                 Pago seguro protegido por encriptación SSL.
               </div>

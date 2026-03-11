@@ -77,7 +77,7 @@ export default function TimePicker({
 
   if (!selectedDate) {
     return (
-      <div className="p-4 bg-amber-50 border border-amber-100 rounded-xl text-amber-700 flex items-center gap-3 animate-pulse">
+      <div className="p-4 bg-amber-50 border border-amber-100 rounded-4xll text-amber-700 flex items-center gap-3 animate-pulse">
         <AlertCircle size={20} />
         <p className="text-sm font-medium">Selecciona una fecha para ver horarios disponibles</p>
       </div>
@@ -112,7 +112,7 @@ export default function TimePicker({
               disabled={disabled || isReserved}
               onClick={() => onChange(time)}
               className={cn(
-                "py-2.5 px-3 rounded-xl border-2 transition-all duration-200 text-sm font-bold",
+                "py-2.5 px-3 rounded-4xll border-2 transition-all duration-200 text-sm font-bold",
                 value === time 
                   ? "border-primary bg-primary text-white shadow-lg shadow-primary/20 scale-105" 
                   : isReserved 

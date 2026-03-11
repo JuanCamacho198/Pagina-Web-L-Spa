@@ -159,7 +159,7 @@
 				<!-- Main Stats -->
 				<div class="grid grid-cols-2 gap-8 py-10 border-y border-gray-100">
 					<div class="flex items-center gap-6">
-						<div class="h-16 w-16 bg-primary/5 rounded-[24px] flex items-center justify-center text-primary border border-primary/10">
+						<div class="h-16 w-16 bg-primary/5 rounded-3xl flex items-center justify-center text-primary border border-primary/10">
 							<Clock size={32} />
 						</div>
 						<div>
@@ -168,7 +168,7 @@
 						</div>
 					</div>
 					<div class="flex items-center gap-6">
-						<div class="h-16 w-16 bg-primary/5 rounded-[24px] flex items-center justify-center text-primary border border-primary/10">
+						<div class="h-16 w-16 bg-primary/5 rounded-3xl flex items-center justify-center text-primary border border-primary/10">
 							<ShieldCheck size={32} />
 						</div>
 						<div>

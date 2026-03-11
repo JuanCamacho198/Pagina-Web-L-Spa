@@ -20,6 +20,6 @@
     type="text"
     bind:value={value}
     {placeholder}
-    class="pl-12 w-full h-[52px] shadow-sm hover:shadow-md focus:shadow-lg transition-all border-gray-100 !rounded-3xl"
+    class="pl-12 w-full h-[52px] shadow-sm hover:shadow-md focus:shadow-lg transition-all border-gray-100 !rounded-4xlxl"
   />
 </div>

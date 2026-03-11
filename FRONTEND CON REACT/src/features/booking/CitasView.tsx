@@ -109,7 +109,7 @@ export default function CitasView() {
         {notification && (
           <div className={`fixed top-24 right-4 z-50 animate-in slide-in-from-right duration-300 ${
             notification.type === 'success' ? 'bg-green-600' : 'bg-red-600'
-          } text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3`}>
+          } text-white px-6 py-4 rounded-4xlxl shadow-2xl flex items-center gap-3`}>
             {notification.type === 'success' ? <CheckCircle2 size={20} /> : <AlertCircle size={20} />}
             <span className="font-medium">{notification.message}</span>
             <button onClick={() => setNotification(null)} className="ml-2 hover:bg-white/20 p-1 rounded-full transition-colors">
@@ -125,8 +125,8 @@ export default function CitasView() {
             <p className="text-gray-500 mt-2 text-lg">Administra tus momentos de relajación y cuidado personal.</p>
           </div>
           <div className="flex gap-4">
-            <div className="bg-white px-6 py-3 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary font-bold">
+            <div className="bg-white px-6 py-3 rounded-4xlxl shadow-sm border border-gray-100 flex items-center gap-3">
+              <div className="w-10 h-10 bg-primary/10 rounded-4xll flex items-center justify-center text-primary font-bold">
                 {citas.length}
               </div>
               <div className="text-xs uppercase font-bold text-gray-400 tracking-widest leading-none">
@@ -144,7 +144,7 @@ export default function CitasView() {
         </div>
 
         {error ? (
-          <div className="bg-white rounded-3xl p-12 text-center shadow-sm border border-gray-100 max-w-lg mx-auto">
+          <div className="bg-white rounded-4xlxl p-12 text-center shadow-sm border border-gray-100 max-w-lg mx-auto">
             <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 text-red-500">
               <AlertCircle size={40} />
             </div>
@@ -153,7 +153,7 @@ export default function CitasView() {
             <button onClick={() => window.location.reload()} className="btn btn-primary px-8">Reintentar</button>
           </div>
         ) : citas.length === 0 ? (
-          <div className="bg-white rounded-3xl p-20 text-center shadow-sm border border-gray-100">
+          <div className="bg-white rounded-4xlxl p-20 text-center shadow-sm border border-gray-100">
             <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-8 text-gray-300">
               <Calendar size={48} />
             </div>
@@ -173,7 +173,7 @@ export default function CitasView() {
             {citas.map(cita => {
               const status = getAppointmentStatus(cita);
               return (
-                <div key={cita.id} className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group self-start">
+                <div key={cita.id} className="bg-white rounded-4xlxl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group self-start">
                   <div className="p-6 grow">
                     <div className="flex justify-between items-start mb-4">
                       <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${status.color}`}>
@@ -190,7 +190,7 @@ export default function CitasView() {
                     
                     <div className="space-y-4">
                       <div className="flex items-center gap-4 text-gray-600">
-                        <div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+                        <div className="w-10 h-10 bg-gray-50 rounded-4xll flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
                           <Calendar size={18} />
                         </div>
                         <div>
@@ -200,7 +200,7 @@ export default function CitasView() {
                       </div>
                       
                       <div className="flex items-center gap-4 text-gray-600">
-                        <div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+                        <div className="w-10 h-10 bg-gray-50 rounded-4xll flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
                           <Clock size={18} />
                         </div>
                         <div>
@@ -247,7 +247,7 @@ export default function CitasView() {
         {modalId && (
           <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
             <div className="bg-white rounded-4xl max-w-sm w-full p-8 shadow-2xl animate-in zoom-in duration-300 text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-6 text-red-600">
+              <div className="w-16 h-16 bg-red-100 rounded-4xlxl flex items-center justify-center mx-auto mb-6 text-red-600">
                 <Info size={32} />
               </div>
               <h2 className="text-2xl font-black text-gray-900 mb-3">¿Cancelar Cita?</h2>
@@ -258,7 +258,7 @@ export default function CitasView() {
                 <button 
                   onClick={confirmCancel}
                   disabled={cancelingId === modalId}
-                  className="w-full py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 transition-colors shadow-lg shadow-red-200 disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-red-600 text-white font-bold rounded-4xlxl hover:bg-red-700 transition-colors shadow-lg shadow-red-200 disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {cancelingId === modalId ? (
                     <Loader2 size={20} className="animate-spin" />
