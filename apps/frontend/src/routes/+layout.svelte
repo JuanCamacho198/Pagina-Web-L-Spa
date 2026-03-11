@@ -1,7 +1,8 @@
 <script lang="ts">
   import '../app.css';
   import Button from '$components/Button.svelte';
-  import Toast from '$components/Toast.svelte';  import Footer from '$components/Footer.svelte';  import { onMount } from 'svelte';
+  import { Toaster } from '$components/Toast.svelte';
+  import Footer from '$components/Footer.svelte';  import { onMount } from 'svelte';
   import { initAuth, isAuthenticated, user, isLoading, login, logout } from '$lib/auth';
   import { cart, cartCount } from '$lib/cart';
   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';
@@ -20,7 +21,7 @@
   });
 </script>
 
-<Toast />
+<Toaster />
 
 <div class="app-container min-h-screen flex flex-col font-sans selection:bg-primary/10">
   <header class="navbar bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 px-6 py-4 transition-all duration-500">

@@ -33,6 +33,25 @@
 
 	let isAddingToCart = $state(false);
 
+	const handleAddToCart = async () => {
+		isAddingToCart = true;
+		try {
+			await cart.addItem({
+				serviceId: service.id,
+				slug: $page.params.slug,
+				name: service.name,
+				price: Number(service.price),
+				image: service.imageUrl || service.image_url || ''
+			});
+			toast.success(`${service.name} añadido al carrito`);
+		} catch (e) {
+			console.error('Error adding to cart:', e);
+			toast.error('No se pudo añadir al carrito');
+		} finally {
+			isAddingToCart = false;
+		}
+	};
+
 	const features = [
 		{ icon: HandHelping, label: 'Atención Personalizada' },
 		{ icon: Waves, label: 'Ambiente Relajante' },
