@@ -79,7 +79,7 @@ export const services = pgTable('services', {
 // Appointments Table
 export const appointments = pgTable('appointments', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  userId: text('user_id').references(() => user.id, { onDelete: 'cascade' }),
   serviceId: uuid('service_id').references(() => services.id, { onDelete: 'set null' }),
   appointmentDate: date('appointment_date').notNull(),
   appointmentTime: time('appointment_time').notNull(),
@@ -90,7 +90,7 @@ export const appointments = pgTable('appointments', {
 // Cart Items Table
 export const cartItems = pgTable('cart_items', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  userId: text('user_id').references(() => user.id, { onDelete: 'cascade' }),
   serviceId: uuid('service_id').references(() => services.id, { onDelete: 'cascade' }),
   quantity: integer('quantity').default(1),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
@@ -106,7 +106,7 @@ export const siteConfig = pgTable('site_config', {
 // Reviews Table
 export const reviews = pgTable('reviews', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
   serviceId: uuid('service_id').notNull().references(() => services.id, { onDelete: 'cascade' }),
   rating: integer('rating').notNull(),
   comment: text('comment'),
