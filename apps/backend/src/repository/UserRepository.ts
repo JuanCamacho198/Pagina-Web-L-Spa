@@ -1,0 +1,88 @@
+import { db, users, cartItems, services } from '@l-spa/database';
+import { eq, and } from 'drizzle-orm';
+import type { UserUpdate } from '@l-spa/shared-types';
+
+export class UserRepository {
+  async findByAuth0Id(auth0Id: string) {
+    const results = await db.select().from(users).where(eq(users.auth0Id, auth0Id)).limit(1);
+    return results[0] || null;
+  }
+
+  async findById(id: string) {
+    const results = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    return results[0] || null;
+  }
+
+  async upsert(data: { auth0Id: string; email: string; firstName?: string; role?: 'admin' | 'employee' | 'customer' }) {
+    const results = await db.insert(users).values({
+      auth0Id: data.auth0Id,
+      email: data.email,
+      firstName: data.firstName,
+      role: data.role || 'customer',
+    }).onConflictDoUpdate({
+      target: [users.auth0Id],
+      set: { firstName: data.firstName, email: data.email }
+    }).returning();
+    return results[0];
+  }
+
+  async update(auth0Id: string, updates: UserUpdate) {
+    const results = await db.update(users)
+      .set(updates)
+      .where(eq(users.auth0Id, auth0Id))
+      .returning();
+    return results[0];
+  }
+
+  // Cart Repository logic inline or separate? Let's keep it here for now as they are related.
+  async getCartItems(userId: string) {
+    return await db.select({
+      id: cartItems.id,
+      serviceId: cartItems.serviceId,
+      serviceName: services.name,
+      servicePrice: services.price,
+      category: services.category,
+      imageUrl: services.imageUrl,
+      duration: services.duration,
+      quantity: cartItems.quantity,
+      createdAt: cartItems.createdAt
+    })
+    .from(cartItems)
+    .innerJoin(services, eq(cartItems.serviceId, services.id))
+    .where(eq(cartItems.userId, userId));
+  }
+
+  async findCartItem(userId: string, serviceId: string) {
+    const results = await db.select()
+      .from(cartItems)
+      .where(and(eq(cartItems.userId, userId), eq(cartItems.serviceId, serviceId)))
+      .limit(1);
+    return results[0] || null;
+  }
+
+  async addCartItem(userId: string, serviceId: string, quantity: number = 1) {
+    const results = await db.insert(cartItems).values({
+      userId,
+      serviceId,
+      quantity
+    }).returning();
+    return results[0];
+  }
+
+  async updateCartItemQuantity(id: string, newQuantity: number) {
+    const results = await db.update(cartItems)
+      .set({ quantity: newQuantity })
+      .where(eq(cartItems.id, id))
+      .returning();
+    return results[0];
+  }
+
+  async removeCartItem(id: string) {
+    const results = await db.delete(cartItems).where(eq(cartItems.id, id)).returning();
+    return results[0];
+  }
+
+  async clearCart(userId: string) {
+    await db.delete(cartItems).where(eq(cartItems.userId, userId));
+  }
+}

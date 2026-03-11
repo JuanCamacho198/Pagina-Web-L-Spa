@@ -1,0 +1,77 @@
+import { Hono } from 'hono';
+import { zodValidator } from '@hono/zod-validator';
+import { userSyncSchema, userUpdateSchema, cartItemSchema } from '@l-spa/shared-types';
+import { UserService } from '../services/UserService';
+
+const users = new Hono();
+const userService = new UserService();
+
+// Get User Profile
+users.get('/:auth0Id', async (c) => {
+  const auth0Id = c.req.param('auth0Id');
+  const user = await userService.getUserByAuth0Id(auth0Id);
+  if (!user) return c.json({ error: 'Usuario no encontrado' }, 404);
+  return c.json(user);
+});
+
+// Sync User Profile (Upsert)
+users.post('/sync', zodValidator('json', userSyncSchema), async (c) => {
+  const data = c.req.valid('json');
+  const result = await userService.syncUser(data);
+  return c.json(result);
+});
+
+// Update User Profile
+users.put('/:auth0Id', zodValidator('json', userUpdateSchema.partial()), async (c) => {
+  const auth0Id = c.req.param('auth0Id');
+  const updates = c.req.valid('json');
+  const result = await userService.updateUser(auth0Id, updates);
+  if (!result) return c.json({ error: 'Usuario no encontrado' }, 404);
+  return c.json(result);
+});
+
+// CART ROUTES
+// Get Cart
+users.get('/:auth0Id/cart', async (c) => {
+  try {
+    const auth0Id = c.req.param('auth0Id');
+    const result = await userService.getCart(auth0Id);
+    return c.json(result);
+  } catch (err: any) {
+    return c.json({ error: err.message }, 404);
+  }
+});
+
+// Add to Cart
+users.post('/cart', zodValidator('json', cartItemSchema), async (c) => {
+  const { auth0Id, serviceId, quantity } = c.req.valid('json');
+  if (!auth0Id) return c.json({ error: 'auth0Id es requerido' }, 400);
+  
+  try {
+    const result = await userService.addToCart(auth0Id, serviceId, quantity);
+    return c.json(result, 201);
+  } catch (err: any) {
+    return c.json({ error: err.message }, 404);
+  }
+});
+
+// Remove from Cart
+users.delete('/cart/:itemId', async (c) => {
+  const itemId = c.req.param('itemId');
+  const result = await userService.removeFromCart(itemId);
+  if (!result) return c.json({ error: 'Item no encontrado' }, 404);
+  return c.json({ message: 'Item eliminado correctamente', item: result });
+});
+
+// Clear Cart
+users.delete('/:auth0Id/cart/clear', async (c) => {
+  const auth0Id = c.req.param('auth0Id');
+  try {
+    await userService.clearCart(auth0Id);
+    return c.json({ message: 'Carrito vaciado' });
+  } catch (err: any) {
+    return c.json({ error: err.message }, 404);
+  }
+});
+
+export default users;

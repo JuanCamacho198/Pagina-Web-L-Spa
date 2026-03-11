@@ -1,0 +1,27 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"moduleResolution": "bundler",
+		"module": "esnext",
+		"lib": ["esnext", "dom", "dom.iterable"],
+		"types": ["@sveltejs/kit", "vite"],
+    "baseUrl": ".",
+    "paths": {
+      "$lib": ["src/lib"],
+      "$lib/*": ["src/lib/*"],
+      "$components": ["src/lib/components"],
+      "$components/*": ["src/lib/components/*"],
+      "$assets": ["src/lib/assets"],
+      "$assets/*": ["src/lib/assets/*"],
+      "$stores": ["src/lib/stores"],
+      "$stores/*": ["src/lib/stores/*"],
+      "$utils": ["src/lib/utils"],
+      "$utils/*": ["src/lib/utils/*"]
+    }
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.svelte",
+		".svelte-kit/types/**/*.d.ts"
+	]
+}

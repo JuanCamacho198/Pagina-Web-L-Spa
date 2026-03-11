@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #8C1B58;
+  --primary-light: #BF3F7F;
+  --primary-dark: #590E35;
+  --secondary-color: #F2D7D9;
+  --accent-color: #D99B9B;
+}
+
+body {
+  @apply antialiased text-gray-900 bg-white;
+}
+
+.btn {
+  @apply px-6 py-2 rounded-full font-medium transition-all duration-300;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary-light active:scale-95;
+}
+
+.btn-ghost {
+  @apply text-primary-dark hover:bg-secondary;
+}
