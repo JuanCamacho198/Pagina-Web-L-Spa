@@ -2,7 +2,7 @@
   import { Star, Clock, MapPin, ChevronLeft, ChevronRight, Sparkles, MoveRight } from 'lucide-svelte';
   import { isAuthenticated, login } from '$lib/auth';
   import Button from '$lib/components/Button.svelte';
-  import bannerSpa from '$lib/assets/banners/bannerSpa.avif';
+  import bannerSpa from '../lib/assets/banners/bannerSpa.avif';
 
   let { data } = $props();
   

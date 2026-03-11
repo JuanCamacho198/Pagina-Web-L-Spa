@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
+    "@l-spa/shared-types": "workspace:*",
     "@tailwindcss/postcss": "^4.2.1",
     "@types/auth0-js": "^9.21.6",
     "@types/react": "^19.2.14",

@@ -3,7 +3,7 @@
   import { page } from '$app/stores';
   
   // Logos
-  import logo from '$lib/assets/logos/LOGO4x-sinfondo.png';
+  import logo from '../assets/logos/LOGO4x-sinfondo.png';
 
   const currentYear = new Date().getFullYear();
 

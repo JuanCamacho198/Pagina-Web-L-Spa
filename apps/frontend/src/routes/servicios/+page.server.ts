@@ -1,11 +1,17 @@
-import { type Service } from '@l-spa/shared-types/services';
+import { type Service } from '@l-spa/shared-types';
+import { apiFetch } from '$lib/utils/api';
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ fetch }) {
-	const response = await fetch('http://localhost:3000/api/services');
-	const services: Service[] = await response.json();
-
-	return {
-		services
-	};
+export async function load() {
+	try {
+		const services: Service[] = await apiFetch('/services');
+		return {
+			services: services || []
+		};
+	} catch (error) {
+		console.error('Error fetching services:', error);
+		return {
+			services: []
+		};
+	}
 }
