@@ -17,13 +17,15 @@
 
   let isAdded = $state(false);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     cart.addItem({
       serviceId: service.id,
       slug: slugify(service.name),
       name: service.name,
       price: Number(service.price),
-      image: service.image_url || ''
+      image: service.imageUrl || service.image_url || ''
     });
     
     isAdded = true;
@@ -41,15 +43,24 @@
       .replace(/\s+/g, '-');
 </script>
 
-<div class={cn(
-  "group relative bg-white rounded-4xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full",
-  className
-)}>
+<a 
+  href="/servicios/{slugify(service.name)}"
+  class={cn(
+    "group relative bg-white rounded-4xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full",
+    className
+  )}
+>
   <!-- Image Container -->
   <div class="relative h-64 overflow-hidden">
-    {#if service.image_url}
+    {#if service.imageUrl || service.image_url}
       <img 
-        src={service.image_url} 
+        src={service.imageUrl || service.image_url} 
+        alt={service.name}
+        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+    {:else if service.imageFileName}
+      <img 
+        src="/assets/{service.imageFileName}" 
         alt={service.name}
         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
@@ -76,42 +87,49 @@
   <!-- Content -->
   <div class="p-8 flex flex-col flex-1">
     <div class="mb-4">
-      <h3 class="text-2xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-1">
-        {service.name}
-      </h3>
-      <p class="text-gray-500 text-sm leading-relaxed line-clamp-3 font-medium">
+      <div class="flex items-center justify-between gap-2 mb-2">
+        <h3 class="text-2xl font-black text-gray-900 group-hover:text-primary transition-colors line-clamp-1">
+          {service.name}
+        </h3>
+        <div class="p-2 bg-gray-50 rounded-xl group-hover:bg-primary group-hover:text-white transition-all duration-300">
+           <ArrowRight size={18} class="group-hover:translate-x-0.5 transition-transform" />
+        </div>
+      </div>
+      <p class="text-gray-500 text-sm leading-relaxed line-clamp-2 font-medium">
         {service.description || 'Disfruta de una experiencia única de bienestar y relajación diseñada especialmente para ti.'}
       </p>
     </div>
 
     <!-- Features -->
     <div class="flex flex-wrap gap-4 mb-8 mt-auto">
-      <div class="flex items-center gap-2 text-gray-400">
-        <Clock size={16} class="text-primary/60" />
-        <span class="text-xs font-bold uppercase tracking-wider">{service.duration || 60} min</span>
+      <div class="flex items-center gap-2 text-gray-400 bg-gray-50/50 px-3 py-1.5 rounded-xl">
+        <Clock size={14} class="text-primary/60" />
+        <span class="text-[10px] font-black uppercase tracking-wider">{service.duration || 60} min</span>
       </div>
-      <div class="flex items-center gap-2 text-gray-400">
-        <Banknote size={16} class="text-primary/60" />
-        <span class="text-xs font-bold uppercase tracking-wider">${service.price} MXN</span>
+      <div class="flex items-center gap-2 text-gray-400 bg-gray-50/50 px-3 py-1.5 rounded-xl">
+        <Banknote size={14} class="text-primary/60" />
+        <span class="text-[10px] font-black uppercase tracking-wider">Profesional</span>
       </div>
     </div>
 
     <!-- Action -->
-    <div class="flex items-center justify-between gap-4 pt-6 border-t border-gray-50">
+    <div class="flex items-center justify-between gap-4 pt-6 border-t border-gray-100">
       <div class="flex flex-col">
-        <span class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Desde</span>
-        <span class="text-xl font-black text-gray-900">${service.price}</span>
+        <span class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Inversión</span>
+        <span class="text-2xl font-black text-gray-900">
+          {Number(service.price).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}
+        </span>
       </div>
       
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
         <button 
           onclick={handleAddToCart}
           disabled={isAdded}
           class={cn(
-            "p-3 rounded-2xl border transition-all duration-300",
+            "h-12 w-12 flex items-center justify-center rounded-2xl border transition-all duration-300 shadow-sm",
             isAdded 
               ? "bg-emerald-50 border-emerald-100 text-emerald-500 scale-95" 
-              : "bg-gray-50 border-gray-100 text-gray-400 hover:bg-primary/5 hover:border-primary/20 hover:text-primary"
+              : "bg-white border-gray-100 text-gray-400 hover:bg-primary hover:border-primary hover:text-white hover:shadow-lg hover:shadow-primary/20"
           )}
           aria-label="Añadir al carrito"
         >
@@ -123,15 +141,7 @@
             <ShoppingBag size={20} strokeWidth={2.5} />
           {/if}
         </button>
-
-        <Button 
-          href="/servicios/{slugify(service.name)}"
-          class="rounded-2xl px-6 py-3 font-bold shadow-xl shadow-primary/10 group-hover:shadow-primary/20"
-        >
-          Detalles
-          <ArrowRight size={18} class="ml-2 group-hover:translate-x-1 transition-transform" />
-        </Button>
       </div>
     </div>
   </div>
-</div>
+</a>

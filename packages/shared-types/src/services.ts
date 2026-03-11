@@ -20,3 +20,9 @@ export const updateServiceSchema = serviceSchema.partial().extend({
 
 export type ServiceSchema = z.infer<typeof serviceSchema>;
 export type UpdateServiceSchema = z.infer<typeof updateServiceSchema>;
+
+export interface Service extends ServiceSchema {
+  id: string;
+  image_url?: string; // Compatibility with both camelCase and snake_case
+  imageFileName?: string;
+}

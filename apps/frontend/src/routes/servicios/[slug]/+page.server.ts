@@ -1,38 +1,35 @@
 import { error } from '@sveltejs/kit';
-import type { Service } from '@l-spa/shared-types/services';
+import { type Service } from '@l-spa/shared-types';
+import { apiFetch } from '$lib/utils/api';
+
+const slugify = (name: string) => 
+    name.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, '-');
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ params, fetch }) {
+export async function load({ params }) {
 	const { slug } = params;
 
-	// Intentar obtener el servicio por el slug (nombre normalizado en el backend)
-	// En el backend original se filtraba por name. En Hono necesitamos asegurarnos que maneje esto.
-	const response = await fetch(`http://localhost:3000/api/services?name=${slug}`);
-	
-	if (!response.ok) {
-		throw error(404, 'Servicio no encontrado');
-	}
+    try {
+        const allServices: Service[] = await apiFetch('/services');
+        const service = allServices.find(s => slugify(s.name) === slug);
+        
+        if (!service) {
+            throw error(404, 'Servicio no encontrado');
+        }
 
-	const service: Service = await response.json();
-
-    // Si el backend devuelve un array (como antes), tomamos el primero
-    // o si el backend devuelve un 404 si no existe.
-    if (!service) {
-        throw error(404, 'Servicio no encontrado');
+        return {
+            service,
+            recommendations: allServices
+                .filter(s => s.id !== service.id)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 3)
+        };
+    } catch (e) {
+        console.error('Error loading service:', e);
+        if (e.status === 404) throw e;
+        throw error(500, 'Error interno al cargar el servicio');
     }
-
-    // Obtener recomendaciones
-    const recommendationsRes = await fetch('http://localhost:3000/api/services');
-    let allServices: Service[] = [];
-    if (recommendationsRes.ok) {
-        allServices = await recommendationsRes.json();
-    }
-
-	return {
-		service,
-        recommendations: allServices
-            .filter(s => s.id !== service.id)
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 3)
-	};
 }
