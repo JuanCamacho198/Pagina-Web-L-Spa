@@ -6,6 +6,7 @@
     variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'lead' | 'small';
     as?: string;
     children?: any;
+    class?: string;
   }
 
   let { 

@@ -12,9 +12,9 @@
 		Heart,
 		MoveRight
 	} from 'lucide-svelte';
-	import Button from '$components/Button.svelte';
-	import Typography from '$components/Typography.svelte';
-	import Badge from '$components/Badge.svelte';
+	import * as Button from '$lib/components/Button.svelte';
+	import * as Typography from '$lib/components/Typography.svelte';
+	import * as Badge from '$lib/components/Badge.svelte';
 	import { cn } from '$lib/utils/cn';
 
 	let { data } = $props();
@@ -58,7 +58,7 @@
 				alt="L-SPA Luxury Environment" 
 				class="w-full h-full object-cover brightness-[0.45] saturate-[0.8]"
 			/>
-			<div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60"></div>
+			<div class="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/60"></div>
 		</div>
 		
 		<div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-white text-center sm:text-left w-full">
@@ -71,7 +71,7 @@
 				<div class="space-y-6">
 					<h1 class="text-6xl sm:text-8xl md:text-9xl font-black leading-[0.85] tracking-tighter drop-shadow-2xl">
 						REINVENTA <br />
-						<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-light via-white to-primary-light/60">TU CALMA</span>
+						<span class="text-transparent bg-clip-text bg-linear-to-r from-primary-light via-white to-primary-light/60">TU CALMA</span>
 					</h1>
 					<p class="text-xl sm:text-2xl font-medium text-gray-300 max-w-2xl leading-relaxed drop-shadow-lg">
 						Un refugio exclusivo de relajación en el corazón de Medellín. Sumérgete en un viaje sensorial diseñado para tu renovación total.
@@ -81,13 +81,13 @@
 				<div class="flex flex-col sm:flex-row items-center gap-6 pt-4">
 					<Button 
 						href="/servicios"
-						class="w-full sm:w-auto px-12 py-7 rounded-[32px] text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/40 group overflow-hidden relative"
+						class="w-full sm:w-auto px-12 py-7 rounded-4xl text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/40 group overflow-hidden relative"
 					>
 						<span class="relative z-10 flex items-center gap-3">
 							Explorar Servicios
 							<MoveRight size={24} class="group-hover:translate-x-2 transition-transform duration-500" />
 						</span>
-						<div class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+						<div class="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
 					</Button>
 					
 					<button class="group flex items-center gap-4 text-white font-black text-sm uppercase tracking-[0.2em] hover:text-primary-light transition-colors">
@@ -101,7 +101,7 @@
 		</div>
 
 		<!-- Bottom Indicators -->
-		<div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-12 text-white/40 text-[9px] font-black uppercase tracking-[0.3em] hidden lg:flex mt-12">
+		<div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-12 text-white/40 text-[9px] font-black uppercase tracking-[0.3em]  lg:flex mt-12">
 			<div class="flex items-center gap-3"><span class="h-px w-8 bg-current"></span> MEDELLÍN</div>
 			<div class="flex items-center gap-3"><span class="h-px w-8 bg-current"></span> PREMIUM SPA</div>
 			<div class="flex items-center gap-3"><span class="h-px w-8 bg-current"></span> EXCLUSIVO</div>
@@ -123,7 +123,7 @@
 					>
 						<div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-full translate-x-16 -translate-y-16 group-hover:bg-primary/5 transition-colors"></div>
 						
-						<div class={cn("h-20 w-20 rounded-[28px] flex items-center justify-center text-white mb-10 shadow-2xl shadow-primary/20 group-hover:rotate-[15deg] transition-all duration-500", item.color)}>
+						<div class={cn("h-20 w-20 rounded-[28px] flex items-center justify-center text-white mb-10 shadow-2xl shadow-primary/20 group-hover:rotate-15 transition-all duration-500", item.color)}>
 							<item.icon size={36} strokeWidth={2.5} />
 						</div>
 						
@@ -166,7 +166,7 @@
 					{#each carouselItems as item}
 						<div class="min-w-full h-full relative">
 							<img src={item.image} alt={item.title} class="w-full h-full object-cover saturate-[0.8]" />
-							<div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent"></div>
+							<div class="absolute inset-0 bg-linear-to-t from-gray-950 via-gray-950/20 to-transparent"></div>
 							
 							<div class="absolute bottom-20 left-20 max-w-md animate-in fade-in slide-in-from-bottom-10 duration-700">
 								<h3 class="text-white text-5xl font-black tracking-tighter mb-4">{item.title}</h3>
@@ -210,7 +210,7 @@
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 				{#each services as service, i}
 					<div class="group relative bg-white rounded-[56px] overflow-hidden border border-gray-100 shadow-xl hover:shadow-primary/5 transition-all duration-700 hover:-translate-y-4">
-						<div class="h-[400px] overflow-hidden relative">
+						<div class="h-100 overflow-hidden relative">
 							<img 
 								src={service.imageUrl || '/src/assets/banners/bannerSpa.avif'} 
 								alt={service.name} 
@@ -247,7 +247,7 @@
 
 							<Button 
 								href="/servicios"
-								class="w-full py-5 rounded-[24px] font-black text-[10px] uppercase tracking-[0.2em] transform transition-transform group-hover:scale-[1.02]"
+								class="w-full py-5 rounded-3xl font-black text-[10px] uppercase tracking-[0.2em] transform transition-transform group-hover:scale-[1.02]"
 							>
 								Reservar Sesión
 							</Button>
@@ -271,8 +271,8 @@
 	<section class="mb-32 px-6">
 		<div class="max-w-7xl mx-auto bg-primary rounded-[64px] p-20 md:p-32 text-center text-white relative overflow-hidden group">
 			<!-- Decor -->
-			<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-white opacity-[0.03] rounded-full translate-x-1/2 -translate-y-1/2 transition-transform duration-[2s] group-hover:scale-125"></div>
-			<div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black opacity-[0.05] rounded-full -translate-x-1/4 translate-y-1/4"></div>
+			<div class="absolute top-0 right-0 w-150 h-150 bg-white opacity-[0.03] rounded-full translate-x-1/2 -translate-y-1/2 transition-transform duration-[2s] group-hover:scale-125"></div>
+			<div class="absolute bottom-0 left-0 w-100 h-100 bg-black opacity-[0.05] rounded-full -translate-x-1/4 translate-y-1/4"></div>
 
 			<div class="relative z-10 space-y-12">
 				<div class="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-white/20 bg-white/10 uppercase tracking-[0.4em] text-[10px] font-black mb-4">

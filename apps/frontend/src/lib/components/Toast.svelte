@@ -62,14 +62,14 @@
   };
 </script>
 
-<div class="fixed bottom-6 right-6 z-[200] flex flex-col gap-3 max-w-[380px] w-full pointer-events-none">
+<div class="fixed bottom-6 right-6 z-200 flex flex-col gap-3 max-w-95 w-full pointer-events-none">
   {#each toasts as t (t.id)}
     <div 
       animate:flip={{ duration: 300 }}
       in:fly={{ x: 100, duration: 400, opacity: 0 }}
       out:fade={{ duration: 200 }}
       class={cn(
-        "pointer-events-auto flex items-start gap-4 p-4 border rounded-[24px] shadow-2xl backdrop-blur-sm transition-all relative overflow-hidden",
+        "pointer-events-auto flex items-start gap-4 p-4 border rounded-3xl shadow-2xl backdrop-blur-sm transition-all relative overflow-hidden",
         colors[t.type]
       )}
     >

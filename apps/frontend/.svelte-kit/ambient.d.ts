@@ -49,10 +49,10 @@ declare module '$env/static/private' {
 	export const ComSpec: string;
 	export const CONDA_PROMPT_MODIFIER: string;
 	export const DriverData: string;
-	export const EFC_6668_1262719628: string;
-	export const EFC_6668_1592913036: string;
-	export const EFC_6668_2283032206: string;
-	export const EFC_6668_3789132940: string;
+	export const EFC_6384_1262719628: string;
+	export const EFC_6384_1592913036: string;
+	export const EFC_6384_2283032206: string;
+	export const EFC_6384_3789132940: string;
 	export const FNM_ARCH: string;
 	export const FNM_COREPACK_ENABLED: string;
 	export const FNM_DIR: string;
@@ -111,12 +111,12 @@ declare module '$env/static/private' {
 	export const COLORTERM: string;
 	export const PYTHONSTARTUP: string;
 	export const PYTHON_BASIC_REPL: string;
+	export const BUN_INSPECT_CONNECT_TO: string;
 	export const GIT_ASKPASS: string;
 	export const VSCODE_GIT_ASKPASS_NODE: string;
 	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
 	export const VSCODE_GIT_IPC_HANDLE: string;
-	export const BUN_INSPECT_CONNECT_TO: string;
 	export const VSCODE_INJECTION: string;
 	export const npm_config_local_prefix: string;
 	export const npm_config_user_agent: string;
@@ -165,10 +165,7 @@ declare module '$env/static/private' {
  * The above values will be the same _even if_ different values for `ENVIRONMENT` or `PUBLIC_BASE_URL` are set at runtime, as they are statically replaced in your code with their build time values.
  */
 declare module '$env/static/public' {
-	export const PUBLIC_API_URL: string;
-	export const PUBLIC_AUTH0_DOMAIN: string;
-	export const PUBLIC_AUTH0_CLIENT_ID: string;
-	export const PUBLIC_AUTH0_AUDIENCE: string;
+	
 }
 
 /**
@@ -229,10 +226,10 @@ declare module '$env/dynamic/private' {
 		ComSpec: string;
 		CONDA_PROMPT_MODIFIER: string;
 		DriverData: string;
-		EFC_6668_1262719628: string;
-		EFC_6668_1592913036: string;
-		EFC_6668_2283032206: string;
-		EFC_6668_3789132940: string;
+		EFC_6384_1262719628: string;
+		EFC_6384_1592913036: string;
+		EFC_6384_2283032206: string;
+		EFC_6384_3789132940: string;
 		FNM_ARCH: string;
 		FNM_COREPACK_ENABLED: string;
 		FNM_DIR: string;
@@ -291,12 +288,12 @@ declare module '$env/dynamic/private' {
 		COLORTERM: string;
 		PYTHONSTARTUP: string;
 		PYTHON_BASIC_REPL: string;
+		BUN_INSPECT_CONNECT_TO: string;
 		GIT_ASKPASS: string;
 		VSCODE_GIT_ASKPASS_NODE: string;
 		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
 		VSCODE_GIT_IPC_HANDLE: string;
-		BUN_INSPECT_CONNECT_TO: string;
 		VSCODE_INJECTION: string;
 		npm_config_local_prefix: string;
 		npm_config_user_agent: string;
@@ -364,10 +361,6 @@ declare module '$env/dynamic/private' {
  */
 declare module '$env/dynamic/public' {
 	export const env: {
-		PUBLIC_API_URL: string;
-		PUBLIC_AUTH0_DOMAIN: string;
-		PUBLIC_AUTH0_CLIENT_ID: string;
-		PUBLIC_AUTH0_AUDIENCE: string;
 		[key: `PUBLIC_${string}`]: string | undefined;
 	}
 }

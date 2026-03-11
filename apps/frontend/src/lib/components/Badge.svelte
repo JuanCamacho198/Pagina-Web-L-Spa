@@ -5,6 +5,7 @@
   interface Props extends HTMLAttributes<HTMLSpanElement> {
     variant?: 'default' | 'secondary' | 'outline' | 'destructive';
     children?: any;
+    class?: string;
   }
 
   let { 
