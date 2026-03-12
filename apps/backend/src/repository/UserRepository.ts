@@ -1,23 +1,36 @@
-import { db, users, cartItems, services } from '@l-spa/database';
+import { db, user, cartItems, services } from '@l-spa/database';
 import { eq, and } from 'drizzle-orm';
 import type { UserUpdate } from '@l-spa/shared-types';
 
 export class UserRepository {
   async findByAuth0Id(auth0Id: string) {
-    const results = await db.select().from(users).where(eq(users.auth0Id, auth0Id)).limit(1);
+    // Note: auth0Id might not be in the new Better Auth 'user' table unless added.
+    // In Better Auth, 'id' is often the primary identifier.
+    const results = await db.select().from(user).where(eq(user.id, auth0Id)).limit(1);
     return results[0] || null;
   }
 
   async findById(id: string) {
-    const results = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    const results = await db.select().from(user).where(eq(user.id, id)).limit(1);
     return results[0] || null;
   }
 
   async upsert(data: { auth0Id: string; email: string; firstName?: string; role?: 'admin' | 'employee' | 'customer' }) {
-    const results = await db.insert(users).values({
-      auth0Id: data.auth0Id,
+    const results = await db.insert(user).values({
+      id: data.auth0Id,
       email: data.email,
       firstName: data.firstName,
+      name: data.firstName || '', // Better Auth user table has 'name'
+      role: data.role as 'admin' | 'employee' | 'customer',
+    }).onConflictDoUpdate({
+      target: user.id,
+      set: {
+        email: data.email,
+        firstName: data.firstName,
+        name: data.firstName || '',
+        role: data.role as 'admin' | 'employee' | 'customer',
+      }
+    }).returning();
       role: data.role || 'customer',
     }).onConflictDoUpdate({
       target: [users.auth0Id],
