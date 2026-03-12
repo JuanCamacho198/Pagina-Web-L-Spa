@@ -2,18 +2,15 @@
   import { cn } from '$lib/utils/cn';
   import type { HTMLAttributes } from 'svelte/elements';
 
-  type Props = HTMLAttributes<HTMLDivElement> & {
-    hoverable?: boolean;
-    children?: any;
-  };
-
-  let props: Props = $props();
   let { 
     hoverable = false, 
     class: className = '', 
     children,
     ...rest 
-  } = props;
+  } = $props<HTMLAttributes<HTMLDivElement> & {
+    hoverable?: boolean;
+    children?: any;
+  }>();
 </script>
 
 <div

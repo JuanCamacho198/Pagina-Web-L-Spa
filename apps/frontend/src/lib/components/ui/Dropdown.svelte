@@ -1,20 +1,17 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
 
-  type Props = {
-    items?: any[];
-    trigger: any;
-    align?: 'left' | 'right' | 'center';
-    class?: string;
-  };
-
-  let props: Props = $props();
   let { 
     items = [], 
     trigger, 
     align = 'left', 
     class: className = '' 
-  } = props;
+  } = $props<{
+    items?: any[];
+    trigger: any;
+    align?: 'left' | 'right' | 'center';
+    class?: string;
+  }>();
 
   let isOpen = $state(false);
   let dropdownRef = $state<HTMLElement | null>(null);

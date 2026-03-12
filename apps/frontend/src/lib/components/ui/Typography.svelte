@@ -3,21 +3,18 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
 
-  type Props = HTMLAttributes<HTMLElement> & {
-    variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'lead' | 'small';
-    as?: string;
-    children?: Snippet;
-    class?: string;
-  };
-
-  let props: Props = $props();
   let { 
     variant = 'p', 
     as, 
     class: className = '', 
     children,
     ...rest 
-  } = props;
+  } = $props<HTMLAttributes<HTMLElement> & {
+    variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'lead' | 'small';
+    as?: string;
+    children?: Snippet;
+    class?: string;
+  }>();
 
   const variants = {
     h1: 'text-4xl font-extrabold tracking-tight lg:text-5xl text-gray-900',

@@ -2,17 +2,6 @@
   import { cn } from '$lib/utils/cn';
   import type { HTMLInputAttributes } from 'svelte/elements';
 
-  type Props = HTMLInputAttributes & {
-    id?: string;
-    label?: string;
-    error?: string;
-    value?: string | number;
-    placeholder?: string;
-    class?: string;
-    type?: string;
-  };
-
-  let props: Props = $props();
   let { 
     id = "input-" + Math.floor(Math.random() * 1000000),
     label, 
@@ -21,7 +10,15 @@
     class: className = '',
     type = 'text',
     ...rest 
-  } = props;
+  } = $props<HTMLInputAttributes & {
+    id?: string;
+    label?: string;
+    error?: string;
+    value?: string | number;
+    placeholder?: string;
+    class?: string;
+    type?: string;
+  }>();
 </script>
 
 <div class="w-full space-y-1.5">
