@@ -16,7 +16,7 @@
 
   // Load cart when session changes
   $effect(() => {
-    if (!session.isPending) {
+    if (!session.get().isPending) {
       cart.load();
     }
   });

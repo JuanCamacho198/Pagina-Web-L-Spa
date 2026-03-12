@@ -4,7 +4,7 @@
   import Button from './Button.svelte';
   import Badge from './Badge.svelte';
   import { ArrowRight, Clock, Banknote, ShoppingBag, Check } from 'lucide-svelte';
-  import type { Service } from '@l-spa/shared-types/services';
+  import type { Service } from '../../../../packages/shared-types/src/services';
   import { cart } from '$lib/cart';
   import { toast } from './Toast.svelte';
 
@@ -13,7 +13,7 @@
     class?: string;
   }
 
-  let { service, class: className = '' } = $props<Props>();
+  let { service, class: className = '' }: Props = $props();
 
   let isAdded = $state(false);
 

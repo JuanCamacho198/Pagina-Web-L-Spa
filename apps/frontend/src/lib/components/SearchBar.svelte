@@ -9,7 +9,7 @@
     class?: string;
   }
 
-  let { value = $bindable(), placeholder = "Buscar...", class: className = "" } = $props<Props>();
+  let { value = $bindable(), placeholder = "Buscar...", class: className = "" }: Props = $props();
 </script>
 
 <div class={cn("relative flex items-center group", className)}>

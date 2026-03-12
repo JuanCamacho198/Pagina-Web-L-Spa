@@ -16,7 +16,7 @@
     onRatingChange, 
     readonly = false, 
     size = 24 
-  } = $props<Props>();
+  }: Props = $props();
 
   let hoverRating = $state(0);
 

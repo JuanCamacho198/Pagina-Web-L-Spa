@@ -19,7 +19,7 @@
     key?: number;
   }
 
-  let { serviceId, key = 0 } = $props<Props>();
+  let { serviceId, key = 0 }: Props = $props();
   let reviews = $state<Review[]>([]);
   let isLoading = $state(true);
 

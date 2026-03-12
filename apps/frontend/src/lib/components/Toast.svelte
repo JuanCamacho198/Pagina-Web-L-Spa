@@ -10,7 +10,7 @@
   // Estado global para los toasts usando un rune de Svelte 5
   export let toasts = $state<Toast[]>([]);
 
-  export function addToast(message, type = 'info') {
+  export function addToast(message: string, type: ToastType = 'info') {
     const id = Math.random().toString(36).substring(2, 9);
     toasts.push({ id, message, type });
     
