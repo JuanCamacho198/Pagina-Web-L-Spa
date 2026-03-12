@@ -4,7 +4,7 @@
   import Badge from '../ui/Badge.svelte';
   import { ArrowRight, Clock, ShoppingBag, Check } from 'lucide-svelte';
   import { slugify } from '$lib/utils/text';
-  import { handleAddToCartLogic } from './ServiceCardLogic';
+  import { handleAddToCartLogic } from '$lib/logic/ServiceCardLogic';
   import type { Service } from '$lib/types/service';
 
   let { service, class: className = '' } = $props<{

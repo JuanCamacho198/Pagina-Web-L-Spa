@@ -3,7 +3,7 @@
   import Button from '../ui/Button.svelte';
   import Input from '../ui/Input.svelte';
   import Typography from '../ui/Typography.svelte';
-  import { AuthFormLogic } from './AuthFormLogic';
+  import { AuthFormLogic } from '$lib/logic/AuthFormLogic';
 
   const logic = new AuthFormLogic();
 </script>

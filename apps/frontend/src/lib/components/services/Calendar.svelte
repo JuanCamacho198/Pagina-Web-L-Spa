@@ -2,7 +2,7 @@
   import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from "lucide-svelte";
   import { cn } from "$lib/utils/cn";
   import Typography from "../ui/Typography.svelte";
-  import { CalendarLogic, type CalendarProps } from "./CalendarLogic";
+  import { CalendarLogic, type CalendarProps } from "$lib/logic/CalendarLogic";
 
   let props = $props<CalendarProps>();
   const logic = new CalendarLogic(props);

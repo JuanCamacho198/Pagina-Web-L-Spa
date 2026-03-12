@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Star } from 'lucide-svelte';
   import { cn } from '$lib/utils/cn';
-  import { calculateStarState } from './StarRatingLogic';
+  import { calculateStarState } from '$lib/logic/StarRatingLogic';
 
   let { 
     rating, 
