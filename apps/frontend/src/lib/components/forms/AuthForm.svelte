@@ -76,14 +76,3 @@
     </button>
   </div>
 </div>
-
-  <div class="mt-8 pt-6 border-t border-gray-100 text-center">
-    <button 
-      type="button"
-      onclick={() => (isLogin = !isLogin)}
-      class="text-sm font-bold text-gray-500 hover:text-primary transition-colors"
-    >
-      {isLogin ? '¿No tienes cuenta? Regístrate aquí' : '¿Ya tienes cuenta? Inicia sesión'}
-    </button>
-  </div>
-</div>

@@ -4,8 +4,14 @@
   import Typography from "../ui/Typography.svelte";
   import { CalendarLogic, type CalendarProps } from "$lib/logic/CalendarLogic";
 
-  let props = $props<CalendarProps>();
-  const logic = new CalendarLogic(props);
+  let { selectedDate, onDateSelect, minDate, maxDate } = $props<{
+    selectedDate?: string;
+    onDateSelect: (date: string) => void;
+    minDate?: string;
+    maxDate?: string;
+  }>();
+  
+  const logic = new CalendarLogic({ selectedDate, onDateSelect, minDate, maxDate });
 </script>
 
 <div class="p-4 bg-white rounded-3xl shadow-xl border border-gray-100 max-w-sm mx-auto">
