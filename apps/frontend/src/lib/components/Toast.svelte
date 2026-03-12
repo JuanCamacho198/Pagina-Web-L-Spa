@@ -10,6 +10,13 @@
   // Estado global para los toasts usando un rune de Svelte 5
   export let toasts = $state<Toast[]>([]);
 
+  export const toast = {
+    success: (msg: string) => addToast(msg, 'success'),
+    error: (msg: string) => addToast(msg, 'error'),
+    info: (msg: string) => addToast(msg, 'info'),
+    warning: (msg: string) => addToast(msg, 'warning'),
+  };
+
   export function addToast(message: string, type: ToastType = 'info') {
     const id = Math.random().toString(36).substring(2, 9);
     toasts.push({ id, message, type });
@@ -19,19 +26,12 @@
     }, 5000);
   }
 
-  export function removeToast(id) {
+  export function removeToast(id: string) {
     const index = toasts.findIndex(t => t.id === id);
     if (index !== -1) {
       toasts.splice(index, 1);
     }
   }
-
-  export const toast = {
-    success: function(msg) { addToast(msg, 'success') },
-    error: function(msg) { addToast(msg, 'error') },
-    info: function(msg) { addToast(msg, 'info') },
-    warning: function(msg) { addToast(msg, 'warning') },
-  };
 </script>
 
 <script lang="ts">
