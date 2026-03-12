@@ -13,20 +13,22 @@ const app = new Hono()
 app.use('*', logger())
 app.use('*', cors({
   origin: 'http://localhost:5173',
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowHeaders: ['Content-Type', 'Authorization'],
   exposeHeaders: ['Content-Length'],
   maxAge: 600,
   credentials: true,
 }))
 
+
 app.get('/api/v1/health', (c) => {
   return c.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 
-app.on(['GET', 'POST'], "/api/v1/auth/*", (c) => {
+app.all("/api/v1/auth/*", (c) => {
   return auth.handler(c.req.raw);
 });
+
 
 app.route('/api/v1/services', services)
 app.route('/api/v1/users', users)
