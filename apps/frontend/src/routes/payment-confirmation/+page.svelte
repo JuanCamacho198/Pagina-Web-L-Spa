@@ -10,9 +10,9 @@
 		Loader2,
 		Sparkles
 	} from 'lucide-svelte';
-	import Button from '$components/Button.svelte';
-	import Typography from '$components/Typography.svelte';
-	import { toast } from '$components/Toast.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Typography from '$lib/components/ui/Typography.svelte';
+	import { toast } from '$lib/components/feedback/Toast.svelte';
 	import { goto } from '$app/navigation';
 	import { cn } from '$lib/utils/cn';
 

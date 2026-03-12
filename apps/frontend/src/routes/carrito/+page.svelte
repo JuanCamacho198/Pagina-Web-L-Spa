@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { cart, cartSubtotal, cartCount } from '$lib/cart';
 	import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, Sparkles, ShieldCheck, Heart, ChevronLeft, Lock } from 'lucide-svelte';
-	import Button from '$components/Button.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 	import { slide } from 'svelte/transition';
 
 	const handleCheckout = () => {

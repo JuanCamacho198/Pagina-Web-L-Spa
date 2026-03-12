@@ -1,8 +1,8 @@
 <script lang="ts">
   import '../app.css';
-  import Button from '$components/Button.svelte';
-  import Toaster from '$components/Toast.svelte';
-  import Footer from '$components/Footer.svelte';  import { onMount } from 'svelte';
+  import Button from '$lib/components/ui/Button.svelte';
+  import Toaster from '$lib/components/feedback/Toast.svelte';
+  import Footer from '$lib/components/layout/Footer.svelte';  import { onMount } from 'svelte';
   import { authClient } from '$lib/auth-client';
    import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';
    import { cart, cartCount } from '$lib/cart';

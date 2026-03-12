@@ -12,11 +12,11 @@
 		History,
 		Sparkles
 	} from 'lucide-svelte';
-	import Button from '$components/Button.svelte';
-	import Typography from '$components/Typography.svelte';
-	import Badge from '$components/Badge.svelte';
-	import Modal from '$components/Modal.svelte';
-	import { toast } from '$components/Toast.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Typography from '$lib/components/ui/Typography.svelte';
+	import Badge from '$lib/components/ui/Badge.svelte';
+	import Modal from '$lib/components/ui/Modal.svelte';
+	import { toast } from '$lib/components/feedback/Toast.svelte';
 
 	let { data } = $props();
 	let appointments = $state(data.appointments || []);

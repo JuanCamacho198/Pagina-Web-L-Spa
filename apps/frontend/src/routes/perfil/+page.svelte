@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { user, isAuthenticated, isLoading, logout } from '$lib/auth';
 	import { User, Mail, ShieldCheck, LogOut, Heart, Calendar, MapPin, Camera } from 'lucide-svelte';
-	import Button from '$components/Button.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 

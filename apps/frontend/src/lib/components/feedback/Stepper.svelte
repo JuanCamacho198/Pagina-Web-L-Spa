@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Check } from 'lucide-svelte';
   import { cn } from '$lib/utils/cn';
-  import Typography from './Typography.svelte';
+  import Typography from '../ui/Typography.svelte';
 
   interface Step {
     id: number;

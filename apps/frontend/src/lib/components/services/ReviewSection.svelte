@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
   import ReviewList from './ReviewList.svelte';
-  import ReviewForm from './ReviewForm.svelte';
+  import ReviewForm from '../forms/ReviewForm.svelte';
 
   interface Props {
     serviceId: string;

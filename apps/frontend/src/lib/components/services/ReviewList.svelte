@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import StarRating from './StarRating.svelte';
-  import Typography from './Typography.svelte';
-  import Skeleton from './Skeleton.svelte';
+  import StarRating from '../ui/StarRating.svelte';
+  import Typography from '../ui/Typography.svelte';
+  import Skeleton from '../ui/Skeleton.svelte';
   import { User, MessageSquare, Calendar } from 'lucide-svelte';
   import { PUBLIC_API_URL } from '$env/static/public';
 
