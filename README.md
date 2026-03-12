@@ -1,53 +1,74 @@
-# ✨ L-SPA Web
+# ✨ L-SPA Web (Monorepo)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Svelte](https://img.shields.io/badge/Svelte-5-FF3E00?logo=svelte&logoColor=white)](https://svelte.dev/)
+[![SvelteKit](https://img.shields.io/badge/SvelteKit-2-FF3E00?logo=svelte&logoColor=white)](https://kit.svelte.dev/)
+[![Hono](https://img.shields.io/badge/Hono-4-E36002?logo=hono&logoColor=white)](https://hono.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Bun](https://img.shields.io/badge/Bun-1.1-black?logo=bun&logoColor=white)](https://bun.sh/)
 
-Plataforma integral para la gestión de servicios de Spa de lujo, diseñada para ofrecer una experiencia de usuario fluida desde el descubrimiento de servicios hasta la reserva y el pago.
+Plataforma integral para la gestión de servicios de Spa de lujo, migrada a una arquitectura de **Monorepo** moderna usando **SvelteKit** y **Hono**.
 
 ---
 
 ## 🚀 Características Principales
 
-- **🔐 Autenticación Robusta:** Sistema de registro e inicio de sesión seguro gestionado por **Auth0**.
-- **📅 Gestión de Citas:** Motor de reservas interactivo con selección de horarios mediante `react-datepicker`.
-- **🛒 Experiencia E-commerce:** Catálogo dinámico de servicios, carrito de compras persistente y flujo de checkout simulado.
-- **🎨 UI Moderna:** Interfaz responsive y elegante construida con **Tailwind CSS 4** y componentes atómicos.
-- **⚡ Rendimiento Optimizado:** Arquitectura basada en **Vite 6** para tiempos de carga ultrarrápidos y HMR.
-- **🗄️ Persistencia de Datos:** Integración con **Neon (PostgreSQL)** vía **Drizzle ORM** para una gestión de datos escalable y moderna.
+- **🔐 Autenticación Robusta:** Sistema gestionado por **Better Auth** con integración de Dashboard (Infra).
+- **📅 Gestión de Citas:** Motor de reservas interactivo con Svelte 5 Runes.
+- **🛒 Experiencia E-commerce:** Catálogo dinámico de servicios, carrito de compras persistente y flujo de checkout.
+- **🎨 UI Moderna:** Interfaz de alto nivel con **Tailwind CSS 4** y **Svelte 5**.
+- **⚡ Arquitectura Decoupled:** Frontend en SvelteKit y Backend API pura en Hono.
+- **🗄️ Persistencia de Datos:** Integración con **PostgreSQL** vía **Drizzle ORM**.
 
 ---
 
 ## 🛠️ Stack Tecnológico
 
-### Frontend
-- **Framework:** React 19 (TypeScript)
-- **Bundler:** Vite 6
-- **Package Manager:** Bun
-- **Estilos:** Tailwind CSS 4, Lucide React (iconos)
-- **Estado:** Context API (Cart)
-- **Formularios:** React Hook Form + Zod (validación)
-
-### Backend & Servicios
-- **Auth:** Auth0
-- **Base de Datos:** Neon Database (Serverless PostgreSQL)
-- **ORM:** Drizzle ORM
-- **Media:** Cloudinary (gestión de imágenes de servicios)
+### Monorepo (Bun Workspaces)
+- **Runtime:** Bun
+- **Frontend:** SvelteKit 2 + Svelte 5 (Runes)
+- **Backend:** Hono API
+- **Auth:** Better Auth
+- **Database:** Drizzle ORM + PostgreSQL
+- **Estilos:** Tailwind CSS 4
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📂 Estructura del Monorepo
 
 ```bash
-src/
-├── api/          # Configuraciones de API externas
-├── assets/       # Imágenes, iconos y recursos estáticos
-├── components/   # Componentes UI (Atomic Design) y Layouts
-├── context/      # Proveedores de estado global (CartContext)
-├── controllers/  # Lógica de negocio y orquestación
+apps/
+├── frontend/     # SvelteKit 5 App (SSR & Client)
+├── backend/      # Hono API Server
+packages/
+├── database/     # Esquemas de Drizzle y cliente DB común
+├── shared-types/ # Tipos TyperScript compartidos entre apps
+```
+
+---
+
+## 🛠️ Instalación y Desarrollo
+
+Este proyecto utiliza **Bun Workspaces**.
+
+```bash
+# Instalar dependencias
+bun install
+
+# Levantar todo el monorepo en desarrollo
+bun run dev
+
+# Levantar aplicaciones específicas
+bun run dev --filter frontend
+bun run dev --filter backend
+```
+
+---
+
+## 📝 Notas de Migración
+
+Este proyecto se encuentra en una fase de migración de una base de código React monolitica a este monorepo basado en micro-monolitos. La lógica original se encuentra en el directorio raíz (temporalmente) mientras se extrae a los nuevos servicios en `apps/`.
+
 ├── db/           # Configuración de Drizzle y Schemas SQL
 ├── features/     # Módulos por dominio (auth, booking, catalog, admin)
 ├── lib/          # Utilidades y librerías (Cloudinary, etc.)
