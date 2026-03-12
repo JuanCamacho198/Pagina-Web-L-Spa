@@ -80,7 +80,7 @@
 			<div class="lg:col-span-6 space-y-12 animate-in fade-in slide-in-from-left duration-1000">
 				<div class="relative group">
 					<!-- Main Image -->
-					<div class="aspect-[4/5] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white group-hover:shadow-primary/20 transition-all duration-700">
+					<div class="aspect-4/5 rounded-[60px] overflow-hidden shadow-2xl border-8 border-white group-hover:shadow-primary/20 transition-all duration-700">
 						{#if service.imageUrl || service.image_url}
 							<img
 								src={service.imageUrl || service.image_url}
@@ -131,7 +131,7 @@
 			<div class="lg:col-span-6 space-y-16 animate-in fade-in slide-in-from-right duration-1000 delay-200">
 				<div class="space-y-8">
 					<div class="flex items-center gap-4">
-						<Badge variant="primary" class="rounded-2xl px-6 py-3 font-black uppercase tracking-[0.2em] text-[10px] shadow-xl shadow-primary/10 border-none bg-primary text-white">
+						<Badge variant="default" class="rounded-2xl px-6 py-3 font-black uppercase tracking-[0.2em] text-[10px] shadow-xl shadow-primary/10 border-none bg-primary text-white">
 							{service.category || 'Bienestar'}
 						</Badge>
 						<div class="h-10 w-px bg-gray-100"></div>
