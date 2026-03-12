@@ -11,7 +11,14 @@ import { auth } from './lib/auth'
 const app = new Hono()
 
 app.use('*', logger())
-app.use('*', cors())
+app.use('*', cors({
+  origin: 'http://localhost:5173',
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+  exposeHeaders: ['Content-Length'],
+  maxAge: 600,
+  credentials: true,
+}))
 
 app.get('/api/v1/health', (c) => {
   return c.json({ status: 'ok', timestamp: new Date().toISOString() })

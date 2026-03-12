@@ -1,12 +1,36 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, type Snippet } from 'svelte';
   import { cn } from '$lib/utils/cn';
+
+  interface DropdownItem {
+    label: string;
+    onClick: () => void;
+    variant?: 'default' | 'danger';
+    icon?: any;
+  }
+
+  interface Props {
+    items: DropdownItem[];
+    trigger: Snippet;
+    align?: 'left' | 'right';
+    class?: string;
+  }
+
+  let { 
+    items = [], 
+    trigger, 
+    align = 'left', 
+    class: className = '' 
+  } = $props<Props>();
+
+  let isOpen = $state(false);
+  let dropdownRef = $state<HTMLElement | null>(null);
 
   const toggle = () => (isOpen = !isOpen);
   const close = () => (isOpen = false);
 
-  const handleClickOutside = (event) => {
-    if (dropdownRef && !dropdownRef.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef && !dropdownRef.contains(event.target as Node)) {
       close();
     }
   };
@@ -35,7 +59,7 @@
   {#if isOpen}
     <div 
       class={cn(
-        "absolute top-full mt-2 bg-white border border-gray-100 rounded-4xl shadow-2xl p-2 min-w-45 z-50",
+        "absolute top-full mt-2 bg-white border border-gray-100 rounded-4xl shadow-2xl p-2 min-w-[200px] z-50",
         "animate-in fade-in zoom-in-95 duration-200 ease-out",
         align === 'right' ? 'right-0' : 'left-0'
       )}
@@ -48,7 +72,7 @@
               close();
             }}
             class={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-4xll transition-all w-full text-left font-medium",
+              "flex items-center gap-3 px-3 py-2.5 rounded-2xl transition-all w-full text-left font-medium",
               item.variant === 'danger' 
                 ? 'text-red-500 hover:bg-red-50' 
                 : 'text-gray-600 hover:bg-gray-50 active:scale-95'
