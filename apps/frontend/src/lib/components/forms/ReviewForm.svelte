@@ -3,7 +3,7 @@
   import StarRating from '../ui/StarRating.svelte';
   import Button from '../ui/Button.svelte';
   import { Sparkles, Send } from 'lucide-svelte';
-  import { ReviewFormLogic, type ReviewFormProps } from '$lib/logic/ReviewFormLogic';
+  import { ReviewFormLogic, type ReviewFormProps } from '$lib/logic/ReviewFormLogic.svelte';
 
   let props: ReviewFormProps = $props();
   const logic = new ReviewFormLogic(props);
