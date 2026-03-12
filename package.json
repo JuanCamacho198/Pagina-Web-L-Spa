@@ -1,13 +1,12 @@
 {
   "name": "l-spa",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "version": "0.0.0",
+  "devDependencies": {
+    "@l-spa/shared-types": "workspace:*",
+    "typescript": "^5.9.3"
+  },
   "license": "MIT",
-  "type": "module",
+  "private": true,
   "scripts": {
     "dev": "bun run --filter \"*\" dev",
     "build": "bun run --filter \"*\" build",
@@ -15,8 +14,9 @@
     "db:push": "bun run --filter @l-spa/database db:push",
     "db:studio": "bun run --filter @l-spa/database db:studio"
   },
-  "devDependencies": {
-    "@l-spa/shared-types": "workspace:*",
-    "typescript": "^5.9.3"
-  }
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

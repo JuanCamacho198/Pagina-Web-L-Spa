@@ -8,23 +8,23 @@ import reviews from './controllers/reviewController'
 import config from './controllers/configController'
 import { auth } from './lib/auth'
 
-const app = new Hono().basePath('/api/v1')
+const app = new Hono()
 
 app.use('*', logger())
 app.use('*', cors())
 
-app.on(["POST", "GET"], "/auth/**", (c) => {
-  return auth.handler(c.req.raw);
-});
-
-app.get('/health', (c) => {
+app.get('/api/v1/health', (c) => {
   return c.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 
-app.route('/services', services)
-app.route('/users', users)
-app.route('/appointments', appointments)
-app.route('/reviews', reviews)
-app.route('/config', config)
+app.on(['GET', 'POST'], "/api/v1/auth/*", (c) => {
+  return auth.handler(c.req.raw);
+});
+
+app.route('/api/v1/services', services)
+app.route('/api/v1/users', users)
+app.route('/api/v1/appointments', appointments)
+app.route('/api/v1/reviews', reviews)
+app.route('/api/v1/config', config)
 
 export default app
