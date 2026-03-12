@@ -123,7 +123,7 @@
 			onclick={() => history.back()}
 			class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-all font-bold text-sm mb-12 group uppercase tracking-widest"
 		>
-			<div class="h-10 w-10 flex items-center justify-center rounded-4xl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
+			<div class="h-10 w-px0 flex items-center justify-center rounded-4xl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
 				<ChevronLeft size={20} />
 			</div>
 			Regresar
@@ -143,7 +143,7 @@
 					{#each steps as step, i}
 						<div class="flex flex-col items-center gap-4">
 							<div class={cn(
-								"w-10 h-10 rounded-4xl flex items-center justify-center font-black transition-all duration-500 ring-8 ring-white",
+								"w-px0 h-10 rounded-4xl flex items-center justify-center font-black transition-all duration-500 ring-8 ring-white",
 								currentStep >= i ? "bg-primary text-white scale-110 shadow-xl shadow-primary/20" : "bg-white text-gray-300 border border-gray-100 shadow-sm"
 							)}>
 								{step.id}
@@ -279,7 +279,7 @@
 
 							<div class="bg-gray-50/50 rounded-[40px] p-8 border border-gray-100 space-y-6">
 								<div class="flex items-center gap-6 pb-6 border-b border-gray-100">
-									<div class="h-16 w-16 bg-white rounded-4xl flex items-center justify-center text-primary shadow-sm">
+									<div class="h-16 w-px6 bg-white rounded-4xl flex items-center justify-center text-primary shadow-sm">
 										<User size={32} />
 									</div>
 									<div class="grow">
@@ -289,7 +289,7 @@
 								</div>
 
 								<div class="flex items-center gap-6 pb-6 border-b border-gray-100">
-									<div class="h-16 w-16 bg-white rounded-4xl flex items-center justify-center text-primary shadow-sm">
+									<div class="h-16 w-px6 bg-white rounded-4xl flex items-center justify-center text-primary shadow-sm">
 										<CalendarIcon size={32} />
 									</div>
 									<div class="grow">
@@ -364,7 +364,7 @@
 					<div class="space-y-6 mb-10 relative z-10">
 						{#each data.itemsToCheckout as item}
 							<div class="flex items-center gap-4 bg-gray-50/50 p-4 rounded-4xl border border-gray-50 group/item hover:bg-white transition-all shadow-sm">
-								<div class="w-14 h-14 rounded-4xl ring-1 ring-gray-100 overflow-hidden shrink-0">
+								<div class="w-px4 h-14 rounded-4xl ring-1 ring-gray-100 overflow-hidden shrink-0">
 									<img src={item.imageUrl || '/src/assets/banners/bannerSpa.avif'} alt={item.serviceName || item.name} class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" />
 								</div>
 								<div class="grow">

@@ -8,7 +8,7 @@
 	import StarRating from '$components/StarRating.svelte';
 	import ServiceCard from '$components/ServiceCard.svelte';
 	import ReviewSection from '$components/ReviewSection.svelte';
-	import { toast } from '$components/Toast.svelte';
+	import { addToast } from '$components/Toast.svelte';
 	import { cart } from '$lib/cart';
 	import { 
 		ShoppingCart, 
@@ -38,15 +38,15 @@
 		try {
 			await cart.addItem({
 				serviceId: service.id,
-				slug: $page.params.slug,
+				slug: page.params.slug,
 				name: service.name,
 				price: Number(service.price),
 				image: service.imageUrl || service.image_url || ''
 			});
-			toast.success(`${service.name} añadido al carrito`);
+			addToast(`${service.name} añadido al carrito`, 'success');
 		} catch (e) {
 			console.error('Error adding to cart:', e);
-			toast.error('No se pudo añadir al carrito');
+			addToast('No se pudo añadir al carrito', 'error');
 		} finally {
 			isAddingToCart = false;
 		}

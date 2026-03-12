@@ -63,7 +63,7 @@
       )}
     >
       <!-- Accent Line -->
-      <div class={cn("absolute left-0 top-0 bottom-0 w-1.5", 
+      <div class={cn("absolute left-0 top-0 bottom-0 w-px.5", 
         t.type === 'success' ? 'bg-emerald-500' :
         t.type === 'error' ? 'bg-rose-500' :
         t.type === 'info' ? 'bg-sky-500' :

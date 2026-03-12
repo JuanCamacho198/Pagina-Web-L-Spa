@@ -195,7 +195,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
                   >
                     <ShoppingCart size={22} className="group-hover:scale-110 transition-transform" />
                     {cartCount > 0 && (
-                      <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-black text-white ring-2 ring-white animate-in zoom-in">
+                      <span className="absolute -top-1 -right-1 flex h-13 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-black text-white ring-2 ring-white animate-in zoom-in">
                         {cartCount}
                       </span>
                     )}

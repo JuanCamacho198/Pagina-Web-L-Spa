@@ -47,7 +47,7 @@ export default function AdminRoute() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 rounded-4xll bg-linear-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/20 animate-pulse">
+          <div className="w-px2 h-12 rounded-4xll bg-linear-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/20 animate-pulse">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
           <p className="text-gray-500 font-medium animate-pulse">Verificando accesos...</p>

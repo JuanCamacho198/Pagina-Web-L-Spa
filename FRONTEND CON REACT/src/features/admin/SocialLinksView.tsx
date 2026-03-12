@@ -179,7 +179,7 @@ export default function SocialLinksView() {
                   href={settings.facebook} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
+                  className="w-px2 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
                 >
                   <Facebook size={20} />
                 </a>
@@ -189,7 +189,7 @@ export default function SocialLinksView() {
                   href={settings.instagram} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full bg-linear-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white hover:opacity-90 transition-opacity"
+                  className="w-px2 h-12 rounded-full bg-linear-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white hover:opacity-90 transition-opacity"
                 >
                   <Instagram size={20} />
                 </a>
@@ -199,7 +199,7 @@ export default function SocialLinksView() {
                   href={settings.whatsapp} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white hover:bg-green-600 transition-colors"
+                  className="w-px2 h-12 rounded-full bg-green-500 flex items-center justify-center text-white hover:bg-green-600 transition-colors"
                 >
                   <MessageCircle size={20} />
                 </a>
@@ -217,15 +217,15 @@ export default function SocialLinksView() {
             <Typography variant="h4" className="font-bold text-amber-800 mb-3">¿Dónde se muestran?</Typography>
             <ul className="space-y-2 text-sm text-amber-700">
               <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></span>
+                <span className="w-px.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></span>
                 Los enlaces aparecen en el Footer del sitio
               </li>
               <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></span>
+                <span className="w-px.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></span>
                 Se muestran como iconos en la sección de contacto
               </li>
               <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></span>
+                <span className="w-px.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></span>
                 Solo se muestran si tienen un valor配置ado
               </li>
             </ul>

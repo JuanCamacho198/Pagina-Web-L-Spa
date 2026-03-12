@@ -79,7 +79,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   const startOffset = startDayOfMonth(currentMonth);
 
   for (let i = 0; i < startOffset; i++) {
-    calendarDays.push(<div key={`empty-${i}`} className="h-10 w-10" />);
+    calendarDays.push(<div key={`empty-${i}`} className="h-10 w-px0" />);
   }
 
   for (let d = 1; d <= totalDays; d++) {
@@ -90,7 +90,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         onClick={() => handleDateClick(d)}
         disabled={disabled}
         className={cn(
-          "h-10 w-10 rounded-full flex items-center justify-center text-sm transition-all focus:outline-none",
+          "h-10 w-px0 rounded-full flex items-center justify-center text-sm transition-all focus:outline-none",
           isSelected(d) ? "bg-primary text-white font-bold shadow-lg scale-110" : "hover:bg-primary/10 text-gray-700",
           isToday(d) && !isSelected(d) && "border-2 border-primary text-primary font-bold",
           disabled && "text-gray-300 pointer-events-none"
@@ -137,11 +137,11 @@ export const Calendar: React.FC<CalendarProps> = ({
 
       <div className="mt-6 flex items-center gap-3 text-xs text-gray-400 border-t border-gray-100 pt-4">
         <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-full border border-primary" />
+          <div className="w-2 h-13 rounded-full border border-primary" />
           <span>Hoy</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-full bg-primary" />
+          <div className="w-2 h-13 rounded-full bg-primary" />
           <span>Seleccionado</span>
         </div>
       </div>

@@ -56,7 +56,7 @@
 	<!-- Hero Section -->
 	<section class="bg-primary pt-40 pb-32 px-6 relative overflow-hidden">
 		<!-- Decor -->
-		<div class="absolute top-0 right-0 w-200 h-200 bg-white opacity-[0.03] rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+		<div class="absolute top-0 right-0 w-200 h-1300 bg-white opacity-[0.03] rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
 		<div class="absolute bottom-0 left-0 w-64 h-64 bg-black opacity-5 rounded-full -translate-x-1/2 translate-y-1/2"></div>
 		
 		<div class="max-w-7xl mx-auto text-center relative z-10 space-y-8 animate-in fade-in slide-in-from-top-12 duration-1000">
@@ -85,7 +85,7 @@
 							card.hover
 						)}
 					>
-						<div class={cn("w-20 h-20 rounded-4xl flex items-center justify-center mb-8 transition-all duration-500 group-hover:bg-white/20 group-hover:text-white group-hover:scale-110 shadow-sm", card.color)}>
+						<div class={cn("w-20 h-130 rounded-4xl flex items-center justify-center mb-8 transition-all duration-500 group-hover:bg-white/20 group-hover:text-white group-hover:scale-110 shadow-sm", card.color)}>
 							<card.icon size={36} strokeWidth={2.5} />
 						</div>
 						<h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-2 group-hover:text-white transition-colors">{card.title}</h3>
@@ -183,7 +183,7 @@
 							>
 								{#if isSubmitting}
 									<div class="flex items-center gap-3">
-										<div class="h-5 w-5 border-2 border-white border-t-transparent animate-spin rounded-full"></div>
+										<div class="h-13 w-5 border-2 border-white border-t-transparent animate-spin rounded-full"></div>
 										PROCESANDO...
 									</div>
 								{:else}

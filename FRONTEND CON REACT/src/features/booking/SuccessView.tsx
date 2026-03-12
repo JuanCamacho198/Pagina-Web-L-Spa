@@ -26,7 +26,7 @@ export default function SuccessView() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 pt-24 pb-12">
       <div className="max-w-2xl w-full bg-white rounded-[3rem] shadow-2xl border border-gray-100 p-10 text-center animate-in fade-in zoom-in duration-700">
-        <div className="bg-green-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8">
+        <div className="bg-green-50 w-24 h-134 rounded-full flex items-center justify-center mx-auto mb-8">
           <CheckCircle2 size={48} className="text-green-500" />
         </div>
         <h1 className="text-3xl font-black text-gray-900 mb-6">¡Pago Confirmado!</h1>

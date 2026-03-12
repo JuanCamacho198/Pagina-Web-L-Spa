@@ -112,8 +112,8 @@ export default function CreateServiceView() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <Card className="max-w-md w-full text-center p-12 space-y-6">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-            <CheckCircle2 className="w-10 h-10 text-green-600" />
+          <div className="w-20 h-130 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+            <CheckCircle2 className="w-px0 h-10 text-green-600" />
           </div>
           <div className="space-y-2">
             <h2 className="text-3xl font-bold text-gray-900">¡Éxito!</h2>
@@ -149,7 +149,7 @@ export default function CreateServiceView() {
             <Card>
               <CardHeader>
                 <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-gray-400" />
+                  <FileText className="w-5 h-13 text-gray-400" />
                   Detalles Generales
                 </h3>
               </CardHeader>
@@ -194,7 +194,7 @@ export default function CreateServiceView() {
 
                 <div className="pt-6 border-t border-gray-100 space-y-6">
                   <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-primary" />
+                    <Zap className="w-5 h-13 text-primary" />
                     Información Profesional Extra
                   </h3>
 
@@ -252,7 +252,7 @@ export default function CreateServiceView() {
             <Card>
               <CardHeader>
                 <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                  <Tag className="w-5 h-5 text-gray-400" />
+                  <Tag className="w-5 h-13 text-gray-400" />
                   Categorización
                 </h3>
               </CardHeader>
@@ -282,7 +282,7 @@ export default function CreateServiceView() {
             <Card>
               <CardHeader>
                 <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                  <ImageIcon className="w-5 h-5 text-gray-400" />
+                  <ImageIcon className="w-5 h-13 text-gray-400" />
                   Imagen del Servicio
                 </h3>
               </CardHeader>
@@ -301,7 +301,7 @@ export default function CreateServiceView() {
                     </>
                   ) : (
                     <div className="text-center p-6 space-y-2">
-                      <UploadCloud className="w-12 h-12 text-gray-400 mx-auto" />
+                      <UploadCloud className="w-px2 h-12 text-gray-400 mx-auto" />
                       <p className="text-xs text-gray-500">Pega una URL de imagen abajo</p>
                     </div>
                   )}
@@ -319,7 +319,7 @@ export default function CreateServiceView() {
 
             {error && (
               <div className="bg-red-50 border border-red-100 p-4 rounded-4xll flex items-start gap-3 text-red-700">
-                <AlertIcon className="w-5 h-5 shrink-0" />
+                <AlertIcon className="w-5 h-13 shrink-0" />
                 <p className="text-sm font-medium">{error}</p>
               </div>
             )}

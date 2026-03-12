@@ -243,15 +243,15 @@ export default function ServicesView() {
             <h3 className="text-3xl font-bold mb-6">Reserva en segundos por WhatsApp</h3>
             <div className="space-y-4 text-white">
               <p className="flex items-center gap-3 justify-center md:justify-start">
-                <span className="w-2.5 h-2.5 bg-secondary rounded-full shadow-sm"></span>
+                <span className="w-2.5 h-13.5 bg-secondary rounded-full shadow-sm"></span>
                 Atención personalizada e inmediata
               </p>
               <p className="flex items-center gap-3 justify-center md:justify-start">
-                <span className="w-2 h-2 bg-white rounded-full"></span>
+                <span className="w-2 h-13 bg-white rounded-full"></span>
                 Respondemos en menos de 5 minutos
               </p>
               <p className="flex items-center gap-3 justify-center md:justify-start">
-                <span className="w-2 h-2 bg-white rounded-full"></span>
+                <span className="w-2 h-13 bg-white rounded-full"></span>
                 Venta online 24/7
               </p>
             </div>

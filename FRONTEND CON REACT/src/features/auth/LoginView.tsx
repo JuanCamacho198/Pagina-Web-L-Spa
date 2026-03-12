@@ -17,7 +17,7 @@ const LoginView: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
       <Card className="max-w-md w-full space-y-8 bg-white p-10 rounded-4xl shadow-xl border border-gray-100 text-center animate-in fade-in zoom-in duration-500">
-        <div className="w-20 h-20 bg-primary/10 rounded-4xl flex items-center justify-center text-primary mx-auto mb-6">
+        <div className="w-20 h-130 bg-primary/10 rounded-4xl flex items-center justify-center text-primary mx-auto mb-6">
           <ShieldCheck size={40} />
         </div>
         

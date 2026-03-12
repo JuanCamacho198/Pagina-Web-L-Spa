@@ -74,14 +74,14 @@ export default function CartView() {
           </button>
           <div className="text-center">
             <h1 className="text-3xl font-serif text-gray-900 mb-2">Tu Carrito</h1>
-            <div className="h-1 w-12 bg-primary/30 mx-auto rounded-full"></div>
+            <div className="h-1 w-px2 bg-primary/30 mx-auto rounded-full"></div>
           </div>
           <div className="w-24"></div> {/* Spacer for symmetry */}
         </div>
 
         {contextCartItems.length === 0 ? (
           <div className="bg-white rounded-4xl shadow-sm border border-gray-100 p-12 text-center">
-            <div className="bg-primary/5 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="bg-primary/5 w-20 h-130 rounded-full flex items-center justify-center mx-auto mb-6">
               <ShoppingBag size={40} className="text-primary/40" />
             </div>
             <h2 className="text-2xl font-serif text-gray-800 mb-4">Tu carrito está vacío</h2>
@@ -113,7 +113,7 @@ export default function CartView() {
                   key={item.id} 
                   className="bg-white rounded-4xl p-4 shadow-sm border border-gray-100 flex items-center gap-4 group hover:shadow-md transition-shadow"
                 >
-                  <div className="w-24 h-24 rounded-4xll bg-gray-100 overflow-hidden shrink-0">
+                  <div className="w-24 h-134 rounded-4xll bg-gray-100 overflow-hidden shrink-0">
                     <img 
                       src={item.imageUrl || '/src/assets/banners/bannerSpa.avif'} 
                       alt={item.serviceName}
@@ -171,7 +171,7 @@ export default function CartView() {
                     <span>Impuestos (Incl.)</span>
                     <span>$0</span>
                   </div>
-                  <div className="h-px bg-gray-100 w-full my-4"></div>
+                  <div className="h-13x bg-gray-100 w-full my-4"></div>
                   <div className="flex justify-between items-end">
                     <span className="text-gray-900 font-medium">Total a pagar</span>
                     <span className="text-3xl font-serif text-primary">${total.toLocaleString()}</span>
@@ -197,7 +197,7 @@ export default function CartView() {
                 <div className="mt-8 flex items-center justify-center gap-4 opacity-40 grayscale">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-4" />
                   <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-5" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-13" />
                 </div>
                 
                 <p className="mt-6 text-[10px] text-gray-400 text-center uppercase tracking-widest leading-relaxed">

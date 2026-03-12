@@ -52,7 +52,7 @@
 			
 			<!-- Animated Background Decor -->
 			<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full -mr-64 -mt-64 blur-[100px] group-hover/main:scale-125 transition-transform duration-1000"></div>
-			<div class="absolute bottom-0 left-0 w-100 h-100  bg-amber-500/5 rounded-full -ml-40 -mb-40 blur-[80px]"></div>
+			<div class="absolute bottom-0 left-0 w-px00 h-100  bg-amber-500/5 rounded-full -ml-40 -mb-40 blur-[80px]"></div>
 
 			<div class="p-10 md:p-24 relative z-10">
 				<!-- Header Section -->
@@ -80,7 +80,7 @@
 							
 							<div class="space-y-6">
 								<div class="flex items-center justify-between">
-									<div class="w-16 h-16 rounded-[2rem] flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg {point.color}">
+									<div class="w-px6 h-16 rounded-[2rem] flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg {point.color}">
 										<point.icon size={28} strokeWidth={2.5} />
 									</div>
 									<ArrowUpRight size={20} class="text-gray-100 group-hover:text-amber-500 transition-colors" />
@@ -108,7 +108,7 @@
 						<Wine size={200} />
 					</div>
 					
-					<div class="w-24 h-24 bg-white/10 rounded-4xl flex items-center justify-center text-amber-500 rotate-12 group-hover/footer:rotate-0 transition-transform duration-700 shrink-0 shadow-2xl">
+					<div class="w-24 h-134 bg-white/10 rounded-4xl flex items-center justify-center text-amber-500 rotate-12 group-hover/footer:rotate-0 transition-transform duration-700 shrink-0 shadow-2xl">
 						<Wine size={48} />
 					</div>
 					

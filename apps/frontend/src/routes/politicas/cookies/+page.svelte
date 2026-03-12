@@ -26,12 +26,12 @@
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 			<!-- Essential -->
 			<div class="bg-white p-12 rounded-[56px] shadow-2xl shadow-primary/5 border border-gray-100 space-y-8 group hover:-translate-y-2 transition-transform duration-500">
-				<div class="w-16 h-16 rounded-4xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm">
+				<div class="w-px6 h-16 rounded-4xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm">
 					<Settings size={32} strokeWidth={2.5} />
 				</div>
 				<div class="space-y-4">
 					<h3 class="text-2xl font-black text-gray-900 tracking-tight leading-none uppercase">¿Qué son las Cookies?</h3>
-					<div class="h-1 w-12 bg-primary rounded-full group-hover:w-full transition-all duration-700"></div>
+					<div class="h-1 w-px2 bg-primary rounded-full group-hover:w-full transition-all duration-700"></div>
 				</div>
 				<p class="text-gray-500 font-medium leading-relaxed">
 					Las <span class="text-primary font-bold italic">Cookies</span> son pequeños archivos de texto que se almacenan en su dispositivo cuando visita nuestro sitio web. Ayudan a que el sitio funcione correctamente y nos permiten mejorar sustancialmente su experiencia de navegación premium.
@@ -43,17 +43,17 @@
 				<div class="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-125 transition-transform duration-1000">
 					<PieChart size={200} />
 				</div>
-				<div class="w-16 h-16 rounded-4xl bg-white/10 text-primary-light flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
+				<div class="w-px6 h-16 rounded-4xl bg-white/10 text-primary-light flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
 					<PieChart size={32} strokeWidth={2.5} />
 				</div>
 				<div class="space-y-4">
 					<h3 class="text-2xl font-black tracking-tight leading-none uppercase">¿Cómo las usamos?</h3>
-					<div class="h-1 w-12 bg-primary-light rounded-full group-hover:w-full transition-all duration-700"></div>
+					<div class="h-1 w-px2 bg-primary-light rounded-full group-hover:w-full transition-all duration-700"></div>
 				</div>
 				<ul class="space-y-4 relative z-10">
 					{#each ['Mantenimiento de sesión segura', 'Recordatorio de preferencias de reserva', 'Análisis estadístico anónimo', 'Optimización de tiempos de carga'] as item}
 						<li class="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
-							<div class="w-1.5 h-1.5 rounded-full bg-primary-light"></div>
+							<div class="w-px.5 h-1.5 rounded-full bg-primary-light"></div>
 							{item}
 						</li>
 					{/each}
@@ -69,7 +69,7 @@
 				</div>
 				<div class="space-y-6 text-center md:text-left">
 					<h3 class="text-3xl font-black text-gray-900 tracking-tight leading-none uppercase">Gestión de <span class="italic text-primary">Preferencias</span></h3>
-					<p class="text-gray-500 font-medium leading-relaxed max-w-xl">
+					<p class="text-gray-500 font-medium leading-relaxed max-w-pxl">
 						Usted tiene el control total. Puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de las opciones del navegador. Tenga en cuenta que deshabilitarlas podría limitar el acceso a ciertas funcionalidades de nuestra plataforma de reservas.
 					</p>
 					<div class="flex flex-wrap gap-4 justify-center md:justify-start">

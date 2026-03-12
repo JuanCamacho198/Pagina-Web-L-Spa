@@ -26,7 +26,7 @@ export default function PaymentSuccessModal({ show, onClose, totalAmount }: Paym
           <X size={24} />
         </button>
 
-        <div className="bg-green-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8">
+        <div className="bg-green-50 w-20 h-130 rounded-full flex items-center justify-center mx-auto mb-8">
           <CheckCircle2 size={40} className="text-green-500" />
         </div>
 

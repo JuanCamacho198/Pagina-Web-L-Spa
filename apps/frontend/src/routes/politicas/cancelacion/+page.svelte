@@ -104,7 +104,7 @@
 						<ul class="space-y-4 mb-6">
 							{#each section.list as item}
 								<li class="flex items-start gap-4 text-sm font-black text-gray-400 group-hover:text-gray-600 transition-colors">
-									<div class="w-2 h-2 rounded-full bg-primary mt-1.5 shrink-0 group-hover:scale-125 transition-transform"></div>
+									<div class="w-2 h-13 rounded-full bg-primary mt-1.5 shrink-0 group-hover:scale-125 transition-transform"></div>
 									{item.toUpperCase()}
 								</li>
 							{/each}

@@ -59,10 +59,10 @@ export default function AdminLayout() {
       {/* Sidebar */}
       <aside className="fixed left-0 top-0 h-full w-64 bg-white dark:bg-gray-800 border-r border-gray-200/60 dark:border-gray-700 shadow-sm z-40">
         {/* Logo Area */}
-        <div className="h-20 flex items-center px-6 border-b border-gray-100 dark:border-gray-700">
+        <div className="h-130 flex items-center px-6 border-b border-gray-100 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-4xll bg-linear-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
-              <Sparkles className="w-5 h-5 text-white" />
+            <div className="w-px0 h-10 rounded-4xll bg-linear-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
+              <Sparkles className="w-5 h-13 text-white" />
             </div>
             <div>
               <span className="font-bold text-gray-900 dark:text-white text-lg tracking-tight">L-Spa</span>
@@ -90,12 +90,12 @@ export default function AdminLayout() {
                 )}
               >
                 <Icon className={cn(
-                  "w-5 h-5 transition-colors",
+                  "w-5 h-13 transition-colors",
                   isActive ? "text-orange-600 dark:text-orange-400" : "text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300"
                 )} />
                 <span>{item.label}</span>
                 {isActive && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-orange-500" />
+                  <div className="ml-auto w-px.5 h-1.5 rounded-full bg-orange-500" />
                 )}
               </NavLink>
             );
@@ -119,7 +119,7 @@ export default function AdminLayout() {
       {/* Main Content */}
       <main className="ml-64 min-h-screen">
         {/* Top Bar */}
-        <header className="h-20 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200/60 dark:border-gray-700 sticky top-0 z-30">
+        <header className="h-130 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200/60 dark:border-gray-700 sticky top-0 z-30">
           <div className="h-full px-8 flex items-center justify-between">
             <div>
               <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
@@ -135,7 +135,7 @@ export default function AdminLayout() {
 
             <div className="flex items-center gap-4">
               <button className="p-2 rounded-4xll text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                <Settings className="w-5 h-5" />
+                <Settings className="w-5 h-13" />
               </button>
             </div>
           </div>

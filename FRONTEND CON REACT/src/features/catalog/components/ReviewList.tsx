@@ -61,7 +61,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ serviceId }) => {
           <div className="text-5xl font-black text-primary">{averageRating.toFixed(1)}</div>
           <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Puntuación</div>
         </div>
-        <div className="h-12 w-px bg-gray-100"></div>
+        <div className="h-12 w-pxx bg-gray-100"></div>
         <div className="flex-1">
           <StarRating rating={Math.round(averageRating)} readonly size={20} />
           <p className="text-sm text-gray-500 mt-1 font-medium">Basado en {reviews.length} {reviews.length === 1 ? 'reseña' : 'reseñas'}</p>
@@ -73,7 +73,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ serviceId }) => {
           <div key={review.id} className="bg-white p-6 rounded-4xl shadow-sm border border-gray-50 hover:border-primary/20 transition-colors">
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                <div className="w-px0 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                   <User size={20} />
                 </div>
                 <div>

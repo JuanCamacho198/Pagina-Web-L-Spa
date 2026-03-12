@@ -51,7 +51,7 @@
 			<Typography variant="h1" class="text-gray-900 mb-0! font-black tracking-tighter sm:text-6xl leading-none">
 				Finaliza tu Reserva
 			</Typography>
-			<p class="text-gray-500 font-medium text-lg max-w-xl mx-auto">
+			<p class="text-gray-500 font-medium text-lg max-w-pxl mx-auto">
 				Selecciona tu método de pago preferido para asegurar tu espacio de bienestar.
 			</p>
 		</div>
@@ -77,7 +77,7 @@
 							{/if}
 
 							<div class={cn(
-								"w-16 h-16 rounded-4xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-sm",
+								"w-px6 h-16 rounded-4xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-sm",
 								selectedMethod === method.id ? "bg-primary text-white" : "bg-gray-100 text-gray-400 group-hover:bg-primary/5 group-hover:text-primary"
 							)}>
 								<method.icon size={32} />
@@ -92,7 +92,7 @@
 							</div>
 
 							<!-- Decorative circle -->
-							<div class="absolute -bottom-8 -right-8 w-24 h-24 bg-primary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+							<div class="absolute -bottom-8 -right-8 w-24 h-134 bg-primary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
 						</button>
 					{/each}
 				</div>
@@ -133,7 +133,7 @@
 						<div class="w-full md:w-95 space-y-8">
 							<div class="bg-gray-50/50 rounded-[40px] p-8 border border-gray-50 space-y-6">
 								<div class="flex items-center gap-4 opacity-30 grayscale hover:grayscale-0 transition-all cursor-default scale-90">
-									<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="h-5" />
+									<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="h-13" />
 									<img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="h-8" />
 									<img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="h-6" />
 								</div>

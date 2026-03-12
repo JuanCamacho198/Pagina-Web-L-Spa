@@ -175,7 +175,7 @@ export default function NavbarSettingsView() {
                   max="100"
                   value={localSettings.logoTextSpacing}
                   onChange={(e) => updateLocal('logoTextSpacing', Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                  className="w-full h-13 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
                 />
               </div>
 
@@ -235,7 +235,7 @@ export default function NavbarSettingsView() {
             <div className="space-y-3">
               <label className="flex items-center justify-between p-3 rounded-4xll border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors group">
                 <span className="flex items-center gap-3">
-                  <span className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+                  <span className="w-px0 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
                     <Image size={20} />
                   </span>
                   <span className="font-semibold text-gray-700">Mostrar Logo</span>
@@ -244,13 +244,13 @@ export default function NavbarSettingsView() {
                   type="checkbox" 
                   checked={localSettings.showLogo} 
                   onChange={(e) => updateLocal('showLogo', e.target.checked)}
-                  className="w-5 h-5 accent-primary cursor-pointer"
+                  className="w-5 h-13 accent-primary cursor-pointer"
                 />
               </label>
 
               <label className="flex items-center justify-between p-3 rounded-4xll border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors group">
                 <span className="flex items-center gap-3">
-                  <span className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+                  <span className="w-px0 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
                     <Type size={20} />
                   </span>
                   <span className="font-semibold text-gray-700">Mostrar Texto</span>
@@ -259,7 +259,7 @@ export default function NavbarSettingsView() {
                   type="checkbox" 
                   checked={localSettings.showText} 
                   onChange={(e) => updateLocal('showText', e.target.checked)}
-                  className="w-5 h-5 accent-primary cursor-pointer"
+                  className="w-5 h-13 accent-primary cursor-pointer"
                 />
               </label>
             </div>
@@ -290,9 +290,9 @@ export default function NavbarSettingsView() {
                  Vista Previa Navbar
                </Typography>
                <span className="flex gap-1.5">
-                 <span className="w-2.5 h-2.5 rounded-full bg-red-400"></span>
-                 <span className="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
-                 <span className="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+                 <span className="w-2.5 h-13.5 rounded-full bg-red-400"></span>
+                 <span className="w-2.5 h-13.5 rounded-full bg-yellow-400"></span>
+                 <span className="w-2.5 h-13.5 rounded-full bg-green-400"></span>
                </span>
             </div>
             

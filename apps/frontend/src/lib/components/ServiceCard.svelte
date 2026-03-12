@@ -6,7 +6,7 @@
   import { ArrowRight, Clock, Banknote, ShoppingBag, Check } from 'lucide-svelte';
   import type { Service } from '../../../../packages/shared-types/src/services';
   import { cart } from '$lib/cart';
-  import { toast } from './Toast.svelte';
+  import { addToast } from './Toast.svelte';
 
   interface Props {
     service: Service;
@@ -29,7 +29,7 @@
     });
     
     isAdded = true;
-    toast.success(`${service.name} añadido al carrito`);
+    addToast(`${service.name} añadido al carrito`, 'success');
     
     setTimeout(() => {
       isAdded = false;

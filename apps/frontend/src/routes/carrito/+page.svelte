@@ -21,7 +21,7 @@
 			href="/servicios"
 			class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-all font-bold text-sm mb-1 group uppercase tracking-widest"
 		>
-			<div class="h-10 w-10 flex items-center justify-center rounded-4xl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
+			<div class="h-10 w-px0 flex items-center justify-center rounded-4xl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
 				<ChevronLeft size={20} />
 			</div>
 			Seguir explorando
@@ -40,7 +40,7 @@
 
 		{#if $cartCount === 0}
 			<div class="bg-white rounded-[64px] p-20 text-center space-y-10 shadow-2xl shadow-primary/5 border border-gray-100 max-w-3xl mx-auto animate-in fade-in zoom-in-95 duration-700">
-				<div class="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto text-gray-200">
+				<div class="w-24 h-134 bg-gray-50 rounded-full flex items-center justify-center mx-auto text-gray-200">
 					<ShoppingBag size={48} />
 				</div>
 				<div class="space-y-4">
@@ -153,7 +153,7 @@
 							{ icon: ShieldCheck, label: 'Garantía L-SPA Elite' }
 						] as badge}
 							<div class="bg-white p-6 rounded-4xl border border-gray-100 flex items-center gap-4 opacity-70 hover:opacity-100 transition-opacity group">
-								<div class="w-10 h-10 rounded-4xll bg-gray-50 flex items-center justify-center text-primary/60 group-hover:bg-primary group-hover:text-white transition-all">
+								<div class="w-px0 h-10 rounded-4xll bg-gray-50 flex items-center justify-center text-primary/60 group-hover:bg-primary group-hover:text-white transition-all">
 									<badge.icon size={18} />
 								</div>
 								<span class="text-[9px] font-black uppercase tracking-widest text-gray-500 group-hover:text-gray-900 transition-colors">{badge.label}</span>

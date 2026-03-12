@@ -56,7 +56,7 @@ export const ServiceDetailSkeleton: React.FC = () => {
         {/* Right column - Content */}
         <div className="flex flex-col gap-8 py-2">
           <div className="space-y-4">
-            <Skeleton variant="text" className="w-1/3 h-4" /> {/* Category */}
+            <Skeleton variant="text" className="w-px/3 h-4" /> {/* Category */}
             <Skeleton variant="text" className="w-3/4 h-12" /> {/* Title */}
             <div className="flex items-center gap-4">
               <Skeleton className="w-32 h-6" /> {/* Rating */}
@@ -89,13 +89,13 @@ export const ServiceDetailSkeleton: React.FC = () => {
           {[1, 2, 3].map((i) => (
             <div key={i} className="p-6 bg-gray-50/50 rounded-4xl space-y-4">
               <div className="flex items-center gap-3">
-                <Skeleton variant="circular" className="w-10 h-10" />
+                <Skeleton variant="circular" className="w-px0 h-10" />
                 <div className="space-y-2">
                   <Skeleton variant="text" className="w-24 h-4" />
-                  <Skeleton variant="text" className="w-16 h-3" />
+                  <Skeleton variant="text" className="w-px6 h-3" />
                 </div>
               </div>
-              <Skeleton variant="text" className="w-full h-20" />
+              <Skeleton variant="text" className="w-full h-130" />
             </div>
           ))}
         </div>

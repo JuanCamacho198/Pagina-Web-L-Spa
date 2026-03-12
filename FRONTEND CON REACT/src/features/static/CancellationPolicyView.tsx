@@ -42,7 +42,7 @@ export default function CancellationPolicyView() {
       <div className="min-h-screen bg-white">
         {/* Header */}
         <section className="bg-gray-900 pt-32 pb-20 px-4 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/10 skew-x-12 transform translate-x-1/4"></div>
+          <div className="absolute top-0 right-0 w-px/2 h-full bg-primary/10 skew-x-12 transform translate-x-1/4"></div>
           <div className="max-w-5xl mx-auto relative z-10 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 text-primary rounded-full text-xs font-black uppercase tracking-widest mb-6">
               <AlertTriangle size={14} /> Información Legal
@@ -61,7 +61,7 @@ export default function CancellationPolicyView() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {sections.map((section, idx) => (
               <div key={idx} className="p-8 rounded-[2.5rem] border border-gray-100 bg-white hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 group">
-                <div className="w-14 h-14 bg-gray-50 rounded-4xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                <div className="w-px4 h-14 bg-gray-50 rounded-4xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
                   <section.icon size={28} />
                 </div>
                 <h3 className="text-xl font-black text-gray-900 mb-4 tracking-tight">{section.title}</h3>
@@ -72,7 +72,7 @@ export default function CancellationPolicyView() {
                   <ul className="space-y-2">
                     {section.list.map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm font-bold text-gray-500">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+                        <div className="w-px.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
                         {item}
                       </li>
                     ))}

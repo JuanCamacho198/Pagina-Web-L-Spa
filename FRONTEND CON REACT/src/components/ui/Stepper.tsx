@@ -28,7 +28,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep, className 
             <div className="flex flex-col items-center relative z-10 basis-0 grow">
               <div
                 className={cn(
-                  "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 font-bold text-lg",
+                  "w-px2 h-12 rounded-full flex items-center justify-center transition-all duration-300 font-bold text-lg",
                   isCompleted ? "bg-primary text-white scale-110 shadow-lg" : 
                   isActive ? "bg-primary/20 text-primary border-4 border-primary scale-125 shadow-md" : 
                   "bg-gray-100 text-gray-400 border-2 border-transparent"

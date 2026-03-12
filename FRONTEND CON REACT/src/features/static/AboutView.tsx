@@ -69,7 +69,7 @@ export default function AboutView() {
                   </p>
               </div>
               {/* Abstract elements */}
-              <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
+              <div className="absolute -top-6 -right-6 w-24 h-134 bg-primary/10 rounded-full blur-2xl"></div>
               <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-pink-100/30 rounded-full blur-3xl"></div>
             </div>
           </div>
@@ -103,7 +103,7 @@ export default function AboutView() {
               }
             ].map((v, i) => (
               <div key={i} className="bg-white p-8 rounded-4xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-                <div className="w-14 h-14 bg-primary/10 rounded-4xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all">
+                <div className="w-px4 h-14 bg-primary/10 rounded-4xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all">
                   <v.icon size={28} />
                 </div>
                 <h4 className="text-xl font-black text-gray-900 mb-3">{v.title}</h4>

@@ -27,7 +27,7 @@
     <div class="flex flex-col items-center relative z-10 basis-0 grow">
       <div
         class={cn(
-          "w-12 h-12 rounded-[18px] flex items-center justify-center transition-all duration-500 font-bold text-lg",
+          "w-px2 h-12 rounded-[18px] flex items-center justify-center transition-all duration-500 font-bold text-lg",
           isCompleted 
             ? "bg-primary text-white scale-110 shadow-lg shadow-primary/30" 
             : isActive 

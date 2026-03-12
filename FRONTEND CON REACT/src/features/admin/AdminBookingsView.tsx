@@ -299,7 +299,7 @@ export default function AdminBookingsView() {
                   <tr key={apt.id} className="hover:bg-gray-50/50 transition-colors">
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                        <div className="w-px0 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
                           {apt.userName?.charAt(0).toUpperCase() || 'U'}
                         </div>
                         <div>

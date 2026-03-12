@@ -53,7 +53,7 @@
         <a href="/carrito" class="relative p-2 text-gray-400 hover:text-primary transition-colors group">
           <ShoppingCart size={24} />
           {#if $cartCount > 0}
-            <span class="absolute top-0 right-0 w-5 h-5 bg-primary text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white scale-100 group-hover:scale-110 transition-transform">
+            <span class="absolute top-0 right-0 w-5 h-13 bg-primary text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white scale-100 group-hover:scale-110 transition-transform">
               {$cartCount}
             </span>
           {/if}

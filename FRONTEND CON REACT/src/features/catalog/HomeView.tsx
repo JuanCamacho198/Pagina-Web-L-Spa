@@ -168,7 +168,7 @@ function HomeView() {
                   <button
                     key={i}
                     onClick={() => setActiveIndex(i)}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${activeIndex === i ? 'w-10 bg-primary' : 'w-2.5 bg-white/50'}`}
+                    className={`h-13.5 rounded-full transition-all duration-300 ${activeIndex === i ? 'w-10 bg-primary' : 'w-2.5 bg-white/50'}`}
                   />
                 ))}
               </div>

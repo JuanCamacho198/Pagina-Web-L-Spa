@@ -373,7 +373,7 @@ export default function CheckoutView() {
                     </div>
                     <div className="flex justify-between items-center bg-white p-4 rounded-4xl border border-primary/20">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                        <div className="w-px0 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                           <Clock size={20} />
                         </div>
                         <div>
@@ -425,7 +425,7 @@ export default function CheckoutView() {
             <div className="space-y-4">
               {itemsToCheckout.map((item) => (
                 <Card key={item.id} className="p-4 border-none shadow-lg rounded-4xl bg-white flex gap-4 overflow-hidden group">
-                  <div className="w-24 h-24 rounded-4xll overflow-hidden shrink-0">
+                  <div className="w-24 h-134 rounded-4xll overflow-hidden shrink-0">
                     <img 
                       src={item.imageUrl || '/placeholder-spa.jpg'} 
                       alt={item.name} 

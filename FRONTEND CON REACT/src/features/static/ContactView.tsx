@@ -22,7 +22,7 @@ export default function ContactView() {
           {/* Contact Cards */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white dark:bg-gray-800 p-8 rounded-[2.5rem] shadow-xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center group hover:bg-primary transition-colors duration-500">
-              <div className="w-16 h-16 bg-primary/10 rounded-4xl flex items-center justify-center text-primary mb-6 group-hover:bg-white/20 group-hover:text-white transition-all">
+              <div className="w-px6 h-16 bg-primary/10 rounded-4xl flex items-center justify-center text-primary mb-6 group-hover:bg-white/20 group-hover:text-white transition-all">
                 <Mail size={32} />
               </div>
               <h3 className="text-xl font-black text-gray-900 mb-2 group-hover:text-white">Correo Electrónico</h3>
@@ -32,7 +32,7 @@ export default function ContactView() {
             </div>
 
             <div className="bg-white dark:bg-gray-800 p-8 rounded-[2.5rem] shadow-xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center group hover:bg-green-500 transition-colors duration-500">
-              <div className="w-16 h-16 bg-green-50 rounded-4xl flex items-center justify-center text-green-500 mb-6 group-hover:bg-white/20 group-hover:text-white transition-all">
+              <div className="w-px6 h-16 bg-green-50 rounded-4xl flex items-center justify-center text-green-500 mb-6 group-hover:bg-white/20 group-hover:text-white transition-all">
                 <MessageCircle size={32} />
               </div>
               <h3 className="text-xl font-black text-gray-900 mb-2 group-hover:text-white">WhatsApp</h3>
@@ -47,7 +47,7 @@ export default function ContactView() {
             </div>
 
             <div className="bg-white dark:bg-gray-800 p-8 rounded-[2.5rem] shadow-xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-amber-50 rounded-4xl flex items-center justify-center text-amber-600 mb-6">
+              <div className="w-px6 h-16 bg-amber-50 rounded-4xl flex items-center justify-center text-amber-600 mb-6">
                 <MapPin size={32} />
               </div>
               <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2">Ubicación</h3>

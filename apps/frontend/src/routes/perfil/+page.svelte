@@ -25,7 +25,7 @@
 <div class="min-h-screen bg-gray-50/50 pt-40 pb-32 px-6">
 	{#if $isLoading}
 		<div class="max-w-4xl mx-auto flex flex-col items-center justify-center py-40 gap-6">
-			<div class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+			<div class="w-px6 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
 			<p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Autenticando Santuario...</p>
 		</div>
 	{:else if $isAuthenticated}
@@ -44,7 +44,7 @@
 									<Camera size={40} class="text-white" />
 								</div>
 							</div>
-							<div class="absolute -bottom-4 -right-4 w-14 h-14 bg-primary text-white rounded-4xl flex items-center justify-center shadow-xl">
+							<div class="absolute -bottom-4 -right-4 w-px4 h-14 bg-primary text-white rounded-4xl flex items-center justify-center shadow-xl">
 								<ShieldCheck size={28} />
 							</div>
 						</div>
@@ -78,7 +78,7 @@
 				<div class="bg-gray-900 p-10 md:px-20 grid grid-cols-1 md:grid-cols-3 gap-12">
 					{#each profileStats as stat}
 						<div class="flex items-center gap-6 group/stat">
-							<div class="w-16 h-16 bg-white/5 rounded-4xl flex items-center justify-center text-primary-light group-hover/stat:bg-primary group-hover/stat:text-white transition-all duration-500">
+							<div class="w-px6 h-16 bg-white/5 rounded-4xl flex items-center justify-center text-primary-light group-hover/stat:bg-primary group-hover/stat:text-white transition-all duration-500">
 								<stat.icon size={24} />
 							</div>
 							<div>

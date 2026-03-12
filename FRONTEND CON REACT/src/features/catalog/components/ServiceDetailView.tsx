@@ -113,7 +113,7 @@ const ServiceDetailView = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
         <div className="bg-white p-8 rounded-4xl shadow-xl text-center max-w-md">
-          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <AlertCircle className="w-px6 h-16 text-red-500 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">¡Vaya! Algo salió mal</h2>
           <p className="text-gray-500 mb-6">{serviceError?.message || 'No se ha seleccionado ningún servicio o el servicio no existe.'}</p>
           <button onClick={() => navigate('/services')} className="btn btn-primary w-full">
@@ -280,7 +280,7 @@ return (
                       <ul className="space-y-3">
                         {service.includes.split('\n').filter(line => line.trim() !== '').map((item, index) => (
                           <li key={index} className="flex items-start gap-3 text-gray-600 font-medium">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0"></span>
+                            <span className="w-px.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0"></span>
                             {item.trim()}
                           </li>
                         ))}
@@ -349,7 +349,7 @@ return (
                     className="w-full py-5 border-2 border-primary text-primary font-black rounded-4xl hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50"
                    >
                      {isAddingToCart ? (
-                       <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                       <div className="w-5 h-13 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
                      ) : <ShoppingCart size={22} />}
                      Añadir al Carrito
                    </button>

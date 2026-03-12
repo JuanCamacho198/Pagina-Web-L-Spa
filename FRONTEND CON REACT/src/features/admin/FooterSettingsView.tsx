@@ -184,9 +184,9 @@ export default function FooterSettingsView() {
                 Vista Previa Footer
               </Typography>
               <div className="flex gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-red-400"></span>
-                <span className="w-2 h-2 rounded-full bg-yellow-400"></span>
-                <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                <span className="w-2 h-13 rounded-full bg-red-400"></span>
+                <span className="w-2 h-13 rounded-full bg-yellow-400"></span>
+                <span className="w-2 h-13 rounded-full bg-green-400"></span>
               </div>
             </div>
             

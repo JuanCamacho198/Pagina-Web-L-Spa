@@ -60,7 +60,7 @@ export default function PaymentView() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-px6 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-500 font-black animate-pulse">Procesando pasarela segura...</p>
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function PaymentView() {
           <div className="lg:col-span-3 space-y-6">
             <div className="bg-white rounded-[2.5rem] p-8 shadow-xl shadow-gray-200/50 border border-gray-100">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 bg-primary/10 rounded-4xll flex items-center justify-center text-primary">
+                <div className="w-px0 h-10 bg-primary/10 rounded-4xll flex items-center justify-center text-primary">
                   <Lock size={20} />
                 </div>
                 <div>
@@ -110,7 +110,7 @@ export default function PaymentView() {
                       }}
                     />
                     <div className="flex items-center gap-4 w-full">
-                      <div className={`w-12 h-12 rounded-4xll flex items-center justify-center transition-colors ${
+                      <div className={`w-px2 h-12 rounded-4xll flex items-center justify-center transition-colors ${
                         selectedPaymentMethod === method.id ? 'bg-primary text-white' : 'bg-gray-50 text-gray-400'
                       }`}>
                         <method.icon size={24} />
@@ -146,7 +146,7 @@ export default function PaymentView() {
             
             <div className="flex items-center justify-center gap-6 opacity-30">
                 <img src="/src/assets/payment/epayco-pagos.png" className="h-6 grayscale" alt="Secure" />
-                <div className="h-4 w-px bg-gray-400"></div>
+                <div className="h-4 w-pxx bg-gray-400"></div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-gray-600">Transacción 100% Protegida</p>
             </div>
           </div>
@@ -183,7 +183,7 @@ export default function PaymentView() {
             </div>
 
             <div className="bg-white rounded-4xl p-6 border border-gray-100 flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-50 rounded-4xl flex items-center justify-center text-green-600">
+              <div className="w-px2 h-12 bg-green-50 rounded-4xl flex items-center justify-center text-green-600">
                 <ShieldCheck size={24} />
               </div>
               <div>

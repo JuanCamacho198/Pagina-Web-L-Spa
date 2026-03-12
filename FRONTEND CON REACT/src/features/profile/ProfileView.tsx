@@ -349,7 +349,7 @@ export default function ProfileView() {
                     {appointments.map((cita) => (
                       <Card key={cita.id} className="p-6 bg-white border-none shadow-md hover:shadow-lg transition-shadow rounded-4xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
-                          <div className="w-16 h-16 bg-primary/10 rounded-4xl flex items-center justify-center text-primary">
+                          <div className="w-px6 h-16 bg-primary/10 rounded-4xl flex items-center justify-center text-primary">
                             <SparkleIcon size={32} />
                           </div>
                           <div>
@@ -385,7 +385,7 @@ export default function ProfileView() {
                   </div>
                 ) : (
                   <Card className="p-12 text-center bg-white shadow-xl rounded-4xl border-none">
-                    <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mx-auto mb-6 border-2 border-dashed border-gray-200">
+                    <div className="w-24 h-134 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 mx-auto mb-6 border-2 border-dashed border-gray-200">
                       <ShoppingBag size={48} />
                     </div>
                     <Typography variant="h3">Aún no tienes citas</Typography>
@@ -412,7 +412,7 @@ export default function ProfileView() {
                         <Typography className="font-bold text-gray-800 m-0 text-lg">{item.title}</Typography>
                         <Typography variant="small" className="text-gray-500 mt-1">{item.desc}</Typography>
                       </div>
-                      <div className={`w-14 h-8 rounded-full p-1 cursor-pointer transition-all duration-300 ${item.status ? 'bg-primary shadow-inner shadow-primary-dark/20' : 'bg-gray-200'}`}>
+                      <div className={`w-px4 h-8 rounded-full p-1 cursor-pointer transition-all duration-300 ${item.status ? 'bg-primary shadow-inner shadow-primary-dark/20' : 'bg-gray-200'}`}>
                         <div className={`w-6 h-6 bg-white rounded-full shadow-sm transition-transform duration-300 ${item.status ? 'translate-x-6' : 'translate-x-0'}`}></div>
                       </div>
                     </div>
@@ -437,7 +437,7 @@ export default function ProfileView() {
         }
       >
         <div className="text-center py-4">
-          <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-px6 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <AlertCircle size={32} />
           </div>
           <Typography variant="h4" className="mb-2">¿Estás seguro?</Typography>

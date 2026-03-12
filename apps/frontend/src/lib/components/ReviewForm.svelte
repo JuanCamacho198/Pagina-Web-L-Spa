@@ -61,7 +61,7 @@
 <form onsubmit={handleSubmit} class="space-y-10 group">
   <div class="space-y-6">
     <div class="flex items-center gap-4">
-      <div class="h-10 w-10 rounded-4xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-primary transform group-hover:rotate-12 transition-transform duration-500">
+      <div class="h-10 w-px0 rounded-4xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-primary transform group-hover:rotate-12 transition-transform duration-500">
         <Sparkles size={20} />
       </div>
       <div>
@@ -90,7 +90,7 @@
             class="w-full min-h-40 p-6 rounded-4xl bg-gray-50 border-2 border-transparent focus:border-primary/20 focus:bg-white focus:outline-none transition-all duration-300 font-medium text-gray-700 resize-none shadow-inner"
             required
           ></textarea>
-          <div class="absolute right-6 bottom-6 h-1 w-10 bg-primary/20 rounded-full transition-all group-focus-within/field:w-20 group-focus-within/field:bg-primary opacity-20"></div>
+          <div class="absolute right-6 bottom-6 h-1 w-px0 bg-primary/20 rounded-full transition-all group-focus-within/field:w-20 group-focus-within/field:bg-primary opacity-20"></div>
         </div>
         
         <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest pl-4">

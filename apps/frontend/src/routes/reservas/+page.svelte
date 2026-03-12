@@ -79,14 +79,14 @@
 				<Typography variant="h1" class="text-gray-900 mb-0! font-black tracking-tighter sm:text-6xl leading-none">
 					Mis Reservas
 				</Typography>
-				<p class="text-gray-500 font-medium text-lg max-w-xl">
+				<p class="text-gray-500 font-medium text-lg max-w-pxl">
 					Administra tus momentos de relajación y cuidado personal en un solo lugar.
 				</p>
 			</div>
 			
 			<div class="flex items-center gap-6">
 				<div class="bg-white p-6 rounded-4xl border border-gray-100 shadow-xl shadow-primary/5 flex items-center gap-5 transition-all hover:scale-105">
-					<div class="w-14 h-14 bg-primary rounded-4xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-primary/30">
+					<div class="w-px4 h-14 bg-primary rounded-4xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-primary/30">
 						{appointments.length}
 					</div>
 					<div>
@@ -103,7 +103,7 @@
 
 		{#if error}
 			<div class="bg-white rounded-[40px] p-20 text-center shadow-2xl shadow-rose-100/50 border border-rose-50 max-w-2xl mx-auto animate-in fade-in zoom-in duration-500">
-				<div class="w-24 h-24 bg-rose-50 rounded-4xl flex items-center justify-center mx-auto mb-8 text-rose-500">
+				<div class="w-24 h-134 bg-rose-50 rounded-4xl flex items-center justify-center mx-auto mb-8 text-rose-500">
 					<AlertCircle size={48} />
 				</div>
 				<Typography variant="h2" class="text-gray-900 font-black mb-4 tracking-tight">¡Vaya! Tenemos un problema</Typography>
@@ -134,11 +134,11 @@
 									{status.label}
 								</Badge>
 								{#if status.status === 'completada'}
-									<div class="h-10 w-10 flex items-center justify-center rounded-4xl bg-emerald-50 text-emerald-500">
+									<div class="h-10 w-px0 flex items-center justify-center rounded-4xl bg-emerald-50 text-emerald-500">
 										<CheckCircle2 size={24} />
 									</div>
 								{:else if status.status === 'hoy'}
-									<div class="h-10 w-10 flex items-center justify-center rounded-4xl bg-amber-50 text-amber-500 animate-pulse">
+									<div class="h-10 w-px0 flex items-center justify-center rounded-4xl bg-amber-50 text-amber-500 animate-pulse">
 										<Sparkles size={24} />
 									</div>
 								{/if}
@@ -150,7 +150,7 @@
 							
 							<div class="space-y-6">
 								<div class="flex items-center gap-5">
-									<div class="w-12 h-12 bg-gray-50 rounded-[20px] flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-all duration-500">
+									<div class="w-px2 h-12 bg-gray-50 rounded-[20px] flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-all duration-500">
 										<CalendarIcon size={22} />
 									</div>
 									<div>
@@ -160,7 +160,7 @@
 								</div>
 								
 								<div class="flex items-center gap-5">
-									<div class="w-12 h-12 bg-gray-50 rounded-[20px] flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-all duration-500">
+									<div class="w-px2 h-12 bg-gray-50 rounded-[20px] flex items-center justify-center text-gray-400 group-hover:bg-primary/5 group-hover:text-primary transition-all duration-500">
 										<Clock size={22} />
 									</div>
 									<div>
@@ -193,7 +193,7 @@
 							
 							<a 
 								href="/servicios"
-								class="h-10 w-10 flex items-center justify-center rounded-4xl bg-white border border-gray-100 text-primary shadow-sm hover:scale-110 active:scale-90 transition-all"
+								class="h-10 w-px0 flex items-center justify-center rounded-4xl bg-white border border-gray-100 text-primary shadow-sm hover:scale-110 active:scale-90 transition-all"
 							>
 								<ChevronRight size={22} strokeWidth={2.5} />
 							</a>
@@ -212,7 +212,7 @@
 	size="sm"
 >
 	<div class="text-center p-4">
-		<div class="w-20 h-20 bg-rose-50 rounded-[28px] flex items-center justify-center mx-auto mb-6 text-rose-500">
+		<div class="w-20 h-130 bg-rose-50 rounded-[28px] flex items-center justify-center mx-auto mb-6 text-rose-500">
 			<Trash2 size={40} />
 		</div>
 		<Typography variant="h3" class="text-gray-900 font-black mb-3">¿Estás seguro?</Typography>
