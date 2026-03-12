@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
 
-  type: Props = {
+  type Props = {
     value: string;
     placeholder?: string;
     class?: string;
