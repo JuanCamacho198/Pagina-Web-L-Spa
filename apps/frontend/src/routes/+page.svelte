@@ -71,7 +71,7 @@
         loading="lazy"
         class="w-full h-full object-cover brightness-[0.45] saturate-[0.8]"
       />
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60"></div>
+      <div class="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/60"></div>
     </div>
     
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full">
@@ -84,7 +84,7 @@
         <div class="space-y-6">
           <h1 class="text-6xl sm:text-8xl md:text-9xl font-black leading-[0.85] tracking-tighter drop-shadow-2xl">
             ¡BIENVENIDO A <br />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-light via-white to-primary-light/60">L-SPA!</span>
+            <span class="text-transparent bg-clip-text bg-linear-to-r from-primary-light via-white to-primary-light/60">L-SPA!</span>
           </h1>
           <p class="text-xl sm:text-2xl font-medium text-gray-300 max-w-2xl leading-relaxed drop-shadow-lg">
             Un oasis de relajación en Medellín. Descubre una experiencia única de bienestar y belleza diseñada para tu renovación total.
@@ -155,14 +155,14 @@
       <div class="relative group overflow-hidden rounded-[4rem] shadow-2xl border border-gray-100 dark:border-gray-800">
         <div class="flex transition-transform duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style="transform: translateX(-{activeIndex * 100}%)">
           {#each [1, 2, 3] as num}
-            <div class="min-w-full h-[600px] relative">
+            <div class="min-w-full h-150 relative">
               <img
                 src={bannerSpa}
                 alt="Instalación {num}"
                 loading="lazy"
                 class="w-full h-full object-cover"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              <div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
               <div class="absolute bottom-16 left-16 text-white max-w-xl">
                  <p class="text-primary-light font-black uppercase tracking-[0.4em] mb-4 text-xs">Premium Wellness</p>
                  <h3 class="text-4xl font-black uppercase tracking-tighter">Ambiente de Paz y Renovación</h3>
@@ -241,7 +241,7 @@
               </p>
               <Button 
                 href="/servicios" 
-                class="w-full rounded-[2rem] py-6 font-black uppercase tracking-[0.25em] text-[10px] shadow-xl group-hover:shadow-primary/40 transition-all"
+                class="w-full rounded-4xl py-6 font-black uppercase tracking-[0.25em] text-[10px] shadow-xl group-hover:shadow-primary/40 transition-all"
               >
                 RESERVAR AHORA
               </Button>
