@@ -21,7 +21,16 @@
     class: className = '',
     type = 'text',
     ...rest 
-  }: Props = $props();
+  } = $props<{
+    id?: string;
+    label?: string;
+    error?: string;
+    value?: string | number;
+    placeholder?: string;
+    class?: string;
+    type?: string;
+    [key: string]: any;
+  }>();
 </script>
 
 <div class="w-full space-y-1.5">

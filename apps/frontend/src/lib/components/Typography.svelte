@@ -16,7 +16,12 @@
     class: className = '', 
     children,
     ...rest 
-  }: Props = $props();
+  } = $props<{
+    variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'lead' | 'small';
+    as?: string;
+    children?: Snippet;
+    class?: string;
+  } & any>();
 
   const variants = {
     h1: 'text-4xl font-extrabold tracking-tight lg:text-5xl text-gray-900',

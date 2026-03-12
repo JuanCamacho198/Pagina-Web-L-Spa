@@ -16,7 +16,13 @@
     onRatingChange = () => {}, 
     readonly = false, 
     size = 24 
-  }: Props = $props();
+  } = $props<{
+    rating: number;
+    maxRating?: number;
+    onRatingChange?: (rating: number) => void;
+    readonly?: boolean;
+    size?: number;
+  }>();
 
   let hoverRating = $state(0);
 

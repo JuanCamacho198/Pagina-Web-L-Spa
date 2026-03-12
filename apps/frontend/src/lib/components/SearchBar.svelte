@@ -11,7 +11,11 @@
     value = $bindable(), 
     placeholder = "Buscar...", 
     class: className = "" 
-  }: Props = $props();
+  } = $props<{
+    value: string;
+    placeholder?: string;
+    class?: string;
+  }>();
 </script>
 
 <div class={cn("relative flex items-center group w-full", className)}>
