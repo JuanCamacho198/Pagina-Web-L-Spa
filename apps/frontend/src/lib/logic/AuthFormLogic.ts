@@ -1,5 +1,5 @@
 import { authClient } from '$lib/auth-client';
-import { toast } from '$lib/components/feedback/Toast.svelte';
+import { toast } from '$lib/stores/toast.svelte';
 
 export class AuthFormLogic {
   isLogin = $state(true);

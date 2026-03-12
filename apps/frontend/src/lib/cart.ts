@@ -76,3 +76,7 @@ export const cart = {
 export const cartCount = derived(cartStore, ($items) => {
 	return $items.reduce((acc, item) => acc + item.quantity, 0);
 });
+
+export const cartSubtotal = derived(cartStore, ($items) => {
+	return $items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+});

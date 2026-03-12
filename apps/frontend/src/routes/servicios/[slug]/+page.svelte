@@ -1,25 +1,20 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { cn } from '$lib/utils/cn';
-	import Button from '$components/Button.svelte';
-	import Typography from '$components/Typography.svelte';
-	import Badge from '$components/Badge.svelte';
-	import StarRating from '$components/StarRating.svelte';
-	import ServiceCard from '$components/ServiceCard.svelte';
-	import ReviewSection from '$components/ReviewSection.svelte';
-	import { addToast } from '$components/Toast.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Typography from '$lib/components/ui/Typography.svelte';
+	import Badge from '$lib/components/ui/Badge.svelte';
+	import StarRating from '$lib/components/ui/StarRating.svelte';
+	import ServiceCard from '$lib/components/services/ServiceCard.svelte';
+	import ReviewSection from '$lib/components/services/ReviewSection.svelte';
+	import { toast } from '$lib/stores/toast.svelte';
 	import { cart } from '$lib/cart';
 	import { 
 		ShoppingCart, 
-		Calendar, 
-		Clock, 
-		Tag, 
+		Clock,  
 		Sparkles, 
 		ChevronLeft, 
-		Award, 
-		CheckCircle2, 
 		ShieldCheck, 
-		MapPin,
 		HandHelping,
 		Waves,
 		HeartPulse,
@@ -48,10 +43,10 @@
 				price: Number(service.price),
 				image: service.imageUrl || service.image_url || ''
 			});
-			addToast(`${service.name} añadido al carrito`, 'success');
+			toast.success(`${service.name} añadido al carrito`);
 		} catch (e) {
 			console.error('Error adding to cart:', e);
-			addToast('No se pudo añadir al carrito', 'error');
+			toast.error('No se pudo añadir al carrito');
 		} finally {
 			isAddingToCart = false;
 		}

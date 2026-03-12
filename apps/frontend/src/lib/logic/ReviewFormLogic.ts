@@ -1,4 +1,4 @@
-import { toast } from '$lib/components/feedback/Toast.svelte';
+import { toast } from '$lib/stores/toast.svelte';
 
 export interface ReviewFormProps {
     serviceId: string;
