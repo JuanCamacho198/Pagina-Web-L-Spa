@@ -19,7 +19,8 @@
     key?: number;
   }
 
-  let { serviceId, key = 0 }: Props = $props();
+  let props: Props = $props();
+  const { serviceId, key = 0 } = $derived(props);
   let reviews = $state<Review[]>([]);
   let isLoading = $state(true);
 

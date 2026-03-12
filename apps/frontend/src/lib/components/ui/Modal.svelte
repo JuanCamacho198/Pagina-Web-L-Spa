@@ -4,15 +4,16 @@
   import Typography from './Typography.svelte';
   import type { Snippet } from 'svelte';
 
-  interface Props {
+  type Props = {
     isOpen: boolean;
     onClose: () => void;
     title: string;
     children: Snippet;
     footer?: Snippet;
     size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
-  }
+  };
 
+  let props: Props = $props();
   let { 
     isOpen, 
     onClose, 
@@ -20,7 +21,7 @@
     children, 
     footer, 
     size = 'md' 
-  }: Props = $props();
+  } = props;
 
   const sizeClasses = {
     sm: 'max-w-md',

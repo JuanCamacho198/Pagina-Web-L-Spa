@@ -1,17 +1,18 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
 
-  interface Props {
+  type: Props = {
     value: string;
     placeholder?: string;
     class?: string;
-  }
+  };
 
+  let props: Props = $props();
   let { 
     value = $bindable(), 
     placeholder = "Buscar...", 
     class: className = "" 
-  }: Props = $props();
+  } = props;
 </script>
 
 <div class={cn("relative flex items-center group w-full", className)}>

@@ -1,12 +1,13 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
 
-  interface Props {
+  type Props = {
     class?: string;
     variant?: 'rectangular' | 'circular' | 'text';
-  }
+  };
 
-  let { class: className = '', variant = 'rectangular' }: Props = $props();
+  let props: Props = $props();
+  let { class: className = '', variant = 'rectangular' } = props;
 
   const variantClasses = {
     rectangular: 'rounded-4xl',

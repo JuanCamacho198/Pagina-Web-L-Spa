@@ -3,21 +3,22 @@
   import { cn } from '$lib/utils/cn';
   import { calculateStarState } from '$lib/logic/StarRatingLogic';
 
-  interface Props {
+  type Props = {
     rating: number;
     maxRating?: number;
     onRatingChange?: (rating: number) => void;
     readonly?: boolean;
     size?: number;
-  }
+  };
 
+  let props: Props = $props();
   let { 
     rating, 
     maxRating = 5, 
     onRatingChange = () => {}, 
     readonly = false, 
     size = 24 
-  }: Props = $props();
+  } = props;
 
   let hoverRating = $state(0);
 

@@ -3,14 +3,15 @@
   import type { HTMLButtonAttributes } from 'svelte/elements';
   import type { Snippet } from 'svelte';
 
-  interface Props extends HTMLButtonAttributes {
+  type Props = HTMLButtonAttributes & {
     variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
     size?: 'sm' | 'md' | 'lg';
     isLoading?: boolean;
     href?: string;
     children?: Snippet;
-  }
+  };
 
+  let props: Props = $props();
   let { 
     variant = 'primary', 
     size = 'md', 
@@ -19,7 +20,7 @@
     class: className = '', 
     children,
     ...rest 
-  }: Props = $props();
+  } = props;
 
   const variantStyles = {
     primary: 'bg-primary text-white hover:bg-primary/90 shadow-md hover:shadow-lg',

@@ -2,18 +2,19 @@
   import { cn } from '$lib/utils/cn';
   import type { HTMLAttributes } from 'svelte/elements';
 
-  interface Props extends HTMLAttributes<HTMLSpanElement> {
+  type Props = HTMLAttributes<HTMLSpanElement> & {
     variant?: 'default' | 'secondary' | 'outline' | 'destructive';
     children?: any;
     class?: string;
-  }
+  };
 
+  let props: Props = $props();
   let { 
     variant = 'default', 
     class: className = '', 
     children,
     ...rest 
-  }: Props = $props();
+  } = props;
 
   const variants = {
     default: 'bg-primary/10 text-primary border-primary/20',

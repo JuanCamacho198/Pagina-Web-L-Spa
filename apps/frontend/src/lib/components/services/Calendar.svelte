@@ -11,10 +11,9 @@
     maxDate?: string;
   }
 
-  let { selectedDate, onDateSelect, minDate, maxDate }: Props = $props();
+  let props: Props = $props();
   
-  const vars = { selectedDate, onDateSelect, minDate, maxDate };
-  const logic = new CalendarLogic(vars);
+  const logic = new CalendarLogic(props);
 </script>
 
 <div class="p-4 bg-white rounded-3xl shadow-xl border border-gray-100 max-w-sm mx-auto">

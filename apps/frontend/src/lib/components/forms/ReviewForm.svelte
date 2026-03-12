@@ -5,8 +5,8 @@
   import { Sparkles, Send } from 'lucide-svelte';
   import { ReviewFormLogic, type ReviewFormProps } from '$lib/logic/ReviewFormLogic';
 
-  const { onReviewSubmitted, serviceId, ...restProps }: ReviewFormProps = $props();
-  const logic = new ReviewFormLogic({ onReviewSubmitted, serviceId, ...restProps });
+  let props: ReviewFormProps = $props();
+  const logic = new ReviewFormLogic(props);
 </script>
 
 <form onsubmit={logic.handleSubmit} class="space-y-10 group">
