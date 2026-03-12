@@ -15,8 +15,7 @@
     class?: string;
   }
 
-  let props: Props = $props();
-  let { steps, currentStep, class: className = "" } = props;
+  let { steps, currentStep, class: className = "" }: Props = $props();
 </script>
 
 <div class={cn("w-full flex items-center justify-between relative", className)}>

@@ -10,14 +10,13 @@
     class?: string;
   }
 
-  let props: Props = $props();
   let { 
     variant = 'p', 
     as, 
     class: className = '', 
     children,
     ...rest 
-  } = props;
+  }: Props = $props();
 
   const variants = {
     h1: 'text-4xl font-extrabold tracking-tight lg:text-5xl text-gray-900',

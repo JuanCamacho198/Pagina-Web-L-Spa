@@ -8,13 +8,12 @@
     class?: string;
   }
 
-  let props: Props = $props();
   let { 
     items = [], 
     trigger, 
     align = 'left', 
     class: className = '' 
-  } = props;
+  }: Props = $props();
 
   let isOpen = $state(false);
   let dropdownRef = $state<HTMLElement | null>(null);

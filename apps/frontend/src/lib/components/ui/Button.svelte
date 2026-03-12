@@ -11,7 +11,6 @@
     children?: Snippet;
   }
 
-  let props: Props = $props();
   let { 
     variant = 'primary', 
     size = 'md', 
@@ -20,7 +19,7 @@
     class: className = '', 
     children,
     ...rest 
-  } = props;
+  }: Props = $props();
 
   const variantStyles = {
     primary: 'bg-primary text-white hover:bg-primary/90 shadow-md hover:shadow-lg',

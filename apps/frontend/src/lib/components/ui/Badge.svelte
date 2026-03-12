@@ -8,13 +8,12 @@
     class?: string;
   }
 
-  let props: Props = $props();
   let { 
     variant = 'default', 
     class: className = '', 
     children,
     ...rest 
-  } = props;
+  }: Props = $props();
 
   const variants = {
     default: 'bg-primary/10 text-primary border-primary/20',

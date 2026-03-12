@@ -6,8 +6,7 @@
     variant?: 'rectangular' | 'circular' | 'text';
   }
 
-  let props: Props = $props();
-  let { class: className = '', variant = 'rectangular' } = props;
+  let { class: className = '', variant = 'rectangular' }: Props = $props();
 
   const variantClasses = {
     rectangular: 'rounded-4xl',
