@@ -7,6 +7,10 @@ export default defineConfig({
 		sveltekit(),
 		tailwindcss()
 	],
+	define: {
+		'process.env.PUBLIC_API_URL': JSON.stringify(process.env.PUBLIC_API_URL),
+		'global': 'globalThis',
+	},
 	ssr: {
 		noExternal: ['better-auth', '@better-auth/utils', 'better-auth/svelte', '@better-auth/core', '@better-auth/infra']
 	}

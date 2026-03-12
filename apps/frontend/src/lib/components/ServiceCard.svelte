@@ -4,7 +4,7 @@
   import Button from './Button.svelte';
   import Badge from './Badge.svelte';
   import { ArrowRight, Clock, Banknote, ShoppingBag, Check } from 'lucide-svelte';
-  import type { Service } from '../../../../packages/shared-types/src/services';
+  import type { Service } from '@l-spa/shared-types';
   import { cart } from '$lib/cart';
   import { addToast } from './Toast.svelte';
 

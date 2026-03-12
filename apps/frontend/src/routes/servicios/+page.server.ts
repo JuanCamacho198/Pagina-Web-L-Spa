@@ -3,15 +3,19 @@ import { apiFetch } from '$lib/utils/api';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
+	console.log('--- Cargando página de servicios ---');
 	try {
-		const services: Service[] = await apiFetch('/services');
+		console.log('Llamando a apiFetch(/services)...');
+		const services = await apiFetch('/services');
+		console.log(`Servicios obtenidos: ${services?.length || 0}`);
 		return {
 			services: services || []
 		};
 	} catch (error) {
-		console.error('Error fetching services:', error);
+		console.error('!!! Error FATAL cargando servicios:', error);
 		return {
-			services: []
+			services: [],
+			error: error instanceof Error ? error.message : 'Error desconocido'
 		};
 	}
 }
