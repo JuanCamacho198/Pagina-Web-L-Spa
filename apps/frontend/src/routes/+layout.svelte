@@ -4,9 +4,9 @@
   import Toaster from '$components/Toast.svelte';
   import Footer from '$components/Footer.svelte';  import { onMount } from 'svelte';
   import { authClient } from '$lib/auth-client';
-  import { cart, cartCount } from '$lib/cart';
-  import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';
-  
+   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';
+   import { cart, cartCount } from '$lib/cart';
+
   let { data, children } = $props();
   const session = authClient.useSession();
 

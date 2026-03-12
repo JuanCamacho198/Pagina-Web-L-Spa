@@ -1,21 +1,21 @@
-import { type Service } from '@l-spa/shared-types';
 import { apiFetch } from '$lib/utils/api';
+
+export const ssr = false;
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-	console.log('--- Cargando página de servicios ---');
+	console.log('--- Cargando servicios (solo cliente) ---');
 	try {
-		console.log('Llamando a apiFetch(/services)...');
-		const services = await apiFetch('/services');
-		console.log(`Servicios obtenidos: ${services?.length || 0}`);
+        const services = await apiFetch('/services');
+        console.log(`Servicios obtenidos: ${services.length}`);
 		return {
-			services: services || []
+			services
 		};
 	} catch (error) {
-		console.error('!!! Error FATAL cargando servicios:', error);
+		console.error('Error loading services:', error);
 		return {
 			services: [],
-			error: error instanceof Error ? error.message : 'Error desconocido'
+			error: 'No se pudieron cargar los servicios'
 		};
 	}
 }

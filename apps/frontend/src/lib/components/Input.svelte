@@ -1,23 +1,27 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
-  import type { HTMLInputAttributes } from 'svelte/elements';
+  import type { HTMLAttributes } from 'svelte/elements';
 
-  interface Props extends HTMLInputAttributes {
+  interface Props {
+    id?: string;
     label?: string;
     error?: string;
-    icon?: any;
-    value?: string | number | string[] | null | undefined;
+    value?: string | number;
+    placeholder?: string;
+    class?: string;
+    type?: string;
+    [key: string]: any;
   }
 
   let { 
-    id = `input-${Math.random().toString(36).substring(2, 9)}`,
+    id = "input-" + Math.floor(Math.random() * 1000000),
     label, 
     error, 
-    icon, 
     value = $bindable(), 
-    class: className = '', 
+    class: className = '',
+    type = 'text',
     ...rest 
-  } = $props();
+  } = $props<Props>();
 </script>
 
 <div class="w-full space-y-1.5">
@@ -27,16 +31,11 @@
     </label>
   {/if}
   <div class="relative group">
-    {#if icon}
-      <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors">
-        {@render icon?.()}
-      </div>
-    {/if}
     <input
-      id={id}
+      {id}
+      {type}
       class={cn(
         'w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700',
-        icon && 'pl-10',
         error && 'border-red-500 focus:border-red-500 focus:ring-red-100',
         className
       )}

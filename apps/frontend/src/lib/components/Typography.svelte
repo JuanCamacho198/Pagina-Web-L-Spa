@@ -1,11 +1,12 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
   import type { HTMLAttributes } from 'svelte/elements';
+  import type { Snippet } from 'svelte';
 
   interface Props extends HTMLAttributes<HTMLElement> {
     variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'lead' | 'small';
     as?: string;
-    children?: any;
+    children?: Snippet;
     class?: string;
   }
 
@@ -15,7 +16,7 @@
     class: className = '', 
     children,
     ...rest 
-  } = $props();
+  } = $props<Props>();
 
   const variants = {
     h1: 'text-4xl font-extrabold tracking-tight lg:text-5xl text-gray-900',

@@ -4,39 +4,51 @@
   import Button from './Button.svelte';
   import Badge from './Badge.svelte';
   import { ArrowRight, Clock, Banknote, ShoppingBag, Check } from 'lucide-svelte';
-  import type { Service } from '@l-spa/shared-types';
   import { cart } from '$lib/cart';
-  import { addToast } from './Toast.svelte';
+  import { toast } from '$lib/stores/toast.svelte';
+
+  interface Service {
+    id: string;
+    name: string;
+    description?: string;
+    price: number | string;
+    category?: string;
+    imageUrl?: string;
+    image_url?: string;
+    imageFileName?: string;
+    duration?: number;
+  }
 
   interface Props {
     service: Service;
     class?: string;
   }
 
-  let { service, class: className = '' } = $props();
+  let { service, class: className = '' } = $props<Props>();
 
   let isAdded = $state(false);
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     cart.addItem({
       serviceId: service.id,
-      slug: slugify(service.name),
-      name: service.name,
-      price: Number(service.price),
+      slug: slugify(service.name || ""),
+      name: service.name || "Servicio",
+      price: Number(service.price) || 0,
       image: service.imageUrl || service.image_url || ''
     });
     
     isAdded = true;
-    addToast(`${service.name} añadido al carrito`, 'success');
+    toast.success(`${service.name} añadido al carrito`);
     
     setTimeout(() => {
       isAdded = false;
     }, 2000);
   };
 
-  const slugify = (name) => {
+  const slugify = (name: string) => {
+    if (!name) return "";
     return name.toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
@@ -51,7 +63,6 @@
     className
   )}
 >
-  <!-- Image Container -->
   <div class="relative h-64 overflow-hidden">
     {#if service.imageUrl || service.image_url}
       <img 
@@ -71,21 +82,18 @@
       </div>
     {/if}
     
-    <!-- Category Badge Over Image -->
     <div class="absolute top-4 left-4">
       <Badge variant="primary" class="bg-white/90 backdrop-blur-md text-primary font-bold shadow-lg border-none px-4 py-2 rounded-2xl">
         {service.category || 'General'}
       </Badge>
     </div>
 
-    <!-- Rating Overlay -->
     <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-2xl shadow-lg flex items-center gap-2">
       <StarRating rating={4.5} size={14} readonly />
       <span class="text-xs font-bold text-gray-800">4.5</span>
     </div>
   </div>
 
-  <!-- Content -->
   <div class="p-8 flex flex-col flex-1">
     <div class="mb-4">
       <div class="flex items-center justify-between gap-2 mb-2">
@@ -101,19 +109,13 @@
       </p>
     </div>
 
-    <!-- Features -->
     <div class="flex flex-wrap gap-4 mb-8 mt-auto">
       <div class="flex items-center gap-2 text-gray-400 bg-gray-50/50 px-3 py-1.5 rounded-xl">
         <Clock size={14} class="text-primary/60" />
         <span class="text-[10px] font-black uppercase tracking-wider">{service.duration || 60} min</span>
       </div>
-      <div class="flex items-center gap-2 text-gray-400 bg-gray-50/50 px-3 py-1.5 rounded-xl">
-        <Banknote size={14} class="text-primary/60" />
-        <span class="text-[10px] font-black uppercase tracking-wider">Profesional</span>
-      </div>
     </div>
 
-    <!-- Action -->
     <div class="flex items-center justify-between gap-4 pt-6 border-t border-gray-100">
       <div class="flex flex-col">
         <span class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Inversión</span>
@@ -132,11 +134,10 @@
               ? "bg-emerald-50 border-emerald-100 text-emerald-500 scale-95" 
               : "bg-white border-gray-100 text-gray-400 hover:bg-primary hover:border-primary hover:text-white hover:shadow-lg hover:shadow-primary/20"
           )}
-          aria-label="Añadir al carrito"
         >
           {#if isAdded}
             <div class="animate-in zoom-in duration-300">
-               <Check size={20} strokeWidth={3} />
+               <Check size={20} strokeWidth={3} class="text-emerald-500" />
             </div>
           {:else}
             <ShoppingBag size={20} strokeWidth={2.5} />

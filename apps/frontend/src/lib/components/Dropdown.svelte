@@ -1,26 +1,12 @@
 <script lang="ts">
-  import { type Snippet } from 'svelte';
   import { cn } from '$lib/utils/cn';
-
-  interface DropdownItem {
-    label: string;
-    onClick: () => void;
-    variant?: 'default' | 'danger';
-  }
-
-  interface Props {
-    items: DropdownItem[];
-    trigger: Snippet;
-    align?: 'left' | 'right';
-    class?: string;
-  }
 
   let { 
     items = [], 
     trigger, 
     align = 'left', 
     class: className = '' 
-  } = $props<Props>();
+  } = $props();
 
   let isOpen = $state(false);
   let dropdownRef = $state<HTMLElement | null>(null);
@@ -58,7 +44,7 @@
   {#if isOpen}
     <div 
       class={cn(
-        "absolute top-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-2xl p-2 min-w-[180px] z-50",
+        "absolute top-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-2xl p-2 min-w-[200px] z-50",
         "animate-in fade-in zoom-in-95 duration-200 ease-out",
         align === 'right' ? 'right-0' : 'left-0'
       )}

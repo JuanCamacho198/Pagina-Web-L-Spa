@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { Search } from 'lucide-svelte';
   import { cn } from '$lib/utils/cn';
-  import Input from './Input.svelte';
 
   interface Props {
     value: string;
@@ -9,17 +7,18 @@
     class?: string;
   }
 
-  let { value = $bindable(), placeholder = "Buscar...", class: className = "" } = $props();
+  let { 
+    value = $bindable(), 
+    placeholder = "Buscar...", 
+    class: className = "" 
+  } = $props<Props>();
 </script>
 
-<div class={cn("relative flex items-center group", className)}>
-  <Search 
-    class="absolute left-4 w-5 h-13 text-gray-400 group-focus-within:text-primary transition-colors pointer-events-none" 
-  />
-  <Input
+<div class={cn("relative flex items-center group w-full", className)}>
+  <input
     type="text"
     bind:value={value}
     {placeholder}
-    class="pl-12 w-full h-[52px] shadow-sm hover:shadow-md focus:shadow-lg transition-all border-gray-100 rounded-4xl!"
+    class="w-full h-[52px] bg-white border border-gray-100 rounded-4xl outline-none shadow-sm hover:shadow-md focus:shadow-lg focus:border-primary transition-all px-6 text-gray-700 placeholder:text-gray-400"
   />
 </div>
