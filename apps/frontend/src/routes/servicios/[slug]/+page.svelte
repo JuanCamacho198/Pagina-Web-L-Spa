@@ -3,7 +3,6 @@
 	import { cn } from '$lib/utils/cn';
 	import Button from '$components/Button.svelte';
 	import Typography from '$components/Typography.svelte';
-	import TypographyElement from '$components/Typography.svelte';
 	import Badge from '$components/Badge.svelte';
 	import StarRating from '$components/StarRating.svelte';
 	import ServiceCard from '$components/ServiceCard.svelte';

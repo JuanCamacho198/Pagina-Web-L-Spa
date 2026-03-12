@@ -1,26 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { cn } from '$lib/utils/cn';
-  import type { Snippet } from 'svelte';
-
-  interface DropdownItem {
-    label: string;
-    onClick: () => void;
-    icon?: any; // Lucide icons
-    variant?: 'default' | 'danger';
-  }
-
-  interface Props {
-    trigger: Snippet;
-    items: DropdownItem[];
-    align?: 'left' | 'right';
-    class?: string;
-  }
-
-  let { trigger, items, align = 'right', class: className = '' } = $props();
-
-  let isOpen = $state(false);
-  let dropdownRef = $state(null);
 
   const toggle = () => (isOpen = !isOpen);
   const close = () => (isOpen = false);
