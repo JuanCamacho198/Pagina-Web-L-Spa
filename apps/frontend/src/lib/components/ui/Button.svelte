@@ -19,13 +19,7 @@
     class: className = '', 
     children,
     ...rest 
-  } = $props<{
-    variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-    size?: 'sm' | 'md' | 'lg';
-    isLoading?: boolean;
-    href?: string;
-    children?: Snippet;
-  } & HTMLButtonAttributes>();
+  }: Props = $props();
 
   const variantStyles = {
     primary: 'bg-primary text-white hover:bg-primary/90 shadow-md hover:shadow-lg',

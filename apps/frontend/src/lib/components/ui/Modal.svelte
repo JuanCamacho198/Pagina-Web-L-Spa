@@ -20,7 +20,7 @@
     children, 
     footer, 
     size = 'md' 
-  } = $props<Props>();
+  }: Props = $props();
 
   const sizeClasses = {
     sm: 'max-w-md',

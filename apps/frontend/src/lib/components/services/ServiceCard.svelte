@@ -7,10 +7,12 @@
   import { handleAddToCartLogic } from '$lib/logic/ServiceCardLogic';
   import type { Service } from '$lib/types/service';
 
-  let { service, class: className = '' } = $props<{
+  interface Props {
     service: Service;
     class?: string;
-  }>();
+  }
+
+  let { service, class: className = '' }: Props = $props();
 
   let isAdded = $state(false);
 

@@ -4,14 +4,17 @@
   import Typography from "../ui/Typography.svelte";
   import { CalendarLogic, type CalendarProps } from "$lib/logic/CalendarLogic";
 
-  let { selectedDate, onDateSelect, minDate, maxDate } = $props<{
+  interface Props {
     selectedDate?: string;
     onDateSelect: (date: string) => void;
     minDate?: string;
     maxDate?: string;
-  }>();
+  }
+
+  let { selectedDate, onDateSelect, minDate, maxDate }: Props = $props();
   
-  const logic = new CalendarLogic({ selectedDate, onDateSelect, minDate, maxDate });
+  const vars = { selectedDate, onDateSelect, minDate, maxDate };
+  const logic = new CalendarLogic(vars);
 </script>
 
 <div class="p-4 bg-white rounded-3xl shadow-xl border border-gray-100 max-w-sm mx-auto">
@@ -63,7 +66,7 @@
     {#each Array(logic.totalDays) as _, i}
       {@const d = i + 1}
       {@const disabled = logic.isDisabled(d)}
-      {@const selected = logic.isSelected(d, props.selectedDate)}
+      {@const selected = logic.isSelected(d, vars.selectedDate)}
       {@const today = logic.isToday(d)}
 
       <button

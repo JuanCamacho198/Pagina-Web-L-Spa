@@ -5,7 +5,7 @@
   import { Sparkles, Send } from 'lucide-svelte';
   import { ReviewFormLogic, type ReviewFormProps } from '$lib/logic/ReviewFormLogic';
 
-  let props = $props<ReviewFormProps>();
+  let props: ReviewFormProps = $props();
   const logic = new ReviewFormLogic(props);
 </script>
 
