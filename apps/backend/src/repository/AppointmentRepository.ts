@@ -1,4 +1,4 @@
-import { db, appointments, services, users } from '@l-spa/database';
+import { db, appointments, services, user as users } from '@l-spa/database';
 import { eq, and, desc, sql, ne } from 'drizzle-orm';
 import type { Appointment } from '@l-spa/shared-types';
 

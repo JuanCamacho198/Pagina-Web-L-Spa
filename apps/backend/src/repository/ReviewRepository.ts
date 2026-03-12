@@ -1,4 +1,4 @@
-import { db, reviews, users, appointments } from '@l-spa/database';
+import { db, reviews, user as users, appointments } from '@l-spa/database';
 import { eq, and, desc } from 'drizzle-orm';
 import type { Review } from '@l-spa/shared-types';
 
