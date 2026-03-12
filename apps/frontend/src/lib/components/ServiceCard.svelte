@@ -13,11 +13,11 @@
     class?: string;
   }
 
-  let { service, class: className = '' }: Props = $props();
+  let { service, class: className = '' } = $props();
 
   let isAdded = $state(false);
 
-  const handleAddToCart = (e: MouseEvent) => {
+  const handleAddToCart = function(e) {
     e.preventDefault();
     e.stopPropagation();
     cart.addItem({
@@ -36,11 +36,12 @@
     }, 2000);
   };
 
-  const slugify = (name: string) => 
-    name.toLowerCase()
+  const slugify = function(name) {
+    return name.toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/\s+/g, '-');
+  };
 </script>
 
 <a 

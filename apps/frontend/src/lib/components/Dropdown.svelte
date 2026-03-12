@@ -17,16 +17,16 @@
     class?: string;
   }
 
-  let { trigger, items, align = 'right', class: className = '' } = $props<Props>();
+  let { trigger, items, align = 'right', class: className = '' } = $props();
 
   let isOpen = $state(false);
-  let dropdownRef = $state<HTMLDivElement | null>(null);
+  let dropdownRef = $state(null);
 
   const toggle = () => (isOpen = !isOpen);
   const close = () => (isOpen = false);
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef && !dropdownRef.contains(event.target as Node)) {
+  const handleClickOutside = (event) => {
+    if (dropdownRef && !dropdownRef.contains(event.target)) {
       close();
     }
   };

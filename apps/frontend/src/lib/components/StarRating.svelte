@@ -16,11 +16,11 @@
     onRatingChange, 
     readonly = false, 
     size = 24 
-  }: Props = $props();
+  } = $props();
 
   let hoverRating = $state(0);
 
-  const handleClick = (value: number) => {
+  const handleClick = (value) => {
     if (!readonly && onRatingChange) {
       onRatingChange(value);
     }

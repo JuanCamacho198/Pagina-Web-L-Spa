@@ -10,12 +10,12 @@
   let { data, children } = $props();
   const session = authClient.useSession();
 
-  onMount(() => {
+  onMount(function() {
     // Auth logic is now handled by Better Auth Client
   });
 
   // Load cart when session changes
-  $effect(() => {
+  $effect(function() {
     if (!session.get().isPending) {
       cart.load();
     }

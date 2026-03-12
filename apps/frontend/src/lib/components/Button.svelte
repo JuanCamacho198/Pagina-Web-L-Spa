@@ -17,7 +17,7 @@
     class: className = '', 
     children,
     ...rest 
-  } = $props<Props>();
+  } = $props();
 
   const variants = {
     primary: 'bg-primary text-white hover:bg-primary-light shadow-md hover:shadow-lg',

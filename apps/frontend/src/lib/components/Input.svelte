@@ -17,7 +17,7 @@
     value = $bindable(), 
     class: className = '', 
     ...rest 
-  }: Props = $props();
+  } = $props();
 </script>
 
 <div class="w-full space-y-1.5">
