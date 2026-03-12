@@ -134,7 +134,7 @@
 						<Badge variant="primary" class="rounded-2xl px-6 py-3 font-black uppercase tracking-[0.2em] text-[10px] shadow-xl shadow-primary/10 border-none bg-primary text-white">
 							{service.category || 'Bienestar'}
 						</Badge>
-						<div class="h-10 w-[1px] bg-gray-100"></div>
+						<div class="h-10 w-px bg-gray-100"></div>
 						<div class="flex items-center gap-2">
 							<div class="flex -space-x-2">
 								{#each [1,2,3] as i}
@@ -191,7 +191,7 @@
 						<button
 							onclick={handleAddToCart}
 							disabled={isAddingToCart}
-							class="flex-1 rounded-[32px] bg-white border-2 border-primary/20 px-10 py-6 font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/5 hover:border-primary hover:bg-primary/5 transition-all active:scale-95 flex items-center justify-center gap-4 group/btn"
+							class="flex-1 rounded-4xl bg-white border-2 border-primary/20 px-10 py-6 font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/5 hover:border-primary hover:bg-primary/5 transition-all active:scale-95 flex items-center justify-center gap-4 group/btn"
 						>
 							{#if isAddingToCart}
 							  <div class="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
@@ -202,7 +202,7 @@
 						</button>
 						<Button
 							href="/booking?serviceId={service.id}"
-							class="flex-[1.5] rounded-[32px] px-12 py-6 font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-primary/40 hover:scale-[1.02] active:scale-95 group/book text-white h-auto"
+							class="flex-[1.5] rounded-4xl px-12 py-6 font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-primary/40 hover:scale-[1.02] active:scale-95 group/book text-white h-auto"
 						>
 							RESERVAR AHORA
 							<ArrowRight size={20} class="ml-4 group-hover/book:translate-x-2 transition-transform" />

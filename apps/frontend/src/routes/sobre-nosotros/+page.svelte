@@ -69,7 +69,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
 			<!-- Media Side (Abstract Decor) -->
 			<div class="relative order-2 lg:order-1 flex justify-center lg:justify-start">
-				<div class="relative w-full max-w-md aspect-4/5 bg-gray-50 rounded-[64px] overflow-hidden shadow-2xl shadow-primary/10 border border-gray-100">
+				<div class="relative w-full max-w-md aspect-4/5/5 bg-gray-50 rounded-[64px] overflow-hidden shadow-2xl shadow-primary/10 border border-gray-100">
 					<img 
 						src="/src/assets/banners/bannerSpa.avif" 
 						alt="L-SPA Interior" 
