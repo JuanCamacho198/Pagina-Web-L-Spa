@@ -17,7 +17,7 @@
 
   let isAdded = $state(false);
 
-  const handleAddToCart = function(e) {
+  const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
     cart.addItem({
@@ -36,7 +36,7 @@
     }, 2000);
   };
 
-  const slugify = function(name) {
+  const slugify = (name) => {
     return name.toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")

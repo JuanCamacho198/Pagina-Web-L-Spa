@@ -33,6 +33,12 @@
 
 	let isAddingToCart = $state(false);
 
+	const features = $derived([
+		{ icon: HandHelping, label: 'Atención Personalizada' },
+		{ icon: Waves, label: 'Ambiente Relajante' },
+		{ icon: HeartPulse, label: 'Bienestar Holístico' },
+	]);
+
 	const handleAddToCart = async () => {
 		isAddingToCart = true;
 		try {
@@ -51,12 +57,6 @@
 			isAddingToCart = false;
 		}
 	};
-
-	const features = [
-		{ icon: HandHelping, label: 'Atención Personalizada' },
-		{ icon: Waves, label: 'Ambiente Relajante' },
-		{ icon: HeartPulse, label: 'Bienestar Holístico' },
-	];
 </script>
 
 <svelte:head>
