@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { onMount, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
   import { cn } from '$lib/utils/cn';
 
   interface DropdownItem {
     label: string;
     onClick: () => void;
     variant?: 'default' | 'danger';
-    icon?: any;
   }
 
   interface Props {
@@ -59,7 +58,7 @@
   {#if isOpen}
     <div 
       class={cn(
-        "absolute top-full mt-2 bg-white border border-gray-100 rounded-4xl shadow-2xl p-2 min-w-[200px] z-50",
+        "absolute top-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-2xl p-2 min-w-[180px] z-50",
         "animate-in fade-in zoom-in-95 duration-200 ease-out",
         align === 'right' ? 'right-0' : 'left-0'
       )}
@@ -72,17 +71,12 @@
               close();
             }}
             class={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-2xl transition-all w-full text-left font-medium",
+              "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all w-full text-left font-medium",
               item.variant === 'danger' 
                 ? 'text-red-500 hover:bg-red-50' 
                 : 'text-gray-600 hover:bg-gray-50 active:scale-95'
             )}
           >
-            {#if item.icon}
-              <span class="shrink-0 opacity-70">
-                <item.icon size={18} />
-              </span>
-            {/if}
             {item.label}
           </button>
         {/each}
