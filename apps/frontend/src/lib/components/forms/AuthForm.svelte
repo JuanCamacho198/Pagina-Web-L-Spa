@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Mail, Lock, User, ArrowRight, Loader2 } from 'lucide-svelte';
+  import { Mail, Lock, User, ArrowRight, LoaderCircle } from 'lucide-svelte';
   import Button from '../ui/Button.svelte';
   import Input from '../ui/Input.svelte';
   import Typography from '../ui/Typography.svelte';
-  import { AuthFormLogic } from '$lib/logic/AuthFormLogic';
+  import { AuthFormLogic } from '$lib/logic/AuthFormLogic.svelte';
 
   const logic = new AuthFormLogic();
 </script>
@@ -58,7 +58,7 @@
 
     <Button type="submit" class="w-full py-4 rounded-2xl group" disabled={logic.isLoading}>
       {#if logic.isLoading}
-        <Loader2 class="animate-spin mr-2" size={20} />
+        <LoaderCircle class="animate-spin mr-2" size={20} />
         Cargando...
       {:else}
         {logic.isLogin ? 'Entrar' : 'Registrarme'}
