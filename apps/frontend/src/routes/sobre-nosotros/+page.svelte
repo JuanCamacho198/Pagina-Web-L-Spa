@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Target, Eye, ShieldCheck, Heart, Sparkles, Coffee, ChevronRight, Award, MapPin } from 'lucide-svelte';
-	import Button from '$lib/components/Button.svelte';
-	import Typography from '$lib/components/Typography.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Typography from '$lib/components/ui/Typography.svelte';
 	import { cn } from '$lib/utils/cn';
 
 	const pillars = [

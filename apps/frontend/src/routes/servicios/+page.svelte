@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { cn } from '$lib/utils/cn';
-	import ServiceCard from '$lib/components/ServiceCard.svelte';
-	import SearchBar from '$lib/components/SearchBar.svelte';
-	import Dropdown from '$lib/components/Dropdown.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import Typography from '$lib/components/Typography.svelte';
+	import ServiceCard from '$lib/components/services/ServiceCard.svelte';
+	import SearchBar from '$lib/components/forms/SearchBar.svelte';
+	import Dropdown from '$lib/components/ui/Dropdown.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Typography from '$lib/components/ui/Typography.svelte';
 	import { Filter, SortAsc, ChevronDown } from 'lucide-svelte';
 
 	let { data } = $props();

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
-  import StarRating from './StarRating.svelte';
-  import Badge from './Badge.svelte';
+  import StarRating from '../ui/StarRating.svelte';
+  import Badge from '../ui/Badge.svelte';
   import { ArrowRight, Clock, ShoppingBag, Check } from 'lucide-svelte';
   import { slugify } from '$lib/utils/text';
   import { handleAddToCartLogic } from './ServiceCardLogic';

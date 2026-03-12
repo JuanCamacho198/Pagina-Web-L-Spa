@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AuthForm from '$lib/components/AuthForm.svelte';
+  import AuthForm from '$lib/components/forms/AuthForm.svelte';
   import { ShieldCheck } from 'lucide-svelte';
 </script>
 

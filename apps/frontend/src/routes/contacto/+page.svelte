@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Mail, MapPin, Send, MessageCircle, Phone, Clock, ShieldCheck, Sparkles } from 'lucide-svelte';
 	import { cn } from '$lib/utils/cn';
-	import Button from '$lib/components/Button.svelte';
-	import Typography from '$lib/components/Typography.svelte';
-	import { toast } from '$lib/components/Toast.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Typography from '$lib/components/ui/Typography.svelte';
+	import { toast } from '$lib/components/feedback/Toast.svelte';
 
 	let isSubmitting = $state(false);
 	
