@@ -8,6 +8,6 @@ export default defineConfig({
 		tailwindcss()
 	],
 	ssr: {
-		noExternal: ['better-auth', '@better-auth/utils', 'better-auth/svelte', '@better-auth/core']
+		noExternal: ['better-auth', '@better-auth/utils', 'better-auth/svelte', '@better-auth/core', '@better-auth/infra']
 	}
 });

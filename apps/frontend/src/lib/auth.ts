@@ -1,89 +1,68 @@
-import { createAuth0Client, type Auth0Client, type User } from '@auth0/auth0-spa-js';
-import { writable } from 'svelte/store';
-import { PUBLIC_AUTH0_DOMAIN, PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_AUDIENCE } from '$env/static/public';
+/**
+ * Auth compatibility layer.
+ * The project migrated from Auth0 to Better Auth.
+ * This file re-exports convenience helpers so existing imports keep working.
+ */
+import { writable, derived, get } from 'svelte/store';
+import { authClient } from './auth-client';
 import { browser } from '$app/environment';
 
+// ---- Svelte stores for backwards compatibility ----
 export const isAuthenticated = writable(false);
-export const user = writable<User | null>(null);
+export const user = writable<{ name?: string; email?: string; image?: string } | null>(null);
 export const isLoading = writable(true);
-export const auth0Client = writable<Auth0Client | null>(null);
-
-let client: Auth0Client;
 
 /**
- * Initializes the Auth0 client and sets up the session state.
+ * Sync Better Auth session → legacy stores.
+ * Call this once inside the root layout's onMount.
  */
-export async function initAuth() {
-	if (!browser) return;
-
-	isLoading.set(true);
-
-	try {
-		client = await createAuth0Client({
-			domain: PUBLIC_AUTH0_DOMAIN,
-			clientId: PUBLIC_AUTH0_CLIENT_ID,
-			authorizationParams: {
-				audience: PUBLIC_AUTH0_AUDIENCE,
-				redirect_uri: window.location.origin
-			},
-			cacheLocation: 'localstorage',
-			useRefreshTokens: true
-		});
-
-		auth0Client.set(client);
-
-		// Handle completion of login flow
-		const query = window.location.search;
-		if (query.includes('code=') && query.includes('state=')) {
-			await client.handleRedirectCallback();
-			window.history.replaceState({}, document.title, window.location.pathname);
-		}
-
-		const isAuth = await client.isAuthenticated();
-		isAuthenticated.set(isAuth);
-
-		if (isAuth) {
-			const userData = await client.getUser();
-			user.set(userData ?? null);
-		}
-	} catch (error) {
-		console.error('Auth0 initialization failed:', error);
-		// Ensure loading state is turned off on error
-		isLoading.set(false);
-	} finally {
-		isLoading.set(false);
-	}
+export async function syncSession() {
+  if (!browser) return;
+  isLoading.set(true);
+  try {
+    const session = authClient.useSession();
+    const data = session.get();
+    if (data?.data) {
+      isAuthenticated.set(true);
+      user.set(data.data.user);
+    } else {
+      isAuthenticated.set(false);
+      user.set(null);
+    }
+  } catch (e) {
+    console.error('Error syncing session:', e);
+    isAuthenticated.set(false);
+    user.set(null);
+  } finally {
+    isLoading.set(false);
+  }
 }
 
 /**
- * Helper to trigger login
+ * Redirect to login page
  */
-export async function login() {
-	if (!client) return;
-	await client.loginWithRedirect();
+export function login() {
+  if (browser) {
+    window.location.href = '/login';
+  }
 }
 
 /**
- * Helper to trigger logout
+ * Logout via Better Auth
  */
 export async function logout() {
-	if (!client) return;
-	await client.logout({
-		logoutParams: {
-			returnTo: window.location.origin
-		}
-	});
+  await authClient.signOut();
+  isAuthenticated.set(false);
+  user.set(null);
+  if (browser) {
+    window.location.href = '/';
+  }
 }
 
 /**
- * Get the Access Token for API calls
+ * getToken — Better Auth uses cookies, so there's no standalone "token".
+ * This is kept for backwards compat; it returns null.
  */
-export async function getToken() {
-	if (!client) return null;
-	try {
-		return await client.getTokenSilently();
-	} catch (e) {
-		console.error('Error getting token', e);
-		return null;
-	}
+export async function getToken(): Promise<string | null> {
+  return null;
 }

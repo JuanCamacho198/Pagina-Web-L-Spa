@@ -39,7 +39,7 @@
 						<!-- Avatar with Upload Hover -->
 						<div class="relative group">
 							<div class="w-48 h-48 rounded-[56px] overflow-hidden border-4 border-white shadow-2xl relative">
-								<img src={$user?.picture} alt={$user?.name} class="w-full h-full object-cover" />
+								<img src={$user?.image} alt={$user?.name} class="w-full h-full object-cover" />
 								<div class="absolute inset-0 bg-gray-900/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center cursor-pointer">
 									<Camera size={40} class="text-white" />
 								</div>

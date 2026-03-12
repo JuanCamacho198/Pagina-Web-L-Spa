@@ -16,6 +16,18 @@ export interface CartItem {
 }
 
 /**
+ * Helper to check if user is authenticated via Better Auth
+ */
+async function checkAuth(): Promise<boolean> {
+	try {
+		const session = await authClient.getSession();
+		return !!session?.data;
+	} catch {
+		return false;
+	}
+}
+
+/**
  * Cart Store State
  */
 const createCartStore = () => {
@@ -32,13 +44,12 @@ const createCartStore = () => {
 			// Skip SSR
 			if (typeof window === 'undefined') return;
 
-			const session = await authClient.getSession();
-			if (session.data) {
+			const isAuth = await checkAuth();
+			if (isAuth) {
 				try {
 					const response = await fetch(`${PUBLIC_API_URL}/cart`, {
-						headers: {
-							// Better Auth handles session via cookies by default
-						}
+						credentials: 'include',
+						headers: {}
 					});
 					if (response.ok) {
 						const data = await response.json();
@@ -83,16 +94,15 @@ const createCartStore = () => {
 				return newItems;
 			});
 
-			// Sync to API if authenticated
-			const isAuth = get(isAuthenticated);
+			// Sync to API if authenticated (Better Auth uses cookies)
+			const isAuth = await checkAuth();
 			if (isAuth) {
 				try {
-					const token = await getToken();
 					await fetch(`${PUBLIC_API_URL}/cart`, {
 						method: 'POST',
+						credentials: 'include',
 						headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${token}`
 						},
 						body: JSON.stringify({ items: currentItems })
 					});
@@ -114,15 +124,14 @@ const createCartStore = () => {
 			});
 
 			// Sync to API if authenticated
-			const isAuth = get(isAuthenticated);
+			const isAuth = await checkAuth();
 			if (isAuth) {
 				try {
-					const token = await getToken();
 					await fetch(`${PUBLIC_API_URL}/cart`, {
 						method: 'POST',
+						credentials: 'include',
 						headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${token}`
 						},
 						body: JSON.stringify({ items: currentItems })
 					});
@@ -145,15 +154,14 @@ const createCartStore = () => {
 			});
 
 			// Sync to API if authenticated
-			const isAuth = get(isAuthenticated);
+			const isAuth = await checkAuth();
 			if (isAuth) {
 				try {
-					const token = await getToken();
 					await fetch(`${PUBLIC_API_URL}/cart`, {
 						method: 'POST',
+						credentials: 'include',
 						headers: {
 							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${token}`
 						},
 						body: JSON.stringify({ items: currentItems })
 					});
