@@ -13,10 +13,10 @@
   let { 
     rating, 
     maxRating = 5, 
-    onRatingChange, 
+    onRatingChange = () => {}, 
     readonly = false, 
     size = 24 
-  } = $props();
+  }: Props = $props();
 
   let hoverRating = $state(0);
 

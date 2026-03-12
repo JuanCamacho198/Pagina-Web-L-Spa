@@ -44,7 +44,7 @@
   {#if isOpen}
     <div 
       class={cn(
-        "absolute top-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-2xl p-2 min-w-[200px] z-50",
+        "absolute top-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-2xl p-2 min-w-50 z-50",
         "animate-in fade-in zoom-in-95 duration-200 ease-out",
         align === 'right' ? 'right-0' : 'left-0'
       )}

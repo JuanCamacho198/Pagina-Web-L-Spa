@@ -24,7 +24,7 @@
     class?: string;
   }
 
-  let { service, class: className = '' } = $props<Props>();
+  let { service, class: className = '' }: Props = $props();
 
   let isAdded = $state(false);
 

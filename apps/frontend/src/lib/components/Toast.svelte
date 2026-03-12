@@ -6,7 +6,7 @@
   import { toast } from '$lib/stores/toast.svelte';
 </script>
 
-<div class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 max-w-[400px] w-full pointer-events-none">
+<div class="fixed bottom-6 right-6 z-100 flex flex-col gap-3 max-w-100 w-full pointer-events-none">
   {#each toast.toasts as t (t.id)}
     <div 
       animate:flip={{ duration: 300 }}
