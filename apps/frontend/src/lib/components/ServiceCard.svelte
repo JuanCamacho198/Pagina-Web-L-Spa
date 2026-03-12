@@ -1,28 +1,11 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
   import StarRating from './StarRating.svelte';
-  import Button from './Button.svelte';
   import Badge from './Badge.svelte';
-  import { ArrowRight, Clock, Banknote, ShoppingBag, Check } from 'lucide-svelte';
-  import { cart } from '$lib/cart';
-  import { toast } from '$lib/stores/toast.svelte';
-
-  interface Service {
-    id: string;
-    name: string;
-    description?: string;
-    price: number | string;
-    category?: string;
-    imageUrl?: string;
-    image_url?: string;
-    imageFileName?: string;
-    duration?: number;
-  }
-
-  interface Props {
-    service: Service;
-    class?: string;
-  }
+  import { ArrowRight, Clock, ShoppingBag, Check } from 'lucide-svelte';
+  import { slugify } from '$lib/utils/text';
+  import { handleAddToCartLogic } from './ServiceCardLogic';
+  import type { Service } from '$lib/types/service';
 
   let { service, class: className = '' } = $props<{
     service: Service;
@@ -34,28 +17,7 @@
   const handleAddToCart = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    cart.addItem({
-      serviceId: service.id,
-      slug: slugify(service.name || ""),
-      name: service.name || "Servicio",
-      price: Number(service.price) || 0,
-      image: service.imageUrl || service.image_url || ''
-    });
-    
-    isAdded = true;
-    toast.success(`${service.name} añadido al carrito`);
-    
-    setTimeout(() => {
-      isAdded = false;
-    }, 2000);
-  };
-
-  const slugify = (name: string) => {
-    if (!name) return "";
-    return name.toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\s+/g, '-');
+    handleAddToCartLogic(service, (val) => isAdded = val);
   };
 </script>
 

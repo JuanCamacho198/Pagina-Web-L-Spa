@@ -1,14 +1,7 @@
 <script lang="ts">
   import { Star } from 'lucide-svelte';
   import { cn } from '$lib/utils/cn';
-
-  interface Props {
-    rating: number;
-    maxRating?: number;
-    onRatingChange?: (rating: number) => void;
-    readonly?: boolean;
-    size?: number;
-  }
+  import { calculateStarState } from './StarRatingLogic';
 
   let { 
     rating, 
@@ -26,7 +19,7 @@
 
   let hoverRating = $state(0);
 
-  const handleClick = (value) => {
+  const handleClick = (value: number) => {
     if (!readonly && onRatingChange) {
       onRatingChange(value);
     }
@@ -40,8 +33,7 @@
   onmouseleave={() => !readonly && (hoverRating = 0)}
 >
   {#each Array(maxRating) as _, index}
-    {@const starValue = index + 1}
-    {@const isActive = starValue <= (hoverRating || rating)}
+    {@const { starValue, isActive } = calculateStarState(index, hoverRating, rating)}
     
     <button
       type="button"
