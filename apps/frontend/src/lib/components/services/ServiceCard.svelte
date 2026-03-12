@@ -51,7 +51,7 @@
     {/if}
     
     <div class="absolute top-4 left-4">
-      <Badge variant="primary" class="bg-white/90 backdrop-blur-md text-primary font-bold shadow-lg border-none px-4 py-2 rounded-2xl">
+      <Badge variant="default" class="bg-white/90 backdrop-blur-md text-primary font-bold shadow-lg border-none px-4 py-2 rounded-2xl">
         {service.category || 'General'}
       </Badge>
     </div>

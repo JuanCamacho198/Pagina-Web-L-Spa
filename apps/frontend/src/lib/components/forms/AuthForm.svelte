@@ -13,7 +13,7 @@
     <Typography variant="h2" class="text-3xl mb-2">
       {logic.isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
     </Typography>
-    <Typography variant="body" class="text-gray-500">
+    <Typography variant="p" class="text-gray-500">
       {logic.isLogin ? 'Entra a tu oasis de relajación' : 'Únete a la experiencia de L-SPA'}
     </Typography>
   </div>

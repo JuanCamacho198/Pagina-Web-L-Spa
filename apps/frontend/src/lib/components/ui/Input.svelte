@@ -13,7 +13,10 @@
     [key: string]: any;
   }
 
-  let props: Props = $props();
+  let props: Props = $props({
+    value: $bindable(),
+  });
+
   let { 
     id = "input-" + Math.floor(Math.random() * 1000000),
     label, 

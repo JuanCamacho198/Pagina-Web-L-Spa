@@ -7,7 +7,10 @@
     class?: string;
   }
 
-  let props: Props = $props();
+  let props: Props = $props({
+    value: $bindable(),
+  });
+
   let { 
     value = $bindable(), 
     placeholder = "Buscar...", 
