@@ -7,16 +7,14 @@
   import { handleAddToCartLogic } from '$lib/logic/ServiceCardLogic';
   import type { Service } from '$lib/types/service';
 
-  interface Props {
+  let { service, class: className = '' } = $props<{
     service: Service;
     class?: string;
-  }
-
-  let { service, class: className = '' }: Props = $props();
+  }>();
 
   let isAdded = $state(false);
 
-  const handleAddToCart = (e: MouseEvent) => {
+  const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
     handleAddToCartLogic(service, (val) => isAdded = val);
