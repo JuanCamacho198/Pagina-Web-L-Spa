@@ -34,10 +34,11 @@ export class AuthFormLogic {
           password: this.password,
           name: this.name,
         });
+        console.log('Signup result:', { data, error });
         if (error) {
           toast.error(error.message || 'Error al registrarte');
         } else {
-          toast.success('Cuenta creada con éxito');
+          toast.success('Cuenta creada. Por favor verifica tu correo.');
           this.isLogin = true;
         }
       }

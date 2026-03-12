@@ -70,6 +70,27 @@ export const cart = {
 	clear: () => {
 		cartStore.set([]);
 		if (browser) localStorage.removeItem('lspa_cart');
+	},
+
+	updateQuantity: (serviceId: string, quantity: number) => {
+		cartStore.update(items => {
+			let newItems;
+			if (quantity <= 0) {
+				newItems = items.filter(i => i.serviceId !== serviceId);
+			} else {
+				newItems = items.map(i => i.serviceId === serviceId ? { ...i, quantity } : i);
+			}
+			if (browser) localStorage.setItem('lspa_cart', JSON.stringify(newItems));
+			return newItems;
+		});
+	},
+
+	removeItem: (serviceId: string) => {
+		cartStore.update(items => {
+			const newItems = items.filter(i => i.serviceId !== serviceId);
+			if (browser) localStorage.setItem('lspa_cart', JSON.stringify(newItems));
+			return newItems;
+		});
 	}
 };
 

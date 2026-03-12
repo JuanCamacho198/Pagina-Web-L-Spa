@@ -60,9 +60,8 @@
           {/if}
         </a>
 
-        {#if session.get().isPending}
-          <div class="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary animate-spin"></div>
-        {:else if session.get().data}
+        <!-- Show login button immediately while session loads, replace with user info once loaded -->
+        {#if session.get().data}
           <!-- User Profile Dropdown -->
           <div class="relative group">
             <button class="flex items-center gap-3 p-1.5 pr-4 bg-gray-50 rounded-full hover:bg-white border border-transparent hover:border-gray-100 transition-all shadow-sm">
