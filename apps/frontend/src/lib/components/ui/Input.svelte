@@ -13,6 +13,7 @@
     [key: string]: any;
   }
 
+  let props: Props = $props();
   let { 
     id = "input-" + Math.floor(Math.random() * 1000000),
     label, 
@@ -21,7 +22,7 @@
     class: className = '',
     type = 'text',
     ...rest 
-  }: Props = $props();
+  } = props;
 </script>
 
 <div class="w-full space-y-1.5">

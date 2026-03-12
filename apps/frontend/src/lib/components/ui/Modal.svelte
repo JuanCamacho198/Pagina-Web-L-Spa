@@ -13,6 +13,7 @@
     size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   }
 
+  let props: Props = $props();
   let { 
     isOpen, 
     onClose, 
@@ -20,7 +21,7 @@
     children, 
     footer, 
     size = 'md' 
-  }: Props = $props();
+  } = props;
 
   const sizeClasses = {
     sm: 'max-w-md',

@@ -7,12 +7,13 @@
     children?: any;
   }
 
+  let props: Props = $props();
   let { 
     hoverable = false, 
     class: className = '', 
     children,
     ...rest 
-  }: Props = $props();
+  } = props;
 </script>
 
 <div

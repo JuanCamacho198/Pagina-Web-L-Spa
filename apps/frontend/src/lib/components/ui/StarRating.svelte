@@ -11,13 +11,14 @@
     size?: number;
   }
 
+  let props: Props = $props();
   let { 
     rating, 
     maxRating = 5, 
     onRatingChange = () => {}, 
     readonly = false, 
     size = 24 
-  }: Props = $props();
+  } = props;
 
   let hoverRating = $state(0);
 
