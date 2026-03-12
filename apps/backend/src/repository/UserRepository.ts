@@ -31,18 +31,13 @@ export class UserRepository {
         role: data.role as 'admin' | 'employee' | 'customer',
       }
     }).returning();
-      role: data.role || 'customer',
-    }).onConflictDoUpdate({
-      target: [users.auth0Id],
-      set: { firstName: data.firstName, email: data.email }
-    }).returning();
     return results[0];
   }
 
-  async update(auth0Id: string, updates: UserUpdate) {
-    const results = await db.update(users)
+  async update(id: string, updates: UserUpdate) {
+    const results = await db.update(user)
       .set(updates)
-      .where(eq(users.auth0Id, auth0Id))
+      .where(eq(user.id, id))
       .returning();
     return results[0];
   }
