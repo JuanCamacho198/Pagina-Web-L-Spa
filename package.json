@@ -15,24 +15,8 @@
     "db:push": "bun run --filter @l-spa/database db:push",
     "db:studio": "bun run --filter @l-spa/database db:studio"
   },
-  "dependencies": {
-    "@neondatabase/serverless": "^1.0.2",
-    "clsx": "^2.1.1",
-    "drizzle-orm": "^0.45.1",
-    "tailwind-merge": "^3.5.0",
-    "zod": "^3.23.8"
-  },
   "devDependencies": {
-    "@eslint/js": "^9.22.0",
     "@l-spa/shared-types": "workspace:*",
-    "@tailwindcss/postcss": "^4.2.1",
-    "autoprefixer": "^10.4.27",
-    "drizzle-kit": "^0.31.9",
-    "eslint": "^9.22.0",
-    "globals": "^16.0.0",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3",
-    "vite": "^6.3.1"
+    "typescript": "^5.9.3"
   }
 }
