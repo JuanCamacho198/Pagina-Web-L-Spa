@@ -5,7 +5,7 @@
   import Footer from '$lib/components/layout/Footer.svelte';
   import { onMount } from 'svelte';
   import { authClient } from '$lib/auth-client';
-  import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';
+  import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart, LayoutDashboard, Scissors } from 'lucide-svelte';
   import { cart, cartCount } from '$lib/cart';
   import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
   import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
@@ -86,6 +86,15 @@
                 <a href="/favoritos" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 hover:text-primary rounded-2xl transition-all">
                   <Heart size={16} /> Favoritos
                 </a>
+                <!-- Admin/Staff Links -->
+                <div class="border-t border-gray-100 my-2 pt-2">
+                  <a href="/staff" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
+                    <Scissors size={16} /> Panel Empleado
+                  </a>
+                  <a href="/admin" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
+                    <LayoutDashboard size={16} /> Panel Admin
+                  </a>
+                </div>
                 <button type="button" onclick={() => authClient.signOut()} class="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 rounded-2xl transition-all">
                   <LogOut size={16} /> Cerrar Sesión
                 </button>
