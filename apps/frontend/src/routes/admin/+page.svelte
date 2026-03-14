@@ -68,7 +68,7 @@
 			change: stats && stats.totalUsers > 100 ? '+12%' : '--', 
 			trend: 'up' as const,
 			icon: Users,
-			color: 'bg-blue-50 text-blue-500'
+			color: 'bg-blue-50 dark:bg-blue-900/30 text-blue-500'
 		},
 		{ 
 			label: 'Servicios Activos', 
@@ -76,7 +76,7 @@
 			change: stats && stats.totalServices > 10 ? '+3' : '--', 
 			trend: 'up' as const,
 			icon: Scissors,
-			color: 'bg-purple-50 text-purple-500'
+			color: 'bg-purple-50 dark:bg-purple-900/30 text-purple-500'
 		},
 		{ 
 			label: 'Citas Este Mes', 
@@ -84,7 +84,7 @@
 			change: stats && stats.thisMonthAppointments > 50 ? '+8%' : '--', 
 			trend: 'up' as const,
 			icon: Calendar,
-			color: 'bg-amber-50 text-amber-500'
+			color: 'bg-amber-50 dark:bg-amber-900/30 text-amber-500'
 		},
 		{ 
 			label: 'Ingresos del Mes', 
@@ -92,7 +92,7 @@
 			change: stats && stats.monthlyRevenue > 5000 ? '+23%' : '--', 
 			trend: 'up' as const,
 			icon: DollarSign,
-			color: 'bg-emerald-50 text-emerald-500'
+			color: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-500'
 		},
 	]);
 
@@ -109,11 +109,11 @@
 
 	function getStatusColor(status: string) {
 		switch(status) {
-			case 'confirmed': return 'bg-emerald-50 text-emerald-600';
-			case 'pending': return 'bg-amber-50 text-amber-600';
-			case 'completed': return 'bg-blue-50 text-blue-600';
-			case 'cancelled': return 'bg-rose-50 text-rose-600';
-			default: return 'bg-gray-50 text-gray-600';
+			case 'confirmed': return 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600';
+			case 'pending': return 'bg-amber-50 dark:bg-amber-900/30 text-amber-600';
+			case 'completed': return 'bg-blue-50 dark:bg-blue-900/30 text-blue-600';
+			case 'cancelled': return 'bg-rose-50 dark:bg-rose-900/30 text-rose-600';
+			default: return 'bg-gray-50 dark:bg-gray-800 text-gray-600';
 		}
 	}
 
@@ -141,14 +141,14 @@
 	<!-- Header -->
 	<div class="flex items-center justify-between">
 		<div>
-			<h1 class="text-3xl font-black text-gray-900 tracking-tight uppercase">Dashboard</h1>
-			<p class="text-gray-500 font-medium mt-1">Bienvenido al panel de administración</p>
+			<h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">Dashboard</h1>
+			<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Bienvenido al panel de administración</p>
 		</div>
 		<div class="flex items-center gap-4">
 			<button 
 				onclick={loadData}
 				disabled={loading}
-				class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-primary transition-colors disabled:opacity-50"
+				class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-primary transition-colors disabled:opacity-50"
 			>
 				{#if loading}
 					<Loader2 size={14} class="animate-spin" />
@@ -163,14 +163,14 @@
 		<div class="flex items-center justify-center py-20">
 			<div class="flex flex-col items-center gap-4">
 				<Loader2 size={40} class="text-primary animate-spin" />
-				<p class="text-gray-500 font-medium">Cargando datos...</p>
+				<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando datos...</p>
 			</div>
 		</div>
 	{:else}
 		<!-- Stats Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 			{#each statsData as stat}
-				<div class="bg-white rounded-4xl p-8 shadow-sm border border-gray-100">
+				<div class="bg-white dark:bg-gray-800 rounded-4xl p-8 shadow-sm border border-gray-100 dark:border-gray-700">
 					<div class="flex items-center justify-between mb-6">
 						<div class="w-14 h-14 rounded-2xl {stat.color} flex items-center justify-center">
 							<stat.icon size={24} />
@@ -184,8 +184,8 @@
 							<span class="text-[10px] font-black">{stat.change}</span>
 						</div>
 					</div>
-					<p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">{stat.label}</p>
-					<p class="text-3xl font-black text-gray-900 tracking-tighter">{stat.value}</p>
+					<p class="text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">{stat.label}</p>
+					<p class="text-3xl font-black text-gray-900 dark:text-white tracking-tighter">{stat.value}</p>
 				</div>
 			{/each}
 		</div>
@@ -193,29 +193,29 @@
 		<!-- Content Grid -->
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 			<!-- Recent Bookings -->
-			<div class="lg:col-span-2 bg-white rounded-4xl p-8 shadow-sm border border-gray-100">
+			<div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-4xl p-8 shadow-sm border border-gray-100 dark:border-gray-700">
 				<div class="flex items-center justify-between mb-8">
-					<h2 class="text-xl font-black text-gray-900 uppercase">Próximas Citas</h2>
+					<h2 class="text-xl font-black text-gray-900 dark:text-white uppercase">Próximas Citas</h2>
 					<a href="/admin/citas" class="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">Ver todas</a>
 				</div>
 				
 				{#if recentAppointments.length > 0}
 					<div class="space-y-4">
 						{#each recentAppointments as booking}
-							<div class="flex items-center justify-between p-6 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors">
+							<div class="flex items-center justify-between p-6 rounded-2xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
 								<div class="flex items-center gap-4">
-									<div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-black">
+									<div class="w-12 h-12 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary font-black">
 										{(booking.userName || 'C').charAt(0).toUpperCase()}
 									</div>
 									<div>
-										<p class="font-black text-gray-900">{booking.userName || 'Cliente'}</p>
-										<p class="text-sm text-gray-500">{booking.serviceName || 'Servicio'}</p>
+										<p class="font-black text-gray-900 dark:text-white">{booking.userName || 'Cliente'}</p>
+										<p class="text-sm text-gray-500 dark:text-gray-400">{booking.serviceName || 'Servicio'}</p>
 									</div>
 								</div>
 								<div class="flex items-center gap-6">
 									<div class="text-right">
-										<p class="font-black text-gray-900">{formatDate(booking.appointmentDate)}</p>
-										<p class="text-sm text-gray-500">{booking.appointmentTime}</p>
+										<p class="font-black text-gray-900 dark:text-white">{formatDate(booking.appointmentDate)}</p>
+										<p class="text-sm text-gray-500 dark:text-gray-400">{booking.appointmentTime}</p>
 									</div>
 									<span class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest {getStatusColor(booking.status)}">
 										{getStatusLabel(booking.status)}
@@ -226,25 +226,25 @@
 					</div>
 				{:else}
 					<div class="py-12 text-center">
-						<p class="text-gray-400 font-medium">No hay citas próximas</p>
+						<p class="text-gray-400 dark:text-gray-500 font-medium">No hay citas próximas</p>
 					</div>
 				{/if}
 			</div>
 
 			<!-- Top Services -->
-			<div class="bg-white rounded-4xl p-8 shadow-sm border border-gray-100">
+			<div class="bg-white dark:bg-gray-800 rounded-4xl p-8 shadow-sm border border-gray-100 dark:border-gray-700">
 				<div class="flex items-center justify-between mb-8">
-					<h2 class="text-xl font-black text-gray-900 uppercase">Servicios Populares</h2>
+					<h2 class="text-xl font-black text-gray-900 dark:text-white uppercase">Servicios Populares</h2>
 					<a href="/admin/servicios" class="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">Ver todos</a>
 				</div>
 				
 				{#if topServices.length > 0}
 					<div class="space-y-4">
 						{#each topServices as service, i}
-							<div class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-colors">
+							<div class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
 								<span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-black">{i + 1}</span>
 								<div class="flex-1">
-									<p class="font-black text-gray-900">{service.name}</p>
+									<p class="font-black text-gray-900 dark:text-white">{service.name}</p>
 								</div>
 								<p class="text-primary font-black">{formatCurrency(service.price)}</p>
 							</div>
@@ -252,7 +252,7 @@
 					</div>
 				{:else}
 					<div class="py-12 text-center">
-						<p class="text-gray-400 font-medium">No hay servicios activos</p>
+						<p class="text-gray-400 dark:text-gray-500 font-medium">No hay servicios activos</p>
 					</div>
 				{/if}
 			</div>

@@ -55,11 +55,11 @@
 
 	function getStatusColor(status: string) {
 		switch(status) {
-			case 'confirmed': return 'bg-emerald-50 text-emerald-600 border-emerald-200';
-			case 'pending': return 'bg-amber-50 text-amber-600 border-amber-200';
-			case 'completed': return 'bg-blue-50 text-blue-600 border-blue-200';
-			case 'cancelled': return 'bg-rose-50 text-rose-600 border-rose-200';
-			default: return 'bg-gray-50 text-gray-600 border-gray-200';
+			case 'confirmed': return 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 border-emerald-200 dark:border-emerald-800';
+			case 'pending': return 'bg-amber-50 dark:bg-amber-900/30 text-amber-600 border-amber-200 dark:border-amber-800';
+			case 'completed': return 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 border-blue-200 dark:border-blue-800';
+			case 'cancelled': return 'bg-rose-50 dark:bg-rose-900/30 text-rose-600 border-rose-200 dark:border-rose-800';
+			default: return 'bg-gray-50 dark:bg-gray-800 text-gray-600 border-gray-200 dark:border-gray-700';
 		}
 	}
 
@@ -123,21 +123,21 @@
 	<!-- Header -->
 	<div class="flex items-center justify-between">
 		<div>
-			<h1 class="text-3xl font-black text-gray-900 tracking-tight uppercase">Citas</h1>
-			<p class="text-gray-500 font-medium mt-1">Gestiona todas las reservas del spa</p>
+			<h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">Citas</h1>
+			<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Gestiona todas las reservas del spa</p>
 		</div>
 		<div class="flex items-center gap-4">
 			<button 
 				onclick={loadData}
 				disabled={loading}
-				class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-primary transition-colors disabled:opacity-50"
+				class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-primary transition-colors disabled:opacity-50"
 			>
 				{#if loading}
 					<Loader2 size={14} class="animate-spin" />
 				{/if}
 				Actualizar
 			</button>
-			<button class="flex items-center gap-3 px-6 py-4 bg-white border border-gray-200 text-gray-700 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-gray-50 transition-colors">
+			<button class="flex items-center gap-3 px-6 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
 				<CalendarIcon size={18} />
 				Ver Calendario
 			</button>
@@ -149,27 +149,27 @@
 		<div class="flex items-center justify-center py-20">
 			<div class="flex flex-col items-center gap-4">
 				<Loader2 size={40} class="text-primary animate-spin" />
-				<p class="text-gray-500 font-medium">Cargando citas...</p>
+				<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando citas...</p>
 			</div>
 		</div>
 	{:else}
 		<!-- Stats -->
 		<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-			<div class="bg-white rounded-2xl p-6 border border-gray-100">
-				<p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Total Citas</p>
-				<p class="text-3xl font-black text-gray-900">{statsData.total}</p>
+			<div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+				<p class="text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Total Citas</p>
+				<p class="text-3xl font-black text-gray-900 dark:text-white">{statsData.total}</p>
 			</div>
-			<div class="bg-emerald-50 rounded-2xl p-6 border border-emerald-100">
-				<p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">Confirmadas</p>
-				<p class="text-3xl font-black text-emerald-700">{statsData.confirmed}</p>
+			<div class="bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-800">
+				<p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-2">Confirmadas</p>
+				<p class="text-3xl font-black text-emerald-700 dark:text-emerald-300">{statsData.confirmed}</p>
 			</div>
-			<div class="bg-amber-50 rounded-2xl p-6 border border-amber-100">
-				<p class="text-[10px] font-black uppercase tracking-widest text-amber-600 mb-2">Pendientes</p>
-				<p class="text-3xl font-black text-amber-700">{statsData.pending}</p>
+			<div class="bg-amber-50 dark:bg-amber-900/30 rounded-2xl p-6 border border-amber-100 dark:border-amber-800">
+				<p class="text-[10px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400 mb-2">Pendientes</p>
+				<p class="text-3xl font-black text-amber-700 dark:text-amber-300">{statsData.pending}</p>
 			</div>
-			<div class="bg-blue-50 rounded-2xl p-6 border border-blue-100">
-				<p class="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-2">Completadas</p>
-				<p class="text-3xl font-black text-blue-700">{statsData.completed}</p>
+			<div class="bg-blue-50 dark:bg-blue-900/30 rounded-2xl p-6 border border-blue-100 dark:border-blue-800">
+				<p class="text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2">Completadas</p>
+				<p class="text-3xl font-black text-blue-700 dark:text-blue-300">{statsData.completed}</p>
 			</div>
 		</div>
 
@@ -181,12 +181,12 @@
 					type="text" 
 					placeholder="Buscar por cliente o servicio..." 
 					bind:value={searchQuery}
-					class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+					class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 				/>
 			</div>
 			<select 
 				bind:value={statusFilter}
-				class="px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary outline-none font-medium bg-white"
+				class="px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 focus:border-primary outline-none font-medium bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
 			>
 				<option value="all">Todos los estados</option>
 				<option value="pending">Pendientes</option>
@@ -197,42 +197,42 @@
 			<input 
 				type="date" 
 				bind:value={dateFilter}
-				class="px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary outline-none font-medium bg-white"
+				class="px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 focus:border-primary outline-none font-medium bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
 			/>
 		</div>
 
 		<!-- Bookings Table -->
-		<div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden">
+		<div class="bg-white dark:bg-gray-800 rounded-4xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
 			<table class="w-full">
-				<thead class="bg-gray-50 border-b border-gray-100">
+				<thead class="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
 					<tr>
-						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400">Cliente</th>
-						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400">Servicio</th>
-						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400">Fecha y Hora</th>
-						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400">Estado</th>
-						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400">Precio</th>
+						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">Cliente</th>
+						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">Servicio</th>
+						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">Fecha y Hora</th>
+						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">Estado</th>
+						<th class="text-left px-6 py-5 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">Precio</th>
 						<th class="px-6 py-5"></th>
 					</tr>
 				</thead>
-				<tbody class="divide-y divide-gray-50">
+				<tbody class="divide-y divide-gray-50 dark:divide-gray-700">
 					{#each filteredAppointments as booking}
-						<tr class="hover:bg-gray-50 transition-colors">
+						<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
 							<td class="px-6 py-5">
 								<div>
-									<p class="font-black text-gray-900">{booking.userName || 'Cliente'}</p>
-									<p class="text-sm text-gray-500">{booking.userPhone || booking.userEmail || '--'}</p>
+									<p class="font-black text-gray-900 dark:text-white">{booking.userName || 'Cliente'}</p>
+									<p class="text-sm text-gray-500 dark:text-gray-400">{booking.userPhone || booking.userEmail || '--'}</p>
 								</div>
 							</td>
 							<td class="px-6 py-5">
-								<p class="font-medium text-gray-900">{booking.serviceName || 'Servicio'}</p>
-								<p class="text-sm text-gray-500">{booking.serviceDuration || '--'} min</p>
+								<p class="font-medium text-gray-900 dark:text-white">{booking.serviceName || 'Servicio'}</p>
+								<p class="text-sm text-gray-500 dark:text-gray-400">{booking.serviceDuration || '--'} min</p>
 							</td>
 							<td class="px-6 py-5">
-								<div class="flex items-center gap-2 text-gray-600">
+								<div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
 									<CalendarIcon size={16} />
 									<span class="font-medium">{booking.appointmentDate}</span>
 								</div>
-								<div class="flex items-center gap-2 text-gray-500 mt-1">
+								<div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 mt-1">
 									<Clock size={14} />
 									<span class="text-sm">{booking.appointmentTime}</span>
 								</div>
@@ -243,7 +243,7 @@
 								</span>
 							</td>
 							<td class="px-6 py-5">
-								<p class="font-black text-gray-900">{formatPrice(booking.servicePrice)}</p>
+								<p class="font-black text-gray-900 dark:text-white">{formatPrice(booking.servicePrice)}</p>
 							</td>
 							<td class="px-6 py-5">
 								<div class="flex items-center gap-2">
@@ -251,7 +251,7 @@
 										<button 
 											onclick={() => confirmBooking(booking.id)}
 											disabled={actionLoading === booking.id}
-											class="p-2 text-emerald-500 hover:bg-emerald-50 rounded-xl transition-colors disabled:opacity-50" 
+											class="p-2 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-xl transition-colors disabled:opacity-50" 
 											title="Confirmar"
 										>
 											{#if actionLoading === booking.id}
@@ -263,7 +263,7 @@
 										<button 
 											onclick={() => cancelBooking(booking.id)}
 											disabled={actionLoading === booking.id}
-											class="p-2 text-rose-500 hover:bg-rose-50 rounded-xl transition-colors disabled:opacity-50" 
+											class="p-2 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-colors disabled:opacity-50" 
 											title="Cancelar"
 										>
 											{#if actionLoading === booking.id}
@@ -273,7 +273,7 @@
 											{/if}
 										</button>
 									{/if}
-									<button class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl transition-colors" title="Más opciones">
+									<button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors" title="Más opciones">
 										<MoreVertical size={18} />
 									</button>
 								</div>
@@ -285,7 +285,7 @@
 
 			{#if filteredAppointments.length === 0}
 				<div class="py-20 text-center">
-					<p class="text-gray-400 font-medium">No se encontraron reservas</p>
+					<p class="text-gray-400 dark:text-gray-500 font-medium">No se encontraron reservas</p>
 				</div>
 			{/if}
 		</div>

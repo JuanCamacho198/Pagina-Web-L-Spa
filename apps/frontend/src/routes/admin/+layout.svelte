@@ -4,7 +4,7 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { theme, getTheme, toggleTheme, initTheme, type Theme } from '$lib/theme';
+	import { getTheme, toggleTheme, initTheme, type Theme } from '$lib/theme';
 	import { 
 		LayoutDashboard, 
 		Users, 
