@@ -6,7 +6,12 @@
   import { ReviewFormLogic, type ReviewFormProps } from '$lib/logic/ReviewFormLogic.svelte';
 
   let props: ReviewFormProps = $props();
-  const logic = new ReviewFormLogic(props);
+  let logic = new ReviewFormLogic({ serviceId: '', onSubmitted: () => {} } as ReviewFormProps);
+
+  $effect(() => {
+    logic.serviceId = props.serviceId;
+    logic.onSuccess = props.onSubmitted;
+  });
 </script>
 
 <form onsubmit={logic.handleSubmit} class="space-y-10 group">
