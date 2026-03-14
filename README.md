@@ -17,6 +17,7 @@ Plataforma integral para la gestión de servicios de Spa de lujo, migrada a una 
 - **📅 Gestión de Citas:** Motor de reservas interactivo con Svelte 5 Runes.
 - **🛒 Experiencia E-commerce:** Catálogo dinámico de servicios, carrito de compras persistente y flujo de checkout.
 - **🎨 UI Moderna:** Interfaz de alto nivel con **Tailwind CSS 4** y **Svelte 5**.
+ - **🎨 UI Moderna:** Interfaz de alto nivel con **Tailwind CSS 4** y **Svelte 5**.
 - **⚡ Arquitectura Decoupled:** Frontend en SvelteKit y Backend API pura en Hono.
 - **🗄️ Persistencia de Datos:** Integración con **PostgreSQL** vía **Drizzle ORM**.
 
@@ -60,7 +61,16 @@ Asegúrate de tener [Bun](https://bun.sh) instalado.
 3. **Desarrollo:**
    Lanza el backend y el frontend simultáneamente:
    ```bash
-   bun dev
+   # Desde la raíz (inicia backend y frontend)
+   bun run dev
+   ```
+   También puedes ejecutar por separado:
+   ```bash
+   # Frontend (desde su carpeta)
+   cd apps/frontend && bun run dev
+
+   # Backend (modo hot reload)
+   bun run dev:backend:root
    ```
 
 4. **Base de Datos:**
@@ -97,12 +107,15 @@ Este proyecto utiliza **Bun Workspaces**.
 # Instalar dependencias
 bun install
 
-# Levantar todo el monorepo en desarrollo
+# Levantar todo el monorepo en desarrollo (desde la raíz)
 bun run dev
 
 # Levantar aplicaciones específicas
-bun run dev --filter frontend
-bun run dev --filter backend
+# Frontend
+cd apps/frontend && bun run dev
+
+# Backend (modo hot reload)
+bun run dev:backend:root
 ```
 
 ---
@@ -136,12 +149,12 @@ Este proyecto se encuentra en una fase de migración de una base de código Reac
 3. **Variables de Entorno:**
    Crea un archivo `.env` basado en `.env.example`:
    ```env
-   VITE_DATABASE_URL=...
-   VITE_CLOUDINARY_CLOUD_NAME=...
-   VITE_CLOUDINARY_API_KEY=...
-   VITE_CLOUDINARY_API_SECRET=...
-   VITE_AUTH0_DOMAIN=...
-   VITE_AUTH0_CLIENT_ID=...
+   DATABASE_URL=...
+   CLOUDINARY_CLOUD_NAME=...
+   CLOUDINARY_API_KEY=...
+   CLOUDINARY_API_SECRET=...
+   AUTH0_DOMAIN=...
+   AUTH0_CLIENT_ID=...
    ```
 
 ---
@@ -168,4 +181,4 @@ Este proyecto se encuentra en una fase de migración de una base de código Reac
 Este proyecto está bajo la licencia [MIT](LICENSE).
 
 ---
-<p align="center">Desarrollado con ❤️ usando Bun y React 19.</p>
+<p align="center">Desarrollado con ❤️ usando Bun y Svelte 5.</p>
