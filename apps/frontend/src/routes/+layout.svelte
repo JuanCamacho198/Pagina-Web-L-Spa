@@ -99,28 +99,28 @@
         {#if $session.data}
           <!-- User Profile Dropdown -->
           <div class="relative group">
-            <button class="flex items-center gap-3 p-1.5 pr-4 bg-gray-50 rounded-full hover:bg-white border border-transparent hover:border-gray-100 transition-all shadow-sm">
-              <img src={$session.data?.user.image || `https://ui-avatars.com/api/?name=${$session.data?.user.name}`} alt={$session.data?.user.name} class="w-8 h-8 rounded-full border border-white shadow-sm" />
-              <span class="text-[10px] font-black uppercase tracking-widest text-gray-600">{$session.data?.user.name}</span>
+            <button class="flex items-center gap-3 p-1.5 pr-4 bg-gray-50 dark:bg-gray-800 rounded-full hover:bg-white dark:hover:bg-gray-700 border border-transparent hover:border-gray-100 dark:hover:border-gray-600 transition-all shadow-sm">
+              <img src={$session.data?.user.image || `https://ui-avatars.com/api/?name=${$session.data?.user.name}`} alt={$session.data?.user.name} class="w-8 h-8 rounded-full border border-white dark:border-gray-600 shadow-sm" />
+              <span class="text-[10px] font-black uppercase tracking-widest text-gray-600 dark:text-gray-300">{$session.data?.user.name}</span>
             </button>
             
-            <div class="absolute right-0 top-full mt-4 w-64 bg-white rounded-4xl shadow-2xl border border-gray-100 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 scale-95 group-hover:scale-100 z-50">
-              <div class="p-6 border-b border-gray-50 mb-3 text-center">
+            <div class="absolute right-0 top-full mt-4 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 scale-95 group-hover:scale-100 z-50">
+              <div class="p-6 border-b border-gray-50 dark:border-gray-700 mb-3 text-center">
                  <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Tu Cuenta Premium</p>
-                 <p class="text-sm font-black text-gray-900 truncate">{$session.data?.user.email}</p>
+                 <p class="text-sm font-black text-gray-900 dark:text-white truncate">{$session.data?.user.email}</p>
               </div>
               <div class="space-y-1">
-                <a href="/perfil" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 hover:text-primary rounded-2xl transition-all">
+                <a href="/perfil" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
                   <User size={16} /> Perfil
                 </a>
-                <a href="/mis-reservas" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 hover:text-primary rounded-2xl transition-all">
+                <a href="/mis-reservas" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
                   <Calendar size={16} /> Mis Citas
                 </a>
-                <a href="/favoritos" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 hover:text-primary rounded-2xl transition-all">
+                <a href="/favoritos" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
                   <Heart size={16} /> Favoritos
                 </a>
                 <!-- Admin/Staff Links -->
-                <div class="border-t border-gray-100 my-2 pt-2">
+                <div class="border-t border-gray-100 dark:border-gray-700 my-2 pt-2">
                   <a href="/staff" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
                     <Scissors size={16} /> Panel Empleado
                   </a>
@@ -128,14 +128,14 @@
                     <LayoutDashboard size={16} /> Panel Admin
                   </a>
                 </div>
-                <button type="button" onclick={() => authClient.signOut()} class="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 rounded-2xl transition-all">
+                <button type="button" onclick={() => authClient.signOut()} class="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-2xl transition-all">
                   <LogOut size={16} /> Cerrar Sesión
                 </button>
               </div>
             </div>
           </div>
         {:else}
-          <a href="/login" class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600 hover:text-primary transition-colors px-6">
+          <a href="/login" class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors px-6">
             LOGIN
           </a>
           
