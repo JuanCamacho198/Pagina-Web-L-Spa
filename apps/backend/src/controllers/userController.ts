@@ -3,7 +3,7 @@ import { zValidator } from '@hono/zod-validator';
 import { userSyncSchema, userUpdateSchema, cartItemSchema } from '@l-spa/shared-types';
 import { UserService } from '../services/UserService';
 import { db } from '@l-spa/database';
-import { user, appointments, cartItems } from '@l-spa/database/schema';
+import { user, appointments, cartItems, favorites } from '@l-spa/database/schema';
 import { eq, count, and } from 'drizzle-orm';
 
 const users = new Hono();
@@ -119,13 +119,19 @@ users.get('/profile/stats', async (c) => {
     
     const cartCount = cartResult?.count || 0;
     
+    // Get favorites count
+    const [favoritesResult] = await db.select({ count: count() })
+      .from(favorites)
+      .where(eq(favorites.userId, userId));
+    
+    const favoritesCount = favoritesResult?.count || 0;
+    
     return c.json({
       user: userData,
       stats: {
         appointmentsCount,
         cartCount,
-        // Favorites count - placeholder for now (would need favorites table)
-        favoritesCount: 0,
+        favoritesCount,
       }
     });
   } catch (error) {
