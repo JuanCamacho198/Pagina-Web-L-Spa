@@ -49,14 +49,15 @@ async function fetchCart() {
 	
 	const session = await getSession();
 	const anonymousId = getAnonymousId();
+	const userId = session?.user?.id || null;
 	
 	const headers: Record<string, string> = {
 		'Content-Type': 'application/json',
 	};
 	
-	if (session?.user?.id) {
-		// User is logged in
-		// For now, we'll pass the userId via header or rely on cookie
+	if (userId) {
+		// User is logged in - send userId
+		headers['X-User-ID'] = userId;
 	} else {
 		// Guest user - pass anonymous ID
 		headers['X-Anonymous-ID'] = anonymousId;
@@ -117,14 +118,24 @@ export const cart = {
 		if (!browser) return;
 		
 		const anonymousId = getAnonymousId();
+		const session = await getSession();
+		const userId = session?.user?.id || null;
 		
 		try {
+			const headers: Record<string, string> = {
+				'Content-Type': 'application/json',
+			};
+			
+			// Send userId if logged in, otherwise send anonymousId
+			if (userId) {
+				headers['X-User-ID'] = userId;
+			} else {
+				headers['X-Anonymous-ID'] = anonymousId;
+			}
+			
 			const response = await fetch(`${API_URL}/cart/items`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Anonymous-ID': anonymousId,
-				},
+				headers,
 				body: JSON.stringify({
 					serviceId: item.serviceId,
 					quantity: 1,

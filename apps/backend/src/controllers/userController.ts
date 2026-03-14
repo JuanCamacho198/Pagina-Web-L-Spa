@@ -2,6 +2,9 @@ import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
 import { userSyncSchema, userUpdateSchema, cartItemSchema } from '@l-spa/shared-types';
 import { UserService } from '../services/UserService';
+import { db } from '@l-spa/database';
+import { user, appointments, cartItems } from '@l-spa/database/schema';
+import { eq, count, and } from 'drizzle-orm';
 
 const users = new Hono();
 const userService = new UserService();

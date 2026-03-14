@@ -6,13 +6,13 @@ const cart = new Hono();
 // Get cart - requires authentication or anonymous ID
 cart.get('/', async (c) => {
   try {
-    // Get user ID from session if available
-    const userId = c.get('userId') as string | null;
+    // Get userId from header or session
+    const userId = c.req.header('X-User-ID') || c.get('userId') as string | null;
     
     // Get anonymous ID from header
     const anonymousId = c.req.header('X-Anonymous-ID') || null;
 
-    const cartData = await cartService.getCart(userId || null, anonymousId);
+    const cartData = await cartService.getCart(userId, anonymousId);
     
     return c.json(cartData);
   } catch (error) {
@@ -31,11 +31,12 @@ cart.post('/items', async (c) => {
       return c.json({ error: 'serviceId is required' }, 400);
     }
 
-    const userId = c.get('userId') as string | null;
+    // Get userId from header (sent by frontend when logged in) or from session
+    const userId = c.req.header('X-User-ID') || c.get('userId') as string | null;
     const anonymousId = c.req.header('X-Anonymous-ID') || null;
 
     const result = await cartService.addItem(
-      userId || null,
+      userId,
       anonymousId,
       serviceId,
       quantity
@@ -97,10 +98,10 @@ cart.delete('/items/:id', async (c) => {
 // Clear cart
 cart.delete('/', async (c) => {
   try {
-    const userId = c.get('userId') as string | null;
+    const userId = c.req.header('X-User-ID') || c.get('userId') as string | null;
     const anonymousId = c.req.header('X-Anonymous-ID') || null;
 
-    const result = await cartService.clearCart(userId || null, anonymousId);
+    const result = await cartService.clearCart(userId, anonymousId);
 
     if (!result.success) {
       return c.json({ error: result.message }, 400);
