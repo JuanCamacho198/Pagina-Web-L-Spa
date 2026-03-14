@@ -233,7 +233,7 @@
 						<!-- Favorite Button -->
 						<button
 							onclick={handleToggleFavorite}
-							class="w-16 h-auto rounded-4xl border-2 flex items-center justify-center gap-2 transition-all active:scale-95 {isFavorite ? 'bg-rose-500 border-rose-500 text-white' : 'bg-white border-primary/20 text-gray-400 hover:border-rose-500 hover:text-rose-500'}"
+							class="w-16 h-auto rounded-4xl border-2 flex items-center justify-center gap-2 transition-all active:scale-95 {isFavorite ? 'bg-rose-500 text-white' : 'bg-white border-primary/20 text-gray-400 hover:border-rose-500 hover:text-rose-500'}"
 							title={isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
 						>
 							<Heart size={20} class={isFavorite ? 'fill-current' : ''} />

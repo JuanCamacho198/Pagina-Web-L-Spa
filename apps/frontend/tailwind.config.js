@@ -1,6 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
+  content: [
+    './src/**/*.{html,js,svelte,ts}',
+    // include other apps and packages in the monorepo
+    '../../apps/**/src/**/*.{html,js,svelte,ts}',
+    '../../packages/**/src/**/*.{html,js,svelte,ts}',
+    // include shared files at repo root (if any)
+    '../../**/*.{html,js,svelte,ts}'
+  ],
   theme: {
     extend: {
       colors: {
@@ -22,5 +29,10 @@ export default {
       }
     }
   },
+  // keep a small safelist for dynamically generated classes used across the app
+  safelist: [
+    { pattern: /^bg-(primary|secondary|accent)(?:-.+)?$/ },
+    { pattern: /^text-(primary|secondary|accent)(?:-.+)?$/ }
+  ],
   plugins: []
 };
