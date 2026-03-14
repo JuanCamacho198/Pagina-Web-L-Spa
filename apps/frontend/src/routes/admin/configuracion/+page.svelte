@@ -63,7 +63,7 @@
 	// Config data
 	let config = $state(loadConfig());
 
-	let activeTab = 'general';
+	let activeTab = $state('general');
 	let saving = $state(false);
 	let saveSuccess = $state(false);
 
@@ -156,228 +156,239 @@
 			<div class="max-w-2xl space-y-8">
 				<!-- Business Info -->
 				<div>
-					<h3 class="text-lg font-black text-gray-900 uppercase mb-6">Información del Negocio</h3>
+					<h3 class="text-lg font-black text-gray-900 dark:text-white uppercase mb-6">Información del Negocio</h3>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div class="md:col-span-2">
-							<label for="businessName" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Nombre del Negocio</label>
+							<label for="businessName" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Nombre del Negocio</label>
 							<input 
 								id="businessName"
 								type="text" 
 								bind:value={config.businessName}
-								class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 							/>
 						</div>
 						<div class="md:col-span-2">
-							<label for="tagline" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Tagline</label>
+							<label for="tagline" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Tagline</label>
 							<input 
 								id="tagline"
 								type="text" 
 								bind:value={config.tagline}
-								class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 							/>
 						</div>
 						<div>
-							<label for="email" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Email</label>
+							<label for="email" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Email</label>
 							<div class="relative">
 								<Mail size={18} class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
 								<input 
 									id="email"
 									type="email" 
 									bind:value={config.email}
-									class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+									class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 								/>
 							</div>
 						</div>
 						<div>
-							<label for="phone" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Teléfono</label>
+							<label for="phone" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Teléfono</label>
 							<div class="relative">
 								<Phone size={18} class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
 								<input 
 									id="phone"
 									type="tel" 
 									bind:value={config.phone}
-									class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+									class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 								/>
 							</div>
 						</div>
 						<div>
-							<label for="whatsapp" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">WhatsApp</label>
+							<label for="whatsapp" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">WhatsApp</label>
 							<div class="relative">
 								<Phone size={18} class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
 								<input 
 									id="whatsapp"
 									type="tel" 
-									bind:value={config.whatsapp}
-									class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+bind:value={config.whatsapp}
+									class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 								/>
 							</div>
 						</div>
 						<div class="md:col-span-2">
-							<label for="address" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Dirección</label>
+							<label for="address" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Dirección</label>
 							<div class="relative">
-								<MapPin size={18} class="absolute left-6 top-4 text-gray-400" />
+								<MapPin size={18} class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
 								<input 
 									id="address"
 									type="text" 
 									bind:value={config.address}
-									class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+									class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 								/>
 							</div>
 						</div>
 						<div>
-							<label for="city" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Ciudad</label>
+							<label for="city" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Ciudad</label>
 							<input 
 								id="city"
 								type="text" 
 								bind:value={config.city}
-								class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 							/>
 						</div>
 						<div>
-							<label for="country" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">País</label>
+							<label for="country" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">País</label>
 							<input 
 								id="country"
 								type="text" 
 								bind:value={config.country}
-								class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
-		{:else if activeTab === 'horarios'}
-			<div class="max-w-2xl">
-				<h3 class="text-lg font-black text-gray-900 uppercase mb-6">Horarios de Atención</h3>
-				<div class="space-y-4">
-					{#each days as day}
-						<div class="flex items-center gap-6 p-6 rounded-2xl bg-gray-50">
-							<label class="flex items-center gap-3 cursor-pointer min-w-40">
-								<input 
-									type="checkbox" 
-									bind:checked={config[day].enabled}
-									class="w-5 h-5 rounded text-primary focus:ring-primary"
-								/>
-								<span class="font-black text-gray-900">{dayLabels[day]}</span>
-							</label>
-							{#if config[day].enabled}
-								<div class="flex items-center gap-4 flex-1">
-									<input 
-										type="time" 
-										bind:value={config[day].open}
-										class="px-4 py-3 rounded-xl border border-gray-200 focus:border-primary outline-none font-medium"
-									/>
-									<span class="text-gray-400">a</span>
-									<input 
-										type="time" 
-										bind:value={config[day].close}
-										class="px-4 py-3 rounded-xl border border-gray-200 focus:border-primary outline-none font-medium"
-									/>
+{:else if activeTab === 'horarios'}
+			<div class="max-w-2xl space-y-8">
+				<div>
+					<h3 class="text-lg font-black text-gray-900 dark:text-white uppercase mb-6">Horarios de Atención</h3>
+					<div class="space-y-4">
+						{#each days as day}
+							<div class="flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
+								<div class="flex items-center gap-4">
+									<span class="w-24 text-sm font-black text-gray-900 dark:text-white">{dayLabels[day]}</span>
 								</div>
-							{:else}
-								<span class="text-gray-400 font-medium">Cerrado</span>
-							{/if}
-						</div>
-					{/each}
+								<div class="flex items-center gap-4">
+									<label class="flex items-center gap-2 cursor-pointer">
+										<input 
+											type="checkbox" 
+											bind:checked={config[day].enabled}
+											class="w-5 h-5 rounded text-primary focus:ring-primary"
+										/>
+										<span class="text-sm text-gray-600 dark:text-gray-400">Abierto</span>
+									</label>
+									<div class="flex items-center gap-2">
+										<input 
+											type="time" 
+											bind:value={config[day].open}
+											disabled={!config[day].enabled}
+											class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary outline-none disabled:opacity-50"
+										/>
+										<span class="text-gray-400">-</span>
+										<input 
+											type="time" 
+											bind:value={config[day].close}
+											disabled={!config[day].enabled}
+											class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary outline-none disabled:opacity-50"
+										/>
+									</div>
+								</div>
+							</div>
+						{/each}
+					</div>
 				</div>
 			</div>
-		{:else if activeTab === 'notificaciones'}
-			<div class="max-w-2xl">
-				<h3 class="text-lg font-black text-gray-900 uppercase mb-6">Preferencias de Notificaciones</h3>
-				<div class="space-y-6">
-					<label class="flex items-center justify-between p-6 rounded-2xl bg-gray-50 cursor-pointer">
-						<div>
-							<p class="font-black text-gray-900">Notificaciones por Email</p>
-							<p class="text-sm text-gray-500">Recibe confirmaciones y recordatorios por email</p>
-						</div>
-						<input 
-							type="checkbox" 
-							bind:checked={config.emailNotifications}
-							class="w-6 h-6 rounded text-primary focus:ring-primary"
-						/>
-					</label>
-					<label class="flex items-center justify-between p-6 rounded-2xl bg-gray-50 cursor-pointer">
-						<div>
-							<p class="font-black text-gray-900">Notificaciones por WhatsApp</p>
-							<p class="text-sm text-gray-500">Recibe recordatorios automáticos por WhatsApp</p>
-						</div>
-						<input 
-							type="checkbox" 
-							bind:checked={config.whatsappNotifications}
-							class="w-6 h-6 rounded text-primary focus:ring-primary"
-						/>
-					</label>
-					<label class="flex items-center justify-between p-6 rounded-2xl bg-gray-50 cursor-pointer">
-						<div>
-							<p class="font-black text-gray-900">Notificaciones por SMS</p>
-							<p class="text-sm text-gray-500">Recibe recordatorios por mensaje de texto</p>
-						</div>
-						<input 
-							type="checkbox" 
-							bind:checked={config.smsNotifications}
-							class="w-6 h-6 rounded text-primary focus:ring-primary"
-						/>
-					</label>
+{:else if activeTab === 'notificaciones'}
+			<div class="max-w-2xl space-y-8">
+				<div>
+					<h3 class="text-lg font-black text-gray-900 dark:text-white uppercase mb-6">Notificaciones</h3>
+					<div class="space-y-4">
+						<label class="flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 cursor-pointer">
+							<div>
+								<p class="font-black text-gray-900 dark:text-white">Notificaciones por Email</p>
+								<p class="text-sm text-gray-500 dark:text-gray-400">Recibe actualizaciones sobre nuevas reservas</p>
+							</div>
+							<input 
+								type="checkbox" 
+								bind:checked={config.emailNotifications}
+								class="w-6 h-6 rounded text-primary focus:ring-primary"
+							/>
+						</label>
+						<label class="flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 cursor-pointer">
+							<div>
+								<p class="font-black text-gray-900 dark:text-white">Notificaciones por SMS</p>
+								<p class="text-sm text-gray-500 dark:text-gray-400">Recibe mensajes de texto con recordatorios</p>
+							</div>
+							<input 
+								type="checkbox" 
+								bind:checked={config.smsNotifications}
+								class="w-6 h-6 rounded text-primary focus:ring-primary"
+							/>
+						</label>
+						<label class="flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 cursor-pointer">
+							<div>
+								<p class="font-black text-gray-900 dark:text-white">Notificaciones por WhatsApp</p>
+								<p class="text-sm text-gray-500 dark:text-gray-400">Recibe mensajes de WhatsApp con confirmaciones</p>
+							</div>
+							<input 
+								type="checkbox" 
+								bind:checked={config.whatsappNotifications}
+								class="w-6 h-6 rounded text-primary focus:ring-primary"
+							/>
+						</label>
+					</div>
 				</div>
 			</div>
 		{:else if activeTab === 'politicas'}
-			<div class="max-w-2xl">
-				<h3 class="text-lg font-black text-gray-900 uppercase mb-6">Políticas de Reserva</h3>
-				<div class="space-y-6">
-					<div>
-						<label for="cancellationPolicy" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Política de Cancelación (horas)</label>
-						<p class="text-sm text-gray-500 mb-2">Los clientes pueden cancelar sin penalización con esta anticipación</p>
-						<input 
-							id="cancellationPolicy"
-							type="number" 
-							bind:value={config.cancellationPolicy}
-							class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
-						/>
-					</div>
-					<div>
-						<label for="bookingInterval" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Intervalo entre Citas (minutos)</label>
-						<p class="text-sm text-gray-500 mb-2">Tiempo mínimo entre el final de una cita y el inicio de la siguiente</p>
-						<input 
-							id="bookingInterval"
-							type="number" 
-							bind:value={config.bookingInterval}
-							class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
-						/>
+			<div class="max-w-2xl space-y-8">
+				<div>
+					<h3 class="text-lg font-black text-gray-900 dark:text-white uppercase mb-6">Políticas de Reserva</h3>
+					<div class="space-y-6">
+						<div>
+							<label for="cancellationPolicy" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Política de Cancelación (horas)</label>
+							<input 
+								id="cancellationPolicy"
+								type="number" 
+								bind:value={config.cancellationPolicy}
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+							/>
+							<p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Los clientes deben cancelar con al menos esta cantidad de horas de anticipación</p>
+						</div>
+						<div>
+							<label for="bookingInterval" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Intervalo entre Citas (minutos)</label>
+							<input 
+								id="bookingInterval"
+								type="number" 
+								bind:value={config.bookingInterval}
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+							/>
+							<p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Tiempo mínimo entre el final de una cita y el inicio de la siguiente</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		{:else if activeTab === 'redes'}
-			<div class="max-w-2xl">
-				<h3 class="text-lg font-black text-gray-900 uppercase mb-6">Redes Sociales</h3>
-				<div class="space-y-6">
-					<div>
-						<label for="instagram" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Instagram</label>
-						<input 
-							id="instagram"
-							type="url" 
-							bind:value={config.instagram}
-							class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
-							placeholder="https://instagram.com/tu-spa"
-						/>
-					</div>
-					<div>
-						<label for="facebook" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Facebook</label>
-						<input 
-							id="facebook"
-							type="url" 
-							bind:value={config.facebook}
-							class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
-							placeholder="https://facebook.com/tu-spa"
-						/>
-					</div>
-					<div>
-						<label for="twitter" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Twitter/X</label>
-						<input 
-							id="twitter"
-							type="url" 
-							bind:value={config.twitter}
-							class="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
-							placeholder="https://x.com/tu-spa"
-						/>
+			<div class="max-w-2xl space-y-8">
+				<div>
+					<h3 class="text-lg font-black text-gray-900 dark:text-white uppercase mb-6">Redes Sociales</h3>
+					<div class="space-y-6">
+						<div>
+							<label for="instagram" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Instagram</label>
+							<input 
+								id="instagram"
+								type="url" 
+								bind:value={config.instagram}
+								placeholder="https://instagram.com/tu-negocio"
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+							/>
+						</div>
+						<div>
+							<label for="facebook" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Facebook</label>
+							<input 
+								id="facebook"
+								type="url" 
+								bind:value={config.facebook}
+								placeholder="https://facebook.com/tu-negocio"
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+							/>
+						</div>
+						<div>
+							<label for="twitter" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Twitter / X</label>
+							<input 
+								id="twitter"
+								type="url" 
+								bind:value={config.twitter}
+								placeholder="https://x.com/tu-negocio"
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

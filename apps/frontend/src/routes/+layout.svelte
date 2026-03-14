@@ -11,9 +11,14 @@
   import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
   import { getTheme, setTheme, toggleTheme, initTheme, type Theme } from '$lib/theme';
 
+  import { page } from '$app/stores';
+  
   let { data, children } = $props();
   const session = authClient.useSession();
   const queryClient = new QueryClient();
+  
+  // Check if we're in admin section
+  let isAdminSection = $derived($page.url.pathname.startsWith('/admin'));
   
   // Theme state
   let currentTheme = $state<Theme>('light');
@@ -148,7 +153,9 @@
     {@render children?.()}
   </main>
 
-  <Footer />
+  {#if !isAdminSection}
+    <Footer />
+  {/if}
 </div>
 <SvelteQueryDevtools initialIsOpen={false} />
 </QueryClientProvider>
