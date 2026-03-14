@@ -20,7 +20,7 @@
 
   // Load cart when session changes
   $effect(function() {
-    if (!session.get().isPending) {
+    if (!$session.isPending) {
       cart.load();
     }
   });
@@ -63,18 +63,18 @@
         </a>
 
         <!-- Show login button immediately while session loads, replace with user info once loaded -->
-        {#if session.get().data}
+        {#if $session.data}
           <!-- User Profile Dropdown -->
           <div class="relative group">
             <button class="flex items-center gap-3 p-1.5 pr-4 bg-gray-50 rounded-full hover:bg-white border border-transparent hover:border-gray-100 transition-all shadow-sm">
-              <img src={session.get().data?.user.image || `https://ui-avatars.com/api/?name=${session.get().data?.user.name}`} alt={session.get().data?.user.name} class="w-8 h-8 rounded-full border border-white shadow-sm" />
-              <span class="text-[10px] font-black uppercase tracking-widest text-gray-600">{session.get().data?.user.name}</span>
+              <img src={$session.data?.user.image || `https://ui-avatars.com/api/?name=${$session.data?.user.name}`} alt={$session.data?.user.name} class="w-8 h-8 rounded-full border border-white shadow-sm" />
+              <span class="text-[10px] font-black uppercase tracking-widest text-gray-600">{$session.data?.user.name}</span>
             </button>
             
             <div class="absolute right-0 top-full mt-4 w-64 bg-white rounded-4xl shadow-2xl border border-gray-100 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 scale-95 group-hover:scale-100 z-50">
               <div class="p-6 border-b border-gray-50 mb-3 text-center">
                  <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Tu Cuenta Premium</p>
-                 <p class="text-sm font-black text-gray-900 truncate">{session.get().data?.user.email}</p>
+                 <p class="text-sm font-black text-gray-900 truncate">{$session.data?.user.email}</p>
               </div>
               <div class="space-y-1">
                 <a href="/perfil" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 hover:text-primary rounded-2xl transition-all">

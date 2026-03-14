@@ -1,15 +1,25 @@
 <script lang="ts">
-	import { user, isAuthenticated, isLoading, logout } from '$lib/auth';
+	import { authClient } from '$lib/auth-client';
 	import { User, Mail, ShieldCheck, LogOut, Heart, Calendar, MapPin, Camera } from 'lucide-svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 
+	// Use Better Auth session directly
+	const session = authClient.useSession();
+
+	// Redirect if not authenticated
 	$effect(() => {
-		if (browser && !$isLoading && !$isAuthenticated) {
-			goto('/');
+		if (browser && !$session.isPending && !$session.data) {
+			goto('/login');
 		}
 	});
+
+	// Logout handler
+	async function handleLogout() {
+		await authClient.signOut();
+		goto('/');
+	}
 
 	const profileStats = [
 		{ label: 'Citas Realizadas', value: '12', icon: Calendar },
@@ -23,12 +33,12 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50/50 pt-40 pb-32 px-6">
-	{#if $isLoading}
+	{#if $session.isPending}
 		<div class="max-w-4xl mx-auto flex flex-col items-center justify-center py-40 gap-6">
-			<div class="w-px6 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+			<div class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
 			<p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Autenticando Santuario...</p>
 		</div>
-	{:else if $isAuthenticated}
+	{:else if $session.data}
 		<div class="max-w-5xl mx-auto space-y-12">
 			<!-- Profile Hero Card -->
 			<div class="bg-white rounded-[64px] shadow-2xl shadow-primary/5 border border-gray-100 overflow-hidden relative group/hero">
@@ -39,12 +49,12 @@
 						<!-- Avatar with Upload Hover -->
 						<div class="relative group">
 							<div class="w-48 h-48 rounded-[56px] overflow-hidden border-4 border-white shadow-2xl relative">
-								<img src={$user?.image} alt={$user?.name} class="w-full h-full object-cover" />
+								<img src={$session.data?.user.image || `https://ui-avatars.com/api/?name=${$session.data?.user.name}`} alt={$session.data?.user.name} class="w-full h-full object-cover" />
 								<div class="absolute inset-0 bg-gray-900/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center cursor-pointer">
 									<Camera size={40} class="text-white" />
 								</div>
 							</div>
-							<div class="absolute -bottom-4 -right-4 w-px4 h-14 bg-primary text-white rounded-4xl flex items-center justify-center shadow-xl">
+							<div class="absolute -bottom-4 -right-4 w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-xl">
 								<ShieldCheck size={28} />
 							</div>
 						</div>
@@ -52,18 +62,18 @@
 						<!-- Bio Info -->
 						<div class="flex-1 text-center md:text-left space-y-6">
 							<div class="space-y-2">
-								<div class="inline-flex items-center gap-2 px-6 py-1.5 rounded-full bg-primary-light/20 text-primary text-[10px] font-black uppercase tracking-[0.3em]">
+								<div class="inline-flex items-center gap-2 px-6 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em]">
 									Cliente Premium L-VIP
 								</div>
 								<h1 class="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none uppercase">
-									{$user?.name?.split(' ')[0]} <br /> <span class="text-primary italic">{$user?.name?.split(' ').slice(1).join(' ')}</span>
+									{$session.data?.user.name?.split(' ')[0]} <br /> <span class="text-primary italic">{$session.data?.user.name?.split(' ').slice(1).join(' ')}</span>
 								</h1>
 							</div>
 							
 							<div class="flex flex-wrap justify-center md:justify-start gap-8">
 								<div class="flex items-center gap-3 text-gray-400 font-bold text-sm">
 									<Mail size={18} class="text-primary" />
-									{$user?.email}
+									{$session.data?.user.email}
 								</div>
 								<div class="flex items-center gap-3 text-gray-400 font-bold text-sm">
 									<MapPin size={18} class="text-primary" />
@@ -78,7 +88,7 @@
 				<div class="bg-gray-900 p-10 md:px-20 grid grid-cols-1 md:grid-cols-3 gap-12">
 					{#each profileStats as stat}
 						<div class="flex items-center gap-6 group/stat">
-							<div class="w-px6 h-16 bg-white/5 rounded-4xl flex items-center justify-center text-primary-light group-hover/stat:bg-primary group-hover/stat:text-white transition-all duration-500">
+							<div class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center text-primary group-hover/stat:bg-primary group-hover/stat:text-white transition-all duration-500">
 								<stat.icon size={24} />
 							</div>
 							<div>
@@ -104,7 +114,7 @@
 							{ title: 'Seguridad', desc: 'Contraseña y verificación de dos pasos', icon: ShieldCheck },
 							{ title: 'Preferencias', desc: 'Notificaciones y aromas favoritos', icon: Heart },
 							{ title: 'Historial', desc: 'Ver todos tus rituales pasados', icon: Calendar },
-							{ title: 'Cerrar Sesión', desc: 'Salir de tu cuenta de forma segura', icon: LogOut, action: logout, danger: true }
+							{ title: 'Cerrar Sesión', desc: 'Salir de tu cuenta de forma segura', icon: LogOut, action: handleLogout, danger: true }
 						] as item}
 							<button 
 								onclick={item.action}
@@ -122,6 +132,11 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	{:else}
+		<!-- Not authenticated, show redirect message -->
+		<div class="max-w-4xl mx-auto flex flex-col items-center justify-center py-40 gap-6">
+			<p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Redirigiendo a login...</p>
 		</div>
 	{/if}
 </div>
