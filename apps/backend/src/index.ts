@@ -6,6 +6,7 @@ import users from './controllers/userController'
 import appointments from './controllers/appointmentController'
 import reviews from './controllers/reviewController'
 import config from './controllers/configController'
+import cart from './controllers/cartController'
 import { auth } from './lib/auth'
 
 const app = new Hono()
@@ -35,5 +36,6 @@ app.route('/api/v1/users', users)
 app.route('/api/v1/appointments', appointments)
 app.route('/api/v1/reviews', reviews)
 app.route('/api/v1/config', config)
+app.route('/api/v1/cart', cart)
 
 export default app
