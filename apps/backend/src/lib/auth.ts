@@ -16,6 +16,8 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true
     },
+    trustedOrigins: ['http://localhost:5173','http://localhost:5174'],
+
     // We will uncomment this when we have the actual credentials
     /*
     socialProviders: {
