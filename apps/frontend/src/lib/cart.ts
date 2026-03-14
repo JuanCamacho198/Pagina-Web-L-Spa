@@ -31,7 +31,7 @@ function getAnonymousId(): string {
 }
 
 // Store that syncs with API
-const cartStore = writable<CartItem[]>([]);
+export const cartStore = writable<CartItem[]>([]);
 
 // Get session from auth client
 async function getSession() {
@@ -102,6 +102,9 @@ async function fetchCart() {
 
 export const cart = {
 	Subscribe: cartStore.subscribe,
+	
+	// Add standard subscribe for Svelte $ prefix compatibility
+	subscribe: cartStore.subscribe,
 	
 	load: async () => {
 		if (!browser) return;

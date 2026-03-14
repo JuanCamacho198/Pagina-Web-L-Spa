@@ -6,7 +6,7 @@
   import { onMount } from 'svelte';
   import { authClient } from '$lib/auth-client';
   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart, LayoutDashboard, Scissors } from 'lucide-svelte';
-  import { cart } from '$lib/cart';
+  import { cart, cartStore } from '$lib/cart';
   import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
   import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 
@@ -20,7 +20,7 @@
   
   // Subscribe to cart store
   onMount(() => {
-    const unsubscribe = cart.subscribe((items) => {
+    const unsubscribe = cartStore.subscribe((items) => {
       cartItemsList = items;
     });
     return unsubscribe;

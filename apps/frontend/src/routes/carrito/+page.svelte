@@ -3,11 +3,17 @@
 	import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, Sparkles, ShieldCheck, Heart, ChevronLeft, Lock } from 'lucide-svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { slide } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
 	const handleCheckout = () => {
 		// Next phase: redirect to booking stepper or flow
 		window.location.href = '/checkout';
 	};
+	
+	// Load cart when page mounts
+	onMount(() => {
+		cart.load();
+	});
 </script>
 
 <svelte:head>
