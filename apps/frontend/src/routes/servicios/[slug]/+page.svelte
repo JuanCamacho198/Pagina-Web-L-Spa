@@ -30,14 +30,11 @@
 
 	let isAddingToCart = $state(false);
 	let isFavorite = $state(false);
-	let isLoadingFavorite = $state(true);
-	let isTogglingFavorite = $state(false);
 
 	// Check if service is favorite on mount
 	onMount(async () => {
 		if (service?.id) {
 			isFavorite = await checkIsFavorite(service.id);
-			isLoadingFavorite = false;
 		}
 	});
 
@@ -67,23 +64,27 @@
 	};
 
 	const handleToggleFavorite = async () => {
-		if (isTogglingFavorite || !service?.id) return;
+		if (!service?.id) return;
 		
-		isTogglingFavorite = true;
+		// Optimistic update - toggle immediately
+		const newFavoriteState = !isFavorite;
+		isFavorite = newFavoriteState;
+		
+		// Show toast
+		toast.success(newFavoriteState ? `${service.name} añadido a favoritos` : `${service.name} eliminado de favoritos`);
+		
+		// Send to API in background
 		try {
-			if (isFavorite) {
-				await removeFromFavorites(service.id);
-				toast.success(`${service.name} eliminado de favoritos`);
-			} else {
+			if (newFavoriteState) {
 				await addToFavorites(service.id);
-				toast.success(`${service.name} añadido a favoritos`);
+			} else {
+				await removeFromFavorites(service.id);
 			}
-			isFavorite = !isFavorite;
 		} catch (e) {
 			console.error('Error toggling favorite:', e);
+			// Revert on error
+			isFavorite = !newFavoriteState;
 			toast.error('Error al actualizar favoritos');
-		} finally {
-			isTogglingFavorite = false;
 		}
 	};
 </script>
@@ -232,15 +233,10 @@
 						<!-- Favorite Button -->
 						<button
 							onclick={handleToggleFavorite}
-							disabled={isTogglingFavorite || isLoadingFavorite}
 							class="w-16 h-auto rounded-4xl border-2 flex items-center justify-center gap-2 transition-all active:scale-95 {isFavorite ? 'bg-rose-500 border-rose-500 text-white' : 'bg-white border-primary/20 text-gray-400 hover:border-rose-500 hover:text-rose-500'}"
 							title={isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
 						>
-							{#if isTogglingFavorite}
-								<div class="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-							{:else}
-								<Heart size={20} class={isFavorite ? 'fill-current' : ''} />
-							{/if}
+							<Heart size={20} class={isFavorite ? 'fill-current' : ''} />
 						</button>
 						<Button
 							href="/booking?serviceId={service.id}"

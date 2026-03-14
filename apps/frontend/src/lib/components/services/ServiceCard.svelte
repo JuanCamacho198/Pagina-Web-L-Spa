@@ -6,6 +6,7 @@
   import { slugify } from '$lib/utils/text';
   import { handleAddToCartLogic } from '$lib/logic/ServiceCardLogic';
   import { addToFavorites, checkIsFavorite, removeFromFavorites } from '$lib/favorites';
+  import { toast } from '$lib/stores/toast.svelte';
   import { onMount } from 'svelte';
   import type { Service } from '$lib/types/service';
 
@@ -16,14 +17,11 @@
 
   let isAdded = $state(false);
   let isFavorite = $state(false);
-  let isLoadingFavorite = $state(true);
-  let isTogglingFavorite = $state(false);
 
   // Check if service is favorite on mount
   onMount(async () => {
     if (service?.id) {
       isFavorite = await checkIsFavorite(service.id);
-      isLoadingFavorite = false;
     }
   });
 
@@ -36,20 +34,27 @@
   const handleToggleFavorite = async (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (isTogglingFavorite || !service?.id) return;
+    if (!service?.id) return;
     
-    isTogglingFavorite = true;
+    // Optimistic update - toggle immediately
+    const newFavoriteState = !isFavorite;
+    isFavorite = newFavoriteState;
+    
+    // Show toast
+    toast.success(newFavoriteState ? `${service.name} añadido a favoritos` : `${service.name} eliminado de favoritos`);
+    
+    // Send to API in background
     try {
-      if (isFavorite) {
-        await removeFromFavorites(service.id);
-      } else {
+      if (newFavoriteState) {
         await addToFavorites(service.id);
+      } else {
+        await removeFromFavorites(service.id);
       }
-      isFavorite = !isFavorite;
     } catch (error) {
       console.error('Error toggling favorite:', error);
-    } finally {
-      isTogglingFavorite = false;
+      // Revert on error
+      isFavorite = !newFavoriteState;
+      toast.error('Error al actualizar favoritos');
     }
   };
 </script>
@@ -85,6 +90,21 @@
         {service.category || 'General'}
       </Badge>
     </div>
+
+    <!-- Favorite Button - Top Right -->
+    <button 
+      onclick={handleToggleFavorite}
+      class="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110"
+      title={isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+    >
+      <Heart 
+        size={18} 
+        class={cn(
+          "transition-all duration-300",
+          isFavorite ? "fill-rose-500 text-rose-500" : "text-gray-400 hover:text-rose-500"
+        )} 
+      />
+    </button>
 
     <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-2xl shadow-lg flex items-center gap-2">
       <StarRating rating={4.5} size={14} readonly />
@@ -123,24 +143,6 @@
       </div>
       
       <div class="flex items-center gap-3">
-        <!-- Favorite Button -->
-        <button 
-          onclick={handleToggleFavorite}
-          disabled={isTogglingFavorite || isLoadingFavorite}
-          class={cn(
-            "h-12 w-12 flex items-center justify-center rounded-2xl border transition-all duration-300 shadow-sm",
-            isFavorite 
-              ? "bg-rose-500 border-rose-500 text-white" 
-              : "bg-white border-gray-100 text-gray-400 hover:bg-rose-500 hover:border-rose-500 hover:text-white hover:shadow-lg hover:shadow-rose-500/20"
-          )}
-          title={isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
-        >
-          {#if isTogglingFavorite}
-            <div class="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-          {:else}
-            <Heart size={20} strokeWidth={2.5} class={isFavorite ? 'fill-current' : ''} />
-          {/if}
-        </button>
         <!-- Add to Cart Button -->
         <button 
           onclick={handleAddToCart}
