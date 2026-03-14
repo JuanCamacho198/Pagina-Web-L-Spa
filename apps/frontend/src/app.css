@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: #8C1B58;
   --color-primary-light: #BF3F7F;
@@ -16,8 +18,39 @@
   --accent-color: #D99B9B;
 }
 
+:root,
+:where(.light, .light *) {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --border-color: #e5e7eb;
+  --border-light: #f3f4f6;
+}
+
+:where(.dark, .dark *) {
+  --bg-primary: #111827;
+  --bg-secondary: #1f2937;
+  --bg-tertiary: #374151;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #6b7280;
+  --border-color: #374151;
+  --border-light: #1f2937;
+}
+
 body {
-  @apply antialiased bg-white;
+  @apply antialiased;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme transition for all elements */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
 }
 
 .btn {

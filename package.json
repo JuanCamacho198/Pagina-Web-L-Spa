@@ -3,12 +3,14 @@
   "version": "0.0.0",
   "devDependencies": {
     "@l-spa/shared-types": "workspace:*",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "concurrently": "^7.6.0"
   },
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "bun run --filter \"*\" dev",
+    "dev": "concurrently -k -n backend,frontend -c yellow,cyan \"bun --hot apps/backend/src/index.ts\" \"cd apps/frontend && bun run dev\"",
+    "dev:backend:root": "bun --hot apps/backend/src/index.ts",
     "build": "bun run --filter \"*\" build",
     "lint": "bun run --filter \"*\" lint",
     "db:push": "bun run --filter @l-spa/database db:push",

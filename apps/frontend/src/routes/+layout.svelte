@@ -5,14 +5,18 @@
   import Footer from '$lib/components/layout/Footer.svelte';
   import { onMount } from 'svelte';
   import { authClient } from '$lib/auth-client';
-  import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart, LayoutDashboard, Scissors } from 'lucide-svelte';
+  import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart, LayoutDashboard, Scissors, Sun, Moon } from 'lucide-svelte';
   import { cart, cartStore } from '$lib/cart';
   import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
   import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
+  import { getTheme, setTheme, toggleTheme, initTheme, type Theme } from '$lib/theme';
 
   let { data, children } = $props();
   const session = authClient.useSession();
   const queryClient = new QueryClient();
+  
+  // Theme state
+  let currentTheme = $state<Theme>('light');
   
   // Reactive cart count - subscribe to store and convert to Svelte 5 reactive
   let cartItemsList = $state<any[]>([]);
@@ -20,6 +24,10 @@
   
   // Subscribe to cart store
   onMount(() => {
+    // Initialize theme
+    initTheme();
+    currentTheme = getTheme();
+    
     const unsubscribe = cartStore.subscribe((items) => {
       cartItemsList = items;
     });
@@ -32,17 +40,21 @@
       cart.load();
     }
   });
+  
+  function handleToggleTheme() {
+    currentTheme = toggleTheme();
+  }
 </script>
 
 <QueryClientProvider client={queryClient}>
   <div class="app-container min-h-screen flex flex-col font-sans selection:bg-primary/10">
-    <header class="navbar bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
+    <header class="navbar bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
     <div class="max-w-7xl mx-auto flex justify-between items-center w-full">
       <a href="/" class="group flex items-center gap-3">
         <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform shadow-lg shadow-primary/20">
           <ShieldCheck size={20} />
         </div>
-        <span class="text-2xl font-black tracking-tighter text-gray-900 uppercase">L-SPA</span>
+        <span class="text-2xl font-black tracking-tighter text-gray-900 dark:text-white uppercase">L-SPA</span>
       </a>
       
       <nav class="hidden lg:flex items-center gap-10">
@@ -60,6 +72,19 @@
       </nav>
 
       <div class="flex items-center gap-4">
+        <!-- Dark Mode Toggle -->
+        <button 
+          onclick={handleToggleTheme}
+          class="p-2 text-gray-400 hover:text-primary dark:text-gray-400 dark:hover:text-yellow-400 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+          aria-label="Cambiar tema"
+        >
+          {#if currentTheme === 'dark'}
+            <Moon size={24} />
+          {:else}
+            <Sun size={24} />
+          {/if}
+        </button>
+
         <!-- Shopping Cart Icon -->
         <a href="/carrito" class="relative p-2 text-gray-400 hover:text-primary transition-colors group">
           <ShoppingCart size={24} />
@@ -119,7 +144,7 @@
     </div>
   </header>
 
-  <main class="grow bg-white">
+  <main class="grow bg-white dark:bg-gray-900 transition-colors duration-300">
     {@render children?.()}
   </main>
 
