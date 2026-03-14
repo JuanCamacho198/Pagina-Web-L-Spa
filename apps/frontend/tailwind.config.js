@@ -29,10 +29,17 @@ export default {
       }
     }
   },
-  // keep a small safelist for dynamically generated classes used across the app
+  // temporary, specific safelist for dynamic color utilities (prefer explicit entries)
   safelist: [
-    { pattern: /^bg-(primary|secondary|accent)(?:-.+)?$/ },
-    { pattern: /^text-(primary|secondary|accent)(?:-.+)?$/ }
+    'bg-primary',
+    'bg-primary-light',
+    'bg-primary-dark',
+    'text-primary',
+    'text-primary-dark',
+    'bg-secondary',
+    'text-secondary',
+    'bg-accent',
+    'text-accent'
   ],
   plugins: []
 };

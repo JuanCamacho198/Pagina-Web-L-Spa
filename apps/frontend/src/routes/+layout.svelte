@@ -113,9 +113,7 @@
           <a href="/login" class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600 hover:text-primary transition-colors px-6">
             LOGIN
           </a>
-          <Button href="/servicios" class="hidden sm:flex px-8 rounded-full shadow-lg shadow-primary/20">
-            RESERVAR AHORA
-          </Button>
+          
         {/if}
       </div>
     </div>
