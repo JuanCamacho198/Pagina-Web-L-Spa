@@ -1,81 +1,108 @@
 <script lang="ts">
-	import { Search, Plus, MoreVertical, Mail, Phone, Calendar, ShieldCheck, Edit, Trash2, Eye } from 'lucide-svelte';
+	import { onMount } from 'svelte';
+	import { Search, Plus, Edit, Trash2, Eye, Loader2, X, ChevronDown } from 'lucide-svelte';
+	import { adminApi, type User } from '$lib/api/admin';
 
-	// Mock users data - en producción vendría de la API
-	let users = [
-		{ 
-			id: '1', 
-			name: 'María González', 
-			email: 'maria.gonzalez@email.com',
-			phone: '+57 300 123 4567',
-			role: 'cliente',
-			createdAt: '15 Ene 2024',
-			bookings: 12,
-			status: 'active'
-		},
-		{ 
-			id: '2', 
-			name: 'Carlos Ruiz', 
-			email: 'carlos.ruiz@email.com',
-			phone: '+57 301 234 5678',
-			role: 'cliente',
-			createdAt: '20 Feb 2024',
-			bookings: 8,
-			status: 'active'
-		},
-		{ 
-			id: '3', 
-			name: 'Ana Martínez', 
-			email: 'ana.martinez@email.com',
-			phone: '+57 302 345 6789',
-			role: 'empleado',
-			createdAt: '10 Mar 2024',
-			bookings: 0,
-			status: 'active'
-		},
-		{ 
-			id: '4', 
-			name: 'Luis Fernando', 
-			email: 'luis.fernando@email.com',
-			phone: '+57 303 456 7890',
-			role: 'admin',
-			createdAt: '01 Ene 2024',
-			bookings: 0,
-			status: 'active'
-		},
-		{ 
-			id: '5', 
-			name: 'Sofia Pérez', 
-			email: 'sofia.perez@email.com',
-			phone: '+57 304 567 8901',
-			role: 'cliente',
-			createdAt: '05 Abr 2024',
-			bookings: 3,
-			status: 'inactive'
-		},
-	];
+	// Data from API
+	let users: User[] = $state([]);
+	let loading = $state(true);
+	let actionLoading = $state<string | null>(null);
 
-	let searchQuery = '';
-	let selectedRole = 'all';
+	// Filters
+	let searchQuery = $state('');
+	let selectedRole = $state('all');
 
-	$: filteredUsers = users.filter(user => {
-		const matchesSearch = user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-							  user.email.toLowerCase().includes(searchQuery.toLowerCase());
-		const matchesRole = selectedRole === 'all' || user.role === selectedRole;
-		return matchesSearch && matchesRole;
-	});
+	// Role dropdown state
+	let openRoleDropdown = $state<string | null>(null);
 
-	function getRoleColor(role: string) {
-		switch(role) {
-			case 'admin': return 'bg-purple-50 text-purple-600';
-			case 'empleado': return 'bg-blue-50 text-blue-600';
-			default: return 'bg-gray-50 text-gray-600';
+	// Role mapping (backend uses 'customer', UI shows 'cliente')
+	const roleLabels: Record<string, string> = {
+		admin: 'Administrador',
+		employee: 'Empleado',
+		customer: 'Cliente'
+	};
+
+	// Load data from API
+	async function loadData() {
+		loading = true;
+		try {
+			users = await adminApi.getUsers();
+		} catch (error) {
+			console.error('Error loading users:', error);
+		} finally {
+			loading = false;
 		}
 	}
 
-	function getStatusColor(status: string) {
-		return status === 'active' ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-gray-500';
+	// Filtered users
+	let filteredUsers = $derived(
+		users.filter(user => {
+			const searchLower = searchQuery.toLowerCase();
+			const matchesSearch = !searchQuery || 
+				(user.name || '').toLowerCase().includes(searchLower) ||
+				(user.email || '').toLowerCase().includes(searchLower);
+			const matchesRole = selectedRole === 'all' || user.role === selectedRole;
+			return matchesSearch && matchesRole;
+		})
+	);
+
+	function getRoleColor(role: string) {
+		switch(role) {
+			case 'admin': return 'bg-purple-50 text-purple-600 border-purple-200';
+			case 'employee': return 'bg-blue-50 text-blue-600 border-blue-200';
+			case 'customer': return 'bg-gray-50 text-gray-600 border-gray-200';
+			default: return 'bg-gray-50 text-gray-600 border-gray-200';
+		}
 	}
+
+	function getRoleLabel(role: string) {
+		return roleLabels[role] || role;
+	}
+
+	function formatDate(dateStr: string | undefined) {
+		if (!dateStr) return '--';
+		const date = new Date(dateStr);
+		return date.toLocaleDateString('es-CO', { 
+			day: 'numeric', 
+			month: 'short', 
+			year: 'numeric' 
+		});
+	}
+
+	async function updateUserRole(userId: string, newRole: 'admin' | 'employee' | 'customer') {
+		actionLoading = userId;
+		openRoleDropdown = null;
+		try {
+			const result = await adminApi.updateUserRole(userId, newRole);
+			if (result) {
+				users = users.map(u => u.id === userId ? result : u);
+			}
+		} catch (error) {
+			console.error('Error updating user role:', error);
+		} finally {
+			actionLoading = null;
+		}
+	}
+
+	function toggleRoleDropdown(userId: string) {
+		openRoleDropdown = openRoleDropdown === userId ? null : userId;
+	}
+
+	// Close dropdown when clicking outside
+	function handleClickOutside(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		if (!target.closest('.role-dropdown')) {
+			openRoleDropdown = null;
+		}
+	}
+
+	onMount(() => {
+		loadData();
+		document.addEventListener('click', handleClickOutside);
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+		};
+	});
 </script>
 
 <div class="space-y-8">
@@ -85,105 +112,143 @@
 			<h1 class="text-3xl font-black text-gray-900 tracking-tight uppercase">Usuarios</h1>
 			<p class="text-gray-500 font-medium mt-1">Gestiona los usuarios del sistema</p>
 		</div>
-		<button class="flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
-			<Plus size={18} />
-			Nuevo Usuario
-		</button>
-	</div>
-
-	<!-- Filters -->
-	<div class="flex items-center gap-4">
-		<div class="flex-1 relative">
-			<Search size={18} class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
-			<input 
-				type="text" 
-				placeholder="Buscar usuarios..." 
-				bind:value={searchQuery}
-				class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
-			/>
+		<div class="flex items-center gap-4">
+			<button 
+				onclick={loadData}
+				disabled={loading}
+				class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-primary transition-colors disabled:opacity-50"
+			>
+				{#if loading}
+					<Loader2 size={14} class="animate-spin" />
+				{/if}
+				Actualizar
+			</button>
 		</div>
-		<select 
-			bind:value={selectedRole}
-			class="px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary outline-none font-medium bg-white"
-		>
-			<option value="all">Todos los roles</option>
-			<option value="admin">Administradores</option>
-			<option value="empleado">Empleados</option>
-			<option value="cliente">Clientes</option>
-		</select>
 	</div>
 
-	<!-- Users Table -->
-	<div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden">
-		<table class="w-full">
-			<thead class="bg-gray-50 border-b border-gray-100">
-				<tr>
-					<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Usuario</th>
-					<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Contacto</th>
-					<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Rol</th>
-					<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Estado</th>
-					<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Reservas</th>
-					<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Fecha Alta</th>
-					<th class="px-8 py-6"></th>
-				</tr>
-			</thead>
-			<tbody class="divide-y divide-gray-50">
-				{#each filteredUsers as user}
-					<tr class="hover:bg-gray-50 transition-colors">
-						<td class="px-8 py-6">
-							<div class="flex items-center gap-4">
-								<img 
-									src={`https://ui-avatars.com/api/?name=${user.name}`} 
-									alt={user.name}
-									class="w-12 h-12 rounded-full"
-								/>
-								<div>
-									<p class="font-black text-gray-900">{user.name}</p>
-									<p class="text-sm text-gray-500">{user.email}</p>
-								</div>
-							</div>
-						</td>
-						<td class="px-8 py-6">
-							<p class="font-medium text-gray-900">{user.phone}</p>
-						</td>
-						<td class="px-8 py-6">
-							<span class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest {getRoleColor(user.role)}">
-								{user.role}
-							</span>
-						</td>
-						<td class="px-8 py-6">
-							<span class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest {getStatusColor(user.status)}">
-								{user.status === 'active' ? 'Activo' : 'Inactivo'}
-							</span>
-						</td>
-						<td class="px-8 py-6">
-							<p class="font-black text-gray-900">{user.bookings}</p>
-						</td>
-						<td class="px-8 py-6">
-							<p class="text-gray-500">{user.createdAt}</p>
-						</td>
-						<td class="px-8 py-6">
-							<div class="flex items-center gap-2">
-								<button class="p-3 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-xl transition-colors" title="Ver">
-									<Eye size={18} />
-								</button>
-								<button class="p-3 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-xl transition-colors" title="Editar">
-									<Edit size={18} />
-								</button>
-								<button class="p-3 text-gray-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-colors" title="Eliminar">
-									<Trash2 size={18} />
-								</button>
-							</div>
-						</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
-
-		{#if filteredUsers.length === 0}
-			<div class="py-20 text-center">
-				<p class="text-gray-400 font-medium">No se encontraron usuarios</p>
+	{#if loading && users.length === 0}
+		<!-- Loading State -->
+		<div class="flex items-center justify-center py-20">
+			<div class="flex flex-col items-center gap-4">
+				<Loader2 size={40} class="text-primary animate-spin" />
+				<p class="text-gray-500 font-medium">Cargando usuarios...</p>
 			</div>
-		{/if}
-	</div>
+		</div>
+	{:else}
+		<!-- Filters -->
+		<div class="flex items-center gap-4">
+			<div class="flex-1 relative">
+				<Search size={18} class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
+				<input 
+					type="text" 
+					placeholder="Buscar usuarios..." 
+					bind:value={searchQuery}
+					class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+				/>
+			</div>
+			<select 
+				bind:value={selectedRole}
+				class="px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary outline-none font-medium bg-white"
+			>
+				<option value="all">Todos los roles</option>
+				<option value="admin">Administradores</option>
+				<option value="employee">Empleados</option>
+				<option value="customer">Clientes</option>
+			</select>
+		</div>
+
+		<!-- Users Table -->
+		<div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden">
+			<table class="w-full">
+				<thead class="bg-gray-50 border-b border-gray-100">
+					<tr>
+						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Usuario</th>
+						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Contacto</th>
+						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Rol</th>
+						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Fecha Alta</th>
+						<th class="px-8 py-6"></th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-gray-50">
+					{#each filteredUsers as user}
+						<tr class="hover:bg-gray-50 transition-colors">
+							<td class="px-8 py-6">
+								<div class="flex items-center gap-4">
+									<img 
+										src={user.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.email)}`} 
+										alt={user.name}
+										class="w-12 h-12 rounded-full"
+									/>
+									<div>
+										<p class="font-black text-gray-900">{user.name || 'Sin nombre'}</p>
+										<p class="text-sm text-gray-500">{user.email}</p>
+									</div>
+								</div>
+							</td>
+							<td class="px-8 py-6">
+								<p class="font-medium text-gray-900">{user.phone || '--'}</p>
+							</td>
+							<td class="px-8 py-6">
+								<div class="relative role-dropdown">
+									<button 
+										onclick={() => toggleRoleDropdown(user.id)}
+										disabled={actionLoading === user.id}
+										class="flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border {getRoleColor(user.role)} hover:opacity-80 transition-opacity disabled:opacity-50"
+									>
+										{#if actionLoading === user.id}
+											<Loader2 size={14} class="animate-spin" />
+										{/if}
+										{getRoleLabel(user.role)}
+										<ChevronDown size={14} />
+									</button>
+									
+									{#if openRoleDropdown === user.id}
+										<div class="absolute top-full mt-1 left-0 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-10 min-w-[160px]">
+											<button 
+												onclick={() => updateUserRole(user.id, 'admin')}
+												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 transition-colors {user.role === 'admin' ? 'text-primary' : 'text-gray-700'}"
+											>
+												Administrador
+											</button>
+											<button 
+												onclick={() => updateUserRole(user.id, 'employee')}
+												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 transition-colors {user.role === 'employee' ? 'text-primary' : 'text-gray-700'}"
+											>
+												Empleado
+											</button>
+											<button 
+												onclick={() => updateUserRole(user.id, 'customer')}
+												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 transition-colors {user.role === 'customer' ? 'text-primary' : 'text-gray-700'}"
+											>
+												Cliente
+											</button>
+										</div>
+									{/if}
+								</div>
+							</td>
+							<td class="px-8 py-6">
+								<p class="text-gray-500">{formatDate(user.createdAt)}</p>
+							</td>
+							<td class="px-8 py-6">
+								<div class="flex items-center gap-2">
+									<button class="p-3 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-xl transition-colors" title="Ver">
+										<Eye size={18} />
+									</button>
+									<button class="p-3 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-xl transition-colors" title="Editar">
+										<Edit size={18} />
+									</button>
+								</div>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+
+			{#if filteredUsers.length === 0}
+				<div class="py-20 text-center">
+					<p class="text-gray-400 font-medium">No se encontraron usuarios</p>
+				</div>
+			{/if}
+		</div>
+	{/if}
 </div>
