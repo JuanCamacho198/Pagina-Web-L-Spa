@@ -26,7 +26,8 @@ export class AuthFormLogic {
           toast.error(error.message || 'Error al iniciar sesión');
         } else {
           toast.success('¡Bienvenido de nuevo!');
-          window.location.reload();
+          // Redirect to home and ensure state is fresh
+          window.location.href = '/';
         }
       } else {
         const { data, error } = await authClient.signUp.email({
@@ -38,8 +39,9 @@ export class AuthFormLogic {
         if (error) {
           toast.error(error.message || 'Error al registrarte');
         } else {
-          toast.success('Cuenta creada. Por favor verifica tu correo.');
+          toast.success('¡Cuenta creada! Ya puedes iniciar sesión.');
           this.isLogin = true;
+          this.password = ''; // Clear password after signup
         }
       }
     } catch (e) {

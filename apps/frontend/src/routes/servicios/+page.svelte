@@ -11,14 +11,14 @@
 
 	let { data } = $props();
 	
-	const servicesQuery = createQuery($derived({
+	const servicesQuery = createQuery(() => ({
 		queryKey: ['services'],
 		queryFn: () => apiFetch('/services'),
 		initialData: data.services,
-		staleTime: 1000 * 60 * 5, // 5 minutos de caché fresca
+		staleTime: 1000 * 60 * 5,
 	}));
 
-	let services = $derived($servicesQuery.data || []);
+	let services = $derived(servicesQuery.data || []);
 
 	let searchTerm = $state('');
 	let selectedCategory = $state('Todos');

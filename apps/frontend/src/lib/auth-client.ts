@@ -12,8 +12,9 @@ export const authClient = createAuthClient({
     // When using custom prefix in backend, we should set it here
     // Better Auth will append /sign-up/email to this
     basePath: "/api/v1/auth",
-    // Force the client to use the full path correctly
+    // Ensure cookies are sent (especially important if frontend and backend have different origins)
     fetchOptions: {
+        credentials: 'include',
         onError(context) {
             console.error("Auth Client Error:", context.error);
         },

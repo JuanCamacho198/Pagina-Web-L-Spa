@@ -14,7 +14,7 @@ export class ReviewFormLogic {
     onSuccess: () => void;
     queryClient = useQueryClient();
 
-    mutation = createMutation({
+    mutation = createMutation(() => ({
         mutationFn: async (reviewData: any) => {
             const response = await fetch('http://localhost:3000/api/reviews', {
                 method: 'POST',
@@ -31,11 +31,11 @@ export class ReviewFormLogic {
             this.comment = '';
             this.onSuccess();
         },
-        onError: (error) => {
+        onError: (error: any) => {
             console.error('Review submission error:', error);
             toast.error('No pudimos enviar tu reseña en este momento.');
         }
-    });
+    }));
 
     constructor(props: ReviewFormProps) {
         this.serviceId = props.serviceId;
@@ -55,7 +55,7 @@ export class ReviewFormLogic {
             return;
         }
 
-        $this.mutation.mutate({
+        this.mutation.mutate({
             serviceId: this.serviceId,
             rating: this.rating,
             comment: this.comment,
@@ -69,6 +69,6 @@ export class ReviewFormLogic {
 
     // Helper para el estado de carga
     get loading() {
-        return $this.mutation.isPending;
+        return this.mutation.isPending;
     }
 }

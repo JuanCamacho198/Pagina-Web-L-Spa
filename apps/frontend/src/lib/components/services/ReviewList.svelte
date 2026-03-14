@@ -21,10 +21,9 @@
   }
 
   let props: Props = $props();
-  // We use a closure or a derived that includes the value to avoid capturing only initial value
   const serviceId = $derived(props.serviceId);
 
-  const reviewsQuery = createQuery($derived({
+  const reviewsQuery = createQuery(() => ({
     queryKey: ['reviews', serviceId],
     queryFn: async () => {
       const response = await fetch(`${PUBLIC_API_URL}/reviews/${serviceId}`);
@@ -34,8 +33,8 @@
     enabled: !!serviceId
   }));
 
-  const reviews = $derived($reviewsQuery.data ?? []);
-  const isLoading = $derived($reviewsQuery.isLoading);
+  const reviews = $derived(reviewsQuery.data ?? []);
+  const isLoading = $derived(reviewsQuery.isLoading);
 </script>
 
 <div class="space-y-8">
