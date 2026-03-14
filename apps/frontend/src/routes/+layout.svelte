@@ -52,6 +52,9 @@
 </script>
 
 <QueryClientProvider client={queryClient}>
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-black focus:text-xs focus:uppercase focus:tracking-widest">
+    Saltar al contenido principal
+  </a>
   <div class="app-container min-h-screen flex flex-col font-sans selection:bg-primary/10">
     <header class="navbar bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
     <div class="max-w-7xl mx-auto flex justify-between items-center w-full">
@@ -84,9 +87,9 @@
           aria-label="Cambiar tema"
         >
           {#if currentTheme === 'dark'}
-            <Moon size={24} />
+            <Moon size={24} aria-hidden="true" />
           {:else}
-            <Sun size={24} />
+            <Sun size={24} aria-hidden="true" />
           {/if}
         </button>
 
@@ -149,7 +152,7 @@
     </div>
   </header>
 
-  <main class="grow bg-white dark:bg-gray-900 transition-colors duration-300">
+  <main id="main" class="grow bg-white dark:bg-gray-900 transition-colors duration-300">
     {@render children?.()}
   </main>
 

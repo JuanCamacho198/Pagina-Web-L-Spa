@@ -147,7 +147,7 @@
 		</aside>
 
 		<!-- Main Content -->
-		<main class="flex-1 ml-72 p-8">
+		<main id="main" class="flex-1 ml-72 p-8">
 			{@render children?.()}
 		</main>
 	</div>

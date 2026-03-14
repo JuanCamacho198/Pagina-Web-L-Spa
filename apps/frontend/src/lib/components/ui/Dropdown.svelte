@@ -36,15 +36,16 @@
 </script>
 
 <div class={cn("relative inline-block", className)} bind:this={dropdownRef}>
-  <div 
+  <button
     onclick={toggle}
-    onkeydown={(e) => e.key === 'Enter' && toggle()}
-    role="button"
-    tabindex="0"
+    onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), toggle())}
+    type="button"
     class="cursor-pointer outline-none"
+    aria-expanded={isOpen}
+    aria-haspopup="true"
   >
     {@render trigger()}
-  </div>
+  </button>
 
   {#if isOpen}
     <div 
