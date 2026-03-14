@@ -15,7 +15,7 @@ app.use('*', logger())
 app.use('*', cors({
   origin: 'http://localhost:5173',
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowHeaders: ['Content-Type', 'Authorization', 'X-Anonymous-ID'],
+  allowHeaders: ['Content-Type', 'Authorization', 'X-Anonymous-ID', 'X-User-ID'],
   exposeHeaders: ['Content-Length'],
   maxAge: 600,
   credentials: true,

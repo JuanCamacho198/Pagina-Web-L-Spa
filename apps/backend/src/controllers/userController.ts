@@ -77,4 +77,61 @@ users.delete('/:auth0Id/cart/clear', async (c) => {
   }
 });
 
+// Get User Profile Stats (for /perfil page) - uses Better Auth user ID
+users.get('/profile/stats', async (c) => {
+  try {
+    // Get user ID from header (sent by frontend when logged in)
+    const userId = c.req.header('X-User-ID');
+    
+    if (!userId) {
+      return c.json({ error: 'User ID required' }, 400);
+    }
+    
+    // Get user data
+    const [userData] = await db.select({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      image: user.image,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phone: user.phone,
+      birthDate: user.birthDate,
+      role: user.role,
+      createdAt: user.createdAt,
+    }).from(user).where(eq(user.id, userId));
+    
+    if (!userData) {
+      return c.json({ error: 'Usuario no encontrado' }, 404);
+    }
+    
+    // Get appointments count
+    const [appointmentsResult] = await db.select({ count: count() })
+      .from(appointments)
+      .where(eq(appointments.userId, userId));
+    
+    const appointmentsCount = appointmentsResult?.count || 0;
+    
+    // Get cart items count
+    const [cartResult] = await db.select({ count: count() })
+      .from(cartItems)
+      .where(eq(cartItems.userId, userId));
+    
+    const cartCount = cartResult?.count || 0;
+    
+    return c.json({
+      user: userData,
+      stats: {
+        appointmentsCount,
+        cartCount,
+        // Favorites count - placeholder for now (would need favorites table)
+        favoritesCount: 0,
+      }
+    });
+  } catch (error) {
+    console.error('Error getting user profile stats:', error);
+    return c.json({ error: 'Error al obtener datos del perfil' }, 500);
+  }
+});
+
 export default users;
