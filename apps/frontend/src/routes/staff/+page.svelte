@@ -131,7 +131,7 @@
 		</div>
 	</div>
 {:else if $session.data}
-	<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+	<div class="min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
 		<!-- Top Header -->
 		<header class="bg-white border-b border-gray-200 px-8 py-4">
 			<div class="flex items-center justify-between">
@@ -257,7 +257,7 @@
 						</div>
 
 						<!-- Quick Stats -->
-						<div class="bg-gradient-to-br from-primary to-primary/80 rounded-3xl p-6 text-white">
+						<div class="bg-linear-to-br from-primary to-primary/80 rounded-3xl p-6 text-white">
 							<h4 class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-4">Resumen del Día</h4>
 							<div class="grid grid-cols-2 gap-4">
 								<div>

@@ -135,7 +135,7 @@
 	<!-- Services Grid -->
 	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 		{#each filteredServices as service}
-			<div class="bg-white rounded-[32px] shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow {service.active ? '' : 'opacity-60'}">
+			<div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow {service.active ? '' : 'opacity-60'}">
 				<!-- Image -->
 				<div class="relative h-48 overflow-hidden">
 					<img 
@@ -199,7 +199,7 @@
 	</div>
 
 	{#if filteredServices.length === 0}
-		<div class="bg-white rounded-[32px] p-20 text-center shadow-sm border border-gray-100">
+		<div class="bg-white rounded-4xl p-20 text-center shadow-sm border border-gray-100">
 			<p class="text-gray-400 font-medium">No se encontraron servicios</p>
 		</div>
 	{/if}

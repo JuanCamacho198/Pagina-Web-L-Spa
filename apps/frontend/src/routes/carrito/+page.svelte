@@ -76,14 +76,14 @@
 									<div class="flex items-center gap-4 bg-gray-50 p-2 rounded-4xl border border-gray-100">
 										<button 
 											onclick={() => cart.updateQuantity(item.serviceId, item.quantity - 1)}
-											class="w-8 h-8 rounded-4xll bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
+											class="w-8 h-8 rounded-4xl bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
 										>
 											<Minus size={14} />
 										</button>
 										<span class="text-sm font-black w-4 text-center">{item.quantity}</span>
 										<button 
 											onclick={() => cart.updateQuantity(item.serviceId, item.quantity + 1)}
-											class="w-8 h-8 rounded-4xll bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
+											class="w-8 h-8 rounded-4xl bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
 										>
 											<Plus size={14} />
 										</button>
@@ -153,7 +153,7 @@
 							{ icon: ShieldCheck, label: 'Garantía L-SPA Elite' }
 						] as badge}
 							<div class="bg-white p-6 rounded-4xl border border-gray-100 flex items-center gap-4 opacity-70 hover:opacity-100 transition-opacity group">
-								<div class="w-px0 h-10 rounded-4xll bg-gray-50 flex items-center justify-center text-primary/60 group-hover:bg-primary group-hover:text-white transition-all">
+								<div class="w-px0 h-10 rounded-4xl bg-gray-50 flex items-center justify-center text-primary/60 group-hover:bg-primary group-hover:text-white transition-all">
 									<badge.icon size={18} />
 								</div>
 								<span class="text-[9px] font-black uppercase tracking-widest text-gray-500 group-hover:text-gray-900 transition-colors">{badge.label}</span>

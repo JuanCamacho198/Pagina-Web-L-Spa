@@ -114,7 +114,7 @@
 	</div>
 
 	<!-- Users Table -->
-	<div class="bg-white rounded-[32px] shadow-sm border border-gray-100 overflow-hidden">
+	<div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden">
 		<table class="w-full">
 			<thead class="bg-gray-50 border-b border-gray-100">
 				<tr>

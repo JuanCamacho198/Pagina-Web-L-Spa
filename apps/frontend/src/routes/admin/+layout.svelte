@@ -15,6 +15,7 @@
 		Sparkles
 	} from 'lucide-svelte';
 
+	let { children } = $props();
 	const session = authClient.useSession();
 
 	// Navigation items for admin
@@ -33,8 +34,8 @@
 		}
 	});
 
-	// Get current path
-	$: currentPath = $page.url.pathname;
+	// Get current path using $derived
+	let currentPath = $derived($page.url.pathname);
 
 	// Logout handler
 	async function handleLogout() {

@@ -90,7 +90,8 @@ export const appointments = pgTable('appointments', {
 // Cart Items Table
 export const cartItems = pgTable('cart_items', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: text('user_id'),
+  userId: text('user_id'), // Logged in user
+  anonymousId: varchar('anonymous_id', { length: 100 }), // Guest user (stored in localStorage)4
   serviceId: uuid('service_id').references(() => services.id, { onDelete: 'cascade' }),
   quantity: integer('quantity').default(1),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
