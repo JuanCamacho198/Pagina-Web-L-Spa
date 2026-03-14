@@ -18,10 +18,16 @@
 	import Modal from '$lib/components/ui/Modal.svelte';
 	import { toast } from '$lib/stores/toast.svelte';
 
-	let { data } = $props();
-	let appointments = $state(data.appointments || []);
-	let isLoading = $state(false);
-	let error = $state(data.error || '');
+		let props = $props();
+		let appointments = $state([]);
+		let isLoading = $state(false);
+		let error = $state('');
+
+		// Keep local state in sync with incoming `data` props
+		$effect(() => {
+			appointments = props.data?.appointments || [];
+			error = props.data?.error || '';
+		});
 	
 	let modalId = $state<string | null>(null);
 	let cancelingId = $state<string | null>(null);

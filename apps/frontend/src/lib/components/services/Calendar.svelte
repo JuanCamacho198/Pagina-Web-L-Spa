@@ -10,10 +10,16 @@
     minDate?: string;
     maxDate?: string;
   }
-
+  // Use top-level props binding and instantiate logic with a safe noop handler; sync props into it via $effect
   let props: Props = $props();
-  
-  const logic = new CalendarLogic(props);
+  let logic = new CalendarLogic({ onDateSelect: () => {} } as CalendarProps);
+
+  $effect(() => {
+    logic.onDateSelect = props.onDateSelect;
+    logic.selectedDate = props.selectedDate;
+    logic.minDate = props.minDate;
+    logic.maxDate = props.maxDate;
+  });
 </script>
 
 <div class="p-4 bg-white rounded-3xl shadow-xl border border-gray-100 max-w-sm mx-auto">
@@ -65,7 +71,7 @@
     {#each Array(logic.totalDays) as _, i}
       {@const d = i + 1}
       {@const disabled = logic.isDisabled(d)}
-      {@const selected = logic.isSelected(d, props.selectedDate)}
+      {@const selected = logic.isSelected(d, logic.selectedDate)}
       {@const today = logic.isToday(d)}
 
       <button

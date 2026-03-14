@@ -167,10 +167,11 @@
 
 							<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 								<div class="space-y-2">
-									<label class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Nombre</label>
+									<label for="checkout-name" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Nombre</label>
 									<div class="relative group">
 										<User class="absolute left-4 top-4 text-gray-300 group-focus-within:text-primary transition-colors" size={20} />
 										<input 
+											id="checkout-name"
 											type="text" 
 											bind:value={formData.name} 
 											placeholder="Ej. Juan"
@@ -179,10 +180,11 @@
 									</div>
 								</div>
 								<div class="space-y-2">
-									<label class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Apellido</label>
+									<label for="checkout-lastName" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Apellido</label>
 									<div class="relative group">
 										<User class="absolute left-4 top-4 text-gray-300 group-focus-within:text-primary transition-colors" size={20} />
 										<input 
+											id="checkout-lastName"
 											type="text" 
 											bind:value={formData.lastName}
 											placeholder="Ej. Camacho"
@@ -191,10 +193,11 @@
 									</div>
 								</div>
 								<div class="space-y-2">
-									<label class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Email</label>
+									<label for="checkout-email" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Email</label>
 									<div class="relative group">
 										<Mail class="absolute left-4 top-4 text-gray-300 group-focus-within:text-primary transition-colors" size={20} />
 										<input 
+											id="checkout-email"
 											type="email" 
 											bind:value={formData.email}
 											placeholder="juan@ejemplo.com"
@@ -203,10 +206,11 @@
 									</div>
 								</div>
 								<div class="space-y-2">
-									<label class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Teléfono</label>
+									<label for="checkout-phone" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Teléfono</label>
 									<div class="relative group">
 										<Phone class="absolute left-4 top-4 text-gray-300 group-focus-within:text-primary transition-colors" size={20} />
 										<input 
+											id="checkout-phone"
 											type="tel" 
 											bind:value={formData.phone}
 											placeholder="+57 321..."
@@ -215,10 +219,11 @@
 									</div>
 								</div>
 								<div class="sm:col-span-2 space-y-2">
-									<label class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Identificación (C.C)</label>
+									<label for="checkout-userCC" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Identificación (C.C)</label>
 									<div class="relative group">
 										<IdCard class="absolute left-4 top-4 text-gray-300 group-focus-within:text-primary transition-colors" size={20} />
 										<input 
+											id="checkout-userCC"
 											type="text" 
 											bind:value={formData.userCC}
 											placeholder="123456789"
@@ -239,8 +244,9 @@
 
 							<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 								<div class="space-y-4 text-center">
-									<label class="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-4">Fecha de Reserva</label>
+									<label for="checkout-preferredDate" class="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-4">Fecha de Reserva</label>
 									<input 
+										id="checkout-preferredDate"
 										type="date" 
 										bind:value={formData.preferredDate}
 										min={new Date().toISOString().split('T')[0]}
@@ -249,22 +255,27 @@
 								</div>
 								
 								<div class="space-y-4">
-									<label class="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-4">Hora Disponible</label>
-									<div class="grid grid-cols-2 gap-3">
-										{#each ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00'] as time}
-											<button 
-												onclick={() => formData.preferredTime = time}
-												class={cn(
-													"py-3 rounded-4xl font-black text-xs transition-all duration-300 border uppercase tracking-widest",
-													formData.preferredTime === time 
-														? "bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-105" 
-														: "bg-white text-gray-500 border-gray-100 hover:border-primary/30"
-												)}
-											>
-												{time}
-											</button>
-										{/each}
-									</div>
+									<fieldset class="space-y-2">
+										<legend id="checkout-preferredTime-legend" class="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-4">Hora Disponible</legend>
+										<div role="radiogroup" aria-labelledby="checkout-preferredTime-legend" class="grid grid-cols-2 gap-3">
+											{#each ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00'] as time}
+												<button 
+													role="radio"
+													aria-checked={formData.preferredTime === time}
+													tabindex={formData.preferredTime === time ? 0 : -1}
+													onclick={() => formData.preferredTime = time}
+													class={cn(
+														"py-3 rounded-4xl font-black text-xs transition-all duration-300 border uppercase tracking-widest",
+														formData.preferredTime === time 
+															? "bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-105" 
+															: "bg-white text-gray-500 border-gray-100 hover:border-primary/30"
+													)}
+												>
+													{time}
+												</button>
+											{/each}
+										</div>
+									</fieldset>
 								</div>
 							</div>
 						</div>
@@ -299,8 +310,9 @@
 								</div>
 								
 								<div class="space-y-4 pt-4">
-									<label class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Notas adicionales (opcional)</label>
+									<label for="checkout-notes" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Notas adicionales (opcional)</label>
 									<textarea 
+										id="checkout-notes"
 										bind:value={formData.notes}
 										placeholder="¿Alguna petición especial?"
 										class="w-full p-6 rounded-4xl bg-white border-none ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none min-h-30"
