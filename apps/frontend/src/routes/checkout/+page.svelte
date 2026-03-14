@@ -155,7 +155,7 @@
 					{/each}
 				</div>
 
-				<div class="bg-white rounded-[48px] p-8 sm:p-12 shadow-2xl shadow-primary/5 border border-gray-100 min-h-[500px] flex flex-col">
+				<div class="bg-white rounded-[48px] p-8 sm:p-12 shadow-2xl shadow-primary/5 border border-gray-100 min-h-125 flex flex-col">
 					{#if currentStep === 0}
 						<!-- Step 1: Personal Data -->
 						<div class="space-y-8 animate-in fade-in slide-in-from-bottom duration-500">
@@ -232,7 +232,7 @@
 						<!-- Step 2: Agenda -->
 						<div class="space-y-8 animate-in fade-in slide-in-from-bottom duration-500">
 							<div class="space-y-2">
-								<Typography variant="h2" class="text-3xl font-black text-gray-900 tracking-tight leading-none uppercase tracking-widest text-xs text-primary mb-2 block">Paso 02</Typography>
+								<Typography variant="h2" class="text-3xl font-black text-gray-900 tracking-tight leading-none uppercase mb-2 block">Paso 02</Typography>
 								<Typography variant="h2" class="text-3xl font-black text-gray-900 tracking-tight leading-none">Agenda tu Experiencia</Typography>
 								<p class="text-gray-400 font-medium text-sm">Selecciona el momento perfecto para tu bienestar.</p>
 							</div>
@@ -272,7 +272,7 @@
 						<!-- Step 3: Confirmation -->
 						<div class="space-y-8 animate-in fade-in slide-in-from-bottom duration-500 text-center sm:text-left">
 							<div class="space-y-2">
-								<Typography variant="h2" class="text-3xl font-black text-gray-900 tracking-tight leading-none uppercase tracking-widest text-xs text-primary mb-2 block">Paso 03</Typography>
+								<Typography variant="h2" class="text-3xl font-black text-gray-900 tracking-tight leading-none uppercase mb-2 block">Paso 03</Typography>
 								<Typography variant="h2" class="text-3xl font-black text-gray-900 tracking-tight leading-none">Confirmar Reserva</Typography>
 								<p class="text-gray-400 font-medium text-sm">Por favor revisa que todo sea correcto.</p>
 							</div>
@@ -303,7 +303,7 @@
 									<textarea 
 										bind:value={formData.notes}
 										placeholder="¿Alguna petición especial?"
-										class="w-full p-6 rounded-4xl bg-white border-none ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none min-h-[120px]"
+										class="w-full p-6 rounded-4xl bg-white border-none ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none min-h-30"
 									></textarea>
 								</div>
 							</div>
@@ -368,7 +368,7 @@
 									<img src={item.imageUrl || '/src/assets/banners/bannerSpa.avif'} alt={item.serviceName || item.name} class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" />
 								</div>
 								<div class="grow">
-									<p class="text-[10px] font-black text-gray-900 uppercase tracking-tight block truncate max-w-[150px]">{item.serviceName || item.name}</p>
+									<p class="text-[10px] font-black text-gray-900 uppercase tracking-tight block truncate max-w-37.5">{item.serviceName || item.name}</p>
 									<p class="text-xs font-bold text-primary">${Number(item.servicePrice || item.price).toLocaleString()}</p>
 								</div>
 							</div>
@@ -393,7 +393,7 @@
 					</div>
 				</div>
 				
-				<div class="mt-8 bg-black/[0.02] p-8 rounded-[40px] border border-gray-100 text-center">
+				<div class="mt-8 bg-black/2 p-8 rounded-[40px] border border-gray-100 text-center">
 					<p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.2em] leading-relaxed">
 						L-SPA Premium Wellness Experience • Bogotá, Colombia
 					</p>

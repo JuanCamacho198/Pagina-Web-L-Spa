@@ -1,7 +1,16 @@
 <script lang="ts">
-	import { CalendarX, Receipt, CreditCard, Clock, RotateCcw, AlertTriangle, ShieldCheck, ChevronRight, Info } from 'lucide-svelte';
+	import { CalendarX, Receipt, CreditCard, Clock, RotateCcw, AlertTriangle, ShieldCheck, ChevronRight, Info, Lock } from 'lucide-svelte';
 
-	const sections = [
+	type Section = {
+		icon: any;
+		title: string;
+		content: string;
+		color?: string;
+		list?: string[];
+		highlight?: string;
+	};
+
+	const sections: Section[] = [
 		{
 			icon: Receipt,
 			title: "Facturación Electrónica",

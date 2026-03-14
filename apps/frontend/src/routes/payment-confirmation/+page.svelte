@@ -116,7 +116,7 @@
 								</div>
 								<div class="flex justify-between items-center bg-gray-50/50 p-6 rounded-4xl border border-gray-50 group hover:bg-white transition-all shadow-sm">
 									<span class="text-[10px] font-black uppercase tracking-widest text-gray-400">Método de Pago</span>
-									<span class="text-sm font-black text-primary tracking-tight uppercase tracking-widest text-[10px]">{selectedMethod}</span>
+									<span class="text-sm font-black text-primary tracking-tight uppercase text-[10px]">{selectedMethod}</span>
 								</div>
 								
 								<div class="pt-8 flex flex-col items-center">
