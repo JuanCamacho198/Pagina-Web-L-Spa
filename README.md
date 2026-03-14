@@ -26,8 +26,50 @@ Plataforma integral para la gestión de servicios de Spa de lujo, migrada a una 
 
 ### Monorepo (Bun Workspaces)
 - **Runtime:** Bun
-- **Frontend:** SvelteKit 2 + Svelte 5 (Runes)
-- **Backend:** Hono API
+- **Frontend:** SvelteKit 2 + Svelte 5 (Runes), TanStack Query, Lucide Svelte, Tailwind CSS.
+- **Backend:** Hono API Framework + Better Auth (Drizzle Adapter).
+- **Base de Datos:** PostgreSQL (Neon), Drizzle ORM.
+
+## 🏗️ Estructura del Proyecto
+
+```text
+├── apps/
+│   ├── backend/       # API REST con Hono y Better Auth
+│   └── frontend/      # SvelteKit 5 (Runes) + Tailwind CSS
+├── packages/
+│   ├── database/      # Drizzle ORM Schema & Migrations (Neon DB)
+│   └── shared-types/  # Tipos TypeScript compartidos entre apps
+└── drizzle/           # Archivos de migración SQL
+```
+
+## 🚀 Inicio Rápido
+
+Asegúrate de tener [Bun](https://bun.sh) instalado.
+
+1. **Instalar dependencias:**
+   ```bash
+   bun install
+   ```
+
+2. **Configuración de Variables de Env:**
+   Crea un `.env` en la raíz con:
+   - `DATABASE_URL`: Tu conexión a Neon DB.
+   - `BETTER_AUTH_SECRET`: Secreto para encriptación.
+   - `BETTER_AUTH_URL`: `http://localhost:3000` (Backend URL).
+
+3. **Desarrollo:**
+   Lanza el backend y el frontend simultáneamente:
+   ```bash
+   bun dev
+   ```
+
+4. **Base de Datos:**
+   - Empujar cambios: `bun run db:push`
+   - Drizzle Studio: `bun run db:studio`
+
+---
+© 2026 L-SPA. Todos los derechos reservados.
+
 - **Auth:** Better Auth
 - **Database:** Drizzle ORM + PostgreSQL
 - **Estilos:** Tailwind CSS 4
