@@ -96,8 +96,8 @@
           <li><a href="/politicas/datos" class={linkClass}>Tratamiento de Datos</a></li>
           <li><a href="/informacion-importante" class={linkClass}>Información de Reserva</a></li>
           <li><a href="/preguntas-frecuentes" class={linkClass}>Preguntas Frecuentes</a></li>
-          <li class="pt-2"><a href="/cookies" class={linkClass}>Cookies</a></li>
-          <li><a href="/privacidad" class={linkClass}>Privacidad</a></li>
+          <li class="pt-2"><a href="/politicas/cookies" class={linkClass}>Cookies</a></li>
+          <li><a href="/politicas/privacidad" class={linkClass}>Privacidad</a></li>
         </ul>
       </div>
 
