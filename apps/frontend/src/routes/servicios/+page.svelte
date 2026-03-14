@@ -6,9 +6,19 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Typography from '$lib/components/ui/Typography.svelte';
 	import { Filter, SortAsc, ChevronDown } from 'lucide-svelte';
+	import { createQuery } from '@tanstack/svelte-query';
+	import { apiFetch } from '$lib/utils/api';
 
 	let { data } = $props();
-	let services = $derived(data.services || []);
+	
+	const servicesQuery = createQuery($derived({
+		queryKey: ['services'],
+		queryFn: () => apiFetch('/services'),
+		initialData: data.services,
+		staleTime: 1000 * 60 * 5, // 5 minutos de caché fresca
+	}));
+
+	let services = $derived($servicesQuery.data || []);
 
 	let searchTerm = $state('');
 	let selectedCategory = $state('Todos');

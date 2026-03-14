@@ -5,11 +5,14 @@
   import Footer from '$lib/components/layout/Footer.svelte';
   import { onMount } from 'svelte';
   import { authClient } from '$lib/auth-client';
-   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';
-   import { cart, cartCount } from '$lib/cart';
+  import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart } from 'lucide-svelte';
+  import { cart, cartCount } from '$lib/cart';
+  import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+  import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 
   let { data, children } = $props();
   const session = authClient.useSession();
+  const queryClient = new QueryClient();
 
   onMount(function() {
     // Auth logic is now handled by Better Auth Client
@@ -23,10 +26,9 @@
   });
 </script>
 
-<Toaster />
-
-<div class="app-container min-h-screen flex flex-col font-sans selection:bg-primary/10">
-  <header class="navbar bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
+<QueryClientProvider client={queryClient}>
+  <div class="app-container min-h-screen flex flex-col font-sans selection:bg-primary/10">
+    <header class="navbar bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
     <div class="max-w-7xl mx-auto flex justify-between items-center w-full">
       <a href="/" class="group flex items-center gap-3">
         <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform shadow-lg shadow-primary/20">
@@ -108,6 +110,8 @@
 
   <Footer />
 </div>
+<SvelteQueryDevtools initialIsOpen={false} />
+</QueryClientProvider>
 
 <Toaster />
 

@@ -5,6 +5,7 @@
   import Skeleton from '../ui/Skeleton.svelte';
   import { User, MessageSquare, Calendar } from 'lucide-svelte';
   import { PUBLIC_API_URL } from '$env/static/public';
+  import { createQuery } from '@tanstack/svelte-query';
 
   interface Review {
     id: string;
@@ -20,31 +21,21 @@
   }
 
   let props: Props = $props();
-  const { serviceId, key = 0 } = $derived(props);
-  let reviews = $state<Review[]>([]);
-  let isLoading = $state(true);
+  // We use a closure or a derived that includes the value to avoid capturing only initial value
+  const serviceId = $derived(props.serviceId);
 
-  const fetchReviews = async () => {
-    if (typeof window === 'undefined') return;
-    isLoading = true;
-    try {
+  const reviewsQuery = createQuery($derived({
+    queryKey: ['reviews', serviceId],
+    queryFn: async () => {
       const response = await fetch(`${PUBLIC_API_URL}/reviews/${serviceId}`);
-      if (response.ok) {
-        reviews = await response.json();
-      }
-    } catch (e) {
-      console.error('Error fetching reviews:', e);
-    } finally {
-      isLoading = false;
-    }
-  };
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json() as Promise<Review[]>;
+    },
+    enabled: !!serviceId
+  }));
 
-  $effect(() => {
-    // Re-fetch when serviceId or key changes
-    if (serviceId || key) {
-        fetchReviews();
-    }
-  });
+  const reviews = $derived($reviewsQuery.data ?? []);
+  const isLoading = $derived($reviewsQuery.isLoading);
 </script>
 
 <div class="space-y-8">
