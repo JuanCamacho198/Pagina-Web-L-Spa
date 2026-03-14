@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, decimal, integer, timestamp, varchar, date, time, pgEnum, uniqueIndex } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, decimal, integer, timestamp, varchar, date, time, pgEnum, uniqueIndex, boolean } from 'drizzle-orm/pg-core';
 
 // Roles Definition
 export const userRoleEnum = pgEnum('user_role', ['admin', 'employee', 'customer']);
@@ -8,7 +8,7 @@ export const user = pgTable('user', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  emailVerified: integer('email_verified').notNull().default(0), // Using integer for boolean like in sqlite, or boolean for pg
+  emailVerified: boolean('email_verified').notNull().default(false), 
   image: text('image'),
   firstName: varchar('first_name', { length: 100 }),
   lastName: varchar('last_name', { length: 100 }),
