@@ -203,7 +203,7 @@
 									</button>
 									
 									{#if openRoleDropdown === user.id}
-										<div class="absolute top-full mt-1 left-0 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-10 min-w-[160px]">
+										<div class="absolute top-full mt-1 left-0 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-10 min-w-40">
 											<button 
 												onclick={() => updateUserRole(user.id, 'admin')}
 												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 transition-colors {user.role === 'admin' ? 'text-primary' : 'text-gray-700'}"

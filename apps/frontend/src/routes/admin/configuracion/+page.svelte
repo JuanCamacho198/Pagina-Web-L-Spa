@@ -1,8 +1,12 @@
 <script lang="ts">
-	import { Save, Building2, MapPin, Phone, Mail, Clock, Globe, DollarSign, Bell, Shield, Palette } from 'lucide-svelte';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+	import { Save, Building2, MapPin, Phone, Mail, Clock, Globe, Bell, Shield } from 'lucide-svelte';
 
-	// Config data - en producción vendría de la API
-	let config = {
+	const STORAGE_KEY = 'lspa_admin_config';
+
+	// Default config
+	const defaultConfig = {
 		// Información del negocio
 		businessName: 'L-SPA Experience',
 		tagline: 'Tu Santuario de Bienestar',
@@ -32,8 +36,8 @@
 		whatsappNotifications: true,
 		
 		// Políticas
-		cancellationPolicy: 24, // horas de anticipación
-		bookingInterval: 30, // minutos entre citas
+		cancellationPolicy: 24,
+		bookingInterval: 30,
 		
 		// Redes sociales
 		instagram: 'https://instagram.com/lspa',
@@ -41,8 +45,27 @@
 		twitter: '',
 	};
 
+	// Load config from localStorage or use default
+	function loadConfig() {
+		if (!browser) return defaultConfig;
+		
+		try {
+			const saved = localStorage.getItem(STORAGE_KEY);
+			if (saved) {
+				return { ...defaultConfig, ...JSON.parse(saved) };
+			}
+		} catch (e) {
+			console.error('Error loading config:', e);
+		}
+		return defaultConfig;
+	}
+
+	// Config data
+	let config = $state(loadConfig());
+
 	let activeTab = 'general';
-	let saving = false;
+	let saving = $state(false);
+	let saveSuccess = $state(false);
 
 	const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 	const dayLabels: Record<string, string> = {
@@ -56,11 +79,31 @@
 	};
 
 	async function saveConfig() {
+		if (!browser) return;
+		
 		saving = true;
-		// Simular guardado
-		await new Promise(resolve => setTimeout(resolve, 1000));
-		saving = false;
+		saveSuccess = false;
+		
+		try {
+			// Save to localStorage
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+			
+			// Simulate API delay
+			await new Promise(resolve => setTimeout(resolve, 800));
+			
+			saveSuccess = true;
+			setTimeout(() => saveSuccess = false, 3000);
+		} catch (e) {
+			console.error('Error saving config:', e);
+		} finally {
+			saving = false;
+		}
 	}
+
+	onMount(() => {
+		// Re-load config on mount (in case of SSR)
+		config = loadConfig();
+	});
 </script>
 
 <div class="space-y-8">
@@ -73,14 +116,18 @@
 		<button 
 			onclick={saveConfig}
 			disabled={saving}
-			class="flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 disabled:opacity-50"
+			class="flex items-center gap-3 px-8 py-4 {saveSuccess ? 'bg-emerald-500' : 'bg-primary'} text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:{saveSuccess ? 'bg-emerald-600' : 'bg-primary/90'} transition-colors shadow-lg shadow-primary/20 disabled:opacity-50"
 		>
 			{#if saving}
 				<div class="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+			{:else if saveSuccess}
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+				</svg>
 			{:else}
 				<Save size={18} />
 			{/if}
-			{saving ? 'Guardando...' : 'Guardar Cambios'}
+			{saving ? 'Guardando...' : saveSuccess ? 'Guardado!' : 'Guardar Cambios'}
 		</button>
 	</div>
 

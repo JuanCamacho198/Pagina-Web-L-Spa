@@ -175,7 +175,7 @@
 
 		<!-- Filters -->
 		<div class="flex items-center gap-4 flex-wrap">
-			<div class="flex-1 min-w-[300px] relative">
+			<div class="flex-1 min-w-75 relative">
 				<Search size={18} class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
 				<input 
 					type="text" 
@@ -202,7 +202,7 @@
 		</div>
 
 		<!-- Bookings Table -->
-		<div class="bg-white rounded-[32px] shadow-sm border border-gray-100 overflow-hidden">
+		<div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden">
 			<table class="w-full">
 				<thead class="bg-gray-50 border-b border-gray-100">
 					<tr>
