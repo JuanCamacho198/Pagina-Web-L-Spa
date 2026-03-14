@@ -34,4 +34,14 @@ export class AppointmentService {
   async deleteAppointment(id: string) {
     return await this.repository.delete(id);
   }
+
+  // Admin: Get all appointments with filters
+  async getAllAppointments(filters?: { status?: string; date?: string; search?: string }) {
+    return await this.repository.findAll(filters);
+  }
+
+  // Admin: Get dashboard stats
+  async getStats() {
+    return await this.repository.getStats();
+  }
 }

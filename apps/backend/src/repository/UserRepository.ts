@@ -93,4 +93,28 @@ export class UserRepository {
   async clearCart(userId: string) {
     await db.delete(cartItems).where(eq(cartItems.userId, userId));
   }
+
+  // Admin: Get all users
+  async findAll() {
+    return await db.select({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      image: user.image,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phone: user.phone,
+      role: user.role,
+      createdAt: user.createdAt,
+    }).from(user).orderBy(user.createdAt);
+  }
+
+  // Admin: Update user role
+  async updateRole(id: string, role: 'admin' | 'employee' | 'customer') {
+    const results = await db.update(user)
+      .set({ role })
+      .where(eq(user.id, id))
+      .returning();
+    return results[0];
+  }
 }

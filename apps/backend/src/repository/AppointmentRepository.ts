@@ -1,5 +1,5 @@
-import { db, appointments, services, user as users } from '@l-spa/database';
-import { eq, and, desc, sql, ne } from 'drizzle-orm';
+import { db, appointments, services, user as users } from '@l-Spa/database';
+import { eq, and, desc, sql, ne, like, or } from 'drizzle-orm';
 import type { Appointment } from '@l-spa/shared-types';
 
 export class AppointmentRepository {
@@ -54,5 +54,84 @@ export class AppointmentRepository {
       .where(eq(appointments.id, id))
       .returning();
     return deleted;
+  }
+
+  // Admin: Get all appointments with filters
+  async findAll(filters?: { status?: string; date?: string; search?: string }) {
+    let conditions = [];
+    
+    if (filters?.status && filters.status !== 'all') {
+      conditions.push(eq(appointments.status, filters.status));
+    }
+    if (filters?.date) {
+      conditions.push(eq(appointments.appointmentDate, filters.date));
+    }
+    
+    const results = await db
+      .select({
+        id: appointments.id,
+        userId: appointments.userId,
+        serviceId: appointments.serviceId,
+        serviceName: services.name,
+        servicePrice: services.price,
+        serviceDuration: services.duration,
+        appointmentDate: appointments.appointmentDate,
+        appointmentTime: appointments.appointmentTime,
+        status: appointments.status,
+        createdAt: appointments.createdAt,
+        userName: users.name,
+        userEmail: users.email,
+        userPhone: users.phone,
+      })
+      .from(appointments)
+      .leftJoin(services, eq(appointments.serviceId, services.id))
+      .leftJoin(users, eq(appointments.userId, users.id))
+      .where(conditions.length > 0 ? and(...conditions) : undefined)
+      .orderBy(desc(appointments.appointmentDate), desc(appointments.appointmentTime));
+    
+    return results;
+  }
+
+  // Admin: Get dashboard statistics
+  async getStats() {
+    const currentDate = new Date();
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).toISOString().split('T')[0];
+    const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).toISOString().split('T')[0];
+
+    // Total users
+    const [usersCount] = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(users);
+
+    // Active services (services with price > 0)
+    const [servicesCount] = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(services);
+
+    // Appointments this month
+    const [appointmentsThisMonth] = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(appointments)
+      .where(and(
+        eq(appointments.appointmentDate, firstDayOfMonth)
+      ));
+
+    // Revenue this month (sum of completed appointments)
+    const [revenueResult] = await db
+      .select({
+        total: sql<string>`COALESCE(SUM(${services.price}), 0)`
+      })
+      .from(appointments)
+      .leftJoin(services, eq(appointments.serviceId, services.id))
+      .where(and(
+        eq(appointments.status, 'completed')
+      ));
+
+    return {
+      totalUsers: usersCount?.count || 0,
+      activeServices: servicesCount?.count || 0,
+      appointmentsThisMonth: appointmentsThisMonth?.count || 0,
+      revenueThisMonth: revenueResult?.total || '0'
+    };
   }
 }

@@ -140,4 +140,39 @@ users.get('/profile/stats', async (c) => {
   }
 });
 
+// ============ ADMIN ENDPOINTS ============
+
+// Admin: Get all users
+users.get('/admin/all', async (c) => {
+  try {
+    const allUsers = await userService.getAllUsers();
+    return c.json(allUsers);
+  } catch (error) {
+    console.error('Error getting all users:', error);
+    return c.json({ error: 'Error al obtener usuarios' }, 500);
+  }
+});
+
+// Admin: Update user role
+users.patch('/admin/:userId/role', async (c) => {
+  try {
+    const userId = c.req.param('userId');
+    const { role } = await c.req.json();
+    
+    if (!role || !['admin', 'employee', 'customer'].includes(role)) {
+      return c.json({ error: 'Rol inválido' }, 400);
+    }
+    
+    const updatedUser = await userService.updateUserRole(userId, role);
+    if (!updatedUser) {
+      return c.json({ error: 'Usuario no encontrado' }, 404);
+    }
+    
+    return c.json(updatedUser);
+  } catch (error) {
+    console.error('Error updating user role:', error);
+    return c.json({ error: 'Error al actualizar rol' }, 500);
+  }
+});
+
 export default users;

@@ -58,4 +58,24 @@ appointments.delete('/:id', async (c) => {
   return c.json({ message: 'Cita eliminada correctamente', appointment: result });
 });
 
+// ============ ADMIN ENDPOINTS ============
+
+// Get all appointments (admin) with optional filters
+appointments.get('/', async (c) => {
+  const status = c.req.query('status');
+  const date = c.req.query('date');
+  const search = c.req.query('search');
+  
+  const filters = { status, date, search };
+  const appointments = await appointmentService.getAllAppointments(filters);
+  
+  return c.json(appointments);
+});
+
+// Get dashboard statistics
+appointments.get('/stats', async (c) => {
+  const stats = await appointmentService.getStats();
+  return c.json(stats);
+});
+
 export default appointments;

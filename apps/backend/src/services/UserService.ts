@@ -48,4 +48,14 @@ export class UserService {
     if (!user) throw new Error('Usuario no encontrado');
     await this.repository.clearCart(user.id);
   }
+
+  // Admin: Get all users
+  async getAllUsers() {
+    return await this.repository.findAll();
+  }
+
+  // Admin: Update user role
+  async updateUserRole(userId: string, role: 'admin' | 'employee' | 'customer') {
+    return await this.repository.updateRole(userId, role);
+  }
 }
