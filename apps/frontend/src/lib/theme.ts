@@ -37,8 +37,19 @@ export function toggleTheme(): Theme {
 
 export function applyTheme(theme: Theme): void {
   if (!browser) return;
-  document.documentElement.classList.remove('light', 'dark');
-  document.documentElement.classList.add(theme);
+  
+  // Smooth transition: fade out briefly, change class, fade in
+  const html = document.documentElement;
+  
+  html.style.transition = 'none';
+  html.classList.remove('light', 'dark');
+  html.classList.add(theme);
+  
+  // Force reflow to apply the class change
+  void html.offsetHeight;
+  
+  // Restore transitions with a smooth animation
+  html.style.transition = 'background-color 0.3s ease, color 0.3s ease';
 }
 
 export function initTheme(): void {
