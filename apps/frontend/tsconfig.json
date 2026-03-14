@@ -1,6 +1,7 @@
 {
 	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
+		"skipLibCheck": true,
 		"moduleResolution": "bundler",
 		"module": "esnext",
 		"lib": ["esnext", "dom", "dom.iterable"],

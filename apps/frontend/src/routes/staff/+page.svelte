@@ -12,7 +12,8 @@
 		X,
 		Clock,
 		User,
-		Scissors
+		Scissors,
+		Shield
 	} from 'lucide-svelte';
 
 	const session = authClient.useSession();
@@ -24,7 +25,7 @@
 		}
 	});
 
-	$: currentPath = $page.url.pathname;
+	// reactive currentPath removed (not used)
 
 	async function handleLogout() {
 		await authClient.signOut();

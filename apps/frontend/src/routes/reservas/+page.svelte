@@ -16,7 +16,7 @@
 	import Typography from '$lib/components/ui/Typography.svelte';
 	import Badge from '$lib/components/ui/Badge.svelte';
 	import Modal from '$lib/components/ui/Modal.svelte';
-	import { toast } from '$lib/components/feedback/Toast.svelte';
+	import { toast } from '$lib/stores/toast.svelte';
 
 	let { data } = $props();
 	let appointments = $state(data.appointments || []);

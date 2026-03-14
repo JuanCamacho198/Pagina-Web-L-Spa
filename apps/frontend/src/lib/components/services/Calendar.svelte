@@ -65,7 +65,7 @@
     {#each Array(logic.totalDays) as _, i}
       {@const d = i + 1}
       {@const disabled = logic.isDisabled(d)}
-      {@const selected = logic.isSelected(d, vars.selectedDate)}
+      {@const selected = logic.isSelected(d, props.selectedDate)}
       {@const today = logic.isToday(d)}
 
       <button

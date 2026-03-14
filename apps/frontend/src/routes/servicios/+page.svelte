@@ -51,10 +51,10 @@
 	];
 
 	const categoryDropdownItems = $derived(
-		categories.map((cat) => ({
-			label: cat,
-			onClick: () => { selectedCategory = cat; }
-		}))
+		categories.map((cat: any) => ({
+				label: String(cat),
+				onClick: () => { selectedCategory = String(cat); }
+			}))
 	);
 
 	const sortDropdownItems = $derived(

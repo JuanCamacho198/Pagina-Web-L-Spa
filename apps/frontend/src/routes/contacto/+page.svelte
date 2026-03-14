@@ -3,7 +3,7 @@
 	import { cn } from '$lib/utils/cn';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Typography from '$lib/components/ui/Typography.svelte';
-	import { toast } from '$lib/components/feedback/Toast.svelte';
+	import { toast } from '$lib/stores/toast.svelte';
 
 	let isSubmitting = $state(false);
 	

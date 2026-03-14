@@ -1,6 +1,7 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
   import type { HTMLInputAttributes } from 'svelte/elements';
+  import type { Snippet } from 'svelte';
 
   let { 
     id = "input-" + Math.floor(Math.random() * 1000000),
@@ -9,6 +10,7 @@
     value = $bindable(), 
     class: className = '',
     type = 'text',
+    icon,
     ...rest 
   } = $props<HTMLInputAttributes & {
     id?: string;
@@ -18,6 +20,7 @@
     placeholder?: string;
     class?: string;
     type?: string;
+    icon?: Snippet;
   }>();
 </script>
 
@@ -28,11 +31,16 @@
     </label>
   {/if}
   <div class="relative group">
+    {#if icon}
+      <div class="absolute left-3 top-1.5 flex items-center pointer-events-none">
+        {@render icon?.()}
+      </div>
+    {/if}
     <input
       {id}
       {type}
       class={cn(
-        'w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700',
+        'w-full bg-white border border-gray-200 rounded-xl ' + (icon ? 'pl-11 pr-4' : 'px-4') + ' py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700',
         error && 'border-red-500 focus:border-red-500 focus:ring-red-100',
         className
       )}
