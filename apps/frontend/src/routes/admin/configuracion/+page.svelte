@@ -110,8 +110,8 @@
 	<!-- Header -->
 	<div class="flex items-center justify-between">
 		<div>
-			<h1 class="text-3xl font-black text-gray-900 tracking-tight uppercase">Configuración</h1>
-			<p class="text-gray-500 font-medium mt-1">Administra la configuración del spa</p>
+			<h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">Configuración</h1>
+			<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Administra la configuración del spa</p>
 		</div>
 		<button 
 			onclick={saveConfig}
@@ -132,7 +132,7 @@
 	</div>
 
 	<!-- Tabs -->
-	<div class="flex items-center gap-2 border-b border-gray-200 pb-px">
+	<div class="flex items-center gap-2 border-b border-gray-200 dark:border-gray-700 pb-px">
 		{#each [
 			{ id: 'general', label: 'General', icon: Building2 },
 			{ id: 'horarios', label: 'Horarios', icon: Clock },
@@ -142,7 +142,7 @@
 		] as tab}
 			<button 
 				onclick={() => activeTab = tab.id}
-				class="flex items-center gap-2 px-6 py-4 rounded-t-2xl transition-all {activeTab === tab.id ? 'bg-white text-primary border-t border-x border-gray-200 -mb-px' : 'text-gray-500 hover:text-gray-700'}"
+				class="flex items-center gap-2 px-6 py-4 rounded-t-2xl transition-all {activeTab === tab.id ? 'bg-white dark:bg-gray-800 text-primary border-t border-x border-gray-200 dark:border-gray-700 -mb-px' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}"
 			>
 				<tab.icon size={16} />
 				<span class="text-[10px] font-black uppercase tracking-widest">{tab.label}</span>
@@ -151,7 +151,7 @@
 	</div>
 
 	<!-- Content -->
-	<div class="bg-white rounded-b-4xl rounded-tr-4xl p-8 shadow-sm border border-gray-100">
+	<div class="bg-white dark:bg-gray-800 rounded-b-4xl rounded-tr-4xl p-8 shadow-sm border border-gray-100 dark:border-gray-700">
 		{#if activeTab === 'general'}
 			<div class="max-w-2xl space-y-8">
 				<!-- Business Info -->

@@ -48,10 +48,10 @@
 
 	function getRoleColor(role: string) {
 		switch(role) {
-			case 'admin': return 'bg-purple-50 text-purple-600 border-purple-200';
-			case 'employee': return 'bg-blue-50 text-blue-600 border-blue-200';
-			case 'customer': return 'bg-gray-50 text-gray-600 border-gray-200';
-			default: return 'bg-gray-50 text-gray-600 border-gray-200';
+			case 'admin': return 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800';
+			case 'employee': return 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800';
+			case 'customer': return 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-600';
+			default: return 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-600';
 		}
 	}
 
@@ -109,14 +109,14 @@
 	<!-- Header -->
 	<div class="flex items-center justify-between">
 		<div>
-			<h1 class="text-3xl font-black text-gray-900 tracking-tight uppercase">Usuarios</h1>
-			<p class="text-gray-500 font-medium mt-1">Gestiona los usuarios del sistema</p>
+			<h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">Usuarios</h1>
+			<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Gestiona los usuarios del sistema</p>
 		</div>
 		<div class="flex items-center gap-4">
 			<button 
 				onclick={loadData}
 				disabled={loading}
-				class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-primary transition-colors disabled:opacity-50"
+				class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-primary transition-colors disabled:opacity-50"
 			>
 				{#if loading}
 					<Loader2 size={14} class="animate-spin" />
@@ -131,7 +131,7 @@
 		<div class="flex items-center justify-center py-20">
 			<div class="flex flex-col items-center gap-4">
 				<Loader2 size={40} class="text-primary animate-spin" />
-				<p class="text-gray-500 font-medium">Cargando usuarios...</p>
+				<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando usuarios...</p>
 			</div>
 		</div>
 	{:else}
@@ -143,12 +143,12 @@
 					type="text" 
 					placeholder="Buscar usuarios..." 
 					bind:value={searchQuery}
-					class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+					class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 				/>
 			</div>
 			<select 
 				bind:value={selectedRole}
-				class="px-6 py-4 rounded-2xl border border-gray-200 focus:border-primary outline-none font-medium bg-white"
+				class="px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 focus:border-primary outline-none font-medium bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
 			>
 				<option value="all">Todos los roles</option>
 				<option value="admin">Administradores</option>
@@ -158,20 +158,20 @@
 		</div>
 
 		<!-- Users Table -->
-		<div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden">
+		<div class="bg-white dark:bg-gray-800 rounded-4xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
 			<table class="w-full">
-				<thead class="bg-gray-50 border-b border-gray-100">
+				<thead class="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
 					<tr>
-						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Usuario</th>
-						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Contacto</th>
-						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Rol</th>
-						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Fecha Alta</th>
+						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">Usuario</th>
+						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">Contacto</th>
+						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">Rol</th>
+						<th class="text-left px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">Fecha Alta</th>
 						<th class="px-8 py-6"></th>
 					</tr>
 				</thead>
-				<tbody class="divide-y divide-gray-50">
+				<tbody class="divide-y divide-gray-50 dark:divide-gray-700">
 					{#each filteredUsers as user}
-						<tr class="hover:bg-gray-50 transition-colors">
+						<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
 							<td class="px-8 py-6">
 								<div class="flex items-center gap-4">
 									<img 
@@ -180,13 +180,13 @@
 										class="w-12 h-12 rounded-full"
 									/>
 									<div>
-										<p class="font-black text-gray-900">{user.name || 'Sin nombre'}</p>
-										<p class="text-sm text-gray-500">{user.email}</p>
+										<p class="font-black text-gray-900 dark:text-white">{user.name || 'Sin nombre'}</p>
+										<p class="text-sm text-gray-500 dark:text-gray-400">{user.email}</p>
 									</div>
 								</div>
 							</td>
 							<td class="px-8 py-6">
-								<p class="font-medium text-gray-900">{user.phone || '--'}</p>
+								<p class="font-medium text-gray-900 dark:text-white">{user.phone || '--'}</p>
 							</td>
 							<td class="px-8 py-6">
 								<div class="relative role-dropdown">
@@ -203,22 +203,22 @@
 									</button>
 									
 									{#if openRoleDropdown === user.id}
-										<div class="absolute top-full mt-1 left-0 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-10 min-w-40">
+										<div class="absolute top-full mt-1 left-0 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 py-1 z-10 min-w-40">
 											<button 
 												onclick={() => updateUserRole(user.id, 'admin')}
-												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 transition-colors {user.role === 'admin' ? 'text-primary' : 'text-gray-700'}"
+												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors {user.role === 'admin' ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}"
 											>
 												Administrador
 											</button>
 											<button 
 												onclick={() => updateUserRole(user.id, 'employee')}
-												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 transition-colors {user.role === 'employee' ? 'text-primary' : 'text-gray-700'}"
+												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors {user.role === 'employee' ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}"
 											>
 												Empleado
 											</button>
 											<button 
 												onclick={() => updateUserRole(user.id, 'customer')}
-												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 transition-colors {user.role === 'customer' ? 'text-primary' : 'text-gray-700'}"
+												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors {user.role === 'customer' ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}"
 											>
 												Cliente
 											</button>
@@ -227,14 +227,14 @@
 								</div>
 							</td>
 							<td class="px-8 py-6">
-								<p class="text-gray-500">{formatDate(user.createdAt)}</p>
+								<p class="text-gray-500 dark:text-gray-400">{formatDate(user.createdAt)}</p>
 							</td>
 							<td class="px-8 py-6">
 								<div class="flex items-center gap-2">
-									<button class="p-3 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-xl transition-colors" title="Ver">
+									<button class="p-3 text-gray-400 hover:text-primary hover:bg-primary/10 dark:hover:bg-primary/20 rounded-xl transition-colors" title="Ver">
 										<Eye size={18} />
 									</button>
-									<button class="p-3 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-xl transition-colors" title="Editar">
+									<button class="p-3 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-colors" title="Editar">
 										<Edit size={18} />
 									</button>
 								</div>
@@ -246,7 +246,7 @@
 
 			{#if filteredUsers.length === 0}
 				<div class="py-20 text-center">
-					<p class="text-gray-400 font-medium">No se encontraron usuarios</p>
+					<p class="text-gray-400 dark:text-gray-500 font-medium">No se encontraron usuarios</p>
 				</div>
 			{/if}
 		</div>
