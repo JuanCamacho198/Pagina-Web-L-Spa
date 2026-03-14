@@ -9,10 +9,10 @@ cart.get('/', async (c) => {
     // Get user ID from session if available
     const userId = c.get('userId') as string | null;
     
-    // Get anonymous ID from cookie or header
-    const anonymousId = c.get('anonymousId') as string | null;
+    // Get anonymous ID from header
+    const anonymousId = c.req.header('X-Anonymous-ID') || null;
 
-    const cartData = await cartService.getCart(userId || null, anonymousId || null);
+    const cartData = await cartService.getCart(userId || null, anonymousId);
     
     return c.json(cartData);
   } catch (error) {
@@ -32,11 +32,11 @@ cart.post('/items', async (c) => {
     }
 
     const userId = c.get('userId') as string | null;
-    const anonymousId = c.get('anonymousId') as string | null;
+    const anonymousId = c.req.header('X-Anonymous-ID') || null;
 
     const result = await cartService.addItem(
       userId || null,
-      anonymousId || null,
+      anonymousId,
       serviceId,
       quantity
     );
@@ -98,9 +98,9 @@ cart.delete('/items/:id', async (c) => {
 cart.delete('/', async (c) => {
   try {
     const userId = c.get('userId') as string | null;
-    const anonymousId = c.get('anonymousId') as string | null;
+    const anonymousId = c.req.header('X-Anonymous-ID') || null;
 
-    const result = await cartService.clearCart(userId || null, anonymousId || null);
+    const result = await cartService.clearCart(userId || null, anonymousId);
 
     if (!result.success) {
       return c.json({ error: result.message }, 400);

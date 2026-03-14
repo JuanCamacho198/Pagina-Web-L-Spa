@@ -6,16 +6,24 @@
   import { onMount } from 'svelte';
   import { authClient } from '$lib/auth-client';
   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart, LayoutDashboard, Scissors } from 'lucide-svelte';
-  import { cart, cartCount } from '$lib/cart';
+  import { cart } from '$lib/cart';
   import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
   import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 
   let { data, children } = $props();
   const session = authClient.useSession();
   const queryClient = new QueryClient();
-
-  onMount(function() {
-    // Auth logic is now handled by Better Auth Client
+  
+  // Reactive cart count - subscribe to store and convert to Svelte 5 reactive
+  let cartItemsList = $state<any[]>([]);
+  let currentCartCount = $derived(cartItemsList.reduce((acc, item) => acc + item.quantity, 0));
+  
+  // Subscribe to cart store
+  onMount(() => {
+    const unsubscribe = cart.subscribe((items) => {
+      cartItemsList = items;
+    });
+    return unsubscribe;
   });
 
   // Load cart when session changes
@@ -55,9 +63,9 @@
         <!-- Shopping Cart Icon -->
         <a href="/carrito" class="relative p-2 text-gray-400 hover:text-primary transition-colors group">
           <ShoppingCart size={24} />
-          {#if $cartCount > 0}
+          {#if currentCartCount > 0}
             <span class="absolute top-0 right-0 w-5 h-5 bg-primary text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white scale-100 group-hover:scale-110 transition-transform">
-              {$cartCount}
+              {currentCartCount}
             </span>
           {/if}
         </a>

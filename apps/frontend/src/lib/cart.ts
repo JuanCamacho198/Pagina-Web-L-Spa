@@ -130,8 +130,13 @@ export const cart = {
 			});
 			
 			if (response.ok) {
-				// Reload cart to get updated data
-				await cart.load();
+				// Small delay to ensure DB write completes, then reload cart
+				await new Promise(resolve => setTimeout(resolve, 100));
+				
+				// Fetch and update store directly to ensure reactivity
+				const items = await fetchCart();
+				cartStore.set(items);
+				
 				return;
 			}
 		} catch (e) {
