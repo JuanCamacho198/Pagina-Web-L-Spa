@@ -36,7 +36,7 @@
     {rows}
     aria-describedby={resolvedErrorId}
     class={cn(
-      'w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700 resize-none',
+      'w-full bg-gray-50 border-0 border-b-2 border-secondary px-4 py-3 outline-none transition-all focus:border-primary focus:ring-0 placeholder:text-gray-400 text-gray-700 resize-none',
       error && 'border-red-500 focus:border-red-500 focus:ring-red-100',
       className
     )}

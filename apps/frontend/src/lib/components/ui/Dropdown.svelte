@@ -83,7 +83,7 @@
     onclick={toggle}
     onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), toggle())}
     type="button"
-    class="cursor-pointer outline-none"
+    class="cursor-pointer outline-none transition-all duration-500 focus:ring-4 focus:ring-primary/20"
     aria-expanded={isOpen}
     aria-haspopup="menu"
     bind:this={triggerRef}
@@ -110,7 +110,7 @@
               close();
             }}
             class={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all w-full text-left font-medium",
+              "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-500 w-full text-left font-medium",
               item.variant === 'danger' 
                 ? 'text-red-500 hover:bg-red-50' 
                 : 'text-gray-600 hover:bg-gray-50 active:scale-95'

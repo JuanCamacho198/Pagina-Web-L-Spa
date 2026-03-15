@@ -20,12 +20,12 @@
   }>();
 
   const variantStyles = {
-    primary: 'bg-primary text-white hover:bg-primary-light shadow-lg hover:shadow-xl hover:-translate-y-0.5',
-    secondary: 'bg-secondary text-primary hover:bg-secondary/80 focus:ring-secondary/20',
-    outline: 'border-2 border-primary text-primary hover:bg-primary/5',
-    ghost: 'text-primary-dark hover:bg-secondary/50',
-    accent: 'bg-accent text-white hover:bg-accent/90',
-    danger: 'bg-red-600 text-white hover:bg-red-700',
+    primary: 'bg-primary text-white hover:bg-primary-light shadow-lg hover:shadow-xl hover:-translate-y-1 duration-500',
+    secondary: 'bg-secondary text-primary hover:bg-secondary/80 focus:ring-secondary/20 duration-500',
+    outline: 'border-2 border-primary text-primary hover:bg-primary/5 duration-500',
+    ghost: 'text-primary-dark hover:bg-secondary/50 duration-500',
+    accent: 'bg-accent text-white hover:bg-accent/90 duration-500',
+    danger: 'bg-red-600 text-white hover:bg-red-700 duration-500',
   };
 
   const sizes = {
