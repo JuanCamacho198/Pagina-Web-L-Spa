@@ -80,7 +80,7 @@ Cada componente debe seguir estos estados: `Default`, `Hover`, `Focus`, `Active`
 
 #### 2. Card (Spa Minimalist)
 ```svelte
-<div class="bg-white rounded-[3rem] p-10 shadow-2xl shadow-primary/5 border border-secondary/20 transition-all duration-500 hover:-translate-y-2 hover:shadow-primary/10">
+<div class="bg-white rounded-b-spa-xl p-10 shadow-2xl shadow-primary/5 border border-secondary/20 transition-all duration-500 hover:-translate-y-2 hover:shadow-primary/10">
   <!-- ICON -->
   <div class="w-16 h-16 bg-secondary/30 rounded-2xl flex items-center justify-center text-primary mb-6">
     <Icon size={32} />
