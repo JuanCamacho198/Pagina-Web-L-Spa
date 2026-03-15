@@ -63,7 +63,7 @@
     Saltar al contenido principal
   </a>
   <div class="app-container min-h-screen flex flex-col font-sans selection:bg-primary/10">
-    <header class="navbar bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
+    <header class="navbar bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-secondary/30 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
     <div class="max-w-7xl mx-auto flex justify-between items-center w-full">
       <a href="/" class="group flex items-center gap-3">
         {#if branding.customLogo}
@@ -74,11 +74,11 @@
             style="height: {branding.logoSize}px"
           />
         {:else}
-          <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform shadow-lg shadow-primary/20">
+          <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/20">
             <ShieldCheck size={20} />
           </div>
         {/if}
-        <span class="text-2xl font-black tracking-tighter text-gray-900 dark:text-white uppercase">{branding.navbarText}</span>
+        <span class="text-2xl font-display font-black tracking-tighter text-gray-900 dark:text-white uppercase">{branding.navbarText}</span>
       </a>
       
       <nav class="hidden lg:flex items-center gap-10" aria-label="Navegación principal">
@@ -88,7 +88,7 @@
           { name: 'Sobre Nosotros', path: '/sobre-nosotros' },
           { name: 'Contacto', path: '/contacto' }
         ] as link}
-          <a href={link.path} class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 hover:text-primary transition-all relative overflow-hidden group">
+          <a href={link.path} class="text-[10px] font-sans font-black uppercase tracking-[0.3em] text-gray-400 hover:text-primary transition-all duration-500 relative overflow-hidden group">
             {link.name}
             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-500"></span>
           </a>
@@ -99,7 +99,7 @@
         <!-- Dark Mode Toggle -->
         <button 
           onclick={handleToggleTheme}
-          class="p-2 text-gray-400 hover:text-primary dark:text-gray-400 dark:hover:text-yellow-400 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+          class="p-2 text-gray-400 hover:text-primary dark:text-gray-400 dark:hover:text-yellow-400 transition-colors duration-500 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
           aria-label="Cambiar tema"
         >
           {#if currentTheme === 'dark'}
@@ -110,7 +110,7 @@
         </button>
 
         <!-- Shopping Cart Icon -->
-        <a href="/carrito" class="relative p-2 text-gray-400 hover:text-primary transition-colors group" aria-label={currentCartCount > 0 ? `Carrito (${currentCartCount} artículos)` : 'Ver carrito de compras'}>
+        <a href="/carrito" class="relative p-2 text-gray-400 hover:text-primary transition-colors duration-500 group" aria-label={currentCartCount > 0 ? `Carrito (${currentCartCount} artículos)` : 'Ver carrito de compras'}>
           <ShoppingCart size={24} />
           {#if currentCartCount > 0}
             <span class="absolute top-0 right-0 w-5 h-5 bg-primary text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white scale-100 group-hover:scale-110 transition-transform">
@@ -128,7 +128,7 @@
               <span class="text-[10px] font-black uppercase tracking-widest text-gray-600 dark:text-gray-300">{$session.data?.user.name}</span>
             </button>
             
-            <div class="absolute right-0 top-full mt-4 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 scale-95 group-hover:scale-100 z-50">
+            <div class="absolute right-0 top-full mt-4 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 translate-y-2 group-hover:translate-y-0 scale-95 group-hover:scale-100 z-50">
               <div class="p-6 border-b border-gray-50 dark:border-gray-700 mb-3 text-center">
                  <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Tu Cuenta Premium</p>
                  <p class="text-sm font-black text-gray-900 dark:text-white truncate">{$session.data?.user.email}</p>
@@ -159,7 +159,7 @@
             </div>
           </div>
         {:else}
-          <a href="/login" class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors px-6">
+          <a href="/login" class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-500 px-6">
             LOGIN
           </a>
           
