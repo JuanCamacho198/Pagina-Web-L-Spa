@@ -65,7 +65,7 @@
         <span class="text-2xl font-black tracking-tighter text-gray-900 dark:text-white uppercase">L-SPA</span>
       </a>
       
-      <nav class="hidden lg:flex items-center gap-10">
+      <nav class="hidden lg:flex items-center gap-10" aria-label="Navegación principal">
         {#each [
           { name: 'Servicios', path: '/servicios' },
           { name: 'Reservas', path: '/informacion-importante' },

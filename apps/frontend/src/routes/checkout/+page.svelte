@@ -175,9 +175,14 @@
 											type="text" 
 											bind:value={formData.name} 
 											placeholder="Ej. Juan"
+											aria-invalid={!!errors.name}
+											aria-describedby={errors.name ? "checkout-name-error" : undefined}
 											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.name ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
+									{#if errors.name}
+										<p id="checkout-name-error" class="text-xs text-red-500 ml-4" role="alert" aria-live="assertive">{errors.name}</p>
+									{/if}
 								</div>
 								<div class="space-y-2">
 									<label for="checkout-lastName" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Apellido</label>
@@ -188,9 +193,14 @@
 											type="text" 
 											bind:value={formData.lastName}
 											placeholder="Ej. Camacho"
+											aria-invalid={!!errors.lastName}
+											aria-describedby={errors.lastName ? "checkout-lastName-error" : undefined}
 											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.lastName ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
+									{#if errors.lastName}
+										<p id="checkout-lastName-error" class="text-xs text-red-500 ml-4" role="alert" aria-live="assertive">{errors.lastName}</p>
+									{/if}
 								</div>
 								<div class="space-y-2">
 									<label for="checkout-email" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Email</label>
@@ -201,9 +211,14 @@
 											type="email" 
 											bind:value={formData.email}
 											placeholder="juan@ejemplo.com"
+											aria-invalid={!!errors.email}
+											aria-describedby={errors.email ? "checkout-email-error" : undefined}
 											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.email ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
+									{#if errors.email}
+										<p id="checkout-email-error" class="text-xs text-red-500 ml-4" role="alert" aria-live="assertive">{errors.email}</p>
+									{/if}
 								</div>
 								<div class="space-y-2">
 									<label for="checkout-phone" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Teléfono</label>
@@ -214,9 +229,14 @@
 											type="tel" 
 											bind:value={formData.phone}
 											placeholder="+57 321..."
+											aria-invalid={!!errors.phone}
+											aria-describedby={errors.phone ? "checkout-phone-error" : undefined}
 											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.phone ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
+									{#if errors.phone}
+										<p id="checkout-phone-error" class="text-xs text-red-500 ml-4" role="alert" aria-live="assertive">{errors.phone}</p>
+									{/if}
 								</div>
 								<div class="sm:col-span-2 space-y-2">
 									<label for="checkout-userCC" class="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Identificación (C.C)</label>
@@ -227,9 +247,14 @@
 											type="text" 
 											bind:value={formData.userCC}
 											placeholder="123456789"
+											aria-invalid={!!errors.userCC}
+											aria-describedby={errors.userCC ? "checkout-userCC-error" : undefined}
 											class={cn("w-full pl-12 pr-6 py-4 rounded-4xl bg-gray-50 border-none ring-1 transition-all outline-none", errors.userCC ? "ring-rose-200 focus:ring-rose-500" : "ring-gray-100 focus:ring-primary/20")}
 										/>
 									</div>
+									{#if errors.userCC}
+										<p id="checkout-userCC-error" class="text-xs text-red-500 ml-4" role="alert" aria-live="assertive">{errors.userCC}</p>
+									{/if}
 								</div>
 							</div>
 						</div>
@@ -250,14 +275,19 @@
 										type="date" 
 										bind:value={formData.preferredDate}
 										min={new Date().toISOString().split('T')[0]}
+										aria-invalid={!!errors.preferredDate}
+										aria-describedby={errors.preferredDate ? "checkout-preferredDate-error" : undefined}
 										class="w-full p-4 rounded-4xl bg-gray-50 border-none ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none"
 									/>
+									{#if errors.preferredDate}
+										<p id="checkout-preferredDate-error" class="text-xs text-red-500 ml-4" role="alert" aria-live="assertive">{errors.preferredDate}</p>
+									{/if}
 								</div>
 								
 								<div class="space-y-4">
 									<fieldset class="space-y-2">
 										<legend id="checkout-preferredTime-legend" class="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-4">Hora Disponible</legend>
-										<div role="radiogroup" aria-labelledby="checkout-preferredTime-legend" class="grid grid-cols-2 gap-3">
+										<div role="radiogroup" aria-labelledby="checkout-preferredTime-legend" aria-describedby={errors.preferredTime ? "checkout-preferredTime-error" : undefined} class="grid grid-cols-2 gap-3">
 											{#each ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00'] as time}
 												<button 
 													role="radio"
@@ -276,6 +306,9 @@
 											{/each}
 										</div>
 									</fieldset>
+									{#if errors.preferredTime}
+										<p id="checkout-preferredTime-error" class="text-xs text-red-500 ml-4" role="alert" aria-live="assertive">{errors.preferredTime}</p>
+									{/if}
 								</div>
 							</div>
 						</div>

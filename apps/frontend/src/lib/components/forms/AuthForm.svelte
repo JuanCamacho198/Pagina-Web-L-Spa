@@ -21,9 +21,11 @@
   <form onsubmit={logic.handleAuth} class="space-y-6">
     {#if !logic.isLogin}
       <Input
+        id="auth-name"
         label="Nombre Completo"
         placeholder="Juan Pérez"
         bind:value={logic.name}
+        error={logic.errors.name}
         required
       >
         {#snippet icon()}
@@ -33,10 +35,13 @@
     {/if}
 
     <Input
+      id="auth-email"
       label="Correo Electrónico"
       type="email"
       placeholder="tu@email.com"
       bind:value={logic.email}
+      error={logic.errors.email}
+      aria-invalid={!!logic.errors.email}
       required
     >
       {#snippet icon()}
@@ -45,10 +50,13 @@
     </Input>
 
     <Input
+      id="auth-password"
       label="Contraseña"
       type="password"
       placeholder="••••••••"
       bind:value={logic.password}
+      error={logic.errors.password}
+      aria-invalid={!!logic.errors.password}
       required
     >
       {#snippet icon()}

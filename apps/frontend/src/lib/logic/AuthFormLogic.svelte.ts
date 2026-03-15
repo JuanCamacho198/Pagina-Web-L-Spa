@@ -7,6 +7,27 @@ export class AuthFormLogic {
   email = $state('');
   password = $state('');
   name = $state('');
+  errors = $state<Record<string, string>>({});
+
+  validate = () => {
+    this.errors = {};
+    if (!this.email) {
+      this.errors.email = 'El correo electrónico es requerido';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
+      this.errors.email = 'Ingresa un correo electrónico válido';
+    }
+    if (!this.password) {
+      this.errors.password = 'La contraseña es requerida';
+    } else if (this.password.length < 6) {
+      this.errors.password = 'La contraseña debe tener al menos 6 caracteres';
+    }
+    if (!this.isLogin) {
+      if (!this.name) {
+        this.errors.name = 'El nombre completo es requerido';
+      }
+    }
+    return Object.keys(this.errors).length === 0;
+  };
 
   toggleMode = () => {
     this.isLogin = !this.isLogin;
@@ -14,6 +35,11 @@ export class AuthFormLogic {
 
   handleAuth = async (e: Event) => {
     e.preventDefault();
+    
+    if (!this.validate()) {
+      return;
+    }
+    
     this.isLoading = true;
 
     try {

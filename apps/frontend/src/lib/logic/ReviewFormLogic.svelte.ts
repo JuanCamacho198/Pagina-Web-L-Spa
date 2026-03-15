@@ -10,6 +10,7 @@ export class ReviewFormLogic {
     rating = $state(0);
     comment = $state('');
     isSubmitting = $state(false);
+    error = $state('');
     serviceId: string;
     onSuccess: () => void;
     queryClient = useQueryClient();
@@ -44,14 +45,15 @@ export class ReviewFormLogic {
 
     handleSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
+        this.error = '';
         
         if (this.rating === 0) {
-            toast.warning('Por favor selecciona una calificación');
+            this.error = 'Por favor selecciona una calificación';
             return;
         }
         
         if (this.comment.length < 10) {
-            toast.warning('Tu comentario debe tener al menos 10 caracteres');
+            this.error = 'Tu comentario debe tener al menos 10 caracteres';
             return;
         }
 

@@ -2,6 +2,7 @@
   import { cn } from '$lib/utils/cn';
   import StarRating from '../ui/StarRating.svelte';
   import Button from '../ui/Button.svelte';
+  import Textarea from '../ui/Textarea.svelte';
   import { Sparkles, Send } from 'lucide-svelte';
   import { ReviewFormLogic, type ReviewFormProps } from '$lib/logic/ReviewFormLogic.svelte';
 
@@ -39,19 +40,21 @@
       </div>
 
       <div class="mt-10 space-y-4">
-        <div class="relative group/field">
-          <textarea
-            bind:value={logic.comment}
-            placeholder="Comparte los detalles de tu experiencia..."
-            class="w-full min-h-40 p-6 rounded-3xl bg-gray-50 border-2 border-transparent focus:border-primary/20 focus:bg-white focus:outline-none transition-all duration-300 font-medium text-gray-700 resize-none shadow-inner"
-            required
-          ></textarea>
-          <div class="absolute right-6 bottom-6 h-1 w-0 bg-primary/20 rounded-full transition-all group-focus-within/field:w-20 group-focus-within/field:bg-primary opacity-20"></div>
-        </div>
+        <Textarea
+          id="review-comment"
+          label="Tu experiencia"
+          bind:value={logic.comment}
+          error={logic.comment.length > 0 && logic.comment.length < 10 ? 'Mínimo 10 caracteres requeridos' : undefined}
+          placeholder="Comparte los detalles de tu experiencia..."
+          rows={6}
+        />
         
         <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest pl-4">
           Mínimo 10 caracteres • {logic.comment.length} caracteres
         </p>
+        {#if logic.error && logic.rating === 0}
+          <p id="review-rating-error" class="text-xs text-red-500 ml-4" role="alert" aria-live="assertive">{logic.error}</p>
+        {/if}
       </div>
     </div>
   </div>
