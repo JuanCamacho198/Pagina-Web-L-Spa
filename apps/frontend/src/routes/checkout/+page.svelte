@@ -113,8 +113,10 @@
 </script>
 
 <svelte:head>
-	<title>Finalizar Reserva - L-SPA</title>
+ 	<title>Finalizar Reserva - L-SPA</title>
 </svelte:head>
+
+<h1 class="sr-only">Finalizar Reserva - L-SPA</h1>
 
 <div class="min-h-screen bg-gray-50/50 pb-24 pt-12">
 	<div class="max-w-7xl mx-auto px-6 lg:px-8">

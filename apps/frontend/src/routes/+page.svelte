@@ -136,7 +136,7 @@
             <div class="mb-6 p-5 bg-primary/5 rounded-2xl group-hover:bg-primary group-hover:text-white transition-all duration-500">
               <item.icon size={32} class="transition-colors" />
             </div>
-            <h4 class="text-xl font-black mb-3 text-gray-800 dark:text-gray-100 uppercase tracking-widest">{item.title}</h4>
+            <h2 class="text-xl font-black mb-3 text-gray-800 dark:text-gray-100 uppercase tracking-widest">{item.title}</h2>
             <p class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-relaxed mt-0">{item.desc}</p>
           </div>
         {/each}

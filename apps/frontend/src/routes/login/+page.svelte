@@ -1,9 +1,9 @@
-<script lang="ts">
-  import AuthForm from '$lib/components/forms/AuthForm.svelte';
-  import { ShieldCheck } from 'lucide-svelte';
-</script>
+<svelte:head>
+  <title>Login | L-SPA Premium Wellness</title>
+</svelte:head>
 
 <div class="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6 bg-[radial-gradient(circle_at_top_right,_#8C1B5808_0%,_transparent_40%),radial-gradient(circle_at_bottom_left,_#8C1B5805_0%,_transparent_40%)]">
+  <h1 class="sr-only">L-SPA - Iniciar Sesión</h1>
   <div class="mb-12 animate-fade-in-down">
     <a href="/" class="flex flex-col items-center gap-4">
       <div class="w-16 h-16 bg-primary rounded-3xl flex items-center justify-center text-white shadow-2xl shadow-primary/30 transform hover:scale-110 transition-transform duration-500">
