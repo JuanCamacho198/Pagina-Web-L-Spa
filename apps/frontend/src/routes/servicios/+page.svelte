@@ -75,7 +75,7 @@
 
 		<!-- Filters -->
 		<div
-			class="bg-white/80 backdrop-blur-2xl rounded-[40px] shadow-2xl shadow-primary/5 border border-white/50 p-8 mb-16 flex flex-col lg:flex-row gap-8 items-center justify-between transition-all hover:shadow-primary/10"
+			class="bg-white/80 backdrop-blur-2xl rounded-[40px] shadow-2xl shadow-primary/5 border border-white/50 p-8 mb-16 flex flex-col lg:flex-row gap-8 items-center justify-between transition-all duration-500 hover:shadow-primary/10"
 		>
 			<div class="w-full lg:max-w-md">
 				<SearchBar bind:value={searchTerm} placeholder="¿Qué experiencia buscas?..." />
