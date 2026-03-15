@@ -1,9 +1,20 @@
 <script lang="ts">
-  import { Facebook, Instagram, MessageCircle, Mail, Phone, MapPin, Clock } from 'lucide-svelte';
+  import { Facebook, Instagram, MessageCircle, Mail, Phone, MapPin, Clock, ShieldCheck } from 'lucide-svelte';
   import { page } from '$app/stores';
+  import { getBrandingWithDefaults, DEFAULT_BRANDING, type BrandingConfig } from '$lib/config/branding';
   
   // Logos
   import logo from '../../assets/logos/LOGO4x-sinfondo.png';
+
+  // Accept branding prop or load defaults
+  interface Props {
+    branding?: BrandingConfig;
+  }
+  
+  let { branding }: Props = $props();
+  
+  // Use provided branding or load from localStorage
+  let currentBranding = $derived(branding || getBrandingWithDefaults());
 
   const currentYear = new Date().getFullYear();
 
@@ -29,16 +40,25 @@
       <!-- Brand Section -->
       <div class="space-y-4">
         <div class="flex items-center gap-3">
-          <img 
-            src={logo} 
-            alt="L-SPA logo" 
-            class="w-auto brightness-110 object-contain" 
-            style="height: {config.logoSize}px"
-          />
+          {#if currentBranding.customLogo}
+            <img 
+              src={currentBranding.customLogo} 
+              alt="L-SPA logo" 
+              class="w-auto brightness-110 object-contain"
+              style="height: {currentBranding.logoSize}px"
+            />
+          {:else}
+            <img 
+              src={logo} 
+              alt="L-SPA logo" 
+              class="w-auto brightness-110 object-contain" 
+              style="height: {currentBranding.logoSize}px"
+            />
+          {/if}
           <h4 class="text-xl font-bold tracking-tight uppercase">L-SPA</h4>
         </div>
         <p class="text-gray-400 text-sm leading-relaxed">
-          {config.description}
+          {currentBranding.footerText || DEFAULT_BRANDING.footerText}
         </p>
         <div class="flex gap-4 pt-2">
           <a href={config.social.facebook} class={iconLinkClass} aria-label="Facebook"><Facebook size={20} /></a>

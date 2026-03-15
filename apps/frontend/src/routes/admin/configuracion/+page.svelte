@@ -1,7 +1,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { Save, Building2, MapPin, Phone, Mail, Clock, Globe, Bell, Shield } from 'lucide-svelte';
+	import { Save, Building2, MapPin, Phone, Mail, Clock, Globe, Bell, Shield, Palette, Upload, X, Eye, EyeOff, ShieldCheck } from 'lucide-svelte';
+	import { 
+		loadBrandingConfig, 
+		saveBrandingConfig, 
+		getBrandingWithDefaults,
+		validateImageFile, 
+		fileToBase64,
+		clearCustomLogo,
+		DEFAULT_BRANDING,
+		MIN_LOGO_SIZE,
+		MAX_LOGO_SIZE,
+		type BrandingConfig
+	} from '$lib/config/branding';
 
 	const STORAGE_KEY = 'lspa_admin_config';
 
@@ -63,6 +75,17 @@
 	// Config data
 	let config = $state(loadConfig());
 
+	// Branding state
+	let branding = $state<BrandingConfig>(getBrandingWithDefaults());
+	let previewBranding = $state<BrandingConfig>(getBrandingWithDefaults());
+	let showPreview = $state(true);
+	let logoUploadError = $state('');
+	let logoPreviewUrl = $state<string | null>(null);
+	let dragOver = $state(false);
+
+	// Debounce timer for preview
+	let previewDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+
 	let activeTab = $state('general');
 	let saving = $state(false);
 	let saveSuccess = $state(false);
@@ -78,6 +101,90 @@
 		sunday: 'Domingo',
 	};
 
+	// Update preview with debounce
+	function updatePreview() {
+		if (previewDebounceTimer) {
+			clearTimeout(previewDebounceTimer);
+		}
+		previewDebounceTimer = setTimeout(() => {
+			previewBranding = { ...branding };
+		}, 150);
+	}
+
+	// Handle file selection
+	async function handleLogoUpload(event: Event) {
+		const input = event.target as HTMLInputElement;
+		const file = input.files?.[0];
+		
+		if (!file) return;
+		
+		// Validate
+		const error = validateImageFile(file);
+		if (error) {
+			logoUploadError = error;
+			return;
+		}
+		
+		logoUploadError = '';
+		
+		try {
+			const base64 = await fileToBase64(file);
+			branding.customLogo = base64;
+			logoPreviewUrl = base64;
+			updatePreview();
+		} catch (e) {
+			logoUploadError = 'Error al procesar la imagen';
+		}
+	}
+
+	// Handle drag and drop
+	function handleDragOver(event: DragEvent) {
+		event.preventDefault();
+		dragOver = true;
+	}
+
+	function handleDragLeave() {
+		dragOver = false;
+	}
+
+	async function handleDrop(event: DragEvent) {
+		event.preventDefault();
+		dragOver = false;
+		
+		const file = event.dataTransfer?.files?.[0];
+		if (!file) return;
+		
+		const error = validateImageFile(file);
+		if (error) {
+			logoUploadError = error;
+			return;
+		}
+		
+		logoUploadError = '';
+		
+		try {
+			const base64 = await fileToBase64(file);
+			branding.customLogo = base64;
+			logoPreviewUrl = base64;
+			updatePreview();
+		} catch (e) {
+			logoUploadError = 'Error al procesar la imagen';
+		}
+	}
+
+	// Remove logo
+	function removeLogo() {
+		branding.customLogo = null;
+		logoPreviewUrl = null;
+		clearCustomLogo();
+		updatePreview();
+	}
+
+	// Handle input changes for preview
+	function handleBrandingInput() {
+		updatePreview();
+	}
+
 	async function saveConfig() {
 		if (!browser) return;
 		
@@ -85,8 +192,11 @@
 		saveSuccess = false;
 		
 		try {
-			// Save to localStorage
+			// Save general config
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+			
+			// Save branding config
+			saveBrandingConfig(branding);
 			
 			// Simulate API delay
 			await new Promise(resolve => setTimeout(resolve, 800));
@@ -103,6 +213,9 @@
 	onMount(() => {
 		// Re-load config on mount (in case of SSR)
 		config = loadConfig();
+		branding = getBrandingWithDefaults();
+		previewBranding = { ...branding };
+		logoPreviewUrl = branding.customLogo;
 	});
 </script>
 
@@ -135,6 +248,7 @@
 	<div class="flex items-center gap-2 border-b border-gray-200 dark:border-gray-700 pb-px">
 		{#each [
 			{ id: 'general', label: 'General', icon: Building2 },
+			{ id: 'branding', label: 'Branding', icon: Palette },
 			{ id: 'horarios', label: 'Horarios', icon: Clock },
 			{ id: 'notificaciones', label: 'Notificaciones', icon: Bell },
 			{ id: 'politicas', label: 'Políticas', icon: Shield },
@@ -207,7 +321,7 @@
 								<input 
 									id="whatsapp"
 									type="tel" 
-bind:value={config.whatsapp}
+									bind:value={config.whatsapp}
 									class="w-full pl-14 pr-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
 								/>
 							</div>
@@ -245,7 +359,197 @@ bind:value={config.whatsapp}
 					</div>
 				</div>
 			</div>
-{:else if activeTab === 'horarios'}
+		{:else if activeTab === 'branding'}
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+				<!-- Branding Form -->
+				<div class="space-y-8">
+					<div>
+						<h3 class="text-lg font-black text-gray-900 dark:text-white uppercase mb-6">Personalización del Sitio</h3>
+						
+						<!-- Navbar Text -->
+						<div class="mb-6">
+							<label for="navbarText" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Texto del Navbar</label>
+							<input 
+								id="navbarText"
+								type="text" 
+								bind:value={branding.navbarText}
+								oninput={handleBrandingInput}
+								placeholder={DEFAULT_BRANDING.navbarText}
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
+							/>
+							<p class="text-xs text-gray-400 mt-2">Texto que aparece en la barra de navegación</p>
+						</div>
+
+						<!-- Logo Upload -->
+						<div class="mb-6">
+							<label class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Logo Personalizado</label>
+							
+							<!-- Drop Zone -->
+							<div 
+								class="border-2 border-dashed rounded-2xl p-6 text-center transition-all {dragOver ? 'border-primary bg-primary/5' : 'border-gray-200 dark:border-gray-700'} {logoUploadError ? 'border-red-400' : ''}"
+								ondragover={handleDragOver}
+								ondragleave={handleDragLeave}
+								ondrop={handleDrop}
+							>
+								{#if logoPreviewUrl || branding.customLogo}
+									<div class="relative inline-block">
+										<img 
+											src={logoPreviewUrl || branding.customLogo} 
+											alt="Logo preview" 
+											class="max-h-24 mx-auto mb-4 object-contain"
+											style="height: {branding.logoSize}px"
+										/>
+										<button
+											type="button"
+											onclick={removeLogo}
+											class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+										>
+											<X size={14} />
+										</button>
+									</div>
+									<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Logo actual</p>
+								{:else}
+									<Upload size={32} class="mx-auto text-gray-400 mb-4" />
+									<p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+										Arrastra una imagen aquí o
+									</p>
+								{/if}
+								
+								<label class="inline-block cursor-pointer">
+									<input 
+										type="file" 
+										accept="image/png,image/jpeg,image/webp"
+										onchange={handleLogoUpload}
+										class="hidden"
+									/>
+									<span class="inline-block px-6 py-3 bg-primary text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary/90 transition-colors">
+										Subir Imagen
+									</span>
+								</label>
+								
+								<p class="text-xs text-gray-400 mt-4">PNG, JPG o WebP. Máximo 500KB.</p>
+							</div>
+							
+							{#if logoUploadError}
+								<p class="text-red-500 text-sm mt-2">{logoUploadError}</p>
+							{/if}
+						</div>
+
+						<!-- Logo Size -->
+						<div class="mb-6">
+							<label for="logoSize" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">
+								Tamaño del Logo: {branding.logoSize}px
+							</label>
+							<input 
+								id="logoSize"
+								type="range"
+								min={MIN_LOGO_SIZE}
+								max={MAX_LOGO_SIZE}
+								bind:value={branding.logoSize}
+								oninput={handleBrandingInput}
+								class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary"
+							/>
+							<div class="flex justify-between text-xs text-gray-400 mt-1">
+								<span>{MIN_LOGO_SIZE}px</span>
+								<span>{MAX_LOGO_SIZE}px</span>
+							</div>
+						</div>
+
+						<!-- Footer Text -->
+						<div class="mb-6">
+							<label for="footerText" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Texto del Footer</label>
+							<textarea 
+								id="footerText"
+								bind:value={branding.footerText}
+								oninput={handleBrandingInput}
+								rows="4"
+								placeholder={DEFAULT_BRANDING.footerText}
+								class="w-full px-6 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium resize-none"
+							></textarea>
+							<p class="text-xs text-gray-400 mt-2">Descripción que aparece en el pie de página</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Live Preview -->
+				<div class="space-y-6">
+					<div class="flex items-center justify-between">
+						<h3 class="text-lg font-black text-gray-900 dark:text-white uppercase">Vista Previa</h3>
+						<button
+							type="button"
+							onclick={() => showPreview = !showPreview}
+							class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-black text-gray-500 hover:text-primary transition-colors"
+						>
+							{#if showPreview}
+								<EyeOff size={16} />
+								Ocultar
+							{:else}
+								<Eye size={16} />
+								Mostrar
+							{/if}
+						</button>
+					</div>
+					
+					{#if showPreview}
+						<div class="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden bg-gray-50 dark:bg-gray-900">
+							<!-- Mini Navbar Preview -->
+							<div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+								<div class="flex items-center gap-3">
+									{#if previewBranding.customLogo}
+										<img 
+											src={previewBranding.customLogo} 
+											alt="Logo" 
+											class="object-contain brightness-110"
+											style="height: {previewBranding.logoSize}px"
+										/>
+									{:else}
+										<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+											<Shield size={16} />
+										</div>
+									{/if}
+									<span class="text-lg font-black text-gray-900 dark:text-white uppercase tracking-tight">
+										{previewBranding.navbarText || DEFAULT_BRANDING.navbarText}
+									</span>
+								</div>
+							</div>
+							
+							<!-- Preview Content Area -->
+							<div class="p-4 min-h-[200px] flex items-center justify-center">
+								<p class="text-gray-400 text-sm text-center">Vista previa del contenido</p>
+							</div>
+							
+							<!-- Mini Footer Preview -->
+							<div class="bg-gray-900 text-white px-4 py-4">
+								<div class="flex items-start gap-3">
+									{#if previewBranding.customLogo}
+										<img 
+											src={previewBranding.customLogo} 
+											alt="Logo" 
+											class="object-contain brightness-110"
+											style="height: {previewBranding.logoSize}px"
+										/>
+									{:else}
+										<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
+											<Shield size={16} />
+										</div>
+									{/if}
+									<div>
+										<span class="text-sm font-bold uppercase">L-SPA</span>
+										<p class="text-xs text-gray-400 mt-1 line-clamp-2">
+											{previewBranding.footerText || DEFAULT_BRANDING.footerText}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<p class="text-xs text-gray-400 text-center">
+							Esta es una vista previa de cómo se verá tu sitio con los cambios aplicados
+						</p>
+					{/if}
+				</div>
+			</div>
+		{:else if activeTab === 'horarios'}
 			<div class="max-w-2xl space-y-8">
 				<div>
 					<h3 class="text-lg font-black text-gray-900 dark:text-white uppercase mb-6">Horarios de Atención</h3>
@@ -285,7 +589,7 @@ bind:value={config.whatsapp}
 					</div>
 				</div>
 			</div>
-{:else if activeTab === 'notificaciones'}
+		{:else if activeTab === 'notificaciones'}
 			<div class="max-w-2xl space-y-8">
 				<div>
 					<h3 class="text-lg font-black text-gray-900 dark:text-white uppercase mb-6">Notificaciones</h3>

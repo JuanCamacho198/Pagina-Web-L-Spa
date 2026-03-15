@@ -10,6 +10,7 @@
   import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
   import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
   import { getTheme, setTheme, toggleTheme, initTheme, type Theme } from '$lib/theme';
+  import { getBrandingWithDefaults, type BrandingConfig } from '$lib/config/branding';
 
   import { page } from '$app/stores';
   
@@ -23,6 +24,9 @@
   // Theme state
   let currentTheme = $state<Theme>('light');
   
+  // Branding state
+  let branding = $state<BrandingConfig>(getBrandingWithDefaults());
+  
   // Reactive cart count - subscribe to store and convert to Svelte 5 reactive
   let cartItemsList = $state<any[]>([]);
   let currentCartCount = $derived(cartItemsList.reduce((acc, item) => acc + item.quantity, 0));
@@ -32,6 +36,9 @@
     // Initialize theme
     initTheme();
     currentTheme = getTheme();
+    
+    // Load branding config
+    branding = getBrandingWithDefaults();
     
     const unsubscribe = cartStore.subscribe((items) => {
       cartItemsList = items;
@@ -59,10 +66,19 @@
     <header class="navbar bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
     <div class="max-w-7xl mx-auto flex justify-between items-center w-full">
       <a href="/" class="group flex items-center gap-3">
-        <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform shadow-lg shadow-primary/20">
-          <ShieldCheck size={20} />
-        </div>
-        <span class="text-2xl font-black tracking-tighter text-gray-900 dark:text-white uppercase">L-SPA</span>
+        {#if branding.customLogo}
+          <img 
+            src={branding.customLogo} 
+            alt="Logo" 
+            class="h-10 w-auto object-contain brightness-110"
+            style="height: {branding.logoSize}px"
+          />
+        {:else}
+          <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform shadow-lg shadow-primary/20">
+            <ShieldCheck size={20} />
+          </div>
+        {/if}
+        <span class="text-2xl font-black tracking-tighter text-gray-900 dark:text-white uppercase">{branding.navbarText}</span>
       </a>
       
       <nav class="hidden lg:flex items-center gap-10" aria-label="Navegación principal">
@@ -157,7 +173,7 @@
   </main>
 
   {#if !isAdminSection}
-    <Footer />
+    <Footer {branding} />
   {/if}
 </div>
 <SvelteQueryDevtools initialIsOpen={false} />
