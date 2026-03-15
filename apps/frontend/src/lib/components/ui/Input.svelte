@@ -7,6 +7,7 @@
     id = "input-" + Math.floor(Math.random() * 1000000),
     label, 
     error, 
+    errorId,
     value = $bindable(), 
     class: className = '',
     type = 'text',
@@ -16,12 +17,15 @@
     id?: string;
     label?: string;
     error?: string;
+    errorId?: string;
     value?: string | number;
     placeholder?: string;
     class?: string;
     type?: string;
     icon?: Snippet;
   }>();
+
+  const resolvedErrorId = $derived(errorId ?? (error ? `${id}-error` : undefined));
 </script>
 
 <div class="w-full space-y-1.5">
@@ -39,6 +43,7 @@
     <input
       {id}
       {type}
+      aria-describedby={resolvedErrorId}
       class={cn(
         'w-full bg-white border border-gray-200 rounded-xl ' + (icon ? 'pl-11 pr-4' : 'px-4') + ' py-2.5 outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-gray-400 text-gray-700',
         error && 'border-red-500 focus:border-red-500 focus:ring-red-100',
@@ -49,7 +54,7 @@
     />
   </div>
   {#if error}
-    <p class="text-xs text-red-500 ml-1 mt-1 flex items-center gap-1">
+    <p id={resolvedErrorId} class="text-xs text-red-500 ml-1 mt-1 flex items-center gap-1" role="alert" aria-live="polite">
       <span>{error}</span>
     </p>
   {/if}
