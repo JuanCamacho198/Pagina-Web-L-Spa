@@ -89,6 +89,7 @@
 							/>
 							<button 
 								onclick={() => handleRemove(favorite.serviceId)}
+								aria-label="Eliminar {favorite.service?.name} de favoritos"
 								class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white transition-all shadow-lg"
 							>
 								<Trash2 size={18} />

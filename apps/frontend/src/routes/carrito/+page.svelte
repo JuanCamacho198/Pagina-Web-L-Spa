@@ -82,6 +82,7 @@
 									<div class="flex items-center gap-4 bg-gray-50 p-2 rounded-4xl border border-gray-100">
 										<button 
 											onclick={() => cart.updateQuantity(item.serviceId, item.quantity - 1)}
+											aria-label="Disminuir cantidad"
 											class="w-8 h-8 rounded-4xl bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
 										>
 											<Minus size={14} />
@@ -89,6 +90,7 @@
 										<span class="text-sm font-black w-4 text-center">{item.quantity}</span>
 										<button 
 											onclick={() => cart.updateQuantity(item.serviceId, item.quantity + 1)}
+											aria-label="Aumentar cantidad"
 											class="w-8 h-8 rounded-4xl bg-white flex items-center justify-center text-gray-400 hover:text-primary hover:shadow-md transition-all"
 										>
 											<Plus size={14} />
@@ -102,6 +104,7 @@
 							<!-- Remove -->
 							<button 
 								onclick={() => cart.removeItem(item.serviceId)}
+								aria-label="Eliminar {item.name} del carrito"
 								class="p-4 rounded-4xl bg-gray-50 text-gray-300 hover:bg-rose-50 hover:text-rose-500 transition-all group-hover:scale-105"
 							>
 								<Trash2 size={24} />
