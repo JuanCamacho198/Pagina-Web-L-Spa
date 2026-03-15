@@ -24,8 +24,18 @@ export default {
         }
       },
       fontFamily: {
+        display: ['Playfair Display', 'serif'],
         serif: ['Playfair Display', 'serif'],
         sans: ['Inter', 'sans-serif']
+      },
+      borderRadius: {
+        '3xl': '2rem',
+        '4xl': '3rem',
+        '5xl': '4rem'
+      },
+      boxShadow: {
+        'spa': '0 20px 50px -12px rgba(140, 27, 88, 0.12)',
+        'spa-hover': '0 30px 60px -12px rgba(140, 27, 88, 0.18)'
       }
     }
   },

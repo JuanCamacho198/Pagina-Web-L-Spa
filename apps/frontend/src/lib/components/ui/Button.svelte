@@ -20,21 +20,22 @@
   }>();
 
   const variantStyles = {
-    primary: 'bg-primary text-white hover:bg-primary/90 shadow-md hover:shadow-lg',
-    secondary: 'bg-accent text-white hover:bg-accent/90',
+    primary: 'bg-primary text-white hover:bg-primary-light shadow-lg hover:shadow-xl hover:-translate-y-0.5',
+    secondary: 'bg-secondary text-primary hover:bg-secondary/80 focus:ring-secondary/20',
     outline: 'border-2 border-primary text-primary hover:bg-primary/5',
-    ghost: 'text-primary-dark hover:bg-secondary',
+    ghost: 'text-primary-dark hover:bg-secondary/50',
+    accent: 'bg-accent text-white hover:bg-accent/90',
     danger: 'bg-red-600 text-white hover:bg-red-700',
   };
 
   const sizes = {
-    sm: 'px-3 py-1.5 text-xs',
-    md: 'px-4 py-2 text-sm',
-    lg: 'px-6 py-3 text-base',
+    sm: 'px-4 py-2 text-xs uppercase tracking-wider',
+    md: 'px-8 py-4 text-sm uppercase tracking-widest',
+    lg: 'px-12 py-5 text-base uppercase tracking-[0.2em]',
   };
 
   const styles = $derived(cn(
-    'inline-flex items-center justify-center font-bold tracking-tight transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none rounded-2xl',
+    'inline-flex items-center justify-center font-bold transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none rounded-full focus:ring-4 focus:ring-primary/20 outline-none',
     variantStyles[variant],
     sizes[size],
     className

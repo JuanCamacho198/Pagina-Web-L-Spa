@@ -8,6 +8,16 @@
   --color-primary-dark: #590E35;
   --color-secondary: #F2D7D9;
   --color-accent: #D99B9B;
+  
+  --radius-spa-md: 1rem;
+  --radius-spa-lg: 2rem;
+  --radius-spa-xl: 3rem;
+
+  --shadow-spa: 0 20px 50px -12px rgba(140, 27, 88, 0.12);
+  --shadow-spa-hover: 0 30px 60px -12px rgba(140, 27, 88, 0.18);
+  
+  --font-display: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
 }
 
 :root {
@@ -16,6 +26,12 @@
   --primary-dark: #590E35;
   --secondary-color: #F2D7D9;
   --accent-color: #D99B9B;
+
+  /* Spa Style Tokens */
+  --radius-sm: 0.5rem;
+  --radius-md: var(--radius-spa-md);
+  --radius-lg: var(--radius-spa-lg);
+  --radius-xl: var(--radius-spa-xl);
 }
 
 :root,
