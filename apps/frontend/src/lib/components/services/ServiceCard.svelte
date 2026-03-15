@@ -95,7 +95,7 @@
     <button 
       onclick={handleToggleFavorite}
       class="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110"
-      title={isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+      aria-label={isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
     >
       <Heart 
         size={18} 
@@ -147,6 +147,7 @@
         <button 
           onclick={handleAddToCart}
           disabled={isAdded}
+          aria-label={isAdded ? 'Añadido al carrito' : 'Añadir al carrito'}
           class={cn(
             "h-12 w-12 flex items-center justify-center rounded-2xl border transition-all duration-300 shadow-sm",
             isAdded 
