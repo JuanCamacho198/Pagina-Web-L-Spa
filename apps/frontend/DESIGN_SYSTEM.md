@@ -133,8 +133,11 @@ theme: {
       accent: '#D99B9B'
     },
     borderRadius: {
-      '3xl': '2rem',
-      '4xl': '3rem'
+      'spa-sm': '0.5rem',
+      'spa-md': '1rem',
+      'spa-lg': '2rem',
+      'spa-xl': '3rem',
+      'spa-xxl': '4rem'
     },
     boxShadow: {
       '2xl': '0 25px 50px -12px rgba(140, 27, 88, 0.15)'

@@ -514,7 +514,7 @@
 							</div>
 							
 							<!-- Preview Content Area -->
-							<div class="p-4 min-h-[200px] flex items-center justify-center">
+							<div class="p-4 min-h-50 flex items-center justify-center">
 								<p class="text-gray-400 text-sm text-center">Vista previa del contenido</p>
 							</div>
 							

@@ -29,9 +29,11 @@ export default {
         sans: ['Inter', 'sans-serif']
       },
       borderRadius: {
-        '3xl': '2rem',
-        '4xl': '3rem',
-        '5xl': '4rem'
+        'spa-sm': '0.5rem',
+        'spa-md': '1rem',
+        'spa-lg': '2rem',
+        'spa-xl': '3rem',
+        'spa-xxl': '4rem'
       },
       boxShadow: {
         'spa': '0 20px 50px -12px rgba(140, 27, 88, 0.12)',

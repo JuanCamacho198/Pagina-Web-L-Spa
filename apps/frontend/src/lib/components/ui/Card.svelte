@@ -15,7 +15,7 @@
 
 <div
   class={cn(
-    'bg-white rounded-[3rem] border border-secondary/20 shadow-spa overflow-visible',
+    'bg-white rounded-spa-xl border border-secondary/20 shadow-spa overflow-visible',
     hoverable && 'transition-all duration-500 hover:shadow-spa-hover hover:-translate-y-2 hover:border-primary/10',
     className
   )}
