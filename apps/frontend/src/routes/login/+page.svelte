@@ -2,7 +2,7 @@
   <title>Login | L-SPA Premium Wellness</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6 bg-[radial-gradient(circle_at_top_right,_#8C1B5808_0%,_transparent_40%),radial-gradient(circle_at_bottom_left,_#8C1B5805_0%,_transparent_40%)]">
+<div class="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6 bg-[radial-gradient(circle_at_top_right,#8C1B5808_0%,transparent_40%),radial-gradient(circle_at_bottom_left,#8C1B5805_0%,transparent_40%)]">
   <h1 class="sr-only">L-SPA - Iniciar Sesión</h1>
   <div class="mb-12 animate-fade-in-down">
     <a href="/" class="flex flex-col items-center gap-4">

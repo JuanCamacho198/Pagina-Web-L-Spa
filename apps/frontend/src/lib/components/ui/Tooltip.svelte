@@ -32,14 +32,27 @@
   function hideTooltip() {
     isVisible = false;
   }
+
+  function handleKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      isVisible = !isVisible;
+    } else if (e.key === 'Escape') {
+      isVisible = false;
+    }
+  }
 </script>
 
 <span 
   class="relative inline-flex"
+  role="button"
+  tabindex="0"
+  aria-describedby={isVisible ? id : undefined}
   onmouseenter={showTooltip}
   onmouseleave={hideTooltip}
   onfocus={showTooltip}
   onblur={hideTooltip}
+  onkeydown={handleKeydown}
 >
   {@render children?.()}
   {#if isVisible}
