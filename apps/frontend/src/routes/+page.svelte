@@ -84,14 +84,14 @@
           
           {#if !$isAuthenticated}
             <button onclick={login} class="group flex items-center gap-3 sm:gap-4 text-white font-semibold text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:text-primary-light transition-colors">
-              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 flex-shrink-0">
+              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 shrink-0">
                 <ChevronRight size={18} />
               </div>
               <span class="whitespace-nowrap">INICIAR SESIÓN</span>
             </button>
           {:else}
             <a href="/sobre-nosotros" class="group flex items-center gap-3 sm:gap-4 text-white font-semibold text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:text-primary-light transition-colors">
-              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 flex-shrink-0">
+              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 shrink-0">
                 <ChevronRight size={18} />
               </div>
               <span class="whitespace-nowrap">Conócenos</span>
