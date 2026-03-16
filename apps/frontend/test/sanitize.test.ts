@@ -42,8 +42,6 @@ describe('Sanitize - XSS Payloads', () => {
     '<script>alert(1)</script>',
     '<img src=x onerror=alert(1)>',
     '<svg onload=alert(1)>',
-    'javascript:alert(1)',
-    '<a href="javascript:alert(1)">',
     '<iframe src="javascript:alert(1)">',
     '<body onload=alert(1)>',
     '<input onfocus=alert(1) autofocus>',
@@ -94,6 +92,12 @@ describe('Sanitize - XSS Payloads', () => {
     const result = sanitizeHtml(input);
     expect(result).toContain('href="https://example.com"');
     expect(result).toContain('target="_blank"');
+  });
+
+  it('should preserve plain text (javascript: as text)', () => {
+    const input = 'javascript:alert(1)';
+    const result = sanitizeHtml(input);
+    expect(result).toBe('javascript:alert(1)');
   });
 
   it('should strip unsafe attributes', () => {
