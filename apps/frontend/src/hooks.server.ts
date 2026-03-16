@@ -1,5 +1,8 @@
 import type { Handle } from '@sveltejs/kit';
 
+// Set to false to enable CSP enforcement mode in production
+const CSP_REPORT_ONLY = true;
+
 function generateNonce(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(16));
   return Buffer.from(bytes).toString('base64url');
@@ -32,7 +35,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   const response = await resolve(event);
 
-  response.headers.set('Content-Security-Policy', cspPolicy);
+  const cspHeaderName = CSP_REPORT_ONLY 
+    ? 'Content-Security-Policy-Report-Only' 
+    : 'Content-Security-Policy';
+  response.headers.set(cspHeaderName, cspPolicy);
   response.headers.set('Strict-Transport-Security', hstsValue);
   response.headers.set('X-Frame-Options', xFrameOptionsValue);
   response.headers.set('X-Content-Type-Options', xContentTypeOptionsValue);

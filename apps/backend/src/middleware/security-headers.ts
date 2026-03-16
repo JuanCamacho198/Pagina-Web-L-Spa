@@ -20,6 +20,7 @@ export interface HSTSConfig {
 
 export interface SecurityHeadersConfig {
   csp?: CSPConfig | boolean;
+  cspReportOnly?: boolean; // New: enable report-only mode for initial CSP testing
   hsts?: HSTSConfig | boolean;
   xFrameOptions?: 'DENY' | 'SAMEORIGIN';
   xContentTypeOptions?: 'nosniff';
@@ -118,7 +119,13 @@ export const securityHeaders = (config?: SecurityHeadersConfig): MiddlewareHandl
       const cspValue = config?.csp === true 
         ? buildCSP(undefined, nonce)
         : buildCSP(config?.csp as CSPConfig, nonce);
-      c.res.headers.set('Content-Security-Policy', cspValue);
+      
+      // Use report-only mode initially for testing (as per spec)
+      // Set cspReportOnly: false to enable enforcement mode in production
+      const cspHeaderName = config?.cspReportOnly !== false 
+        ? 'Content-Security-Policy-Report-Only' 
+        : 'Content-Security-Policy';
+      c.res.headers.set(cspHeaderName, cspValue);
     }
 
     if (config?.hsts !== false) {
