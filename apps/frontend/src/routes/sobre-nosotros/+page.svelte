@@ -70,7 +70,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
 			<!-- Media Side (Abstract Decor) -->
 			<div class="relative order-2 lg:order-1 flex justify-center lg:justify-start">
-				<div class="relative w-full max-w-md aspect-4/5/5 bg-gray-50 rounded-[64px] overflow-hidden shadow-2xl shadow-primary/10 border border-gray-100">
+				<div class="relative w-full max-w-md aspect-4/5/5 bg-gray-50 rounded-spa-xxl overflow-hidden shadow-2xl shadow-primary/10 border border-gray-100">
 					<enhanced:img 
 						src={bannerImage}
 						alt="L-SPA Interior" 
@@ -180,7 +180,7 @@
 				</div>
 			</div>
 
-			<div class="md:w-px/2 w-full aspect-video rounded-[48px] overflow-hidden shadow-2xl relative">
+			<div class="md:w-px/2 w-full aspect-video rounded-spa-xl overflow-hidden shadow-2xl relative">
 				<enhanced:img 
 					src={bannerImage}
 					alt="L-SPA Map/Location" 
@@ -197,7 +197,7 @@
 
 	<!-- CTA Section -->
 	<section class="px-6">
-		<div class="max-w-5xl mx-auto bg-primary rounded-[64px] p-20 text-center text-white relative overflow-hidden group">
+		<div class="max-w-5xl mx-auto bg-primary rounded-spa-xxl p-20 text-center text-white relative overflow-hidden group">
 			<div class="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-700"></div>
 			
 			<div class="relative z-10 space-y-12">

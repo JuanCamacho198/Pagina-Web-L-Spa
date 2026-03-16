@@ -62,7 +62,7 @@
 <a 
   href="/servicios/{slugify(service.name)}"
   class={cn(
-    "group relative bg-white rounded-[3rem] overflow-hidden border border-secondary/20 shadow-2xl shadow-primary/5 hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full",
+    "group relative bg-white rounded-spa-xl overflow-hidden border border-secondary/20 shadow-2xl shadow-primary/5 hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full",
     className
   )}
 >

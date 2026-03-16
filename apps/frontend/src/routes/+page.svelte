@@ -142,7 +142,7 @@
         <div class="h-1 w-24 bg-primary mx-auto rounded-full"></div>
       </div>
 
-      <div class="relative group overflow-hidden rounded-[3rem] shadow-2xl border border-gray-100 dark:border-gray-800">
+      <div class="relative group overflow-hidden rounded-spa-xl shadow-2xl border border-gray-100 dark:border-gray-800">
         <div class="flex transition-transform duration-1000 ease-in-out" style="transform: translateX(-{activeIndex * 100}%)">
           {#each [1, 2, 3] as num}
             <div class="min-w-full h-125 relative">

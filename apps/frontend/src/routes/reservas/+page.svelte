@@ -119,7 +119,7 @@
 			</div>
 		{:else if appointments.length === 0}
 			<div class="bg-white rounded-[40px] p-32 text-center shadow-2xl shadow-primary/5 border border-gray-100 animate-in fade-in zoom-in duration-700">
-				<div class="w-32 h-32 bg-gray-50 rounded-[48px] flex items-center justify-center mx-auto mb-10 text-gray-200 group-hover:scale-110 transition-transform">
+				<div class="w-32 h-32 bg-gray-50 rounded-spa-xl flex items-center justify-center mx-auto mb-10 text-gray-200 group-hover:scale-110 transition-transform">
 					<CalendarIcon size={64} />
 				</div>
 				<Typography variant="h2" class="text-gray-900 font-black mb-6 tracking-tight sm:text-4xl">No tienes citas programadas</Typography>
