@@ -10,3 +10,14 @@ export const reviewSchema = z.object({
 });
 
 export type Review = z.infer<typeof reviewSchema>;
+
+export interface SanitizeOptions {
+  stripBlankChars?: boolean;
+  maxLength?: number;
+}
+
+export const reviewSanitizedSchema = reviewSchema.extend({
+  comment: z.string().optional().nullable()
+});
+
+export type ReviewSanitized = z.infer<typeof reviewSanitizedSchema>;
