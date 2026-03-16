@@ -5,6 +5,7 @@
   import Textarea from '../ui/Textarea.svelte';
   import { Sparkles, Send } from 'lucide-svelte';
   import { ReviewFormLogic, type ReviewFormProps } from '$lib/logic/ReviewFormLogic.svelte';
+  import { sanitizeHtml } from '$lib/utils/sanitize';
 
   let props: ReviewFormProps = $props();
   let logic = new ReviewFormLogic({ serviceId: '', onSubmitted: () => {} } as ReviewFormProps);
@@ -13,6 +14,8 @@
     logic.serviceId = props.serviceId;
     logic.onSuccess = props.onSubmitted;
   });
+
+  const sanitizedComment = $derived(sanitizeHtml(logic.comment));
 </script>
 
 <form onsubmit={logic.handleSubmit} class="space-y-10 group">

@@ -3,6 +3,10 @@ import { zValidator } from '@hono/zod-validator';
 import { reviewSchema } from '@l-spa/shared-types';
 import { ReviewService } from '../services/ReviewService';
 
+function stripHtmlTags(html: string): string {
+  return html.replace(/<[^>]*>/g, '').trim();
+}
+
 const reviews = new Hono();
 const reviewService = new ReviewService();
 
@@ -10,7 +14,11 @@ const reviewService = new ReviewService();
 reviews.get('/:serviceId', async (c) => {
   const serviceId = c.req.param('serviceId');
   const results = await reviewService.getReviewsByServiceId(serviceId);
-  return c.json(results);
+  const sanitizedResults = results.map((review: any) => ({
+    ...review,
+    comment: stripHtmlTags(review.comment),
+  }));
+  return c.json(sanitizedResults);
 });
 
 // Create a new review

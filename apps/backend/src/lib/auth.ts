@@ -4,6 +4,7 @@ import { dash } from "@better-auth/infra";
 import * as schema from "@l-spa/database/schema";
 import { db } from "@l-spa/database";
 
+// better-auth provides built-in CSRF protection for all auth routes by default
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
         provider: "pg",

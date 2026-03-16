@@ -9,10 +9,14 @@ import config from './controllers/configController'
 import cart from './controllers/cartController'
 import favorites from './controllers/favoritesController'
 import { auth } from './lib/auth'
+import { csrf } from './middleware/csrf'
+import { securityHeaders } from './middleware/security-headers'
 
 const app = new Hono()
 
 app.use('*', logger())
+app.use('*', securityHeaders())
+app.use('*', csrf())
 app.use('*', cors({
   origin: 'http://localhost:5173',
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
