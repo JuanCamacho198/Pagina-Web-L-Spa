@@ -80,7 +80,7 @@
       onclick={logic.toggleMode}
       class="text-sm font-bold text-gray-400 hover:text-primary transition-colors duration-500 uppercase tracking-widest"
     >
-      {logic.isLogin ? '¿No tienes cuenta? Crea una oasis' : '¿Ya eres parte de L-SPA? Entra'}
+      {logic.isLogin ? '¿No tienes cuenta? Creala en 1 minuto' : '¿Ya eres parte de L-SPA? Entra'}
     </button>
   </div>
 </div>
