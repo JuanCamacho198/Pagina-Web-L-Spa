@@ -21,3 +21,14 @@ export interface ErrorConfig {
     baseDelay?: number;
   };
 }
+
+export function isAppError(error: unknown): error is AppError {
+  if (typeof error !== 'object' || error === null) {
+    return false;
+  }
+  const obj = error as Record<string, unknown>;
+  return (
+    typeof obj['code'] === 'string' &&
+    typeof obj['message'] === 'string'
+  );
+}

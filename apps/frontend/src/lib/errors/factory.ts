@@ -1,4 +1,5 @@
 import type { AppError, ErrorCode } from './types';
+import { isAppError } from './types';
 
 export function createError(
   code: ErrorCode,
@@ -111,15 +112,4 @@ export function getRetryAfter(response: Response): number | null {
     }
   }
   return null;
-}
-
-function isAppError(error: unknown): error is AppError {
-  if (typeof error !== 'object' || error === null) {
-    return false;
-  }
-  const obj = error as Record<string, unknown>;
-  return (
-    typeof obj['code'] === 'string' &&
-    typeof obj['message'] === 'string'
-  );
 }
