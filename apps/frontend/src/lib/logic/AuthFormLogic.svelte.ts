@@ -34,7 +34,12 @@ export class AuthFormLogic {
   };
 
   toggleMode = () => {
-    this.isLogin = !this.isLogin;
+    // Navigate instead of just toggling state to update URL
+    if (this.isLogin) {
+      window.location.href = '/registro';
+    } else {
+      window.location.href = '/login';
+    }
   };
 
   handleAuth = async (e: Event) => {

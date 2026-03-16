@@ -163,8 +163,11 @@
             </div>
           </div>
         {:else}
-          <a href="/login" class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-500 px-6">
+          <a href="/login" class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-500 px-4">
             LOGIN
+          </a>
+          <a href="/registro" class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-white bg-primary hover:bg-primary/90 transition-all duration-500 px-6 py-3 rounded-full shadow-lg shadow-primary/20">
+            REGISTRO
           </a>
           
         {/if}
