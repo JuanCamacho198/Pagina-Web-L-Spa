@@ -162,7 +162,7 @@
 	<!-- Header -->
 	<div class="flex items-center justify-between">
 		<div>
-			<h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">Servicios</h1>
+			<h1 class="text-3xl font-display font-black text-gray-900 dark:text-white tracking-tight uppercase">Servicios</h1>
 			<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Gestiona los servicios del spa</p>
 		</div>
 		<div class="flex items-center gap-4">
@@ -220,7 +220,7 @@
 		<!-- Services Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 			{#each filteredServices as service}
-				<div class="bg-white dark:bg-gray-800 rounded-4xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow {service.active ? '' : 'opacity-60'}">
+				<div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl shadow-primary/5 border border-secondary/20 overflow-hidden transition-all duration-500 hover:-translate-y-2 {service.active ? '' : 'opacity-60'}">
 					<!-- Image -->
 					<div class="relative h-48 overflow-hidden">
 						<img 
@@ -271,7 +271,7 @@
 							<div class="flex items-center gap-2">
 								<button 
 									onclick={() => openEditModal(service)}
-									class="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-colors" 
+									class="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-colors duration-500" 
 									title="Editar"
 								>
 									<Edit size={18} />
@@ -279,7 +279,7 @@
 								<button 
 									onclick={() => deleteService(service)}
 									disabled={actionLoading === service.id}
-									class="p-2 text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-colors disabled:opacity-50" 
+									class="p-2 text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-colors duration-500 disabled:opacity-50" 
 									title="Eliminar"
 								>
 									<Trash2 size={18} />
@@ -292,7 +292,7 @@
 		</div>
 
 		{#if filteredServices.length === 0}
-			<div class="bg-white dark:bg-gray-800 rounded-4xl p-20 text-center shadow-sm border border-gray-100 dark:border-gray-700">
+			<div class="bg-white dark:bg-gray-800 rounded-3xl p-20 text-center shadow-2xl shadow-primary/5 border border-secondary/20">
 				<p class="text-gray-400 dark:text-gray-500 font-medium">No se encontraron servicios</p>
 			</div>
 		{/if}

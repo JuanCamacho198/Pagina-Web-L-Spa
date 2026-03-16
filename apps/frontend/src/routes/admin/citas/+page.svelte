@@ -123,7 +123,7 @@
 	<!-- Header -->
 	<div class="flex items-center justify-between">
 		<div>
-			<h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">Citas</h1>
+			<h1 class="text-3xl font-display font-black text-gray-900 dark:text-white tracking-tight uppercase">Citas</h1>
 			<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Gestiona todas las reservas del spa</p>
 		</div>
 		<div class="flex items-center gap-4">
@@ -155,19 +155,19 @@
 	{:else}
 		<!-- Stats -->
 		<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-			<div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+			<div class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-2xl shadow-primary/5 border border-secondary/20">
 				<p class="text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">Total Citas</p>
 				<p class="text-3xl font-black text-gray-900 dark:text-white">{statsData.total}</p>
 			</div>
-			<div class="bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-800">
+			<div class="bg-emerald-50 dark:bg-emerald-900/30 rounded-3xl p-6 border border-emerald-100 dark:border-emerald-800">
 				<p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-2">Confirmadas</p>
 				<p class="text-3xl font-black text-emerald-700 dark:text-emerald-300">{statsData.confirmed}</p>
 			</div>
-			<div class="bg-amber-50 dark:bg-amber-900/30 rounded-2xl p-6 border border-amber-100 dark:border-amber-800">
+			<div class="bg-amber-50 dark:bg-amber-900/30 rounded-3xl p-6 border border-amber-100 dark:border-amber-800">
 				<p class="text-[10px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400 mb-2">Pendientes</p>
 				<p class="text-3xl font-black text-amber-700 dark:text-amber-300">{statsData.pending}</p>
 			</div>
-			<div class="bg-blue-50 dark:bg-blue-900/30 rounded-2xl p-6 border border-blue-100 dark:border-blue-800">
+			<div class="bg-blue-50 dark:bg-blue-900/30 rounded-3xl p-6 border border-blue-100 dark:border-blue-800">
 				<p class="text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2">Completadas</p>
 				<p class="text-3xl font-black text-blue-700 dark:text-blue-300">{statsData.completed}</p>
 			</div>
@@ -202,7 +202,7 @@
 		</div>
 
 		<!-- Bookings Table -->
-		<div class="bg-white dark:bg-gray-800 rounded-4xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+		<div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl shadow-primary/5 border border-secondary/20 overflow-hidden transition-all duration-500 hover:-translate-y-1">
 			<table class="w-full">
 				<thead class="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
 					<tr>
@@ -216,7 +216,7 @@
 				</thead>
 				<tbody class="divide-y divide-gray-50 dark:divide-gray-700">
 					{#each filteredAppointments as booking}
-						<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+						<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-500">
 							<td class="px-6 py-5">
 								<div>
 									<p class="font-black text-gray-900 dark:text-white">{booking.userName || 'Cliente'}</p>
@@ -251,7 +251,7 @@
 										<button 
 											onclick={() => confirmBooking(booking.id)}
 											disabled={actionLoading === booking.id}
-											class="p-2 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-xl transition-colors disabled:opacity-50" 
+											class="p-2 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-xl transition-colors duration-500 disabled:opacity-50" 
 											title="Confirmar"
 										>
 											{#if actionLoading === booking.id}
@@ -263,7 +263,7 @@
 										<button 
 											onclick={() => cancelBooking(booking.id)}
 											disabled={actionLoading === booking.id}
-											class="p-2 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-colors disabled:opacity-50" 
+											class="p-2 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-colors duration-500 disabled:opacity-50" 
 											title="Cancelar"
 										>
 											{#if actionLoading === booking.id}
@@ -273,7 +273,7 @@
 											{/if}
 										</button>
 									{/if}
-									<button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors" title="Más opciones">
+									<button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors duration-500" title="Más opciones">
 										<MoreVertical size={18} />
 									</button>
 								</div>

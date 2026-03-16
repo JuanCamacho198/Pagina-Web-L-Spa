@@ -13,6 +13,6 @@
     type="text"
     bind:value={value}
     {placeholder}
-    class="w-full h-13 bg-white border border-gray-100 rounded-4xl outline-none shadow-sm hover:shadow-md focus:shadow-lg focus:border-primary transition-all px-6 text-gray-700 placeholder:text-gray-400"
+    class="w-full h-13 bg-white border-0 border-b-2 border-secondary rounded-none outline-none shadow-sm hover:shadow-md focus:shadow-lg focus:border-primary transition-all duration-500 px-6 text-gray-700 placeholder:text-gray-400"
   />
 </div>

@@ -61,7 +61,7 @@
 
   <Button
     type="submit"
-    class="w-full py-6 rounded-3xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:shadow-primary/40 active:scale-95 transition-all duration-300 group-hover:-translate-y-1"
+    class="w-full py-6 rounded-full font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:shadow-primary/40 active:scale-95 transition-all duration-500 group-hover:-translate-y-1"
     isLoading={logic.isSubmitting}
   >
     Publicar Experiencia

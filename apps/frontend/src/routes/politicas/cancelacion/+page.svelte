@@ -75,7 +75,7 @@
 					<AlertTriangle size={14} />
 					Normativa y Compromiso
 				</div>
-				<h1 class="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] uppercase">
+				<h1 class="font-display text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] uppercase">
 					Políticas de <br /> <span class="text-transparent bg-clip-text bg-linear-to-r from-primary-light via-white to-primary-light/60 italic">Reserva</span>
 				</h1>
 				<p class="text-xl text-gray-400 max-w-2xl font-medium leading-relaxed">
@@ -100,10 +100,10 @@
 						<div class="w-16 h-16 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg {section.color}">
 							<section.icon size={32} strokeWidth={2.5} />
 						</div>
-						<span class="text-[10px] font-black text-gray-200 group-hover:text-primary transition-colors">0{i + 1}</span>
+						<span class="text-[10px] font-black text-gray-200 group-hover:text-primary transition-colors duration-500">0{i + 1}</span>
 					</div>
 
-					<h3 class="text-2xl font-black text-gray-900 mb-6 tracking-tight leading-none uppercase">{section.title}</h3>
+					<h3 class="font-display text-2xl font-black text-gray-900 mb-6 tracking-tight leading-none uppercase">{section.title}</h3>
 					
 					<p class="text-gray-500 font-medium leading-relaxed mb-6 flex-1">
 						{section.content}
@@ -112,8 +112,8 @@
 					{#if section.list}
 						<ul class="space-y-4 mb-6">
 							{#each section.list as item}
-								<li class="flex items-start gap-4 text-sm font-black text-gray-400 group-hover:text-gray-600 transition-colors">
-									<div class="w-2 h-13 rounded-full bg-primary mt-1.5 shrink-0 group-hover:scale-125 transition-transform"></div>
+								<li class="flex items-start gap-4 text-sm font-black text-gray-400 group-hover:text-gray-600 transition-colors duration-500">
+									<div class="w-2 h-13 rounded-full bg-primary mt-1.5 shrink-0 group-hover:scale-125 transition-transform duration-500"></div>
 									{item.toUpperCase()}
 								</li>
 							{/each}
@@ -133,7 +133,7 @@
 		<!-- Footer Disclaimer -->
 		<div class="mt-32 max-w-3xl mx-auto bg-gray-50 p-12 rounded-[56px] border border-dashed border-gray-200 text-center space-y-6 group">
 			<div class="flex justify-center">
-				<div class="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center text-gray-300 group-hover:text-primary transition-colors">
+				<div class="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center text-gray-300 group-hover:text-primary transition-colors duration-500">
 					<ShieldCheck size={24} />
 				</div>
 			</div>

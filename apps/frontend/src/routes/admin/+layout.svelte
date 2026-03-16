@@ -82,21 +82,21 @@
 {:else if $session.data}
 	<div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
 		<!-- Sidebar -->
-		<aside class="w-72 bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 fixed h-full flex flex-col transition-colors">
+		<aside class="w-72 bg-white dark:bg-gray-800 border-r border-secondary/20 fixed h-full flex flex-col transition-colors duration-500">
 			<!-- Logo & Theme Toggle -->
-			<div class="p-8 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+			<div class="p-8 border-b border-secondary/20 flex items-center justify-between">
 				<a href="/admin" class="flex items-center gap-3">
-					<div class="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-white">
+					<div class="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/20">
 						<Sparkles size={24} />
 					</div>
 					<div>
-						<span class="text-lg font-black tracking-tighter text-gray-900 dark:text-white uppercase">L-SPA</span>
+						<span class="text-lg font-display font-black tracking-tighter text-gray-900 dark:text-white uppercase">L-SPA</span>
 						<p class="text-[10px] font-black uppercase tracking-widest text-primary">Panel Admin</p>
 					</div>
 				</a>
 				<button 
 					onclick={handleToggleTheme}
-					class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+					class="p-2 rounded-xl hover:bg-secondary/30 transition-colors duration-500"
 					title={currentTheme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
 				>
 					{#if currentTheme === 'dark'}
@@ -112,7 +112,7 @@
 				{#each adminNavItems as item}
 					<a 
 						href={item.href}
-						class="flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-300 {isActive(item.href) ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}"
+						class="flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-500 {isActive(item.href) ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-gray-500 dark:text-gray-400 hover:bg-secondary/30 hover:text-gray-900 dark:hover:text-white'}"
 					>
 						<item.icon size={20} />
 						<span class="text-[10px] font-black uppercase tracking-widest">{item.label}</span>
@@ -124,7 +124,7 @@
 			</nav>
 
 			<!-- User Info & Logout -->
-			<div class="p-6 border-t border-gray-100 dark:border-gray-700">
+			<div class="p-6 border-t border-secondary/20">
 				<div class="flex items-center gap-4 mb-4">
 					<img 
 						src={$session.data?.user.image || `https://ui-avatars.com/api/?name=${$session.data?.user.name}`} 
@@ -138,7 +138,7 @@
 				</div>
 				<button 
 					onclick={handleLogout}
-					class="w-full flex items-center gap-3 px-6 py-3 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-2xl transition-colors"
+					class="w-full flex items-center gap-3 px-6 py-3 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-2xl transition-colors duration-500"
 				>
 					<LogOut size={18} />
 					<span class="text-[10px] font-black uppercase tracking-widest">Cerrar Sesión</span>

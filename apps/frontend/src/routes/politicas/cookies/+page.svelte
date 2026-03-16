@@ -14,7 +14,7 @@
 				<Cookie size={14} />
 				Experiencia Digital Personalizada
 			</div>
-			<h1 class="text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tighter leading-none uppercase">
+			<h1 class="font-display text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tighter leading-none uppercase">
 				Política de <br /> <span class="text-primary italic">Cookies</span>
 			</h1>
 			<p class="text-lg text-gray-500 dark:text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed">
@@ -30,7 +30,7 @@
 					<Settings size={32} strokeWidth={2.5} />
 				</div>
 				<div class="space-y-4">
-					<h3 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight leading-none uppercase">¿Qué son las Cookies?</h3>
+					<h3 class="font-display text-2xl font-black text-gray-900 dark:text-white tracking-tight leading-none uppercase">¿Qué son las Cookies?</h3>
 					<div class="h-1 w-px2 bg-primary rounded-full group-hover:w-full transition-all duration-700"></div>
 				</div>
 				<p class="text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
@@ -47,7 +47,7 @@
 					<PieChart size={32} strokeWidth={2.5} />
 				</div>
 				<div class="space-y-4">
-					<h3 class="text-2xl font-black tracking-tight leading-none uppercase">¿Cómo las usamos?</h3>
+					<h3 class="font-display text-2xl font-black tracking-tight leading-none uppercase">¿Cómo las usamos?</h3>
 					<div class="h-1 w-px2 bg-primary-light rounded-full group-hover:w-full transition-all duration-700"></div>
 				</div>
 				<ul class="space-y-4 relative z-10">
@@ -68,13 +68,13 @@
 					<HelpCircle size={64} strokeWidth={1.5} />
 				</div>
 				<div class="space-y-6 text-center md:text-left">
-					<h3 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight leading-none uppercase">Gestión de <span class="italic text-primary">Preferencias</span></h3>
+					<h3 class="font-display text-3xl font-black text-gray-900 dark:text-white tracking-tight leading-none uppercase">Gestión de <span class="italic text-primary">Preferencias</span></h3>
 					<p class="text-gray-500 dark:text-gray-400 font-medium leading-relaxed max-w-pxl">
 						Usted tiene el control total. Puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de las opciones del navegador. Tenga en cuenta que deshabilitarlas podría limitar el acceso a ciertas funcionalidades de nuestra plataforma de reservas.
 					</p>
 					<div class="flex flex-wrap gap-4 justify-center md:justify-start">
 						{#each ['Chrome', 'Safari', 'Firefox', 'Edge'] as browser}
-							<span class="px-5 py-2 bg-gray-50 dark:bg-gray-700 rounded-full text-[9px] font-black text-gray-400 dark:text-gray-300 group-hover:text-primary transition-colors border border-gray-100 dark:border-gray-600">{browser.toUpperCase()}</span>
+							<span class="px-5 py-2 bg-gray-50 dark:bg-gray-700 rounded-full text-[9px] font-black text-gray-400 dark:text-gray-300 group-hover:text-primary transition-colors duration-500 border border-gray-100 dark:border-gray-600">{browser.toUpperCase()}</span>
 						{/each}
 					</div>
 				</div>

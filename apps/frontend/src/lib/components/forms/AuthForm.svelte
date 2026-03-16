@@ -64,13 +64,13 @@
       {/snippet}
     </Input>
 
-    <Button type="submit" class="w-full py-4 rounded-2xl group" disabled={logic.isLoading}>
+    <Button type="submit" class="w-full py-4 rounded-full group" disabled={logic.isLoading}>
       {#if logic.isLoading}
         <LoaderCircle class="animate-spin mr-2" size={20} />
         Cargando...
       {:else}
         {logic.isLogin ? 'Entrar' : 'Registrarme'}
-        <ArrowRight class="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+        <ArrowRight class="ml-2 group-hover:translate-x-1 transition-transform duration-500" size={18} />
       {/if}
     </Button>
   </form>
@@ -78,7 +78,7 @@
   <div class="mt-8 text-center border-t border-gray-100 pt-8">
     <button 
       onclick={logic.toggleMode}
-      class="text-sm font-bold text-gray-400 hover:text-primary transition-colors uppercase tracking-widest"
+      class="text-sm font-bold text-gray-400 hover:text-primary transition-colors duration-500 uppercase tracking-widest"
     >
       {logic.isLogin ? '¿No tienes cuenta? Crea una oasis' : '¿Ya eres parte de L-SPA? Entra'}
     </button>

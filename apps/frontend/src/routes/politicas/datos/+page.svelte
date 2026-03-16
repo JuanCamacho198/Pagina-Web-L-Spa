@@ -14,7 +14,7 @@
 				<Database size={14} />
 				Protección de Datos
 			</div>
-			<h1 class="text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tighter leading-none uppercase">
+			<h1 class="font-display text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tighter leading-none uppercase">
 				Tratamiento de <br /> <span class="text-primary italic">Datos Personales</span>
 			</h1>
 			<p class="text-lg text-gray-500 dark:text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed">
@@ -28,12 +28,12 @@
 				<!-- Section 1: Responsable -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-px2 h-12 rounded-4xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-px2 h-12 rounded-4xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
 							<UserCheck size={24} />
 						</div>
 					</div>
 					<div class="md:col-span-11 space-y-4">
-						<h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
+						<h2 class="font-display text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
 							Responsable del Tratamiento
 							<div class="h-1 flex-1 bg-gray-50 dark:bg-gray-700 rounded-full"></div>
 						</h2>
@@ -46,12 +46,12 @@
 				<!-- Section 2: Datos que recopilamos -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-px2 h-12 rounded-4xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-px2 h-12 rounded-4xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
 							<Database size={24} />
 						</div>
 					</div>
 					<div class="md:col-span-11 space-y-4">
-						<h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
+						<h2 class="font-display text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
 							Datos que Recopilamos
 							<div class="h-1 flex-1 bg-gray-50 dark:bg-gray-700 rounded-full"></div>
 						</h2>
@@ -72,12 +72,12 @@
 				<!-- Section 3: Finalidad -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-px2 h-12 rounded-4xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-px2 h-12 rounded-4xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
 							<ChevronRight size={24} />
 						</div>
 					</div>
 					<div class="md:col-span-11 space-y-4">
-						<h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
+						<h2 class="font-display text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
 							Finalidad del Tratamiento
 							<div class="h-1 flex-1 bg-gray-50 dark:bg-gray-700 rounded-full"></div>
 						</h2>
@@ -98,12 +98,12 @@
 				<!-- Section 4: Derechos -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-px2 h-12 rounded-4xl bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-px2 h-12 rounded-4xl bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
 							<Bell size={24} />
 						</div>
 					</div>
 					<div class="md:col-span-11 space-y-4">
-						<h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
+						<h2 class="font-display text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
 							Tus Derechos
 							<div class="h-1 flex-1 bg-gray-50 dark:bg-gray-700 rounded-full"></div>
 						</h2>
@@ -124,12 +124,12 @@
 				<!-- Section 5: Contacto -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-px2 h-12 rounded-4xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-px2 h-12 rounded-4xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
 							<Mail size={24} />
 						</div>
 					</div>
 					<div class="md:col-span-11 space-y-4">
-						<h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
+						<h2 class="font-display text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
 							Ejercicio de Derechos
 							<div class="h-1 flex-1 bg-gray-50 dark:bg-gray-700 rounded-full"></div>
 						</h2>
@@ -137,11 +137,11 @@
 							Para ejercer cualquiera de sus derechos o realizar consultas sobre el tratamiento de sus datos personales, puede contactarnos a través de:
 						</p>
 						<div class="flex flex-col md:flex-row gap-4 pt-4">
-							<a href="mailto:contacto@l-spa.com" class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+							<a href="mailto:contacto@l-spa.com" class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors duration-500">
 								<Mail size={20} class="text-primary" />
 								<span class="font-bold text-gray-700 dark:text-gray-300">contacto@l-spa.com</span>
 							</a>
-							<a href="tel:+1234567890" class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+							<a href="tel:+1234567890" class="flex items-center gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-2xl hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors duration-500">
 								<Phone size={20} class="text-primary" />
 								<span class="font-bold text-gray-700 dark:text-gray-300">(123) 456-7890</span>
 							</a>
@@ -156,7 +156,7 @@
 					<ShieldCheck size={32} class="text-primary-light" />
 					<span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">Última actualización: Marzo 2024</span>
 				</div>
-				<button class="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all border border-white/10">
+				<button class="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 border border-white/10">
 					Descargar PDF
 				</button>
 			</div>

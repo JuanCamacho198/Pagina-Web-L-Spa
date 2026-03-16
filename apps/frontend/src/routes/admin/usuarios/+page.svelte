@@ -109,7 +109,7 @@
 	<!-- Header -->
 	<div class="flex items-center justify-between">
 		<div>
-			<h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">Usuarios</h1>
+			<h1 class="text-3xl font-display font-black text-gray-900 dark:text-white tracking-tight uppercase">Usuarios</h1>
 			<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Gestiona los usuarios del sistema</p>
 		</div>
 		<div class="flex items-center gap-4">
@@ -158,7 +158,7 @@
 		</div>
 
 		<!-- Users Table -->
-		<div class="bg-white dark:bg-gray-800 rounded-4xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+		<div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl shadow-primary/5 border border-secondary/20 overflow-hidden transition-all duration-500 hover:-translate-y-1">
 			<table class="w-full">
 				<thead class="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
 					<tr>
@@ -171,7 +171,7 @@
 				</thead>
 				<tbody class="divide-y divide-gray-50 dark:divide-gray-700">
 					{#each filteredUsers as user}
-						<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+						<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-500">
 							<td class="px-8 py-6">
 								<div class="flex items-center gap-4">
 									<img 
@@ -193,7 +193,7 @@
 									<button 
 										onclick={() => toggleRoleDropdown(user.id)}
 										disabled={actionLoading === user.id}
-										class="flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border {getRoleColor(user.role)} hover:opacity-80 transition-opacity disabled:opacity-50"
+										class="flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border {getRoleColor(user.role)} hover:opacity-80 transition-opacity duration-500 disabled:opacity-50"
 									>
 										{#if actionLoading === user.id}
 											<Loader2 size={14} class="animate-spin" />
@@ -206,19 +206,19 @@
 										<div class="absolute top-full mt-1 left-0 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 py-1 z-10 min-w-40">
 											<button 
 												onclick={() => updateUserRole(user.id, 'admin')}
-												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors {user.role === 'admin' ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}"
+												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300 {user.role === 'admin' ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}"
 											>
 												Administrador
 											</button>
 											<button 
 												onclick={() => updateUserRole(user.id, 'employee')}
-												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors {user.role === 'employee' ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}"
+												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300 {user.role === 'employee' ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}"
 											>
 												Empleado
 											</button>
 											<button 
 												onclick={() => updateUserRole(user.id, 'customer')}
-												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors {user.role === 'customer' ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}"
+												class="w-full px-4 py-2 text-left text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300 {user.role === 'customer' ? 'text-primary' : 'text-gray-700 dark:text-gray-300'}"
 											>
 												Cliente
 											</button>
@@ -231,10 +231,10 @@
 							</td>
 							<td class="px-8 py-6">
 								<div class="flex items-center gap-2">
-									<button class="p-3 text-gray-400 hover:text-primary hover:bg-primary/10 dark:hover:bg-primary/20 rounded-xl transition-colors" title="Ver">
+									<button class="p-3 text-gray-400 hover:text-primary hover:bg-primary/10 dark:hover:bg-primary/20 rounded-xl transition-colors duration-500" title="Ver">
 										<Eye size={18} />
 									</button>
-									<button class="p-3 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-colors" title="Editar">
+									<button class="p-3 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-colors duration-500" title="Editar">
 										<Edit size={18} />
 									</button>
 								</div>

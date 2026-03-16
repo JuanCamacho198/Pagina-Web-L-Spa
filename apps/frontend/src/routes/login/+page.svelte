@@ -9,7 +9,7 @@
       <div class="w-16 h-16 bg-primary rounded-3xl flex items-center justify-center text-white shadow-2xl shadow-primary/30 transform hover:scale-110 transition-transform duration-500">
         <ShieldCheck size={32} />
       </div>
-      <span class="text-4xl font-black tracking-tighter text-gray-900 uppercase">L-SPA</span>
+      <span class="font-display text-4xl font-black tracking-tighter text-gray-900 uppercase">L-SPA</span>
     </a>
   </div>
 

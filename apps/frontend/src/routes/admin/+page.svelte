@@ -141,7 +141,7 @@
 	<!-- Header -->
 	<div class="flex items-center justify-between">
 		<div>
-			<h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">Dashboard</h1>
+			<h1 class="text-3xl font-display font-black text-gray-900 dark:text-white tracking-tight uppercase">Dashboard</h1>
 			<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Bienvenido al panel de administración</p>
 		</div>
 		<div class="flex items-center gap-4">
@@ -170,7 +170,7 @@
 		<!-- Stats Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 			{#each statsData as stat}
-				<div class="bg-white dark:bg-gray-800 rounded-4xl p-8 shadow-sm border border-gray-100 dark:border-gray-700">
+				<div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl shadow-primary/5 border border-secondary/20 transition-all duration-500 hover:-translate-y-2">
 					<div class="flex items-center justify-between mb-6">
 						<div class="w-14 h-14 rounded-2xl {stat.color} flex items-center justify-center">
 							<stat.icon size={24} />
@@ -193,16 +193,16 @@
 		<!-- Content Grid -->
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 			<!-- Recent Bookings -->
-			<div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-4xl p-8 shadow-sm border border-gray-100 dark:border-gray-700">
+			<div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl shadow-primary/5 border border-secondary/20 transition-all duration-500 hover:-translate-y-1">
 				<div class="flex items-center justify-between mb-8">
-					<h2 class="text-xl font-black text-gray-900 dark:text-white uppercase">Próximas Citas</h2>
+					<h2 class="text-xl font-display font-black text-gray-900 dark:text-white uppercase">Próximas Citas</h2>
 					<a href="/admin/citas" class="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">Ver todas</a>
 				</div>
 				
 				{#if recentAppointments.length > 0}
 					<div class="space-y-4">
 						{#each recentAppointments as booking}
-							<div class="flex items-center justify-between p-6 rounded-2xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+							<div class="flex items-center justify-between p-6 rounded-2xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-500">
 								<div class="flex items-center gap-4">
 									<div class="w-12 h-12 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary font-black">
 										{(booking.userName || 'C').charAt(0).toUpperCase()}
@@ -232,16 +232,16 @@
 			</div>
 
 			<!-- Top Services -->
-			<div class="bg-white dark:bg-gray-800 rounded-4xl p-8 shadow-sm border border-gray-100 dark:border-gray-700">
+			<div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl shadow-primary/5 border border-secondary/20 transition-all duration-500 hover:-translate-y-1">
 				<div class="flex items-center justify-between mb-8">
-					<h2 class="text-xl font-black text-gray-900 dark:text-white uppercase">Servicios Populares</h2>
+					<h2 class="text-xl font-display font-black text-gray-900 dark:text-white uppercase">Servicios Populares</h2>
 					<a href="/admin/servicios" class="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">Ver todos</a>
 				</div>
 				
 				{#if topServices.length > 0}
 					<div class="space-y-4">
 						{#each topServices as service, i}
-							<div class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+							<div class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-500">
 								<span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-black">{i + 1}</span>
 								<div class="flex-1">
 									<p class="font-black text-gray-900 dark:text-white">{service.name}</p>

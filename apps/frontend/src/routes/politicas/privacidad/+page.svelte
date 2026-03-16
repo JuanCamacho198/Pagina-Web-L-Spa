@@ -14,7 +14,7 @@
 				<ShieldCheck size={14} />
 				Seguridad y Transparencia
 			</div>
-			<h1 class="text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tighter leading-none uppercase">
+			<h1 class="font-display text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tighter leading-none uppercase">
 				Políticas de <br /> <span class="text-primary italic">Privacidad</span>
 			</h1>
 			<p class="text-lg text-gray-500 dark:text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed">
@@ -28,12 +28,12 @@
 				<!-- Section 1 -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-px2 h-12 rounded-4xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-px2 h-12 rounded-4xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
 							<Eye size={24} />
 						</div>
 					</div>
 					<div class="md:col-span-11 space-y-4">
-						<h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
+						<h2 class="font-display text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
 							Introducción
 							<div class="h-1 flex-1 bg-gray-50 dark:bg-gray-700 rounded-full"></div>
 						</h2>
@@ -46,12 +46,12 @@
 				<!-- Section 2 -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-px2 h-12 rounded-4xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-px2 h-12 rounded-4xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
 							<FileText size={24} />
 						</div>
 					</div>
 					<div class="md:col-span-11 space-y-4">
-						<h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
+						<h2 class="font-display text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
 							Datos que recopilamos
 							<div class="h-1 flex-1 bg-gray-50 dark:bg-gray-700 rounded-full"></div>
 						</h2>
@@ -64,12 +64,12 @@
 				<!-- Section 3 -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">
 					<div class="md:col-span-1">
-						<div class="w-px2 h-12 rounded-4xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+						<div class="w-px2 h-12 rounded-4xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
 							<Lock size={24} />
 						</div>
 					</div>
 					<div class="md:col-span-11 space-y-4">
-						<h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
+						<h2 class="font-display text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-4">
 							Seguridad de la Información
 							<div class="h-1 flex-1 bg-gray-50 dark:bg-gray-700 rounded-full"></div>
 						</h2>
@@ -94,7 +94,7 @@
 					<ShieldCheck size={32} class="text-primary-light" />
 					<span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">Última actualización: Marzo 2024</span>
 				</div>
-				<button class="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all border border-white/10">
+				<button class="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 border border-white/10">
 					Descargar PDF
 				</button>
 			</div>
