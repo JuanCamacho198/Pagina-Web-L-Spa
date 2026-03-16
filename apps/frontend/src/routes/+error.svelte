@@ -83,7 +83,7 @@
 <div class="min-h-[70vh] flex items-center justify-center px-4 py-16 bg-gray-50 dark:bg-gray-900">
   <div class="max-w-lg w-full text-center">
     <div class="relative mb-8">
-      <div class="w-24 h-24 mx-auto bg-gradient-to-br from-rose-100 to-rose-200 dark:from-rose-900/30 dark:to-rose-800/20 rounded-full flex items-center justify-center shadow-xl shadow-rose-500/10">
+      <div class="w-24 h-24 mx-auto bg-linear-to-br from-rose-100 to-rose-200 dark:from-rose-900/30 dark:to-rose-800/20 rounded-full flex items-center justify-center shadow-xl shadow-rose-500/10">
         <ErrorIcon size={48} class="text-rose-500" />
       </div>
       {#if errorStatus}
