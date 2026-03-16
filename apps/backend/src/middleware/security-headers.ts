@@ -27,7 +27,7 @@ export interface SecurityHeadersConfig {
   permissionsPolicy?: Record<string, string[]>;
 }
 
-function buildCSP(csp: CSPConfig | undefined, nonce: string): string {
+export function buildCSP(csp: CSPConfig | undefined, nonce: string): string {
   if (!csp) {
     return [
       "default-src 'self'",
@@ -104,7 +104,7 @@ function buildCSP(csp: CSPConfig | undefined, nonce: string): string {
   return directives.join('; ');
 }
 
-function generateNonce(): string {
+export function generateNonce(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(16));
   return Buffer.from(bytes).toString('base64url');
 }

@@ -1,11 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "types": ["bun-types"],
     "baseUrl": ".",
     "paths": {
       "@l-spa/shared-types": ["../../packages/shared-types/src/index.ts"],
       "@l-spa/database": ["../../packages/database/src/index.ts"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "test/**/*"]
 }

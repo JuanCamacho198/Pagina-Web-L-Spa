@@ -7,6 +7,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "types": ["bun-types"],
     "baseUrl": ".",
     "paths": {
       "@l-spa/database": ["./packages/database/src/index.ts"],

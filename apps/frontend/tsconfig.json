@@ -5,11 +5,12 @@
 		"moduleResolution": "bundler",
 		"module": "esnext",
 		"lib": ["esnext", "dom", "dom.iterable"],
-		"types": ["@sveltejs/kit", "vite"]
+		"types": ["@sveltejs/kit", "vite", "bun-types"]
 	},
 	"include": [
 		"src/**/*.ts",
 		"src/**/*.svelte",
+		"test/**/*.ts",
 		".svelte-kit/types/**/*.d.ts"
 	]
 }
