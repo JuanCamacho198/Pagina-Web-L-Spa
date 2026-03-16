@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { type Service } from '@l-spa/shared-types';
-import { apiFetch } from '$lib/utils/api';
+import { apiClient } from '$lib/api';
 
 const slugify = (name: string) => 
     name.toLowerCase()
@@ -13,7 +13,7 @@ export async function load({ params }) {
 	const { slug } = params;
 
     try {
-        const allServices: Service[] = await apiFetch('/services');
+        const allServices: Service[] = await apiClient.get('/services');
         const service = allServices.find(s => slugify(s.name) === slug);
         
         if (!service) {

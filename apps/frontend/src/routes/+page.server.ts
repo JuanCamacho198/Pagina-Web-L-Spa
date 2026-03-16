@@ -1,10 +1,10 @@
 import type { PageServerLoad as PageServerLoader } from './$types';
-import { apiFetch } from '$lib/utils/api';
+import { apiClient } from '$lib/api';
 
 export const load: PageServerLoader = async () => {
 	let services = [];
 	try {
-		services = await apiFetch('/services');
+		services = await apiClient.get('/services');
 	} catch (e) {
 		console.error('Error fetching featured services:', e);
 	}

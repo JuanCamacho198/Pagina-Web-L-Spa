@@ -7,13 +7,13 @@
 	import Typography from '$lib/components/ui/Typography.svelte';
 	import { Filter, SortAsc, ChevronDown } from 'lucide-svelte';
 	import { createQuery } from '@tanstack/svelte-query';
-	import { apiFetch } from '$lib/utils/api';
+	import { apiClient } from '$lib/api';
 
 	let { data } = $props();
 	
 	const servicesQuery = createQuery(() => ({
 		queryKey: ['services'],
-		queryFn: () => apiFetch('/services'),
+		queryFn: () => apiClient.get('/services'),
 		initialData: data.services,
 		staleTime: 1000 * 60 * 5,
 	}));

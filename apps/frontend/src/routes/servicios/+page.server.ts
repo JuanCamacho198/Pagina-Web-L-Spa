@@ -1,4 +1,4 @@
-import { apiFetch } from '$lib/utils/api';
+import { apiClient } from '$lib/api';
 
 export const ssr = false;
 
@@ -6,7 +6,7 @@ export const ssr = false;
 export async function load() {
 	console.log('--- Cargando servicios (solo cliente) ---');
 	try {
-        const services = await apiFetch('/services');
+        const services = await apiClient.get('/services');
         console.log(`Servicios obtenidos: ${services.length}`);
 		return {
 			services

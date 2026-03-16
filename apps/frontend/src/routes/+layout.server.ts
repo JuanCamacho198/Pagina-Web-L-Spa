@@ -1,11 +1,11 @@
-import { apiFetch } from '$lib/utils/api';
+import { apiClient } from '$lib/api';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async () => {
   try {
     // Intentamos cargar la configuración global (Footer, Logos, etc)
     // El endpoint real es /config/:id, usamos 'footer' como fallback o 'global'
-    const siteConfig = await apiFetch('/config/footer').catch(() => null);
+    const siteConfig = await apiClient.get('/config/footer').catch(() => null);
     return {
       siteConfig: siteConfig || {
         title: 'L-SPA',
