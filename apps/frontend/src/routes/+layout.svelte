@@ -5,6 +5,7 @@
   import Footer from '$lib/components/layout/Footer.svelte';
   import { onMount } from 'svelte';
   import { authClient } from '$lib/auth-client';
+  import { initializeErrorHandling } from '$lib/error-handlers';
   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart, LayoutDashboard, Scissors, Sun, Moon } from 'lucide-svelte';
   import { cart, cartStore } from '$lib/cart';
   import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
@@ -39,6 +40,9 @@
     
     // Load branding config
     branding = getBrandingWithDefaults();
+    
+    // Initialize client-side error handlers
+    initializeErrorHandling();
     
     const unsubscribe = cartStore.subscribe((items) => {
       cartItemsList = items;
