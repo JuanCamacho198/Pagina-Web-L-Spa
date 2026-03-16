@@ -1,4 +1,5 @@
 import { apiClient } from '$lib/api';
+import type { Service } from '@l-spa/shared-types';
 
 export const ssr = false;
 
@@ -6,7 +7,7 @@ export const ssr = false;
 export async function load() {
 	console.log('--- Cargando servicios (solo cliente) ---');
 	try {
-        const services = await apiClient.get('/services');
+        const services = await apiClient.get<Service[]>('/services');
         console.log(`Servicios obtenidos: ${services.length}`);
 		return {
 			services

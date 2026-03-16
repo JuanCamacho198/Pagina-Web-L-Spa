@@ -8,12 +8,13 @@
 	import { Filter, SortAsc, ChevronDown } from 'lucide-svelte';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { apiClient } from '$lib/api';
+	import type { Service } from '@l-spa/shared-types';
 
 	let { data } = $props();
 	
 	const servicesQuery = createQuery(() => ({
 		queryKey: ['services'],
-		queryFn: () => apiClient.get('/services'),
+		queryFn: () => apiClient.get<Service[]>('/services'),
 		initialData: data.services,
 		staleTime: 1000 * 60 * 5,
 	}));

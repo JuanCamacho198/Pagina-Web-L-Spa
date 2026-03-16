@@ -7,9 +7,16 @@
 
   let { data } = $props();
   
+  // Carousel images from static/assets (served from /assets/)
+  const carouselImages = [
+    '/assets/carrusel1.jpg',
+    '/assets/carrusel2.jpg', 
+    '/assets/carrusel3.jpg'
+  ];
+  
   // State
   let activeIndex = $state(0);
-  const totalImages = 3;
+  const totalImages = carouselImages.length;
 
   // Auto-carousel
   onMount(() => {
@@ -27,32 +34,14 @@
     activeIndex = (activeIndex + 1) % totalImages;
   };
 
-  const featuredServices = [
-    {
-      id: 1,
-      name: "Masaje Relajante",
-      description: "Una experiencia de relajación total para tu cuerpo y mente.",
-      price: 120000,
-      duration: 60,
-      imageUrl: "/lib/assets/banners/bannerSpa.avif"
-    },
-    {
-      id: 2,
-      name: "Tratamiento Facial",
-      description: "Luce una piel radiante y renovada con nuestros expertos.",
-      price: 150000,
-      duration: 45,
-      imageUrl: "/lib/assets/banners/bannerSpa.avif"
-    },
-    {
-      id: 3,
-      name: "Circuito de Hidroterapia",
-      description: "Benefíciate del poder del agua en nuestras modernas instalaciones.",
-      price: 80000,
-      duration: 90,
-      imageUrl: "/lib/assets/banners/bannerSpa.avif"
-    }
-  ];
+  // Use dynamic services from server data
+  const featuredServices = $derived(
+    (data.services || []).slice(0, 3).map(service => ({
+      ...service,
+      price: Number(service.price) || 0,
+      duration: service.duration || 60
+    }))
+  );
 </script>
 
 <svelte:head>
@@ -62,50 +51,50 @@
 
 <div class="grow font-sans bg-gray-50 dark:bg-gray-900 border-t border-secondary/10">
   <!-- Hero Section -->
-  <section class="relative h-[85vh] flex items-center overflow-hidden bg-gray-900">
+  <section class="relative min-h-[90vh] flex items-center overflow-hidden bg-gray-900 pb-20">
     <div class="absolute inset-0 z-0">
       <enhanced:img src={bannerImage} alt="L-SPA Banner" class="w-full h-full object-cover opacity-50 mix-blend-overlay" />
       <div class="absolute inset-0 bg-linear-to-b from-black/20 via-black/40 to-black/80"></div>
     </div>
     
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full pt-16">
       <div class="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-12 duration-1000">
-        <div class="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white text-xs font-semibold uppercase tracking-[0.3em] shadow-2xl">
+        <div class="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white text-xs font-semibold uppercase tracking-[0.3em] shadow-2xl mt-8">
           <Sparkles size={14} class="text-primary-light" />
-          L-SPA PREMIUM EXPERIENCE
+          L-SPA EXPERIENCIA PREMIUM
         </div>
         
         <div class="space-y-4">
-          <h1 class="text-5xl sm:text-7xl md:text-8xl font-serif leading-[1.1] drop-shadow-2xl">
+          <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif leading-[1.1] drop-shadow-2xl">
             Un oasis de <br />
-            <span class="text-primary-light italic font-serif">relajación</span> en Medellín
+            <span class="text-primary-light italic font-serif">relajación</span> <br />en Medellín
           </h1>
-          <p class="text-lg sm:text-2xl font-light text-gray-200 max-w-2xl leading-relaxed drop-shadow-lg font-sans">
+          <p class="text-base sm:text-xl font-light text-gray-200 max-w-2xl leading-relaxed drop-shadow-lg font-sans">
             Descubre una experiencia única de bienestar y belleza diseñada para tu renovación total. Tu momento de paz comienza aquí.
           </p>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center gap-6 pt-8">
-          <Button href="/servicios" class="w-full sm:w-auto px-10 py-5 rounded-full text-sm font-semibold uppercase tracking-widest shadow-2xl bg-primary hover:bg-primary-light transition-colors group overflow-hidden relative">
-            <span class="relative z-10 flex items-center gap-3">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 pt-8">
+          <Button href="/servicios" class="w-full sm:w-auto px-8 sm:px-10 py-5 rounded-full text-sm font-semibold uppercase tracking-widest shadow-2xl bg-primary hover:bg-primary-light transition-colors group overflow-hidden relative whitespace-nowrap">
+            <span class="relative z-10 flex items-center justify-center gap-3">
               Explorar Servicios
               <MoveRight size={20} class="group-hover:translate-x-2 transition-transform duration-500" />
             </span>
           </Button>
           
           {#if !$isAuthenticated}
-            <button onclick={login} class="group flex items-center gap-4 text-white font-semibold text-sm uppercase tracking-[0.2em] hover:text-primary-light transition-colors">
-              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105">
+            <button onclick={login} class="group flex items-center gap-3 sm:gap-4 text-white font-semibold text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:text-primary-light transition-colors">
+              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 flex-shrink-0">
                 <ChevronRight size={18} />
               </div>
-              INICIAR SESIÓN
+              <span class="whitespace-nowrap">INICIAR SESIÓN</span>
             </button>
           {:else}
-            <a href="/sobre-nosotros" class="group flex items-center gap-4 text-white font-semibold text-sm uppercase tracking-[0.2em] hover:text-primary-light transition-colors">
-              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105">
+            <a href="/sobre-nosotros" class="group flex items-center gap-3 sm:gap-4 text-white font-semibold text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:text-primary-light transition-colors">
+              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 flex-shrink-0">
                 <ChevronRight size={18} />
               </div>
-              Conócenos
+              <span class="whitespace-nowrap">Conócenos</span>
             </a>
           {/if}
         </div>
@@ -144,9 +133,9 @@
 
       <div class="relative group overflow-hidden rounded-spa-xl shadow-2xl border border-gray-100 dark:border-gray-800">
         <div class="flex transition-transform duration-1000 ease-in-out" style="transform: translateX(-{activeIndex * 100}%)">
-          {#each [1, 2, 3] as num}
+          {#each carouselImages as img, num}
             <div class="min-w-full h-125 relative">
-              <enhanced:img src={bannerImage} alt="Instalación {num}" loading="lazy" class="w-full h-full object-cover" />
+              <img src={img} alt="Instalación {num + 1}" loading="lazy" class="w-full h-full object-cover" />
               <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
               <div class="absolute bottom-12 left-12 md:bottom-16 md:left-16 text-white max-w-xl">
                  <p class="text-primary-light font-semibold uppercase tracking-[0.3em] mb-4 text-xs font-sans">Premium Wellness</p>
