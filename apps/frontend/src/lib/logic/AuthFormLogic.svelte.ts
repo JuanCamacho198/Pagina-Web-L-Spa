@@ -9,6 +9,10 @@ export class AuthFormLogic {
   name = $state('');
   errors = $state<Record<string, string>>({});
 
+  constructor(initialMode: 'login' | 'register' = 'login') {
+    this.isLogin = initialMode === 'login';
+  }
+
   validate = () => {
     this.errors = {};
     if (!this.email) {
@@ -66,8 +70,9 @@ export class AuthFormLogic {
           toast.error(error.message || 'Error al registrarte');
         } else {
           toast.success('¡Cuenta creada! Ya puedes iniciar sesión.');
-          this.isLogin = true;
-          this.password = ''; // Clear password after signup
+          // Automáticamente iniciar sesión después del registro si better-auth no lo hace ya
+          // O redirigir a login. Por ahora seguimos el diseño de redirigir a home si tiene éxito
+          window.location.href = '/';
         }
       }
     } catch (e) {

@@ -5,7 +5,8 @@
   import Typography from '../ui/Typography.svelte';
   import { AuthFormLogic } from '$lib/logic/AuthFormLogic.svelte';
 
-  const logic = new AuthFormLogic();
+  let { mode = 'login' } = $props<{ mode?: 'login' | 'register' }>();
+  const logic = new AuthFormLogic(mode);
 </script>
 
 <div class="w-full max-w-md mx-auto p-8 bg-white rounded-4xl border border-gray-100 shadow-2xl">
