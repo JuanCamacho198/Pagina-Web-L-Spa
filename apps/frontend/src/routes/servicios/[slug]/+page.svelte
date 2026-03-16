@@ -115,12 +115,16 @@
 							<img
 								src={service.imageUrl || service.image_url}
 								alt={service.name}
+								loading="lazy"
+								decoding="async"
 								class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
 							/>
 						{:else if service.imageFileName}
 							<img
 								src="/assets/{service.imageFileName}"
 								alt={service.name}
+								loading="lazy"
+								decoding="async"
 								class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
 							/>
 						{:else}
@@ -169,7 +173,7 @@
 							<div class="flex -space-x-2">
 								{#each [1,2,3] as i}
 									<div class="h-8 w-8 rounded-full border-2 border-white bg-gray-100 overflow-hidden ring-1 ring-gray-100">
-										<img src="https://i.pravatar.cc/150?u={service.id}{i}" alt="user" />
+										<img src="https://i.pravatar.cc/150?u={service.id}{i}" alt="user" loading="lazy" decoding="async" />
 									</div>
 								{/each}
 							</div>

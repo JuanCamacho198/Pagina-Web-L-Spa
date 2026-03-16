@@ -71,12 +71,16 @@
       <img 
         src={service.imageUrl || service.image_url} 
         alt={service.name}
+        loading="lazy"
+        decoding="async"
         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
     {:else if service.imageFileName}
       <img 
         src="/assets/{service.imageFileName}" 
         alt={service.name}
+        loading="lazy"
+        decoding="async"
         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
     {:else}

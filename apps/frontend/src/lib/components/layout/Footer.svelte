@@ -2,9 +2,7 @@
   import { Facebook, Instagram, MessageCircle, Mail, Phone, MapPin, Clock, ShieldCheck } from 'lucide-svelte';
   import { page } from '$app/stores';
   import { getBrandingWithDefaults, DEFAULT_BRANDING, type BrandingConfig } from '$lib/config/branding';
-  
-  // Logos
-  import logo from '../../assets/logos/LOGO4x-sinfondo.png';
+  import logoImage from '$lib/assets/logos/LOGO4x-sinfondo.png';
 
   // Accept branding prop or load defaults
   interface Props {
@@ -44,12 +42,14 @@
             <img 
               src={currentBranding.customLogo} 
               alt="L-SPA logo" 
+              loading="lazy"
+              decoding="async"
               class="w-auto brightness-110 object-contain"
               style="height: {currentBranding.logoSize}px"
             />
           {:else}
-            <img 
-              src={logo} 
+            <enhanced:img 
+              src={logoImage}
               alt="L-SPA logo" 
               class="w-auto brightness-110 object-contain" 
               style="height: {currentBranding.logoSize}px"

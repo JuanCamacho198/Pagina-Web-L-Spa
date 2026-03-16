@@ -2,8 +2,8 @@
   import { Star, Clock, MapPin, ChevronLeft, ChevronRight, Sparkles, MoveRight } from 'lucide-svelte';
   import { isAuthenticated, login } from '$lib/auth';
   import Button from '$lib/components/ui/Button.svelte';
-  import bannerSpa from '../lib/assets/banners/bannerSpa.avif';
   import { onMount } from 'svelte';
+  import bannerImage from '$lib/assets/banners/bannerSpa.avif';
 
   let { data } = $props();
   
@@ -34,7 +34,7 @@
       description: "Una experiencia de relajación total para tu cuerpo y mente.",
       price: 120000,
       duration: 60,
-      imageUrl: bannerSpa 
+      imageUrl: "/lib/assets/banners/bannerSpa.avif"
     },
     {
       id: 2,
@@ -42,7 +42,7 @@
       description: "Luce una piel radiante y renovada con nuestros expertos.",
       price: 150000,
       duration: 45,
-      imageUrl: bannerSpa
+      imageUrl: "/lib/assets/banners/bannerSpa.avif"
     },
     {
       id: 3,
@@ -50,7 +50,7 @@
       description: "Benefíciate del poder del agua en nuestras modernas instalaciones.",
       price: 80000,
       duration: 90,
-      imageUrl: bannerSpa
+      imageUrl: "/lib/assets/banners/bannerSpa.avif"
     }
   ];
 </script>
@@ -64,7 +64,7 @@
   <!-- Hero Section -->
   <section class="relative h-[85vh] flex items-center overflow-hidden bg-gray-900">
     <div class="absolute inset-0 z-0">
-      <img src={bannerSpa} alt="L-SPA Banner" loading="lazy" class="w-full h-full object-cover opacity-50 mix-blend-overlay" />
+      <enhanced:img src={bannerImage} alt="L-SPA Banner" class="w-full h-full object-cover opacity-50 mix-blend-overlay" />
       <div class="absolute inset-0 bg-linear-to-b from-black/20 via-black/40 to-black/80"></div>
     </div>
     
@@ -146,7 +146,7 @@
         <div class="flex transition-transform duration-1000 ease-in-out" style="transform: translateX(-{activeIndex * 100}%)">
           {#each [1, 2, 3] as num}
             <div class="min-w-full h-125 relative">
-              <img src={bannerSpa} alt="Instalación {num}" loading="lazy" class="w-full h-full object-cover" />
+              <enhanced:img src={bannerImage} alt="Instalación {num}" loading="lazy" class="w-full h-full object-cover" />
               <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
               <div class="absolute bottom-12 left-12 md:bottom-16 md:left-16 text-white max-w-xl">
                  <p class="text-primary-light font-semibold uppercase tracking-[0.3em] mb-4 text-xs font-sans">Premium Wellness</p>
@@ -186,7 +186,7 @@
         {#each featuredServices as service}
           <div class="overflow-hidden group border border-secondary/20 shadow-xl hover:shadow-2xl transition-all duration-700 rounded-[2.5rem] bg-white dark:bg-gray-900 hover:-translate-y-3 flex flex-col">
             <div class="h-64 overflow-hidden relative">
-              <img src={service.imageUrl} alt={service.name} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out" />
+              <img src={service.imageUrl} alt={service.name} loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out" />
               <div class="absolute top-6 right-6">
                 <div class="bg-white/95 backdrop-blur-md text-primary font-bold px-5 py-2 rounded-full shadow-lg text-lg">
                   ${service.price.toLocaleString()}

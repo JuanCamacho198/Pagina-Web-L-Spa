@@ -150,6 +150,8 @@
 						<img 
 							src={$session.data?.user.image || `https://ui-avatars.com/api/?name=${$session.data?.user.name}`}
 							alt={$session.data?.user.name}
+							loading="lazy"
+							decoding="async"
 							class="w-10 h-10 rounded-full border-2 border-white shadow-sm"
 						/>
 						<div class="text-right">

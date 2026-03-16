@@ -3,6 +3,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Typography from '$lib/components/ui/Typography.svelte';
 	import { cn } from '$lib/utils/cn';
+	import bannerImage from '$lib/assets/banners/bannerSpa.avif';
 
 	const pillars = [
 		{ 
@@ -35,8 +36,8 @@
 	<!-- Hero Section -->
 	<section class="relative h-[65vh] flex items-center justify-center overflow-hidden">
 		<div class="absolute inset-0 z-0 scale-110">
-			<img 
-				src="/src/assets/banners/bannerSpa.avif" 
+			<enhanced:img 
+				src={bannerImage}
 				alt="L-SPA Essence" 
 				class="w-full h-full object-cover brightness-[0.4] saturate-[0.8]"
 			/>
@@ -70,8 +71,8 @@
 			<!-- Media Side (Abstract Decor) -->
 			<div class="relative order-2 lg:order-1 flex justify-center lg:justify-start">
 				<div class="relative w-full max-w-md aspect-4/5/5 bg-gray-50 rounded-[64px] overflow-hidden shadow-2xl shadow-primary/10 border border-gray-100">
-					<img 
-						src="/src/assets/banners/bannerSpa.avif" 
+					<enhanced:img 
+						src={bannerImage}
 						alt="L-SPA Interior" 
 						class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
 					/>
@@ -180,8 +181,8 @@
 			</div>
 
 			<div class="md:w-px/2 w-full aspect-video rounded-[48px] overflow-hidden shadow-2xl relative">
-				<img 
-					src="/src/assets/banners/bannerSpa.avif" 
+				<enhanced:img 
+					src={bannerImage}
 					alt="L-SPA Map/Location" 
 					class="w-full h-full object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-1000"
 				/>
