@@ -17,6 +17,8 @@ export interface CSRFConfig {
 declare module 'hono' {
   interface ContextVariableMap {
     csrfToken?: string;
+    userId?: string;
+    cspNonce?: string;
   }
 }
 
