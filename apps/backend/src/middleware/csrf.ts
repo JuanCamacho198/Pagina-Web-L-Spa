@@ -35,8 +35,14 @@ export const csrf = (config?: CSRFConfig): MiddlewareHandler => {
 
   return async (c, next) => {
     const method = c.req.method;
+    const url = c.req.url;
 
-    if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') {
+    if (
+      method === 'GET' || 
+      method === 'HEAD' || 
+      method === 'OPTIONS' ||
+      url.includes('/api/v1/auth/')
+    ) {
       await next();
       return;
     }
