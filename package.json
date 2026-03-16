@@ -20,5 +20,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@sveltejs/enhanced-img": "^0.10.4"
+  }
 }
