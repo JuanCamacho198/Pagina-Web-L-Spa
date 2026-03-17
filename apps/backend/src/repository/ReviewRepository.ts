@@ -1,5 +1,5 @@
 import { db, reviews, user as users, appointments } from '@l-spa/database';
-import { eq, and, desc } from 'drizzle-orm';
+import { eq, and, desc } from '@l-spa/database';
 import type { Review } from '@l-spa/shared-types';
 
 export class ReviewRepository {

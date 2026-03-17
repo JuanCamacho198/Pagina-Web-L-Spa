@@ -1,5 +1,5 @@
 import { db, siteConfig } from '@l-spa/database';
-import { eq } from 'drizzle-orm';
+import { eq } from '@l-spa/database';
 
 export class ConfigRepository {
   async findById(id: string) {

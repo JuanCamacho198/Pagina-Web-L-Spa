@@ -1,6 +1,6 @@
 import { db } from "@l-spa/database";
 import { cartItems, services } from "@l-spa/database/schema";
-import { sql, and, eq, asc } from "drizzle-orm";
+import { sql, and, eq, asc } from "@l-spa/database";
 
 export class CartRepository {
   async getCartByUserId(userId: string) {
@@ -17,6 +17,8 @@ export class CartRepository {
     // Get service details for each item
     const itemsWithServices = await Promise.all(
       items.map(async (item) => {
+        if (!item.serviceId) return { ...item, service: null };
+
         const [service] = await db.select({
           id: services.id,
           name: services.name,
@@ -50,6 +52,8 @@ export class CartRepository {
     // Get service details for each item
     const itemsWithServices = await Promise.all(
       items.map(async (item) => {
+        if (!item.serviceId) return { ...item, service: null };
+
         const [service] = await db.select({
           id: services.id,
           name: services.name,
@@ -95,7 +99,7 @@ export class CartRepository {
     if (existingItem) {
       // Update quantity
       await db.update(cartItems)
-        .set({ quantity: existingItem.quantity + quantity })
+        .set({ quantity: (existingItem.quantity ?? 0) + quantity })
         .where(eq(cartItems.id, existingItem.id));
       return existingItem.id;
     } else {
@@ -139,6 +143,14 @@ export class CartRepository {
       .where(eq(cartItems.anonymousId, anonymousId));
 
     for (const item of anonymousItems) {
+      // If serviceId is null, just transfer ownership
+      if (!item.serviceId) {
+        await db.update(cartItems)
+          .set({ userId, anonymousId: null })
+          .where(eq(cartItems.id, item.id));
+        continue;
+      }
+
       // Check if user already has this service in cart
       const existingUserItems = await db.select()
         .from(cartItems)
@@ -149,9 +161,9 @@ export class CartRepository {
         .limit(1);
 
       if (existingUserItems && existingUserItems.length > 0) {
-        // Merge quantities
+        // Merge quantities (handle possible nulls)
         await db.update(cartItems)
-          .set({ quantity: existingUserItems[0].quantity + item.quantity })
+          .set({ quantity: (existingUserItems[0].quantity ?? 0) + (item.quantity ?? 0) })
           .where(eq(cartItems.id, existingUserItems[0].id));
         
         // Remove anonymous item

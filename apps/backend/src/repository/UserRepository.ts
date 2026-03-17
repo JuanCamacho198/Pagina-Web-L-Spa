@@ -1,5 +1,5 @@
 import { db, user, cartItems, services } from '@l-spa/database';
-import { eq, and } from 'drizzle-orm';
+import { eq, and } from '@l-spa/database';
 import type { UserUpdate } from '@l-spa/shared-types';
 
 export class UserRepository {

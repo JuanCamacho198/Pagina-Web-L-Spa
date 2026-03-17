@@ -1,5 +1,5 @@
 import { db, services } from '@l-spa/database';
-import { eq } from 'drizzle-orm';
+import { eq } from '@l-spa/database';
 import type { ServiceSchema, UpdateServiceSchema } from '@l-spa/shared-types';
 
 export class ServiceRepository {
