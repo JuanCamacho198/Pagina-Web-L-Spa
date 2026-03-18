@@ -18,7 +18,7 @@ app.use('*', logger())
 app.use('*', securityHeaders())
 app.use('*', csrf())
 app.use('*', cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'http://localhost:5174'],
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowHeaders: ['Content-Type', 'Authorization', 'X-Anonymous-ID', 'X-User-ID'],
   exposeHeaders: ['Content-Length'],
