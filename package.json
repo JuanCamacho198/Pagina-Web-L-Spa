@@ -2,10 +2,15 @@
   "name": "l-spa",
   "version": "0.0.0",
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@l-spa/shared-types": "workspace:*",
     "bun-types": "^1.1.0",
     "concurrently": "^7.6.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-svelte": "^2.4.0",
+    "svelte-eslint-parser": "^0.4.0",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.0.0",
     "vite": "^7.0.0",
     "vitest": "^3.0.0"
   },
@@ -15,6 +20,7 @@
     "dev": "concurrently -k -n backend,frontend -c yellow,cyan \"bun --hot apps/backend/src/index.ts\" \"cd apps/frontend && bun run dev\"",
     "dev:backend:root": "bun --hot apps/backend/src/index.ts",
     "build": "bun run --filter \"*\" build",
+    "typecheck": "tsc --noEmit",
     "lint": "bun run --filter \"*\" lint",
     "db:push": "bun run --filter @l-spa/database db:push",
     "db:studio": "bun run --filter @l-spa/database db:studio",
