@@ -6,7 +6,8 @@
     "bun-types": "^1.1.0",
     "concurrently": "^7.6.0",
     "typescript": "^5.9.3",
-    "vite": "^7.0.0"
+    "vite": "^7.0.0",
+    "vitest": "^3.0.0"
   },
   "license": "MIT",
   "private": true,
@@ -16,7 +17,12 @@
     "build": "bun run --filter \"*\" build",
     "lint": "bun run --filter \"*\" lint",
     "db:push": "bun run --filter @l-spa/database db:push",
-    "db:studio": "bun run --filter @l-spa/database db:studio"
+    "db:studio": "bun run --filter @l-spa/database db:studio",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:run": "vitest run",
+    "test:e2e": "echo 'Use Playwright MCP for E2E tests'",
+    "test:all": "bun test:run && bun test:e2e"
   },
   "type": "module",
   "workspaces": [
