@@ -22,7 +22,10 @@
     "test:watch": "vitest --watch",
     "test:run": "vitest run",
     "test:e2e": "echo 'Use Playwright MCP for E2E tests'",
-    "test:all": "bun test:run && bun test:e2e"
+    "test:all": "bun test:run && bun test:e2e",
+    "release": "semantic-release",
+    "release:dry": "semantic-release --dry-run",
+    "prepare": "husky install"
   },
   "type": "module",
   "workspaces": [

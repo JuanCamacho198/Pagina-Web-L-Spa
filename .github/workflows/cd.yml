@@ -1,0 +1,73 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version bump type (patch, minor, major, or skip)'
+        required: false
+        default: ''
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build application
+        run: bun run build
+
+  release:
+    name: Release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Release
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.inputs.version != 'skip')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bunx semantic-release
+
+      - name: Release (Manual)
+        if: github.event_name == 'workflow_dispatch' && github.inputs.version != '' && github.inputs.version != 'skip'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "${{ github.inputs.version }}" == "major" ]]; then
+            bunx semantic-release --release-as major
+          elif [[ "${{ github.inputs.version }}" == "minor" ]]; then
+            bunx semantic-release --release-as minor
+          elif [[ "${{ github.inputs.version }}" == "patch" ]]; then
+            bunx semantic-release --release-as patch
+          fi
