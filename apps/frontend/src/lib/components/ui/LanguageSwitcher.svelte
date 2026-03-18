@@ -24,14 +24,14 @@
 <div class="flex items-center space-x-2">
 	<button 
 		class="px-2 py-1 text-sm rounded hover:bg-gray-200 {$locale === 'es' ? 'font-bold underline' : ''}" 
-		on:click={() => switchLanguage('es')}
+		onclick={() => switchLanguage('es')}
 	>
 		ES
 	</button>
 	<span>|</span>
 	<button 
 		class="px-2 py-1 text-sm rounded hover:bg-gray-200 {$locale === 'en' ? 'font-bold underline' : ''}" 
-		on:click={() => switchLanguage('en')}
+		onclick={() => switchLanguage('en')}
 	>
 		EN
 	</button>

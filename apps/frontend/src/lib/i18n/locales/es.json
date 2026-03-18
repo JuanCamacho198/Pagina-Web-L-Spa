@@ -8,5 +8,8 @@
   },
   "home": {
     "title": "Bienvenido a L-SPA"
+  },
+  "layout": {
+    "skipToMain": "Saltar al contenido principal"
   }
 }
