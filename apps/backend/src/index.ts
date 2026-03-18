@@ -1,5 +1,4 @@
 import { Hono } from 'hono'
-import { logger } from 'hono/logger'
 import { cors } from 'hono/cors'
 import services from './controllers/servicesController'
 import users from './controllers/userController'
@@ -11,10 +10,17 @@ import favorites from './controllers/favoritesController'
 import { auth } from './lib/auth'
 import { csrf } from './middleware/csrf'
 import { securityHeaders } from './middleware/security-headers'
+import { loggingMiddleware } from './middleware/logger'
+import * as Sentry from '@sentry/hono/node'
 
 const app = new Hono()
 
-app.use('*', logger())
+app.use('*', Sentry.sentry(app, {
+  dsn: process.env.SENTRY_DSN,
+  tracesSampleRate: 1.0,
+  environment: process.env.NODE_ENV,
+}))
+app.use('*', loggingMiddleware)
 app.use('*', securityHeaders())
 app.use('*', csrf())
 app.use('*', cors({

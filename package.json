@@ -4,10 +4,13 @@
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@l-spa/shared-types": "workspace:*",
+    "@sentry/hono": "^10.0.0",
     "bun-types": "^1.1.0",
     "concurrently": "^7.6.0",
     "eslint": "^9.0.0",
     "eslint-plugin-svelte": "^2.4.0",
+    "pino": "^10.3.1",
+    "pino-pretty": "^10.3.1",
     "svelte-eslint-parser": "^0.4.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.0.0",

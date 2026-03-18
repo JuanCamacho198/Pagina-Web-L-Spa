@@ -1,6 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
+import { Sentry } from './lib/sentry';
 
-// Set to false to enable CSP enforcement mode in production
 const CSP_REPORT_ONLY = true;
 
 function generateNonce(): string {
