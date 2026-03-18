@@ -1,0 +1,12 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión",
+    "profile": "Perfil"
+  },
+  "home": {
+    "title": "Bienvenido a L-SPA"
+  }
+}

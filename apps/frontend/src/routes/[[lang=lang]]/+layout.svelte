@@ -13,6 +13,9 @@
   import { getTheme, setTheme, toggleTheme, initTheme, type Theme } from '$lib/theme';
   import { getBrandingWithDefaults, type BrandingConfig } from '$lib/config/branding';
   import { resolvedMetadata, seoStore, BASE_URL, SITE_NAME, TWITTER_HANDLE } from '$lib/seo';
+  import LanguageSwitcher from '$lib/components/ui/LanguageSwitcher.svelte';
+  import '$lib/i18n';
+  import { _ } from 'svelte-i18n';
 
   import { page } from '$app/stores';
   
@@ -75,6 +78,10 @@
   {/if}
   <link rel="canonical" href={resolvedMetadata.canonical} />
   
+  <link rel="alternate" hreflang="es" href={`${BASE_URL}/es`} />
+  <link rel="alternate" hreflang="en" href={`${BASE_URL}/en`} />
+  <link rel="alternate" hreflang="x-default" href={`${BASE_URL}/es`} />
+
   <!-- Open Graph -->
   <meta property="og:type" content={resolvedMetadata.type} />
   <meta property="og:title" content={resolvedMetadata.title} />
@@ -119,10 +126,10 @@
       
       <nav class="hidden lg:flex items-center gap-10" aria-label="Navegación principal">
         {#each [
-          { name: 'Servicios', path: '/servicios' },
+          { name: $_('nav.services') || 'Servicios', path: '/servicios' },
           { name: 'Reservas', path: '/informacion-importante' },
           { name: 'Sobre Nosotros', path: '/sobre-nosotros' },
-          { name: 'Contacto', path: '/contacto' }
+          { name: $_('nav.contact') || 'Contacto', path: '/contacto' }
         ] as link}
           <a href={link.path} class="text-[10px] font-sans font-black uppercase tracking-[0.3em] text-gray-400 hover:text-primary transition-all duration-500 relative overflow-hidden group">
             {link.name}
@@ -132,6 +139,7 @@
       </nav>
 
       <div class="flex items-center gap-4">
+        <LanguageSwitcher />
         <!-- Dark Mode Toggle -->
         <button 
           onclick={handleToggleTheme}

@@ -1,0 +1,12 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "contact": "Contact",
+    "login": "Login",
+    "profile": "Profile"
+  },
+  "home": {
+    "title": "Welcome to L-SPA"
+  }
+}
