@@ -12,6 +12,7 @@
   import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
   import { getTheme, setTheme, toggleTheme, initTheme, type Theme } from '$lib/theme';
   import { getBrandingWithDefaults, type BrandingConfig } from '$lib/config/branding';
+  import { resolvedMetadata, seoStore, BASE_URL, SITE_NAME, TWITTER_HANDLE } from '$lib/seo';
 
   import { page } from '$app/stores';
   
@@ -44,6 +45,9 @@
     // Initialize client-side error handlers
     initializeErrorHandling();
     
+    // Reset SEO metadata for each navigation
+    seoStore.reset();
+    
     const unsubscribe = cartStore.subscribe((items) => {
       cartItemsList = items;
     });
@@ -61,6 +65,34 @@
     currentTheme = toggleTheme();
   }
 </script>
+
+<svelte:head>
+  <title>{resolvedMetadata.title}</title>
+  <meta name="description" content={resolvedMetadata.description} />
+  <meta name="keywords" content={resolvedMetadata.keywords} />
+  {#if resolvedMetadata.noindex}
+    <meta name="robots" content="noindex, nofollow" />
+  {/if}
+  <link rel="canonical" href={resolvedMetadata.canonical} />
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content={resolvedMetadata.type} />
+  <meta property="og:title" content={resolvedMetadata.title} />
+  <meta property="og:description" content={resolvedMetadata.description} />
+  <meta property="og:image" content={resolvedMetadata.image} />
+  <meta property="og:url" content={resolvedMetadata.url} />
+  <meta property="og:site_name" content={SITE_NAME} />
+  {#if resolvedMetadata.publishedTime}
+    <meta property="article:published_time" content={resolvedMetadata.publishedTime} />
+  {/if}
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content={TWITTER_HANDLE} />
+  <meta name="twitter:title" content={resolvedMetadata.title} />
+  <meta name="twitter:description" content={resolvedMetadata.description} />
+  <meta name="twitter:image" content={resolvedMetadata.image} />
+</svelte:head>
 
 <QueryClientProvider client={queryClient}>
   <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-black focus:text-xs focus:uppercase focus:tracking-widest">

@@ -4,8 +4,20 @@
   import Button from '$lib/components/ui/Button.svelte';
   import { onMount } from 'svelte';
   import bannerImage from '$lib/assets/banners/bannerSpa.avif';
+  import { seoStore, BASE_URL } from '$lib/seo';
 
   let { data } = $props();
+  
+  // Set homepage metadata
+  $effect(() => {
+    seoStore.setPageMetadata({
+      title: 'Inicio',
+      description: 'L-Spa - Bienestar y Relajación Premium en Medellín. Descubre una experiencia única de spa con masajes, tratamientos faciales y corporales.',
+      image: `${BASE_URL}/assets/carrusel1.jpg`,
+      url: BASE_URL,
+      type: 'website'
+    });
+  });
   
   // Carousel images from static/assets (served from /assets/)
   const carouselImages = [
@@ -43,11 +55,6 @@
     }))
   );
 </script>
-
-<svelte:head>
-  <title>L-SPA | Bienestar y Relajación Premium en Medellín</title>
-  <meta name="description" content="Descubre una experiencia única de bienestar y belleza en el corazón de Medellín. Reserva masajes, tratamientos faciales y corporales." />
-</svelte:head>
 
 <div class="grow font-sans bg-gray-50 dark:bg-gray-900 border-t border-secondary/10">
   <!-- Hero Section -->
