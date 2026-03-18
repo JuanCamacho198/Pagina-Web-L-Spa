@@ -95,7 +95,7 @@
 	<main class="max-w-7xl mx-auto px-6 py-32">
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{#each sections as section, i}
-				<div class="p-10 rounded-[48px] border border-gray-100 bg-white hover:shadow-2xl hover:shadow-primary/5 transition-all duration-700 group flex flex-col h-full animate-in fade-in slide-in-from-bottom-8" style="animation-delay: {i * 100}ms">
+				<div class="p-10 rounded-spa-xl border border-gray-100 bg-white hover:shadow-2xl hover:shadow-primary/5 transition-all duration-700 group flex flex-col h-full animate-in fade-in slide-in-from-bottom-8" style="animation-delay: {i * 100}ms">
 					<div class="flex items-start justify-between mb-10">
 						<div class="w-16 h-16 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg {section.color}">
 							<section.icon size={32} strokeWidth={2.5} />

@@ -23,7 +23,7 @@
 		</header>
 
 		<!-- Content Card -->
-		<div class="bg-white dark:bg-gray-800 rounded-[48px] shadow-2xl shadow-primary/5 border border-gray-100 dark:border-gray-700 overflow-hidden">
+		<div class="bg-white dark:bg-gray-800 rounded-spa-xl shadow-2xl shadow-primary/5 border border-gray-100 dark:border-gray-700 overflow-hidden">
 			<div class="p-8 md:p-16 space-y-16">
 				<!-- Section 1: Responsable -->
 				<section class="grid grid-cols-1 md:grid-cols-12 gap-8 group">

@@ -62,7 +62,7 @@
 		</div>
 
 		<!-- Management Section -->
-		<div class="bg-white dark:bg-gray-800 p-12 md:p-20 rounded-[64px] shadow-2xl shadow-primary/5 border border-gray-100 dark:border-gray-700 relative overflow-hidden group">
+		<div class="bg-white dark:bg-gray-800 p-12 md:p-20 rounded-spa-xxl shadow-2xl shadow-primary/5 border border-gray-100 dark:border-gray-700 relative overflow-hidden group">
 			<div class="flex flex-col md:flex-row items-center gap-12 relative z-10">
 				<div class="w-32 h-32 rounded-[40px] bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 rotate-12 group-hover:rotate-0 transition-transform duration-700">
 					<HelpCircle size={64} strokeWidth={1.5} />

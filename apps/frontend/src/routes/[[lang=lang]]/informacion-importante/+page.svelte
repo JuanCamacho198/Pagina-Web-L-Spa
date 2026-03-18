@@ -48,10 +48,10 @@
 <div class="min-h-screen bg-gray-50/50 pt-40 pb-32 px-6 overflow-hidden">
 	<div class="max-w-7xl mx-auto">
 		<!-- Main Container Card -->
-		<div class="bg-white rounded-[64px] shadow-2xl shadow-primary/5 border border-gray-100 relative overflow-hidden group/main">
+		<div class="bg-white rounded-spa-xxl shadow-2xl shadow-primary/5 border border-gray-100 relative overflow-hidden group/main">
 			
 			<!-- Animated Background Decor -->
-			<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full -mr-64 -mt-64 blur-[100px] group-hover/main:scale-125 transition-transform duration-1000"></div>
+			<div class="absolute top-0 right-0 w-125 h-125 bg-primary/5 rounded-full -mr-64 -mt-64 blur-[100px] group-hover/main:scale-125 transition-transform duration-1000"></div>
 			<div class="absolute bottom-0 left-0 w-px00 h-100  bg-amber-500/5 rounded-full -ml-40 -mb-40 blur-[80px]"></div>
 
 			<div class="p-10 md:p-24 relative z-10">
@@ -103,7 +103,7 @@
 				</div>
 
 				<!-- Extra Note / Disclaimer -->
-				<footer class="mt-32 p-10 bg-gray-900 rounded-[48px] text-white flex flex-col md:flex-row items-center gap-10 group/footer overflow-hidden relative">
+				<footer class="mt-32 p-10 bg-gray-900 rounded-spa-xl text-white flex flex-col md:flex-row items-center gap-10 group/footer overflow-hidden relative">
 					<div class="absolute top-0 right-0 p-10 opacity-5 group-hover/footer:scale-150 transition-transform duration-1000 rotate-12">
 						<Wine size={200} />
 					</div>

@@ -92,7 +92,7 @@
 			<!-- Bookings List -->
 			<div class="space-y-6">
 				{#each myBookings as booking}
-					<div class="bg-white rounded-[48px] p-8 shadow-sm border border-gray-100">
+					<div class="bg-white rounded-spa-xl p-8 shadow-sm border border-gray-100">
 						<div class="flex flex-col md:flex-row md:items-center gap-6">
 							<!-- Date Box -->
 							<div class="w-24 h-24 bg-primary/5 rounded-3xl flex flex-col items-center justify-center">
@@ -151,7 +151,7 @@
 			</div>
 
 			{#if myBookings.length === 0}
-				<div class="bg-white rounded-[48px] p-12 text-center shadow-sm border border-gray-100">
+				<div class="bg-white rounded-spa-xl p-12 text-center shadow-sm border border-gray-100">
 					<Calendar size={48} class="mx-auto mb-4 text-gray-300" />
 					<p class="text-gray-500 font-medium">No tienes reservas programadas</p>
 					<a href="/servicios" class="inline-block mt-4 px-8 py-4 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary/90 transition-colors">

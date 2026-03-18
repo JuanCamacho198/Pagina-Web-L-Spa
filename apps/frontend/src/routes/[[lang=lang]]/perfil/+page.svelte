@@ -77,7 +77,7 @@
 	{:else if $session.data}
 		<div class="max-w-5xl mx-auto space-y-12">
 			<!-- Profile Hero Card -->
-			<div class="bg-white rounded-[64px] shadow-2xl shadow-primary/5 border border-gray-100 overflow-hidden relative group/hero">
+			<div class="bg-white rounded-spa-xxl shadow-2xl shadow-primary/5 border border-gray-100 overflow-hidden relative group/hero">
 				<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover/hero:opacity-100 transition-opacity duration-1000"></div>
 				
 				<div class="p-12 md:p-20 relative z-10">
@@ -157,7 +157,7 @@
 			<!-- Interaction Grid -->
 			<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 				<!-- Settings / Account -->
-				<div class="lg:col-span-12 bg-white rounded-[48px] p-12 shadow-2xl shadow-primary/5 border border-gray-100">
+				<div class="lg:col-span-12 bg-white rounded-spa-xl p-12 shadow-2xl shadow-primary/5 border border-gray-100">
 					<div class="flex items-center justify-between mb-12">
 						<h2 class="text-3xl font-black text-gray-900 tracking-tight uppercase">Gestión de <span class="text-primary italic">Cuenta</span></h2>
 						<Button variant="ghost" class="text-[10px] font-black tracking-widest uppercase">Editar Perfil</Button>

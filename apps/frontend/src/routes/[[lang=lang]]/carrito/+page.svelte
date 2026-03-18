@@ -45,7 +45,7 @@
 		</header>
 
 		{#if $cartCount === 0}
-			<div class="bg-white rounded-[64px] p-20 text-center space-y-10 shadow-2xl shadow-primary/5 border border-gray-100 max-w-3xl mx-auto animate-in fade-in zoom-in-95 duration-700">
+			<div class="bg-white rounded-spa-xxl p-20 text-center space-y-10 shadow-2xl shadow-primary/5 border border-gray-100 max-w-3xl mx-auto animate-in fade-in zoom-in-95 duration-700">
 				<div class="w-24 h-134 bg-gray-50 rounded-full flex items-center justify-center mx-auto text-gray-200">
 					<ShoppingBag size={48} />
 				</div>

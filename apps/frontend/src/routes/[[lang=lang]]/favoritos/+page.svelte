@@ -64,7 +64,7 @@
 				<div class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
 			</div>
 		{:else if $favoritesStore.length === 0}
-			<div class="bg-white rounded-[64px] p-20 text-center space-y-10 shadow-2xl shadow-primary/5 border border-gray-100 max-w-3xl mx-auto animate-in fade-in zoom-in-95 duration-700">
+			<div class="bg-white rounded-spa-xxl p-20 text-center space-y-10 shadow-2xl shadow-primary/5 border border-gray-100 max-w-3xl mx-auto animate-in fade-in zoom-in-95 duration-700">
 				<div class="w-24 h-134 bg-gray-50 rounded-full flex items-center justify-center mx-auto text-gray-200">
 					<Heart size={48} />
 				</div>
@@ -79,7 +79,7 @@
 		{:else}
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 				{#each $favoritesStore as favorite (favorite.id)}
-					<div class="bg-white rounded-[48px] shadow-2xl shadow-primary/5 border border-gray-100 overflow-hidden group">
+					<div class="bg-white rounded-spa-xl shadow-2xl shadow-primary/5 border border-gray-100 overflow-hidden group">
 						<!-- Image -->
 						<div class="aspect-4/3 relative overflow-hidden">
 							<img 

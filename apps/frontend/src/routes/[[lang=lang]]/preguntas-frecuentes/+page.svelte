@@ -96,13 +96,13 @@
 							</div>
 						</div>
 						
-						<div class="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center transition-all duration-500 {openIndex === idx ? 'bg-primary border-primary text-white rotate-180' : 'text-gray-300 group-hover:border-primary group-hover:text-primary'}">
+						<div class="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center transition-all duration-500 {openIndex === idx ? 'bg-primary text-white rotate-180' : 'text-gray-300 group-hover:border-primary group-hover:text-primary'}">
 							<ChevronDown size={24} />
 						</div>
 					</button>
 					
 					{#if openIndex === idx}
-						<div class="px-8 md:px-[6.5rem] pb-12 animate-in slide-in-from-top-4 duration-500">
+						<div class="px-8 md:px-26 pb-12 animate-in slide-in-from-top-4 duration-500">
 							<div class="h-1 w-full bg-gray-50 rounded-full mb-8 opacity-50"></div>
 							<p class="text-lg text-gray-500 font-medium leading-relaxed max-w-2xl">
 								{faq.a}
@@ -114,7 +114,7 @@
 		</div>
 
 		<!-- Support CTA -->
-		<div class="bg-gray-900 rounded-[64px] p-12 md:p-20 text-center relative overflow-hidden group">
+		<div class="bg-gray-900 rounded-spa-xxl p-12 md:p-20 text-center relative overflow-hidden group">
 			<div class="absolute inset-0 opacity-20 pointer-events-none">
 				<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-primary rounded-full blur-[120px] group-hover:scale-110 transition-transform duration-1000"></div>
 			</div>

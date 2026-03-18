@@ -97,7 +97,7 @@
 					{/each}
 				</div>
 
-				<div class="bg-white rounded-[48px] p-12 shadow-2xl shadow-primary/5 border border-gray-100 relative overflow-hidden">
+				<div class="bg-white rounded-spa-xl p-12 shadow-2xl shadow-primary/5 border border-gray-100 relative overflow-hidden">
 					<div class="absolute top-0 right-0 p-8 opacity-5">
 						<Sparkles size={120} class="text-primary" />
 					</div>

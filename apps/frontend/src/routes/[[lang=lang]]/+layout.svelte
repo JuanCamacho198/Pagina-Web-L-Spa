@@ -103,7 +103,7 @@
 
 <QueryClientProvider client={queryClient}>
   <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-black focus:text-xs focus:uppercase focus:tracking-widest">
-    Saltar al contenido principal
+    {$_('layout.skipToMain')}
   </a>
   <div class="app-container min-h-screen flex flex-col font-sans selection:bg-primary/10">
     <header class="navbar bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-secondary/30 sticky top-0 z-50 px-6 py-4 transition-all duration-500">

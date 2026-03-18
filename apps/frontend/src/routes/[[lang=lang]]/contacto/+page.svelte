@@ -81,7 +81,7 @@
 					<a 
 						href={card.href}
 						class={cn(
-							"bg-white p-10 rounded-[48px] shadow-2xl shadow-primary/5 border border-gray-100 flex flex-col items-center text-center group transition-all duration-700 hover:-translate-y-2",
+							"bg-white p-10 rounded-spa-xl shadow-2xl shadow-primary/5 border border-gray-100 flex flex-col items-center text-center group transition-all duration-700 hover:-translate-y-2",
 							card.hover
 						)}
 					>
@@ -94,7 +94,7 @@
 				{/each}
 
 				<!-- Extra Info Box -->
-				<div class="bg-gray-900 rounded-[48px] p-10 text-white space-y-8 relative overflow-hidden group">
+				<div class="bg-gray-900 rounded-spa-xl p-10 text-white space-y-8 relative overflow-hidden group">
 					<div class="absolute top-0 right-0 p-8 opacity-20 group-hover:scale-125 transition-transform duration-1000">
 						<Clock size={80} />
 					</div>
@@ -129,7 +129,7 @@
 					></iframe>
 				</div>
 
-				<div class="bg-white p-12 md:p-20 rounded-[64px] shadow-2xl shadow-primary/5 border border-gray-100 relative overflow-hidden group">
+				<div class="bg-white p-12 md:p-20 rounded-spa-xxl shadow-2xl shadow-primary/5 border border-gray-100 relative overflow-hidden group">
 					<!-- Bg Icon -->
 					<div class="absolute -bottom-20 -right-20 opacity-5 -rotate-12 group-hover:rotate-0 transition-all duration-1000">
 						<Send size={300} class="text-primary" />

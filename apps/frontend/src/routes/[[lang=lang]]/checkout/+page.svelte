@@ -157,7 +157,7 @@
 					{/each}
 				</div>
 
-				<div class="bg-white rounded-[48px] p-8 sm:p-12 shadow-2xl shadow-primary/5 border border-gray-100 min-h-125 flex flex-col">
+				<div class="bg-white rounded-spa-xl p-8 sm:p-12 shadow-2xl shadow-primary/5 border border-gray-100 min-h-125 flex flex-col">
 					{#if currentStep === 0}
 						<!-- Step 1: Personal Data -->
 						<div class="space-y-8 animate-in fade-in slide-in-from-bottom duration-500">
@@ -400,7 +400,7 @@
 
 			<!-- Sidebar Summary -->
 			<div class="lg:col-span-4 sticky top-12">
-				<div class="bg-white rounded-[48px] p-10 shadow-2xl shadow-primary/5 border border-gray-100 relative overflow-hidden group">
+				<div class="bg-white rounded-spa-xl p-10 shadow-2xl shadow-primary/5 border border-gray-100 relative overflow-hidden group">
 					<div class="absolute -top-12 -right-12 w-48 h-48 bg-primary/5 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150"></div>
 					
 					<h2 class="text-2xl font-black text-gray-900 mb-8 tracking-tight relative z-10 flex items-center gap-3">
