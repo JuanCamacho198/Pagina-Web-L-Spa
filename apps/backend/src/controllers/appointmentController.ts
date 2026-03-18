@@ -20,6 +20,17 @@ appointments.get('/user/:auth0Id', async (c) => {
   return c.json(results);
 });
 
+// Get employee appointments by date range
+appointments.get('/employee/:auth0Id', async (c) => {
+  const auth0Id = c.req.param('auth0Id');
+  const today = new Date().toISOString().split('T')[0];
+  const startDate = c.req.query('startDate') || today;
+  const endDate = c.req.query('endDate') || today;
+  
+  const results = await appointmentService.getEmployeeAppointments(auth0Id, startDate, endDate);
+  return c.json(results);
+});
+
 // Create a new appointment
 appointments.post('/', zValidator('json', appointmentSchema), async (c) => {
   const { auth0Id, serviceId, appointmentDate, appointmentTime } = c.req.valid('json');

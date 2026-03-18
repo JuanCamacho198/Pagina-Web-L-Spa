@@ -44,4 +44,10 @@ export class AppointmentService {
   async getStats() {
     return await this.repository.getStats();
   }
+
+  async getEmployeeAppointments(auth0Id: string, startDate: string, endDate: string) {
+    const user = await this.userRepo.findByAuth0Id(auth0Id);
+    if (!user) return [];
+    return await this.repository.findByDateRange(startDate, endDate, user.id);
+  }
 }

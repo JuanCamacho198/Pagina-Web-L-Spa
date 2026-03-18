@@ -134,4 +134,74 @@ export class AppointmentRepository {
       revenueThisMonth: revenueResult?.total || '0'
     };
   }
+
+  async findByDateRange(startDate: string, endDate: string, userId?: string) {
+    const conditions = [
+      sql`${appointments.appointmentDate} >= ${startDate}`,
+      sql`${appointments.appointmentDate} <= ${endDate}`,
+      ne(appointments.status, 'cancelled')
+    ];
+
+    if (userId) {
+      conditions.push(eq(appointments.userId, userId));
+    }
+
+    const results = await db
+      .select({
+        id: appointments.id,
+        userId: appointments.userId,
+        serviceId: appointments.serviceId,
+        serviceName: services.name,
+        servicePrice: services.price,
+        serviceDuration: services.duration,
+        appointmentDate: appointments.appointmentDate,
+        appointmentTime: appointments.appointmentTime,
+        status: appointments.status,
+        createdAt: appointments.createdAt,
+        userName: sql<string>`CONCAT(${users.firstName}, ' ', ${users.lastName})`,
+        userEmail: users.email,
+        userPhone: users.phone,
+      })
+      .from(appointments)
+      .leftJoin(services, eq(appointments.serviceId, services.id))
+      .leftJoin(users, eq(appointments.userId, users.id))
+      .where(and(...conditions))
+      .orderBy(appointments.appointmentDate, appointments.appointmentTime);
+
+    return results;
+  }
+
+  async getEmployeeStats(auth0Id: string) {
+    const today = new Date().toISOString().split('T')[0];
+
+    const [stats] = await db
+      .select({
+        totalAppointments: sql<number>`count(*)`,
+        totalHours: sql<number>`COALESCE(SUM(${services.duration}), 0)`,
+        totalRevenue: sql<string>`COALESCE(SUM(${services.price}), '0')`
+      })
+      .from(appointments)
+      .leftJoin(services, eq(appointments.serviceId, services.id))
+      .where(and(
+        eq(appointments.userId, auth0Id),
+        eq(appointments.appointmentDate, today),
+        eq(appointments.status, 'completed')
+      ));
+
+    const [todayCount] = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(appointments)
+      .where(and(
+        eq(appointments.userId, auth0Id),
+        eq(appointments.appointmentDate, today),
+        ne(appointments.status, 'cancelled')
+      ));
+
+    return {
+      totalAppointments: stats?.totalAppointments || 0,
+      totalHours: Number(stats?.totalHours) || 0,
+      totalRevenue: stats?.totalRevenue || '0',
+      todayAppointments: todayCount?.count || 0
+    };
+  }
 }

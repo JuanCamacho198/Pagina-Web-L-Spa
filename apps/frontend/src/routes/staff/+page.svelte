@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { authClient } from '$lib/auth-client';
+	import { authClient, apiClient } from '$lib/auth-client';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
@@ -18,6 +18,25 @@
 
 	const session = authClient.useSession();
 
+	type EmployeeAppointment = {
+		id: string;
+		serviceId: string;
+		serviceName: string;
+		serviceDuration: number;
+		servicePrice: string;
+		appointmentDate: string;
+		appointmentTime: string;
+		status: 'pending' | 'confirmed' | 'cancelled' | 'completed';
+		userName: string;
+		userEmail: string;
+		userPhone: string;
+	};
+
+	let todayBookings = $state<EmployeeAppointment[]>([]);
+	let upcomingBookings = $state<EmployeeAppointment[]>([]);
+	let isLoading = $state(true);
+	let error = $state<string | null>(null);
+
 	// Redirect if not authenticated
 	$effect(() => {
 		if (browser && !$session.isPending && !$session.data) {
@@ -25,86 +44,63 @@
 		}
 	});
 
-	// reactive currentPath removed (not used)
+	// Fetch appointments on mount when session is ready
+	$effect(() => {
+		if (!browser || $session.isPending) return;
+		if (!$session.data?.user?.id) return;
+		
+		fetchAppointments($session.data.user.id);
+	});
+
+	async function fetchAppointments(auth0Id: string) {
+		isLoading = true;
+		error = null;
+		
+		try {
+			const today = new Date().toISOString().split('T')[0];
+			const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+			const nextWeek = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
+
+			const [todayResponse, upcomingResponse] = await Promise.all([
+				apiClient.get<EmployeeAppointment[]>(`/appointments/employee/${auth0Id}?startDate=${today}&endDate=${today}`),
+				apiClient.get<EmployeeAppointment[]>(`/appointments/employee/${auth0Id}?startDate=${tomorrow}&endDate=${nextWeek}`)
+			]);
+
+			todayBookings = todayResponse || [];
+			upcomingBookings = upcomingResponse || [];
+		} catch (err) {
+			console.error('Error fetching appointments:', err);
+			error = 'Error al cargar las citas';
+		} finally {
+			isLoading = false;
+		}
+	}
+
+	async function updateAppointmentStatus(id: string, newStatus: 'confirmed' | 'completed' | 'cancelled') {
+		try {
+			await apiClient.patch(`/appointments/${id}/status`, { status: newStatus });
+			
+			// Refetch appointments to update UI
+			if ($session.data?.user?.id) {
+				await fetchAppointments($session.data.user.id);
+			}
+		} catch (err) {
+			console.error('Error updating appointment status:', err);
+			error = 'Error al actualizar el estado de la cita';
+		}
+	}
 
 	async function handleLogout() {
 		await authClient.signOut();
 		goto('/');
 	}
 
-	// Today's bookings for this employee
-	const todayBookings = [
-		{ 
-			id: '1', 
-			time: '09:00',
-			client: 'María González',
-			service: 'Masaje Relajante',
-			duration: 60,
-			status: 'completed',
-			notes: 'Cliente frecuente'
-		},
-		{ 
-			id: '2', 
-			time: '10:30',
-			client: 'Carlos Ruiz',
-			service: 'Tratamiento Facial',
-			duration: 45,
-			status: 'in-progress',
-			notes: 'Primera vez'
-		},
-		{ 
-			id: '3', 
-			time: '14:00',
-			client: 'Ana López',
-			service: 'Aromaterapia',
-			duration: 90,
-			status: 'confirmed',
-			notes: 'Prefiere aceite de lavanda'
-		},
-		{ 
-			id: '4', 
-			time: '16:00',
-			client: 'Luis Fernando',
-			service: 'Masaje Deportivo',
-			duration: 75,
-			status: 'pending',
-			notes: ''
-		},
-	];
-
-	const upcomingBookings = [
-		{ 
-			id: '5', 
-			date: '15 Mar',
-			time: '10:00',
-			client: 'Sofia Pérez',
-			service: 'Masaje Relajante',
-			duration: 60,
-		},
-		{ 
-			id: '6', 
-			date: '15 Mar',
-			time: '14:00',
-			client: 'Jorge Wilson',
-			service: 'Tratamiento Facial',
-			duration: 45,
-		},
-		{ 
-			id: '7', 
-			date: '16 Mar',
-			time: '11:00',
-			client: 'Laura Díaz',
-			service: 'Aromaterapia',
-			duration: 90,
-		},
-	];
-
 	function getStatusColor(status: string) {
 		switch(status) {
 			case 'completed': return 'bg-emerald-50 text-emerald-600';
-			case 'in-progress': return 'bg-blue-50 text-blue-600';
-			case 'confirmed': return 'bg-purple-50 text-purple-600';
+			case 'confirmed': return 'bg-blue-50 text-blue-600';
 			case 'pending': return 'bg-amber-50 text-amber-600';
+			case 'cancelled': return 'bg-rose-50 text-rose-600';
 			default: return 'bg-gray-50 text-gray-600';
 		}
 	}
@@ -112,11 +108,16 @@
 	function getStatusLabel(status: string) {
 		switch(status) {
 			case 'completed': return 'Completada';
-			case 'in-progress': return 'En progreso';
 			case 'confirmed': return 'Confirmada';
 			case 'pending': return 'Pendiente';
+			case 'cancelled': return 'Cancelada';
 			default: return status;
 		}
+	}
+
+	function formatDate(dateStr: string) {
+		const date = new Date(dateStr);
+		return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }).replace('.', '');
 	}
 </script>
 
@@ -172,117 +173,151 @@
 
 		<main class="p-8">
 			<div class="max-w-6xl mx-auto">
-				<!-- Date Header -->
-				<div class="mb-8">
-					<h2 class="text-2xl font-black text-gray-900 uppercase">Viernes, 14 de Marzo</h2>
-					<p class="text-gray-500">4 citas programadas para hoy</p>
-				</div>
-
-				<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-					<!-- Today's Timeline -->
-					<div class="lg:col-span-2 space-y-6">
-						<h3 class="text-lg font-black text-gray-900 uppercase flex items-center gap-2">
-							<Clock size={20} class="text-primary" />
-							Citas de Hoy
-						</h3>
-
-						<div class="space-y-4">
-							{#each todayBookings as booking}
-								<div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
-									<div class="flex items-start gap-6">
-										<!-- Time -->
-										<div class="w-20 text-center">
-											<p class="text-2xl font-black text-gray-900">{booking.time}</p>
-											<p class="text-xs text-gray-400">{booking.duration} min</p>
-										</div>
-
-										<!-- Content -->
-										<div class="flex-1">
-											<div class="flex items-start justify-between mb-2">
-												<div>
-													<h4 class="text-lg font-black text-gray-900">{booking.client}</h4>
-													<p class="text-gray-500">{booking.service}</p>
-												</div>
-												<span class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest {getStatusColor(booking.status)}">
-													{getStatusLabel(booking.status)}
-												</span>
-											</div>
-											
-											{#if booking.notes}
-												<p class="text-sm text-gray-400 bg-gray-50 rounded-xl p-3 mt-3">
-													{booking.notes}
-												</p>
-											{/if}
-
-											<!-- Actions -->
-											<div class="flex items-center gap-3 mt-4">
-												{#if booking.status === 'pending'}
-													<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-black uppercase tracking-widest hover:bg-primary/90 transition-colors">
-														<Check size={16} />
-														Iniciar
-													</button>
-													<button class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-gray-50 transition-colors">
-														<X size={16} />
-														Cancelar
-													</button>
-												{:else if booking.status === 'in-progress'}
-													<button class="flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-xl text-sm font-black uppercase tracking-widest hover:bg-emerald-600 transition-colors">
-														<Check size={16} />
-														Completar
-													</button>
-												{/if}
-											</div>
-										</div>
-									</div>
-								</div>
-							{/each}
+				{#if isLoading}
+					<div class="flex items-center justify-center py-20">
+						<div class="text-center">
+							<div class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+							<p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Cargando...</p>
 						</div>
 					</div>
+				{:else if error}
+					<div class="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-center">
+						<p class="text-rose-600 font-black">{error}</p>
+					</div>
+				{:else}
+					<!-- Date Header -->
+					<div class="mb-8">
+						<h2 class="text-2xl font-black text-gray-900 uppercase">{new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}</h2>
+						<p class="text-gray-500">{todayBookings.length} citas programadas para hoy</p>
+					</div>
 
-					<!-- Sidebar - Upcoming -->
-					<div class="space-y-6">
-						<h3 class="text-lg font-black text-gray-900 uppercase flex items-center gap-2">
-							<Calendar size={20} class="text-primary" />
-							Próximas Citas
-						</h3>
+					<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+						<!-- Today's Timeline -->
+						<div class="lg:col-span-2 space-y-6">
+							<h3 class="text-lg font-black text-gray-900 uppercase flex items-center gap-2">
+								<Clock size={20} class="text-primary" />
+								Citas de Hoy
+							</h3>
 
-						<div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 space-y-4">
-							{#each upcomingBookings as booking}
-								<div class="p-4 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
-									<div class="flex items-center justify-between mb-2">
-										<span class="text-sm font-black text-gray-900">{booking.date}</span>
-										<span class="text-sm font-medium text-gray-500">{booking.time}</span>
-									</div>
-									<p class="font-black text-gray-700">{booking.client}</p>
-									<p class="text-sm text-gray-500">{booking.service}</p>
+							{#if todayBookings.length === 0}
+								<div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 text-center">
+									<p class="text-gray-500">No hay citas programadas para hoy</p>
 								</div>
-							{/each}
+							{:else}
+								<div class="space-y-4">
+									{#each todayBookings as booking}
+										<div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+											<div class="flex items-start gap-6">
+												<!-- Time -->
+												<div class="w-20 text-center">
+													<p class="text-2xl font-black text-gray-900">{booking.appointmentTime}</p>
+													<p class="text-xs text-gray-400">{booking.serviceDuration} min</p>
+												</div>
+
+												<!-- Content -->
+												<div class="flex-1">
+													<div class="flex items-start justify-between mb-2">
+														<div>
+															<h4 class="text-lg font-black text-gray-900">{booking.userName}</h4>
+															<p class="text-gray-500">{booking.serviceName}</p>
+														</div>
+														<span class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest {getStatusColor(booking.status)}">
+															{getStatusLabel(booking.status)}
+														</span>
+													</div>
+													
+													{#if booking.userPhone}
+														<p class="text-sm text-gray-400 bg-gray-50 rounded-xl p-3 mt-3">
+															Tel: {booking.userPhone}
+														</p>
+													{/if}
+
+													<!-- Actions -->
+													<div class="flex items-center gap-3 mt-4">
+														{#if booking.status === 'pending'}
+															<button 
+																onclick={() => updateAppointmentStatus(booking.id, 'confirmed')}
+																class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-black uppercase tracking-widest hover:bg-primary/90 transition-colors"
+															>
+																<Check size={16} />
+																Iniciar
+															</button>
+															<button 
+																onclick={() => updateAppointmentStatus(booking.id, 'cancelled')}
+																class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-gray-50 transition-colors"
+															>
+																<X size={16} />
+																Cancelar
+															</button>
+														{:else if booking.status === 'confirmed'}
+															<button 
+																onclick={() => updateAppointmentStatus(booking.id, 'completed')}
+																class="flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-xl text-sm font-black uppercase tracking-widest hover:bg-emerald-600 transition-colors"
+															>
+																<Check size={16} />
+																Completar
+															</button>
+														{/if}
+													</div>
+												</div>
+											</div>
+										</div>
+									{/each}
+								</div>
+							{/if}
 						</div>
 
-						<!-- Quick Stats -->
-						<div class="bg-linear-to-br from-primary to-primary/80 rounded-3xl p-6 text-white">
-							<h4 class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-4">Resumen del Día</h4>
-							<div class="grid grid-cols-2 gap-4">
-								<div>
-									<p class="text-3xl font-black">4</p>
-									<p class="text-xs opacity-80">Citas</p>
+						<!-- Sidebar - Upcoming -->
+						<div class="space-y-6">
+							<h3 class="text-lg font-black text-gray-900 uppercase flex items-center gap-2">
+								<Calendar size={20} class="text-primary" />
+								Próximas Citas
+							</h3>
+
+							{#if upcomingBookings.length === 0}
+								<div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 text-center">
+									<p class="text-gray-500 text-sm">No hay citas próximas</p>
 								</div>
-								<div>
-									<p class="text-3xl font-black">4.5h</p>
-									<p class="text-xs opacity-80">Trabajo</p>
+							{:else}
+								<div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 space-y-4">
+									{#each upcomingBookings as booking}
+										<div class="p-4 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
+											<div class="flex items-center justify-between mb-2">
+												<span class="text-sm font-black text-gray-900">{formatDate(booking.appointmentDate)}</span>
+												<span class="text-sm font-medium text-gray-500">{booking.appointmentTime}</span>
+											</div>
+											<p class="font-black text-gray-700">{booking.userName}</p>
+											<p class="text-sm text-gray-500">{booking.serviceName}</p>
+										</div>
+									{/each}
 								</div>
-								<div>
-									<p class="text-3xl font-black">$295k</p>
-									<p class="text-xs opacity-80">Ingresos</p>
-								</div>
-								<div>
-									<p class="text-3xl font-black">3</p>
-									<p class="text-xs opacity-80">Clientes</p>
+							{/if}
+
+							<!-- Quick Stats -->
+							<div class="bg-linear-to-br from-primary to-primary/80 rounded-3xl p-6 text-white">
+								<h4 class="text-[10px] font-black uppercase tracking-widest opacity-80 mb-4">Resumen del Día</h4>
+								<div class="grid grid-cols-2 gap-4">
+									<div>
+										<p class="text-3xl font-black">{todayBookings.length}</p>
+										<p class="text-xs opacity-80">Citas</p>
+									</div>
+									<div>
+										<p class="text-3xl font-black">{todayBookings.reduce((acc, b) => acc + b.serviceDuration, 0) / 60}h</p>
+										<p class="text-xs opacity-80">Trabajo</p>
+									</div>
+									<div>
+										<p class="text-3xl font-black">${todayBookings.reduce((acc, b) => acc + parseFloat(b.servicePrice || '0'), 0).toLocaleString('es-CL')}</p>
+										<p class="text-xs opacity-80">Ingresos</p>
+									</div>
+									<div>
+										<p class="text-3xl font-black">{new Set(todayBookings.map(b => b.userName)).size}</p>
+										<p class="text-xs opacity-80">Clientes</p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				{/if}
 			</div>
 		</main>
 	</div>
