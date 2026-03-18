@@ -1,4 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
+import { locale, waitLocale } from 'svelte-i18n';
+import '$lib/i18n'; // Ensure i18n is initialized
 import { Sentry } from './lib/sentry';
 
 const CSP_REPORT_ONLY = true;
@@ -23,6 +25,38 @@ function buildCSP(nonce: string): string {
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
+  const { url, request, cookies } = event;
+  
+  // Detect language from cookie, or default to 'es'
+  let lang = cookies.get('lang');
+  if (!lang) {
+    const acceptLanguage = request.headers.get('accept-language');
+    lang = acceptLanguage && acceptLanguage.includes('en') ? 'en' : 'es';
+  }
+  
+  // Set locale in Locals
+  event.locals.lang = lang as 'es' | 'en';
+  
+  // Redirect root to /[lang]
+  if (url.pathname === '/') {
+    return new Response(null, {
+      status: 302,
+      headers: { location: `/${lang}` }
+    });
+  }
+
+  // Set the locale for svelte-i18n on the server
+  // Determine if URL has a lang parameter (e.g., /en/about)
+  const pathLang = url.pathname.split('/')[1];
+  if (pathLang === 'en' || pathLang === 'es') {
+    locale.set(pathLang);
+    event.locals.lang = pathLang;
+  } else {
+    locale.set(lang);
+  }
+
+  await waitLocale();
+
   const nonce = generateNonce();
   
   const cspPolicy = buildCSP(nonce);

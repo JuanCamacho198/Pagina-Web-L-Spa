@@ -8,5 +8,5 @@ const defaultLocale = 'es';
 
 init({
 	fallbackLocale: defaultLocale,
-	initialLocale: browser ? getLocaleFromNavigator() : defaultLocale,
+	initialLocale: browser ? window.navigator.language : defaultLocale,
 });

@@ -6,7 +6,10 @@
 	const switchLanguage = (newLocale: string) => {
 		locale.set(newLocale);
 		
-		// Optional: update URL if using [[lang=lang]] routing strategy
+		// Set language cookie
+		document.cookie = `lang=${newLocale}; path=/; max-age=31536000`;
+		
+		// Optional: update URL if using [lang=lang] routing strategy
 		const path = $page.url.pathname;
 		const segments = path.split('/').filter(Boolean);
 		
