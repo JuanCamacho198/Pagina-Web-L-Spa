@@ -64,7 +64,6 @@
 	{#if isOpen}
 		<div
 			class="absolute right-0 top-full mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50"
-			transition:scale={{ duration: 150, start: 0.95 }}
 			transition:fade={{ duration: 150 }}
 		>
 			{#each locales as loc}
