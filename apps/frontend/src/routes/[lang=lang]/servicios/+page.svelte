@@ -66,7 +66,7 @@
 	);
 </script>
 
-<div class="min-h-screen bg-white/50 flex flex-col pt-12 pb-24">
+<div class="servicios-page min-h-screen bg-linear-to-b from-white to-gray-50/50 flex flex-col pt-12 pb-24">
 	<section class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
         <!-- Header -->
         <div class="mb-16">
@@ -141,12 +141,3 @@
 		{/if}
 	</section>
 </div>
-
-<style>
-	:global(body) {
-		background-image: radial-gradient(at 0% 0%, hsla(327, 67%, 33%, 0.03) 0, transparent 50%),
-			radial-gradient(at 50% 0%, hsla(327, 67%, 33%, 0.02) 0, transparent 50%),
-			radial-gradient(at 100% 0%, hsla(327, 67%, 33%, 0.03) 0, transparent 50%);
-		background-attachment: fixed;
-	}
-</style>

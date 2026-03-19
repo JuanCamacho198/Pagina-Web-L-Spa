@@ -15,7 +15,7 @@
   import { seoStore, BASE_URL, SITE_NAME, TWITTER_HANDLE } from '$lib/seo';
   import LanguageSwitcher from '$lib/components/ui/LanguageSwitcher.svelte';
   import '$lib/i18n';
-  import { _ } from 'svelte-i18n';
+  import { _, isLoading } from 'svelte-i18n';
 
   import { page } from '$app/stores';
   import { getLocalizedPath } from '$lib/i18n/utils';
@@ -108,6 +108,15 @@
 </svelte:head>
 
 <QueryClientProvider client={queryClient}>
+  {#if $isLoading}
+    <!-- Loading state while i18n initializes -->
+    <div class="min-h-screen flex items-center justify-center bg-white">
+      <div class="animate-pulse flex flex-col items-center gap-4">
+        <div class="w-12 h-12 bg-primary/20 rounded-xl"></div>
+        <div class="text-primary font-medium">Cargando...</div>
+      </div>
+    </div>
+  {:else}
   <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-black focus:text-xs focus:uppercase focus:tracking-widest">
     {$_('layout.skipToMain')}
   </a>
@@ -132,10 +141,10 @@
       
       <nav class="hidden lg:flex items-center gap-10" aria-label="Navegación principal">
         {#each [
-          { name: $_('nav.services') || 'Servicios', path: getLocalizedPath('/servicios', currentLang) },
+          { name: $_('nav.services'), path: getLocalizedPath('/servicios', currentLang) },
           { name: 'Reservas', path: getLocalizedPath('/informacion-importante', currentLang) },
           { name: 'Sobre Nosotros', path: getLocalizedPath('/sobre-nosotros', currentLang) },
-          { name: $_('nav.contact') || 'Contacto', path: getLocalizedPath('/contacto', currentLang) }
+          { name: $_('nav.contact'), path: getLocalizedPath('/contacto', currentLang) }
         ] as link}
           <a href={link.path} class="text-[10px] font-sans font-black uppercase tracking-[0.3em] text-gray-400 hover:text-primary transition-all duration-500 relative overflow-hidden group">
             {link.name}
@@ -229,6 +238,7 @@
     <Footer {branding} />
   {/if}
 </div>
+{/if}
 <SvelteQueryDevtools initialIsOpen={false} />
 </QueryClientProvider>
 

@@ -1,18 +1,22 @@
 <script lang="ts">
-	import { locale } from 'svelte-i18n';
+	import { locale, _ } from 'svelte-i18n';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { fade, scale } from 'svelte/transition';
-	import { getLocalizedPath } from '$lib/i18n/utils';
+	import { fade } from 'svelte/transition';
 
 	let isOpen = $state(false);
+	let dropdownRef: HTMLDivElement;
 
 	const locales = [
 		{ code: 'es', name: 'Español', flag: '🇪🇸' },
-		{ code: 'en', name: 'English', flag: '🇬🇧' }
+		{ code: 'en', name: 'English', flag: '🇺🇸' }
 	];
 
-	let currentLocale = $derived(locales.find((l) => l.code === $locale) || locales[0]);
+	// Get current locale safely
+	function getCurrentLocale() {
+		const current = $locale;
+		return locales.find((l) => l.code === current) || locales[0];
+	}
 
 	function switchLanguage(newLocale: string) {
 		locale.set(newLocale);
@@ -31,10 +35,12 @@
 		isOpen = false;
 	}
 
+	function toggleDropdown() {
+		isOpen = !isOpen;
+	}
+
 	function handleClickOutside(event: MouseEvent) {
-		const target = event.target as HTMLElement;
-		const switcher = target.closest('.language-switcher');
-		if (isOpen && !switcher) {
+		if (isOpen && dropdownRef && !dropdownRef.contains(event.target as Node)) {
 			isOpen = false;
 		}
 	}
@@ -42,16 +48,17 @@
 
 <svelte:window onclick={handleClickOutside} />
 
-<div class="language-switcher relative">
+<div class="language-switcher relative" bind:this={dropdownRef}>
 	<button
 		type="button"
 		class="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-		onclick={(e) => { e.stopPropagation(); isOpen = !isOpen; }}
+		onclick={toggleDropdown}
 		aria-label="Cambiar idioma"
 		aria-expanded={isOpen}
+		aria-haspopup="listbox"
 	>
-		<span class="text-lg">{currentLocale.flag}</span>
-		<span class="font-medium">{currentLocale.code.toUpperCase()}</span>
+		<span class="text-lg">{getCurrentLocale().flag}</span>
+		<span class="font-medium">{getCurrentLocale().code.toUpperCase()}</span>
 		<svg
 			class="w-4 h-4 transition-transform duration-200 {isOpen ? 'rotate-180' : ''}"
 			fill="none"
@@ -64,19 +71,33 @@
 
 	{#if isOpen}
 		<div
-			class="absolute right-0 top-full mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50"
+			role="listbox"
+			class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-9999"
 			transition:fade={{ duration: 150 }}
 		>
 			{#each locales as loc}
 				<button
 					type="button"
-					class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors {loc.code === $locale ? 'bg-gray-50 dark:bg-gray-700 font-medium' : ''}"
+					role="option"
+					aria-selected={loc.code === $locale}
+					class="w-full flex items-center gap-3 px-4 py-3 text-sm hover:bg-primary/5 dark:hover:bg-gray-700 transition-colors {loc.code === $locale ? 'bg-primary/10 font-semibold text-primary' : 'text-gray-700 dark:text-gray-200'}"
 					onclick={() => switchLanguage(loc.code)}
 				>
-					<span class="text-lg">{loc.flag}</span>
+					<span class="text-xl">{loc.flag}</span>
 					<span>{loc.name}</span>
+					{#if loc.code === $locale}
+						<svg class="ml-auto w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
+							<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+						</svg>
+					{/if}
 				</button>
 			{/each}
 		</div>
 	{/if}
 </div>
+
+<style>
+	.language-switcher {
+		position: relative;
+	}
+</style>
