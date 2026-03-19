@@ -154,8 +154,8 @@
       <nav class="hidden lg:flex items-center gap-10" aria-label="Navegación principal">
         {#each [
           { name: $_('nav.services'), path: getLocalizedPath('/servicios', currentLang) },
-          { name: 'Reservas', path: getLocalizedPath('/informacion-importante', currentLang) },
-          { name: 'Sobre Nosotros', path: getLocalizedPath('/sobre-nosotros', currentLang) },
+          { name: $_('nav.bookings'), path: getLocalizedPath('/informacion-importante', currentLang) },
+          { name: $_('nav.about'), path: getLocalizedPath('/sobre-nosotros', currentLang) },
           { name: $_('nav.contact'), path: getLocalizedPath('/contacto', currentLang) }
         ] as link}
           <a href={link.path} class="text-[10px] font-sans font-black uppercase tracking-[0.3em] text-gray-400 hover:text-primary transition-all duration-500 relative overflow-hidden group">
