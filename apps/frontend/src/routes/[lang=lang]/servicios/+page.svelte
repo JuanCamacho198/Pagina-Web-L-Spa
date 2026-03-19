@@ -15,7 +15,7 @@
 	const servicesQuery = createQuery(() => ({
 		queryKey: ['services'],
 		queryFn: () => apiClient.get<Service[]>('/services'),
-		initialData: data.services,
+		initialData: data?.services ?? [],
 		staleTime: 1000 * 60 * 5,
 	}));
 

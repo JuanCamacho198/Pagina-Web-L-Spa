@@ -6,7 +6,13 @@ register('es', () => import('./locales/es.json'));
 
 const defaultLocale = 'es';
 
+function getInitialLocale(): string {
+	if (!browser) return defaultLocale;
+	const navLang = navigator.language.slice(0, 2);
+	return navLang === 'es' || navLang === 'en' ? navLang : defaultLocale;
+}
+
 init({
 	fallbackLocale: defaultLocale,
-	initialLocale: browser ? window.navigator.language : defaultLocale,
+	initialLocale: getInitialLocale(),
 });

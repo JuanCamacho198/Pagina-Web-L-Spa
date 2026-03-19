@@ -33,7 +33,8 @@
 
 	function handleClickOutside(event: MouseEvent) {
 		const target = event.target as HTMLElement;
-		if (isOpen && !target.closest('.language-switcher')) {
+		const switcher = target.closest('.language-switcher');
+		if (isOpen && !switcher) {
 			isOpen = false;
 		}
 	}
