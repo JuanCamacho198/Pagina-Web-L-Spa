@@ -1,5 +1,9 @@
 <script lang="ts">
 	import { ShieldCheck, Lock, Eye, FileText, ChevronRight } from 'lucide-svelte';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
+
+	let currentLang = $derived($page.params.lang || 'es');
 </script>
 
 <svelte:head>
@@ -103,7 +107,7 @@
 		<!-- Back Link Or Contact -->
 		<div class="text-center">
 			<p class="text-sm text-gray-400 dark:text-gray-500 font-medium">
-				¿Tienes dudas sobre tus datos? <a href="/contacto" class="text-primary font-black hover:underline">Contáctanos directamente.</a>
+				¿Tienes dudas sobre tus datos? <a href={getLocalizedPath('/contacto', currentLang)} class="text-primary font-black hover:underline">Contáctanos directamente.</a>
 			</p>
 		</div>
 	</div>

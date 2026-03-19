@@ -3,6 +3,7 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
 	import { 
 		Calendar, 
 		Users,
@@ -17,6 +18,7 @@
 	} from 'lucide-svelte';
 
 	const session = authClient.useSession();
+	let currentLang = $derived($page.params.lang || 'es');
 
 	type EmployeeAppointment = {
 		id: string;
@@ -326,7 +328,7 @@
 		<div class="text-center">
 			<Shield size={48} class="mx-auto mb-4 text-gray-300" />
 			<p class="text-gray-500">No tienes acceso a este panel</p>
-			<a href="/login" class="text-primary font-black">Iniciar sesión</a>
+			<a href={getLocalizedPath('/login', currentLang)} class="text-primary font-black">Iniciar sesión</a>
 		</div>
 	</div>
 {/if}

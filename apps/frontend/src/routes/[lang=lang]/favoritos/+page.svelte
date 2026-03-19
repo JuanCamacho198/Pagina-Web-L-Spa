@@ -125,7 +125,7 @@
 								</div>
 							</div>
 							
-							<Button href="/servicios/{favorite.serviceId}" class="w-full mt-4">
+							<Button href={getLocalizedPath(`/servicios/${favorite.serviceId}`, currentLang)} class="w-full mt-4">
 								VER DETALLES
 							</Button>
 						</div>

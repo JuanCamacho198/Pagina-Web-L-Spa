@@ -1,9 +1,15 @@
 <script lang="ts">
 	import { cart, cartSubtotal, cartCount } from '$lib/cart';
+	import { authClient } from '$lib/auth-client';
 	import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, Sparkles, ShieldCheck, Heart, ChevronLeft, Lock } from 'lucide-svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
+
+	const session = authClient.useSession();
+	let currentLang = $derived($page.params.lang || 'es');
 
 	const handleCheckout = () => {
 		// Next phase: redirect to booking stepper or flow
@@ -24,7 +30,7 @@
 	<div class="max-w-7xl mx-auto space-y-12">
 		<!-- Back Button -->
 		<a
-			href="/servicios"
+			href={getLocalizedPath('/servicios', currentLang)}
 			class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-all font-bold text-sm mb-1 group uppercase tracking-widest"
 		>
 			<div class="h-10 w-px0 flex items-center justify-center rounded-4xl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
@@ -53,7 +59,7 @@
 					<h2 class="text-3xl font-black text-gray-900 tracking-tight uppercase">Tu carrito está vacío</h2>
 					<p class="text-gray-400 font-medium max-w-sm mx-auto">Explora nuestros rituales y selecciona la experiencia que transformará tu bienestar.</p>
 				</div>
-				<Button href="/servicios" class="px-10 py-5 rounded-full shadow-xl shadow-primary/20">
+				<Button href={getLocalizedPath('/servicios', currentLang)} class="px-10 py-5 rounded-full shadow-xl shadow-primary/20">
 					DESCUBRIR SERVICIOS
 				</Button>
 			</div>
