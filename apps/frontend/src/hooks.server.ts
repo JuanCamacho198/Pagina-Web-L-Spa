@@ -2,6 +2,7 @@ import type { Handle } from '@sveltejs/kit';
 import { locale, waitLocale } from 'svelte-i18n';
 import '$lib/i18n'; // Ensure i18n is initialized
 import { Sentry } from './lib/sentry';
+import { isValidLocale } from '$lib/i18n/utils';
 
 const CSP_REPORT_ONLY = true;
 
@@ -48,6 +49,13 @@ export const handle: Handle = async ({ event, resolve }) => {
   // Set the locale for svelte-i18n on the server
   // Determine if URL has a lang parameter (e.g., /en/about)
   const pathLang = url.pathname.split('/')[1];
+  if (!isValidLocale(pathLang) && pathLang) {
+    const newPath = url.pathname.replace(`/${pathLang}`, '');
+    return new Response(null, {
+      status: 302,
+      headers: { location: `/es${newPath}` }
+    });
+  }
   if (pathLang === 'en' || pathLang === 'es') {
     locale.set(pathLang);
     event.locals.lang = pathLang;

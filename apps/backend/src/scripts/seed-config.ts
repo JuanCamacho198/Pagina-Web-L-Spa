@@ -1,5 +1,5 @@
 import { db, siteConfig } from '@l-spa/database';
-import { sql } from 'drizzle-orm';
+
 
 async function seedSiteConfig() {
   console.log('🌱 Seeding site configuration...\n');
