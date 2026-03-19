@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '../app.css';
+  import '../../app.css';
   import Button from '$lib/components/ui/Button.svelte';
   import Toaster from '$lib/components/feedback/Toast.svelte';
   import Footer from '$lib/components/layout/Footer.svelte';
