@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { locale, _ } from 'svelte-i18n';
+	import { locale } from 'svelte-i18n';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
@@ -51,28 +51,19 @@
 <div class="language-switcher relative" bind:this={dropdownRef}>
 	<button
 		type="button"
-		class="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+		class="flex items-center justify-center w-10 h-10 text-lg rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
 		onclick={toggleDropdown}
 		aria-label="Cambiar idioma"
 		aria-expanded={isOpen}
 		aria-haspopup="listbox"
 	>
-		<span class="text-lg">{getCurrentLocale().flag}</span>
-		<span class="font-medium">{getCurrentLocale().code.toUpperCase()}</span>
-		<svg
-			class="w-4 h-4 transition-transform duration-200 {isOpen ? 'rotate-180' : ''}"
-			fill="none"
-			stroke="currentColor"
-			viewBox="0 0 24 24"
-		>
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-		</svg>
+		{getCurrentLocale().flag}
 	</button>
 
 	{#if isOpen}
 		<div
 			role="listbox"
-			class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-9999"
+			class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-[9999]"
 			transition:fade={{ duration: 150 }}
 		>
 			{#each locales as loc}
