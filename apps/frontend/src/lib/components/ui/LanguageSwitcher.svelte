@@ -53,7 +53,7 @@
 		type="button"
 		class="flex items-center justify-center w-10 h-10 text-lg rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
 		onclick={toggleDropdown}
-		aria-label="Cambiar idioma"
+		aria-label="Change language"
 		aria-expanded={isOpen}
 		aria-haspopup="listbox"
 	>
@@ -63,7 +63,7 @@
 	{#if isOpen}
 		<div
 			role="listbox"
-			class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-[9999]"
+			class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-9999"
 			transition:fade={{ duration: 150 }}
 		>
 			{#each locales as loc}

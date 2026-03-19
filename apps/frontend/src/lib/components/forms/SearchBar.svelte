@@ -1,9 +1,10 @@
 <script lang="ts">
   import { cn } from '$lib/utils/cn';
+  import { _ } from 'svelte-i18n';
 
   let { 
     value = $bindable(), 
-    placeholder = "Buscar...", 
+    placeholder = $_('common.search') || 'Buscar...', 
     class: className = "" 
   } = $props();
 </script>

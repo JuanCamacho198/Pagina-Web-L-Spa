@@ -8,6 +8,7 @@
 	import { Filter, SortAsc, ChevronDown } from 'lucide-svelte';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { apiClient } from '$lib/api';
+	import { _ } from 'svelte-i18n';
 	import type { Service } from '@l-spa/shared-types';
 
 	let { data } = $props();
@@ -22,33 +23,33 @@
 	let services = $derived(servicesQuery.data || []);
 
 	let searchTerm = $state('');
-	let selectedCategory = $state('Todos');
+	let selectedCategory = $state($_('services.allCategories'));
 	let sortOption = $state('default');
 
-	const categories = $derived(['Todos', ...new Set(services.map((s) => s.category || 'General'))]);
+	const categories = $derived([$_('services.allCategories'), ...new Set(services.map((s) => s.category || 'General'))]);
 
 	const filteredServices = $derived(
 		services
 			.filter((s) => {
 				const matchesSearch = s.name.toLowerCase().includes(searchTerm.toLowerCase());
-				const matchesCategory = selectedCategory === 'Todos' || (s.category || 'General') === selectedCategory;
+				const matchesCategory = selectedCategory === $_('services.allCategories') || (s.category || 'General') === selectedCategory;
 				return matchesSearch && matchesCategory;
 			})
 			.sort((a, b) => {
-				if (sortOption === 'nombre-asc') return a.name.localeCompare(b.name);
-				if (sortOption === 'nombre-desc') return b.name.localeCompare(a.name);
-				if (sortOption === 'precio-asc') return Number(a.price) - Number(b.price);
-				if (sortOption === 'precio-desc') return Number(b.price) - Number(a.price);
+				if (sortOption === 'nameAsc') return a.name.localeCompare(b.name);
+				if (sortOption === 'nameDesc') return b.name.localeCompare(a.name);
+				if (sortOption === 'priceAsc') return Number(a.price) - Number(b.price);
+				if (sortOption === 'priceDesc') return Number(b.price) - Number(a.price);
 				return 0;
 			})
 	);
 
 	const sortOptions = [
-		{ label: 'Destacados', value: 'default' },
-		{ label: 'Nombre A-Z', value: 'nombre-asc' },
-		{ label: 'Nombre Z-A', value: 'nombre-desc' },
-		{ label: 'Precio: Menor a Mayor', value: 'precio-asc' },
-		{ label: 'Precio: Mayor a Menor', value: 'precio-desc' }
+		{ label: $_('services.sort.featured'), value: 'default' },
+		{ label: $_('services.sort.nameAsc'), value: 'nameAsc' },
+		{ label: $_('services.sort.nameDesc'), value: 'nameDesc' },
+		{ label: $_('services.sort.priceAsc'), value: 'priceAsc' },
+		{ label: $_('services.sort.priceDesc'), value: 'priceDesc' }
 	];
 
 	const categoryDropdownItems = $derived(
@@ -61,7 +62,7 @@
 	const sortDropdownItems = $derived(
 		sortOptions.map((opt) => ({
 			label: opt.label,
-			onClick: () => { sortOption = opt.value; }
+			onClick: () => { sortOption = opt.value }
 		}))
 	);
 </script>
@@ -70,8 +71,8 @@
 	<section class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
         <!-- Header -->
         <div class="mb-16">
-            <Typography variant="h1" class="text-gray-900 mb-4">Nuestros <span class="text-primary italic">Servicios</span></Typography>
-            <p class="text-gray-500 max-w-2xl font-medium">Descubre una selección curada de experiencias diseñadas para rejuvenecer tu cuerpo y alma.</p>
+            <Typography variant="h1" class="text-gray-900 mb-4">{$_('services.title')}</Typography>
+            <p class="text-gray-500 max-w-2xl font-medium">{$_('services.subtitle')}</p>
         </div>
 
 		<!-- Filters -->
@@ -79,7 +80,7 @@
 			class="bg-white/80 backdrop-blur-2xl rounded-[40px] shadow-2xl shadow-primary/5 border border-white/50 p-8 mb-16 flex flex-col lg:flex-row gap-8 items-center justify-between transition-all duration-500 hover:shadow-primary/10"
 		>
 			<div class="w-full lg:max-w-md">
-				<SearchBar bind:value={searchTerm} placeholder="¿Qué experiencia buscas?..." />
+				<SearchBar bind:value={searchTerm} />
 			</div>
 
 			<div class="flex flex-wrap gap-4 w-full lg:w-auto items-center justify-center lg:justify-end">
@@ -102,7 +103,7 @@
 					<Dropdown items={sortDropdownItems}>
 						{#snippet trigger()}
 							<span class="flex items-center gap-3 font-bold text-gray-700 text-sm py-1 px-2 outline-none cursor-pointer">
-								{sortOptions.find((o) => o.value === sortOption)?.label || 'Ordenar'}
+								{sortOptions.find((o) => o.value === sortOption)?.label || $_('services.sort.sortBy')}
 								<ChevronDown size={16} class="text-primary opacity-50" />
 							</span>
 						{/snippet}
@@ -124,18 +125,18 @@
 				<div class="w-24 h-24 bg-primary/5 rounded-full flex items-center justify-center mx-auto mb-8">
 					<Filter size={48} class="text-primary/20" />
 				</div>
-				<Typography variant="h3" class="text-gray-900 font-bold mb-4">No encontramos servicios</Typography>
+				<Typography variant="h3" class="text-gray-900 font-bold mb-4">{$_('services.noResults.title')}</Typography>
 				<p class="text-gray-500 font-medium mb-10 max-w-md mx-auto">
-					No hay resultados para "{searchTerm}" en {selectedCategory}. Intenta con otros filtros.
+					{$_('services.noResults.description').replace('{search}', searchTerm).replace('{category}', selectedCategory)}
 				</p>
 				<Button
 					onclick={() => {
 						searchTerm = '';
-						selectedCategory = 'Todos';
+						selectedCategory = $_('services.allCategories');
 					}}
 					class="rounded-2xl px-8 py-4 font-bold"
 				>
-					Limpiar Filtros
+					{$_('services.noResults.clearFilters')}
 				</Button>
 			</div>
 		{/if}

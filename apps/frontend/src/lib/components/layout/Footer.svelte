@@ -3,6 +3,7 @@
   import { page } from '$app/stores';
   import { getLocalizedPath } from '$lib/i18n/utils';
   import { getBrandingWithDefaults, DEFAULT_BRANDING, type BrandingConfig } from '$lib/config/branding';
+  import { _ } from 'svelte-i18n';
   import logoImage from '$lib/assets/logos/LOGO4x-sinfondo.png';
 
   // Accept branding prop or load defaults
@@ -72,55 +73,55 @@
 
       <!-- Contact Section -->
       <div>
-        <h4 class={sectionTitleClass}>Contacto</h4>
+        <h4 class={sectionTitleClass}>{$_('footer.contactSection.title')}</h4>
         <ul class="space-y-3">
           <li class="flex items-start gap-3 text-sm text-gray-400">
             <MapPin size={18} class="text-primary shrink-0" />
-            <span>Calle 87c#23-52</span>
+            <span>{$_('footer.contactSection.address')}</span>
           </li>
           <li class="flex items-center gap-3 text-sm text-gray-400">
             <Phone size={18} class="text-primary shrink-0" />
-            <span>(123) 456-7890</span>
+            <span>{$_('footer.contactSection.phone')}</span>
           </li>
           <li class="flex items-center gap-3 text-sm text-gray-400">
             <Mail size={18} class="text-primary shrink-0" />
-            <a href="mailto:contacto@l-spa.com" class="hover:text-white">contacto@l-spa.com</a>
+            <a href="mailto:contacto@l-spa.com" class="hover:text-white">{$_('footer.contactSection.email')}</a>
           </li>
         </ul>
       </div>
 
       <!-- Hours Section -->
       <div>
-        <h4 class={sectionTitleClass}>Horario de Atención</h4>
+        <h4 class={sectionTitleClass}>{$_('footer.hoursSection.title')}</h4>
         <ul class="space-y-2">
           <li class="flex items-center gap-3 text-sm text-gray-400">
             <Clock size={16} class="text-primary" />
             <div class="flex flex-col">
-              <span>Lunes a Viernes</span>
-              <span class="text-white font-medium">9:00 AM - 7:00 PM</span>
+              <span>{$_('footer.hoursSection.weekdays')}</span>
+              <span class="text-white font-medium">{$_('footer.hoursSection.weekdaysTime')}</span>
             </div>
           </li>
           <li class="flex flex-col gap-1 text-sm text-gray-400 pl-7">
-            <span>Sábado</span>
-            <span class="text-white font-medium">9:00 AM - 4:00 PM</span>
+            <span>{$_('footer.hoursSection.saturday')}</span>
+            <span class="text-white font-medium">{$_('footer.hoursSection.saturdayTime')}</span>
           </li>
           <li class="flex flex-col gap-1 text-sm text-gray-400 pl-7">
-            <span>Domingo</span>
-            <span class="text-red-400 font-medium">Cerrado</span>
+            <span>{$_('footer.hoursSection.sunday')}</span>
+            <span class="text-red-400 font-medium">{$_('footer.hoursSection.closed')}</span>
           </li>
         </ul>
       </div>
 
       <!-- Navigation Section -->
       <div>
-        <h4 class={sectionTitleClass}>Información</h4>
+        <h4 class={sectionTitleClass}>{$_('footer.infoSection.title')}</h4>
         <ul class="space-y-2">
-          <li><a href={getLocalizedPath('/politicas/cancelacion', currentLang)} class={linkClass}>Políticas de Cancelación</a></li>
-          <li><a href={getLocalizedPath('/politicas/datos', currentLang)} class={linkClass}>Tratamiento de Datos</a></li>
-          <li><a href={getLocalizedPath('/informacion-importante', currentLang)} class={linkClass}>Información de Reserva</a></li>
-          <li><a href={getLocalizedPath('/preguntas-frecuentes', currentLang)} class={linkClass}>Preguntas Frecuentes</a></li>
-          <li class="pt-2"><a href={getLocalizedPath('/politicas/cookies', currentLang)} class={linkClass}>Cookies</a></li>
-          <li><a href={getLocalizedPath('/politicas/privacidad', currentLang)} class={linkClass}>Privacidad</a></li>
+          <li><a href={getLocalizedPath('/politicas/cancelacion', currentLang)} class={linkClass}>{$_('footer.infoSection.cancellationPolicy')}</a></li>
+          <li><a href={getLocalizedPath('/politicas/datos', currentLang)} class={linkClass}>{$_('footer.infoSection.dataTreatment')}</a></li>
+          <li><a href={getLocalizedPath('/informacion-importante', currentLang)} class={linkClass}>{$_('footer.infoSection.bookingInfo')}</a></li>
+          <li><a href={getLocalizedPath('/preguntas-frecuentes', currentLang)} class={linkClass}>{$_('footer.infoSection.faq')}</a></li>
+          <li class="pt-2"><a href={getLocalizedPath('/politicas/cookies', currentLang)} class={linkClass}>{$_('footer.infoSection.cookies')}</a></li>
+          <li><a href={getLocalizedPath('/politicas/privacidad', currentLang)} class={linkClass}>{$_('footer.infoSection.privacy')}</a></li>
         </ul>
       </div>
 
@@ -128,7 +129,7 @@
 
     <div class="pt-8 mt-8 border-t border-gray-800 text-center">
       <p class="text-gray-500 text-xs">
-        © {currentYear} L-Spa. Todos los derechos reservados.
+        © {currentYear} L-Spa. {$_('footer.rights')}
       </p>
     </div>
   </div>

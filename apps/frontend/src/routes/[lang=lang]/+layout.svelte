@@ -125,7 +125,7 @@
     <div class="min-h-screen flex items-center justify-center bg-white">
       <div class="animate-pulse flex flex-col items-center gap-4">
         <div class="w-12 h-12 bg-primary/20 rounded-xl"></div>
-        <div class="text-primary font-medium">Cargando...</div>
+        <div class="text-primary font-medium">{$_('common.loading')}</div>
       </div>
     </div>
   {:else}
@@ -171,7 +171,7 @@
         <button 
           onclick={handleToggleTheme}
           class="p-2 text-gray-400 hover:text-primary dark:text-gray-400 dark:hover:text-yellow-400 transition-colors duration-500 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-          aria-label="Cambiar tema"
+          aria-label="Toggle theme"
         >
           {#if currentTheme === 'dark'}
             <Moon size={24} aria-hidden="true" />
@@ -181,7 +181,7 @@
         </button>
 
         <!-- Shopping Cart Icon -->
-        <a href={getLocalizedPath('/carrito', currentLang)} class="relative p-2 text-gray-400 hover:text-primary transition-colors duration-500 group" aria-label={currentCartCount > 0 ? `Carrito (${currentCartCount} artículos)` : 'Ver carrito de compras'}>
+        <a href={getLocalizedPath('/carrito', currentLang)} class="relative p-2 text-gray-400 hover:text-primary transition-colors duration-500 group" aria-label={currentCartCount > 0 ? `${currentCartCount} items in cart` : 'View shopping cart'}>
           <ShoppingCart size={24} />
           {#if currentCartCount > 0}
             <span class="absolute top-0 right-0 w-5 h-5 bg-primary text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white scale-100 group-hover:scale-110 transition-transform">
@@ -205,30 +205,30 @@
             {#if isUserMenuOpen}
               <div class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 z-9999">
                 <div class="p-6 border-b border-gray-50 dark:border-gray-700 mb-3 text-center">
-                   <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Tu Cuenta Premium</p>
+                   <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">{$_('profile.roles.client')}</p>
                    <p class="text-sm font-black text-gray-900 dark:text-white truncate">{$session.data?.user.email}</p>
                 </div>
                 <div class="space-y-1">
                   <a href={getLocalizedPath('/perfil', currentLang)} onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
-                    <User size={16} /> Perfil
+                    <User size={16} /> {$_('nav.profile')}
                   </a>
                   <a href={getLocalizedPath('/mis-reservas', currentLang)} onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
-                    <Calendar size={16} /> Mis Citas
+                    <Calendar size={16} /> {$_('nav.bookings')}
                   </a>
                   <a href={getLocalizedPath('/favoritos', currentLang)} onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
-                    <Heart size={16} /> Favoritos
+                    <Heart size={16} /> {$_('nav.favorites')}
                   </a>
                   <!-- Admin/Staff Links -->
                   <div class="border-t border-gray-100 dark:border-gray-700 my-2 pt-2">
                     <a href="/staff" onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
-                      <Scissors size={16} /> Panel Empleado
+                      <Scissors size={16} /> Staff Panel
                     </a>
                     <a href="/admin" onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
-                      <LayoutDashboard size={16} /> Panel Admin
+                      <LayoutDashboard size={16} /> Admin Panel
                     </a>
                   </div>
                   <button type="button" onclick={() => { authClient.signOut(); isUserMenuOpen = false; }} class="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-2xl transition-all">
-                    <LogOut size={16} /> Cerrar Sesión
+                    <LogOut size={16} /> {$_('nav.logout')}
                   </button>
                 </div>
               </div>
@@ -236,10 +236,10 @@
           </div>
         {:else}
           <a href={getLocalizedPath('/login', currentLang)} class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-500 px-4">
-            LOGIN
+            {$_('nav.login')}
           </a>
           <a href={getLocalizedPath('/registro', currentLang)} class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-white bg-primary hover:bg-primary/90 transition-all duration-500 px-6 py-3 rounded-full shadow-lg shadow-primary/20">
-            REGISTRO
+            {$_('auth.register.title')}
           </a>
           
         {/if}
