@@ -33,8 +33,7 @@
     "test:e2e": "echo 'Use Playwright MCP for E2E tests'",
     "test:all": "bun test:run && bun test:e2e",
     "release": "semantic-release",
-    "release:dry": "semantic-release --dry-run",
-    "prepare": "husky install"
+    "release:dry": "semantic-release --dry-run"
   },
   "type": "module",
   "workspaces": [
