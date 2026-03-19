@@ -18,10 +18,13 @@
   import { _ } from 'svelte-i18n';
 
   import { page } from '$app/stores';
+  import { getLocalizedPath } from '$lib/i18n/utils';
   
   let { data, children } = $props();
   const session = authClient.useSession();
   const queryClient = new QueryClient();
+  
+  let currentLang = $derived($page.params.lang || 'es');
   
   // Check if we're in admin section
   let isAdminSection = $derived($page.url.pathname.startsWith('/admin'));
@@ -111,7 +114,7 @@
   <div class="app-container min-h-screen flex flex-col font-sans selection:bg-primary/10">
     <header class="navbar bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-secondary/30 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
     <div class="max-w-7xl mx-auto flex justify-between items-center w-full">
-      <a href="/" class="group flex items-center gap-3">
+      <a href={getLocalizedPath('/', currentLang)} class="group flex items-center gap-3">
         {#if branding.customLogo}
           <img 
             src={branding.customLogo} 
@@ -129,10 +132,10 @@
       
       <nav class="hidden lg:flex items-center gap-10" aria-label="Navegación principal">
         {#each [
-          { name: $_('nav.services') || 'Servicios', path: '/servicios' },
-          { name: 'Reservas', path: '/informacion-importante' },
-          { name: 'Sobre Nosotros', path: '/sobre-nosotros' },
-          { name: $_('nav.contact') || 'Contacto', path: '/contacto' }
+          { name: $_('nav.services') || 'Servicios', path: getLocalizedPath('/servicios', currentLang) },
+          { name: 'Reservas', path: getLocalizedPath('/informacion-importante', currentLang) },
+          { name: 'Sobre Nosotros', path: getLocalizedPath('/sobre-nosotros', currentLang) },
+          { name: $_('nav.contact') || 'Contacto', path: getLocalizedPath('/contacto', currentLang) }
         ] as link}
           <a href={link.path} class="text-[10px] font-sans font-black uppercase tracking-[0.3em] text-gray-400 hover:text-primary transition-all duration-500 relative overflow-hidden group">
             {link.name}
@@ -157,7 +160,7 @@
         </button>
 
         <!-- Shopping Cart Icon -->
-        <a href="/carrito" class="relative p-2 text-gray-400 hover:text-primary transition-colors duration-500 group" aria-label={currentCartCount > 0 ? `Carrito (${currentCartCount} artículos)` : 'Ver carrito de compras'}>
+        <a href={getLocalizedPath('/carrito', currentLang)} class="relative p-2 text-gray-400 hover:text-primary transition-colors duration-500 group" aria-label={currentCartCount > 0 ? `Carrito (${currentCartCount} artículos)` : 'Ver carrito de compras'}>
           <ShoppingCart size={24} />
           {#if currentCartCount > 0}
             <span class="absolute top-0 right-0 w-5 h-5 bg-primary text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white scale-100 group-hover:scale-110 transition-transform">
@@ -181,13 +184,13 @@
                  <p class="text-sm font-black text-gray-900 dark:text-white truncate">{$session.data?.user.email}</p>
               </div>
               <div class="space-y-1">
-                <a href="/perfil" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
+                <a href={getLocalizedPath('/perfil', currentLang)} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
                   <User size={16} /> Perfil
                 </a>
-                <a href="/mis-reservas" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
+                <a href={getLocalizedPath('/mis-reservas', currentLang)} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
                   <Calendar size={16} /> Mis Citas
                 </a>
-                <a href="/favoritos" class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
+                <a href={getLocalizedPath('/favoritos', currentLang)} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
                   <Heart size={16} /> Favoritos
                 </a>
                 <!-- Admin/Staff Links -->
@@ -206,10 +209,10 @@
             </div>
           </div>
         {:else}
-          <a href="/login" class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-500 px-4">
+          <a href={getLocalizedPath('/login', currentLang)} class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-500 px-4">
             LOGIN
           </a>
-          <a href="/registro" class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-white bg-primary hover:bg-primary/90 transition-all duration-500 px-6 py-3 rounded-full shadow-lg shadow-primary/20">
+          <a href={getLocalizedPath('/registro', currentLang)} class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-white bg-primary hover:bg-primary/90 transition-all duration-500 px-6 py-3 rounded-full shadow-lg shadow-primary/20">
             REGISTRO
           </a>
           

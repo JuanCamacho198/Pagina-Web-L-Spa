@@ -5,8 +5,12 @@
   import { onMount } from 'svelte';
   import bannerImage from '$lib/assets/banners/bannerSpa.avif';
   import { seoStore, BASE_URL } from '$lib/seo';
+  import { page } from '$app/stores';
+  import { getLocalizedPath } from '$lib/i18n/utils';
 
   let { data } = $props();
+  
+  let currentLang = $derived($page.params.lang || 'es');
   
   // Set homepage metadata
   $effect(() => {
@@ -82,7 +86,7 @@
         </div>
 
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 pt-8">
-          <Button href="/servicios" class="w-full sm:w-auto px-8 sm:px-10 py-5 rounded-full text-sm font-semibold uppercase tracking-widest shadow-2xl bg-primary hover:bg-primary-light transition-colors group overflow-hidden relative whitespace-nowrap">
+            <Button href={getLocalizedPath('/servicios', currentLang)} class="w-full sm:w-auto px-8 sm:px-10 py-5 rounded-full text-sm font-semibold uppercase tracking-widest shadow-2xl bg-primary hover:bg-primary-light transition-colors group overflow-hidden relative whitespace-nowrap">
             <span class="relative z-10 flex items-center justify-center gap-3">
               Explorar Servicios
               <MoveRight size={20} class="group-hover:translate-x-2 transition-transform duration-500" />
@@ -97,7 +101,7 @@
               <span class="whitespace-nowrap">INICIAR SESIÓN</span>
             </button>
           {:else}
-            <a href="/sobre-nosotros" class="group flex items-center gap-3 sm:gap-4 text-white font-semibold text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:text-primary-light transition-colors">
+            <a href={getLocalizedPath('/sobre-nosotros', currentLang)} class="group flex items-center gap-3 sm:gap-4 text-white font-semibold text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:text-primary-light transition-colors">
               <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 shrink-0">
                 <ChevronRight size={18} />
               </div>
@@ -172,7 +176,7 @@
           <h2 class="text-4xl sm:text-5xl font-serif text-gray-900 dark:text-white mb-6">Nuestros Servicios</h2>
           <p class="text-gray-600 dark:text-gray-400 text-lg font-light leading-relaxed">Experiencias sensoriales diseñadas para tu bienestar absoluto.</p>
         </div>
-        <a href="/servicios" class="group flex items-center gap-3 px-8 py-4 bg-white dark:bg-gray-700 text-primary font-semibold uppercase tracking-widest text-xs rounded-full hover:bg-primary hover:text-white transition-all shadow-md">
+        <a href={getLocalizedPath('/servicios', currentLang)} class="group flex items-center gap-3 px-8 py-4 bg-white dark:bg-gray-700 text-primary font-semibold uppercase tracking-widest text-xs rounded-full hover:bg-primary hover:text-white transition-all shadow-md">
           Ver Catálogo
           <MoveRight size={16} class="group-hover:translate-x-2 transition-transform" />
         </a>
@@ -198,7 +202,7 @@
               <p class="text-gray-600 dark:text-gray-400 text-sm font-light leading-relaxed mb-8 flex-1">
                 {service.description}
               </p>
-              <Button href="/servicios" class="w-full rounded-full py-4 font-semibold uppercase tracking-widest text-xs bg-gray-100 text-gray-900 hover:bg-primary hover:text-white dark:bg-gray-800 dark:text-white transition-all">
+              <Button href={getLocalizedPath('/servicios', currentLang)} class="w-full rounded-full py-4 font-semibold uppercase tracking-widest text-xs bg-gray-100 text-gray-900 hover:bg-primary hover:text-white dark:bg-gray-800 dark:text-white transition-all">
                 Reservar
               </Button>
             </div>

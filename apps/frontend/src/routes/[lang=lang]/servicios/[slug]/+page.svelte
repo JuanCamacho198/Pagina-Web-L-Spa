@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/state';
+	import { page as pageStore } from '$app/stores';
 	import { cn } from '$lib/utils/cn';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Typography from '$lib/components/ui/Typography.svelte';
@@ -11,6 +11,7 @@
 	import { cart } from '$lib/cart';
 	import { addToFavorites, checkIsFavorite, removeFromFavorites } from '$lib/favorites';
 	import { onMount } from 'svelte';
+	import { getLocalizedPath } from '$lib/i18n/utils';
 	import { 
 		ShoppingCart, 
 		Clock,  
@@ -27,6 +28,8 @@
 	let { data } = $props();
 	let service = $derived(data.service);
 	let recommendations = $derived(data.recommendations || []);
+
+	let currentLang = $derived($pageStore.params.lang || 'es');
 
 	let isAddingToCart = $state(false);
 	let isFavorite = $state(false);
@@ -49,7 +52,7 @@
 		try {
 			await cart.addItem({
 				serviceId: service.id,
-				slug: page.params.slug,
+				slug: $pageStore.params.slug,
 				name: service.name,
 				price: Number(service.price),
 				image: service.imageUrl || service.image_url || ''
@@ -98,9 +101,9 @@
 	<div class="max-w-7xl mx-auto px-6 lg:px-8">
 		<!-- Navigation -->
 		<nav class="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] mb-12 animate-in fade-in duration-700">
-			<a href="/" class="text-gray-400 hover:text-primary transition-colors">Inicio</a>
+			<a href={getLocalizedPath('/', currentLang)} class="text-gray-400 hover:text-primary transition-colors">Inicio</a>
 			<span class="text-gray-200">/</span>
-			<a href="/servicios" class="text-gray-400 hover:text-primary transition-colors">Catálogo</a>
+			<a href={getLocalizedPath('/servicios', currentLang)} class="text-gray-400 hover:text-primary transition-colors">Catálogo</a>
 			<span class="text-gray-200">/</span>
 			<span class="text-primary">{service.name}</span>
 		</nav>
@@ -270,7 +273,7 @@
 					</Typography>
 					<p class="text-gray-500 font-medium">Otras experiencias exclusivas diseñadas para elevar tu bienestar.</p>
 				</div>
-				<Button variant="ghost" href="/servicios" class="font-bold uppercase tracking-widest text-xs group">
+				<Button variant="ghost" href={getLocalizedPath('/servicios', currentLang)} class="font-bold uppercase tracking-widest text-xs group">
 					Ver catálogo completo
 					<ChevronLeft size={16} class="ml-2 rotate-180 transition-transform group-hover:translate-x-1" />
 				</Button>

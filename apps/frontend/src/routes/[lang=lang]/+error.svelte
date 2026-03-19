@@ -2,10 +2,12 @@
   import { page } from '$app/stores';
   import { isAppError, type AppError } from '$lib/errors/types';
   import { ShieldX, Home, RefreshCw, Wifi, WifiOff, Lock, Server, AlertTriangle } from 'lucide-svelte';
+  import { getLocalizedPath } from '$lib/i18n/utils';
 
   let { error } = $props();
 
   let isDev = $derived(import.meta.env.DEV);
+  let currentLang = $derived($page.params.lang || 'es');
   
   let errorData = $derived.by(() => {
     if (!error) return null;
@@ -132,7 +134,7 @@
       </button>
       
       <a
-        href="/"
+        href={getLocalizedPath('/', currentLang)}
         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-black text-sm uppercase tracking-wider rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
       >
         <Home size={18} />
