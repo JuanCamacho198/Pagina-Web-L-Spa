@@ -203,7 +203,7 @@
             </button>
             
             {#if isUserMenuOpen}
-              <div class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 z-[9999]">
+              <div class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 z-9999">
                 <div class="p-6 border-b border-gray-50 dark:border-gray-700 mb-3 text-center">
                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Tu Cuenta Premium</p>
                    <p class="text-sm font-black text-gray-900 dark:text-white truncate">{$session.data?.user.email}</p>
