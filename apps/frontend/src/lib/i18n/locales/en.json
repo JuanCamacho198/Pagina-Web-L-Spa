@@ -4,12 +4,608 @@
     "services": "Services",
     "contact": "Contact",
     "login": "Login",
-    "profile": "Profile"
+    "profile": "Profile",
+    "logout": "Logout",
+    "about": "About Us",
+    "bookings": "Bookings",
+    "cart": "Cart",
+    "favorites": "Favorites"
   },
   "home": {
-    "title": "Welcome to L-SPA"
+    "title": "Welcome to L-SPA",
+    "hero": {
+      "badge": "L-SPA PREMIUM EXPERIENCE",
+      "headline": "An oasis of relaxation in Medellín",
+      "subtitle": "Discover a unique wellness and beauty experience designed for your total renewal. Your moment of peace begins here.",
+      "exploreServices": "Explore Services",
+      "login": "LOGIN",
+      "knowUs": "Get to Know Us"
+    },
+    "features": {
+      "quality": {
+        "title": "Premium Quality",
+        "description": "Exclusive and personalized treatments with international standards."
+      },
+      "time": {
+        "title": "Your Time",
+        "description": "Schedule flexibility designed to adapt to your lifestyle."
+      },
+      "location": {
+        "title": "Ideal Location",
+        "description": "A peaceful refuge accessible in the heart of Medellín."
+      }
+    },
+    "facilities": {
+      "title": "Our Facilities",
+      "badge": "Premium Wellness",
+      "headline": "Peace and Renewal Atmosphere"
+    },
+    "services": {
+      "title": "Our Services",
+      "subtitle": "Sensory experiences designed for your absolute well-being.",
+      "viewCatalog": "View Catalog",
+      "book": "Book",
+      "minutes": "{minutes} MINUTES"
+    }
   },
   "layout": {
     "skipToMain": "Skip to main content"
+  },
+  "services": {
+    "title": "Services",
+    "subtitle": "Discover a curated selection of experiences designed to rejuvenate your body and soul.",
+    "bookNow": "Book now",
+    "viewDetails": "View details",
+    "allCategories": "All",
+    "sort": {
+      "featured": "Featured",
+      "nameAsc": "Name A-Z",
+      "nameDesc": "Name Z-A",
+      "priceAsc": "Price: Low to High",
+      "priceDesc": "Price: High to Low",
+      "sortBy": "Sort by"
+    },
+    "search": {
+      "placeholder": "What experience are you looking for?"
+    },
+    "filters": {
+      "category": "Category",
+      "sort": "Sort"
+    },
+    "noResults": {
+      "title": "No services found",
+      "description": "No results for \"{search}\" in {category}. Try other filters.",
+      "clearFilters": "Clear Filters"
+    }
+  },
+  "serviceDetail": {
+    "breadcrumb": {
+      "home": "Home",
+      "catalog": "Catalog"
+    },
+    "title": "Service Details",
+    "elite": "Elite",
+    "rating": "{rating}",
+    "experiences": "+{count} EXPERIENCES",
+    "description": "Description",
+    "sessionComplete": "Complete Session",
+    "guarantee": "L-SPA Guarantee",
+    "investment": "/ Investment",
+    "addToCart": "Add to Cart",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites",
+    "bookNow": "BOOK NOW",
+    "features": {
+      "personalizedAttention": "Personalized Attention",
+      "relaxingEnvironment": "Relaxing Environment",
+      "holisticWellness": "Holistic Wellness"
+    },
+    "recommendations": {
+      "title": "You might also like",
+      "subtitle": "Other exclusive experiences designed to elevate your well-being.",
+      "viewCatalog": "View full catalog"
+    },
+    "toast": {
+      "addedToCart": "{name} added to cart",
+      "couldNotAddToCart": "Could not add to cart",
+      "addedToFavorites": "{name} added to favorites",
+      "removedFromFavorites": "{name} removed from favorites",
+      "errorUpdatingFavorites": "Error updating favorites"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Do you have questions or want to schedule a personalized experience? Our team of experts is ready to advise you on your wellness journey.",
+    "hero": {
+      "badge": "Contact Channels",
+      "headline": "WE ARE HERE TO LISTEN"
+    },
+    "cards": {
+      "email": {
+        "title": "Email"
+      },
+      "whatsapp": {
+        "title": "WhatsApp Business"
+      },
+      "location": {
+        "title": "Our Location"
+      }
+    },
+    "hours": {
+      "title": "Business Hours",
+      "weekdays": "Monday - Friday",
+      "saturday": "Saturdays",
+      "sunday": "Sundays",
+      "closed": "Closed",
+      "openTime": "09:00 - 20:00",
+      "saturdayTime": "10:00 - 18:00"
+    },
+    "form": {
+      "title": "Send Us a Private Message",
+      "name": {
+        "label": "Your Name",
+        "placeholder": "Ex. John Smith"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "john@example.com"
+      },
+      "message": {
+        "label": "How can we help you?",
+        "placeholder": "Describe your inquiry..."
+      },
+      "submit": "Send Information",
+      "submitting": "PROCESSING..."
+    },
+    "badges": {
+      "secureData": "SECURE DATA",
+      "responseTime": "RESPONSE < 24H",
+      "vipService": "VIP SERVICE",
+      "support247": "SUPPORT 24/7"
+    },
+    "toast": {
+      "messageSent": "Message sent successfully! We will contact you soon."
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "hero": {
+      "badge": "EXCELLENCE IN WELLNESS",
+      "headline": "OUR ESSENCE",
+      "subtitle": "More than a spa, we are a sanctuary dedicated to restoring your vital balance and natural beauty in the heart of Medellín."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "headline": "Commitment to Your Digital Transformation",
+      "description": "At L-SPA, we transcend the conventional to offer comprehensive services that fuse relaxation, vitality, and health. Our priority is total satisfaction through personalized care that evolves with you."
+    },
+    "values": {
+      "certified": {
+        "title": "Certified",
+        "subtitle": "Guaranteed Quality"
+      },
+      "empathy": {
+        "title": "Empathy",
+        "subtitle": "Passion for detail"
+      }
+    },
+    "pillars": {
+      "title": "Our Pillars",
+      "subtitle": "FUNDAMENTALS OF THE EXPERIENCE",
+      "innovation": {
+        "title": "Wellness Innovation",
+        "description": "We constantly update our techniques to offer you the latest in relaxation and beauty therapies."
+      },
+      "exclusive": {
+        "title": "Exclusive Care",
+        "description": "Absolute personalization. We understand your needs even before you express them."
+      },
+      "commitment": {
+        "title": "Human Commitment",
+        "description": "Unbreakable professionalism that generates lasting trust in every experience."
+      }
+    },
+    "location": {
+      "title": "Strategic Location",
+      "badge": "Main Headquarters",
+      "description": "Find your peace refuge in the most exclusive sector of Medellín. A space designed for total disconnection without leaving the city."
+    },
+    "cta": {
+      "headline": "READY FOR YOUR TRANSFORMATION?",
+      "contactUs": "Contact Us Now",
+      "exploreServices": "Explore Services"
+    }
+  },
+  "reservas": {
+    "title": "My Bookings",
+    "subtitle": "Manage your relaxation and personal care moments in one place.",
+    "agenda": "Personal Schedule",
+    "total": "Total",
+    "sessions": "Sessions",
+    "new": "New",
+    "status": {
+      "completed": "Completed",
+      "today": "For Today",
+      "upcoming": "Upcoming",
+      "finalized": "Finalized"
+    },
+    "date": "Date",
+    "time": "Time",
+    "cancel": "Cancel",
+    "cancelModal": {
+      "title": "Cancel Reservation"
+    },
+    "empty": {
+      "title": "You have no scheduled appointments",
+      "description": "Take a break. Explore our exclusive experiences and book your next moment of peace.",
+      "explore": "Explore Services"
+    },
+    "error": {
+      "title": "Oops! We have a problem",
+      "retry": "Try again"
+    },
+    "toast": {
+      "cancelled": "Appointment cancelled successfully",
+      "couldNotCancel": "We could not cancel the appointment"
+    }
+  },
+  "checkout": {
+    "title": "Complete Reservation",
+    "back": "Go Back",
+    "steps": {
+      "yourData": "Your Data",
+      "yourDataDescription": "Personal information",
+      "schedule": "Schedule",
+      "scheduleDescription": "Date and time",
+      "confirm": "Confirm",
+      "confirmDescription": "Complete reservation"
+    },
+    "step1": {
+      "title": "Step 01",
+      "subtitle": "Your Personal Data",
+      "description": "We need this information to confirm your identity at the spa."
+    },
+    "step2": {
+      "title": "Step 02",
+      "subtitle": "Schedule Your Experience",
+      "description": "Select the perfect moment for your well-being."
+    },
+    "step3": {
+      "title": "Step 03",
+      "subtitle": "Confirm Reservation",
+      "description": "Please review that everything is correct."
+    },
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Ex. John"
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Ex. Smith"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "john@example.com"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "+57 321..."
+      },
+      "identification": {
+        "label": "ID Number",
+        "placeholder": "123456789"
+      },
+      "date": {
+        "label": "Reservation Date"
+      },
+      "time": {
+        "label": "Available Time"
+      },
+      "notes": {
+        "label": "Additional notes (optional)",
+        "placeholder": "Any special requests?"
+      }
+    },
+    "buttons": {
+      "back": "Back",
+      "continue": "Continue",
+      "confirm": "Confirm Well-being",
+      "processing": "Processing..."
+    },
+    "summary": {
+      "title": "Your Selection",
+      "totalLabel": "Total Investment",
+      "guarantee": {
+        "title": "L-SPA Guarantee",
+        "description": "Your satisfaction is our highest priority in every session."
+      }
+    },
+    "errors": {
+      "nameRequired": "Name is required",
+      "lastNameRequired": "Last name is required",
+      "emailInvalid": "Invalid email",
+      "phoneRequired": "Phone is required",
+      "identificationRequired": "ID is required",
+      "selectDate": "Select a date",
+      "selectTime": "Select a time",
+      "fillRequired": "Please complete the required fields"
+    },
+    "toast": {
+      "success": "Appointment booked successfully!",
+      "error": "An error occurred while processing your reservation"
+    }
+  },
+  "cart": {
+    "title": "Your Well-being Cart",
+    "continueExploring": "Continue exploring",
+    "header": {
+      "badge": "Your Luxury Selection",
+      "title": "WELL-BEING CART"
+    },
+    "empty": {
+      "title": "Your cart is empty",
+      "description": "Explore our rituals and select the experience that will transform your well-being.",
+      "discover": "DISCOVER SERVICES"
+    },
+    "item": {
+      "label": "Personalized Ritual",
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity"
+    },
+    "total": {
+      "experiences": "Total experiences: {count}",
+      "emptyCart": "EMPTY CART",
+      "subtotal": "Subtotal",
+      "total": "TOTAL"
+    },
+    "summary": {
+      "title": "Ritual Summary"
+    },
+    "security": {
+      "message": "100% secure transaction with bank-level encryption."
+    },
+    "checkout": "PROCEED TO CHECKOUT",
+    "trust": {
+      "satisfaction": "Guaranteed Satisfaction",
+      "personalized": "Personalized Ritual",
+      "guarantee": "L-SPA Elite Guarantee"
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "authenticating": "Authenticating Sanctuary...",
+    "redirecting": "Redirecting to login...",
+    "roles": {
+      "admin": "Administrator",
+      "employee": "Employee",
+      "client": "Premium Client"
+    },
+    "stats": {
+      "appointments": "Completed Appointments",
+      "favorites": "Favorites",
+      "inCart": "In Cart"
+    },
+    "account": {
+      "title": "Account Management",
+      "editProfile": "Edit Profile",
+      "security": {
+        "title": "Security",
+        "description": "Password and two-step verification"
+      },
+      "preferences": {
+        "title": "Preferences",
+        "description": "Notifications and favorite aromas"
+      },
+      "history": {
+        "title": "History",
+        "description": "View all your past rituals"
+      },
+      "logout": {
+        "title": "Log Out",
+        "description": "Sign out of your account securely"
+      }
+    },
+    "errors": {
+      "loadingProfile": "Error loading profile data",
+      "serverConnection": "Error connecting to server"
+    }
+  },
+  "favoritos": {
+    "title": "My Favorites",
+    "header": {
+      "badge": "Your Favorites",
+      "title": "FAVORITE SERVICES"
+    },
+    "empty": {
+      "title": "You don't have any favorites yet",
+      "description": "Explore our rituals and save your favorites to quickly find what you like most.",
+      "discover": "DISCOVER SERVICES"
+    },
+    "viewDetails": "VIEW DETAILS"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Enter your relaxation oasis",
+      "button": "Sign In",
+      "noAccount": "Don't have an account? Create one in 1 minute"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join the L-SPA experience",
+      "button": "Register",
+      "hasAccount": "Already part of L-SPA? Sign In"
+    },
+    "email": "Email",
+    "password": "Password",
+    "name": "Full Name",
+    "loading": "Loading...",
+    "copyright": "© 2026 L-SPA. All rights reserved."
+  },
+  "payment": {
+    "title": "Payment Confirmation",
+    "subtitle": "Select your preferred payment method to secure your well-being space.",
+    "secure": {
+      "badge": "Secure Encrypted Payment"
+    },
+    "finalize": "Finalize Your Reservation",
+    "methods": {
+      "card": "Credit/Debit Card",
+      "pse": "PSE (Transfer)",
+      "nequi": "Nequi / Daviplata",
+      "noFees": "No extra fees"
+    },
+    "summary": {
+      "title": "Payment Summary",
+      "concept": "Concept",
+      "conceptValue": "L-SPA Well-being Services",
+      "paymentMethod": "Payment Method",
+      "total": "Total to Pay",
+      "calculating": "Calculating...",
+      "vatIncluded": "VAT Included"
+    },
+    "terms": "By completing this payment, you accept L-SPA Premium's Cancellation Policies and Terms of Service.",
+    "buttons": {
+      "processing": "Validating...",
+      "proceed": "Proceed to Payment"
+    },
+    "security": {
+      "ssl": "SSL 256-bit",
+      "pci": "PCI Compliant",
+      "secure3d": "3D Secure"
+    },
+    "toast": {
+      "success": "Reservation confirmed and paid!"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know before immersing yourself in the L-SPA experience.",
+    "header": {
+      "badge": "Explore your doubts",
+      "title": "FREQUENTLY ASKED QUESTIONS"
+    },
+    "query": "Query {number}",
+    "stillDoubts": {
+      "title": "Still have questions?",
+      "subtitle": "We are just one click away to advise you in a personalized way.",
+      "button": "TALK TO AN ADVISOR"
+    },
+    "questions": {
+      "ritualIncludes": "What does my ritual or experience include?",
+      "ritualIncludesAnswer": "Each ritual includes a curated sequence of wet areas, therapeutic massages, botanical exfoliations, and nourishing masks. The exact details are found in each service description in our digital catalog and are attached to your reservation confirmation.",
+      "accompanied": "Can I attend accompanied?",
+      "accompaniedAnswer": "Absolutely. We have private suites specifically designed for couple rituals, as well as social areas for group experiences and corporate wellness events.",
+      "bringItems": "Do I need to bring anything for my reservation?",
+      "bringItemsAnswer": "We only require that you bring your swimwear and comfortable footwear. L-SPA provides silk robes, high GSM towels, personalized sandals, and biometric security lockers.",
+      "arrivalTime": "How early should I arrive?",
+      "arrivalTimeAnswer": "To fully immerse yourself in the L-SPA atmosphere, we recommend arriving 20 minutes before your appointment. This will allow you to complete the check-in process unhurriedly and enjoy our welcome infusion.",
+      "foodAllowed": "Is food allowed inside?",
+      "foodAllowedAnswer": "It's not necessary. We offer a select menu of hydration, organic teas, and courtesy glasses depending on the chosen plan. Outside food or beverages are not permitted to preserve the sensory purity of the environment.",
+      "parking": "Is parking available?",
+      "parkingAnswer": "We offer free private parking with 24/7 security for all our guests during their stay at the spa.",
+      "minorsAllowed": "Can minors attend?",
+      "minorsAllowedAnswer": "Our experiences are optimized for adults. However, we accept young people from 16 years old as long as they are under the direct supervision of a responsible adult throughout the visit."
+    }
+  },
+  "footer": {
+    "about": "About L-Spa",
+    "services": "Services",
+    "contact": "Contact",
+    "legal": "Legal",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved.",
+    "description": "Your well-being and relaxation refuge. Experts in massages, facial treatments, and personal care.",
+    "contactSection": {
+      "title": "Contact",
+      "address": "Calle 87c#23-52",
+      "phone": "(123) 456-7890",
+      "email": "contacto@l-spa.com"
+    },
+    "hoursSection": {
+      "title": "Business Hours",
+      "weekdays": "Monday to Friday",
+      "weekdaysTime": "9:00 AM - 7:00 PM",
+      "saturday": "Saturday",
+      "saturdayTime": "9:00 AM - 4:00 PM",
+      "sunday": "Sunday",
+      "closed": "Closed"
+    },
+    "infoSection": {
+      "title": "Information",
+      "cancellationPolicy": "Cancellation Policies",
+      "dataTreatment": "Data Treatment",
+      "bookingInfo": "Reservation Information",
+      "faq": "Frequently Asked Questions",
+      "cookies": "Cookies",
+      "privacy": "Privacy"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "goBack": "Go back",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "remove": "Remove",
+    "submit": "Submit"
+  },
+  "errors": {
+    "404": "Page not found",
+    "500": "Server error",
+    "generic": "Something went wrong",
+    "auth": {
+      "title": "Authentication Error",
+      "description": "Your session has expired or you don't have permission to access this resource."
+    },
+    "network": {
+      "title": "Connection Error",
+      "description": "Could not connect to the server. Check your internet connection."
+    },
+    "rateLimit": {
+      "title": "Too Many Requests",
+      "description": "You have made too many requests. Please wait a moment."
+    },
+    "server": {
+      "title": "Server Error",
+      "description": "The server encountered a problem. Our team has been notified."
+    },
+    "validation": {
+      "title": "Validation Error",
+      "description": "The provided data is invalid. Please verify the information."
+    },
+    "unknown": {
+      "title": "Something Went Wrong",
+      "description": "An unexpected error occurred. Please try again."
+    },
+    "buttons": {
+      "retry": "Retry",
+      "goHome": "Back to Home"
+    },
+    "details": "Error Details:",
+    "originalError": "Original Error:",
+    "contactSupport": "If the problem persists, contact technical support."
+  },
+  "toast": {
+    "addedToCart": "{name} added to cart",
+    "removedFromCart": "{name} removed from cart",
+    "addedToFavorites": "{name} added to favorites",
+    "removedFromFavorites": "{name} removed from favorites",
+    "error": "An error occurred. Please try again."
   }
 }
