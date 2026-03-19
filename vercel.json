@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd apps/frontend && bun run build",
+  "installCommand": "bun install",
+  "framework": "sveltekit",
+  "regions": ["iad1"]
+}
