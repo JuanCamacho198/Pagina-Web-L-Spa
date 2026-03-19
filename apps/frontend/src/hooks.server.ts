@@ -3,6 +3,7 @@ import { locale, waitLocale } from 'svelte-i18n';
 import '$lib/i18n'; // Ensure i18n is initialized
 import { Sentry } from './lib/sentry';
 import { isValidLocale } from '$lib/i18n/utils';
+import { dev } from '$app/environment';
 
 const CSP_REPORT_ONLY = true;
 
@@ -12,13 +13,16 @@ function generateNonce(): string {
 }
 
 function buildCSP(nonce: string): string {
+  // In development, allow localhost connections for Vite HMR
+  const devConnectSrc = dev ? ' ws://localhost:* http://localhost:*' : '';
+  
   return [
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}'`,
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: https:",
     "font-src 'self' https://fonts.gstatic.com",
-    "connect-src 'self'",
+    `connect-src 'self'${devConnectSrc}`,
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
