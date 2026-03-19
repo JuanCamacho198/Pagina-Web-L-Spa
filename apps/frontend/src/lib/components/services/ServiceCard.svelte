@@ -9,11 +9,15 @@
   import { toast } from '$lib/stores/toast.svelte';
   import { onMount } from 'svelte';
   import type { Service } from '$lib/types/service';
+  import { page } from '$app/stores';
+  import { getLocalizedPath } from '$lib/i18n/utils';
 
   let { service, class: className = '' } = $props<{
     service: Service;
     class?: string;
   }>();
+
+  let currentLang = $derived($page.params.lang || 'es');
 
   let isAdded = $state(false);
   let isFavorite = $state(false);
@@ -60,7 +64,7 @@
 </script>
 
 <a 
-  href="/servicios/{slugify(service.name)}"
+  href={getLocalizedPath(`/servicios/${slugify(service.name)}`, currentLang)}
   class={cn(
     "group relative bg-white rounded-spa-xl overflow-hidden border border-secondary/20 shadow-2xl shadow-primary/5 hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full",
     className

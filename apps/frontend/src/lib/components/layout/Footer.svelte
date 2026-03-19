@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Facebook, Instagram, MessageCircle, Mail, Phone, MapPin, Clock, ShieldCheck } from 'lucide-svelte';
   import { page } from '$app/stores';
+  import { getLocalizedPath } from '$lib/i18n/utils';
   import { getBrandingWithDefaults, DEFAULT_BRANDING, type BrandingConfig } from '$lib/config/branding';
   import logoImage from '$lib/assets/logos/LOGO4x-sinfondo.png';
 
@@ -13,6 +14,8 @@
   
   // Use provided branding or load from localStorage
   let currentBranding = $derived(branding || getBrandingWithDefaults());
+
+  let currentLang = $derived($page.params.lang || 'es');
 
   const currentYear = new Date().getFullYear();
 
@@ -112,12 +115,12 @@
       <div>
         <h4 class={sectionTitleClass}>Información</h4>
         <ul class="space-y-2">
-          <li><a href="/politicas/cancelacion" class={linkClass}>Políticas de Cancelación</a></li>
-          <li><a href="/politicas/datos" class={linkClass}>Tratamiento de Datos</a></li>
-          <li><a href="/informacion-importante" class={linkClass}>Información de Reserva</a></li>
-          <li><a href="/preguntas-frecuentes" class={linkClass}>Preguntas Frecuentes</a></li>
-          <li class="pt-2"><a href="/politicas/cookies" class={linkClass}>Cookies</a></li>
-          <li><a href="/politicas/privacidad" class={linkClass}>Privacidad</a></li>
+          <li><a href={getLocalizedPath('/politicas/cancelacion', currentLang)} class={linkClass}>Políticas de Cancelación</a></li>
+          <li><a href={getLocalizedPath('/politicas/datos', currentLang)} class={linkClass}>Tratamiento de Datos</a></li>
+          <li><a href={getLocalizedPath('/informacion-importante', currentLang)} class={linkClass}>Información de Reserva</a></li>
+          <li><a href={getLocalizedPath('/preguntas-frecuentes', currentLang)} class={linkClass}>Preguntas Frecuentes</a></li>
+          <li class="pt-2"><a href={getLocalizedPath('/politicas/cookies', currentLang)} class={linkClass}>Cookies</a></li>
+          <li><a href={getLocalizedPath('/politicas/privacidad', currentLang)} class={linkClass}>Privacidad</a></li>
         </ul>
       </div>
 

@@ -130,7 +130,7 @@
 				<p class="text-gray-500 max-w-md mx-auto mb-12 text-lg font-medium leading-relaxed">
 					Tómate un descanso. Explora nuestras experiencias exclusivas y reserva tu próximo momento de paz.
 				</p>
-				<Button href="/servicios" class="rounded-4xl px-12 py-6 text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/30">
+				<Button href={getLocalizedPath('/servicios', currentLang)} class="rounded-4xl px-12 py-6 text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/30">
 					Explorar Servicios
 				</Button>
 			</div>
@@ -203,7 +203,7 @@
 							{/if}
 							
 							<a 
-								href="/servicios"
+								href={getLocalizedPath('/servicios', currentLang)}
 								class="h-10 w-px0 flex items-center justify-center rounded-4xl bg-white border border-gray-100 text-primary shadow-sm hover:scale-110 active:scale-90 transition-all"
 							>
 								<ChevronRight size={22} strokeWidth={2.5} />
