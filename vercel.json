@@ -1,7 +1,5 @@
 {
-  "rootDirectory": "./",
-  "buildCommand": "cd apps/frontend && bun install && bun run build",
+  "buildCommand": "bun run --filter @l-spa/frontend build",
   "installCommand": "bun install",
-  "framework": null,
-  "regions": ["iad1"]
+  "framework": "sveltekit"
 }
