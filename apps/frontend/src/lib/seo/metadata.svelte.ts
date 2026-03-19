@@ -28,6 +28,19 @@ export const seoStore = {
   get metadata() {
     return currentMetadata;
   },
+  get resolved() {
+    return {
+      title: currentMetadata.title ? `${currentMetadata.title} | ${SITE_NAME}` : SITE_NAME,
+      description: currentMetadata.description || SITE_DESCRIPTION,
+      keywords: currentMetadata.keywords || DEFAULT_KEYWORDS,
+      image: currentMetadata.image || DEFAULT_OG_IMAGE,
+      url: currentMetadata.url || BASE_URL,
+      type: currentMetadata.type || 'website',
+      publishedTime: currentMetadata.publishedTime,
+      noindex: currentMetadata.noindex || false,
+      canonical: currentMetadata.canonical || currentMetadata.url || BASE_URL
+    };
+  },
   setPageMetadata(meta: Partial<PageMetadata>) {
     currentMetadata = { ...defaultMetadata, ...meta };
   },
@@ -35,18 +48,6 @@ export const seoStore = {
     currentMetadata = { ...defaultMetadata };
   }
 };
-
-export const resolvedMetadata = $derived({
-  title: currentMetadata.title ? `${currentMetadata.title} | ${SITE_NAME}` : SITE_NAME,
-  description: currentMetadata.description || SITE_DESCRIPTION,
-  keywords: currentMetadata.keywords || DEFAULT_KEYWORDS,
-  image: currentMetadata.image || DEFAULT_OG_IMAGE,
-  url: currentMetadata.url || BASE_URL,
-  type: currentMetadata.type || 'website',
-  publishedTime: currentMetadata.publishedTime,
-  noindex: currentMetadata.noindex || false,
-  canonical: currentMetadata.canonical || currentMetadata.url || BASE_URL
-});
 
 export function buildPageTitle(pageTitle?: string): string {
   return pageTitle ? `${pageTitle} | ${SITE_NAME}` : SITE_NAME;

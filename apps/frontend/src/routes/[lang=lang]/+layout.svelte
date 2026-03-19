@@ -12,7 +12,7 @@
   import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
   import { getTheme, setTheme, toggleTheme, initTheme, type Theme } from '$lib/theme';
   import { getBrandingWithDefaults, type BrandingConfig } from '$lib/config/branding';
-  import { resolvedMetadata, seoStore, BASE_URL, SITE_NAME, TWITTER_HANDLE } from '$lib/seo';
+  import { seoStore, BASE_URL, SITE_NAME, TWITTER_HANDLE } from '$lib/seo';
   import LanguageSwitcher from '$lib/components/ui/LanguageSwitcher.svelte';
   import '$lib/i18n';
   import { _ } from 'svelte-i18n';
@@ -25,6 +25,9 @@
   
   // Check if we're in admin section
   let isAdminSection = $derived($page.url.pathname.startsWith('/admin'));
+  
+  // SEO metadata derived from store
+  let resolvedMetadata = $derived(seoStore.resolved);
   
   // Theme state
   let currentTheme = $state<Theme>('light');
