@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { HelpCircle, ChevronDown, ChevronUp, Sparkles, Users, Clock, Info, MessageCircle, ArrowRight } from 'lucide-svelte';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
 
+	let currentLang = $derived($page.params.lang || 'es');
 	let openIndex = $state<number | null>(null);
 
 	const faqs = [
@@ -128,7 +131,7 @@
 					<p class="text-primary-light/60 font-medium text-lg max-w-md mx-auto italic">Estamos a un solo clic de distancia para asesorarte de forma personalizada.</p>
 				</div>
 				<a 
-					href="/contacto"
+					href={getLocalizedPath('/contacto', currentLang)}
 					class="inline-flex items-center gap-4 px-10 py-5 bg-white text-gray-900 font-black rounded-full hover:bg-primary hover:text-white transition-all duration-500 group/btn shadow-2xl"
 				>
 					HABLAR CON UN ASESOR

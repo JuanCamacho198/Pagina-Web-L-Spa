@@ -2,14 +2,17 @@
 	import { authClient } from '$lib/auth-client';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
 	import { Calendar, Clock, MapPin, Check, X, AlertCircle } from 'lucide-svelte';
 
 	const session = authClient.useSession();
+	let currentLang = $derived($page.params.lang || 'es');
 
 	// Redirect if not authenticated
 	$effect(() => {
 		if (browser && !$session.isPending && !$session.data) {
-			goto('/login');
+			goto(getLocalizedPath('/login', currentLang));
 		}
 	});
 
@@ -140,7 +143,7 @@
 										Reprogramar
 									</button>
 								{:else if booking.status === 'completed'}
-									<a href="/servicios/{booking.id}" class="px-6 py-3 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary/90 transition-colors">
+									<a href={getLocalizedPath(`/servicios/${booking.id}`, currentLang)} class="px-6 py-3 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary/90 transition-colors">
 										Reservar Again
 									</a>
 								{/if}
@@ -154,7 +157,7 @@
 				<div class="bg-white rounded-spa-xl p-12 text-center shadow-sm border border-gray-100">
 					<Calendar size={48} class="mx-auto mb-4 text-gray-300" />
 					<p class="text-gray-500 font-medium">No tienes reservas programadas</p>
-					<a href="/servicios" class="inline-block mt-4 px-8 py-4 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary/90 transition-colors">
+					<a href={getLocalizedPath('/servicios', currentLang)} class="inline-block mt-4 px-8 py-4 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary/90 transition-colors">
 						Ver Servicios
 					</a>
 				</div>

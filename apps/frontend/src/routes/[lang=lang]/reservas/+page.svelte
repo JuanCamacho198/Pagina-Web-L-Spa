@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { cn } from '$lib/utils/cn';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
 	import { 
 		Calendar as CalendarIcon, 
 		Clock, 
@@ -18,6 +20,8 @@
 	import Modal from '$lib/components/ui/Modal.svelte';
 	import LazyModal from '$lib/components/common/LazyModal.svelte';
 	import { toast } from '$lib/stores/toast.svelte';
+
+	let currentLang = $derived($page.params.lang || 'es');
 
 		let props = $props();
 		let appointments = $state([]);
@@ -101,7 +105,7 @@
 						<span class="text-gray-900 font-bold text-lg">Sesiones</span>
 					</div>
 				</div>
-				<Button href="/servicios" class="rounded-4xl px-8 py-5 font-black uppercase tracking-widest shadow-2xl shadow-primary/20">
+				<Button href={getLocalizedPath('/servicios', currentLang)} class="rounded-4xl px-8 py-5 font-black uppercase tracking-widest shadow-2xl shadow-primary/20">
 					<Plus size={20} class="mr-2" />
 					Nuevo
 				</Button>

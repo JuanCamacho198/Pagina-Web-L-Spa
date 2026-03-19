@@ -15,7 +15,10 @@
 	import { toast } from '$lib/stores/toast.svelte';
 	import { goto } from '$app/navigation';
 	import { cn } from '$lib/utils/cn';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
 
+	let currentLang = $derived($page.params.lang || 'es');
 	let selectedMethod = $state('card');
 	let isProcessing = $state(false);
 
@@ -139,7 +142,7 @@
 								</div>
 								
 								<p class="text-[9px] font-medium text-gray-400 text-center leading-relaxed">
-									Al completar este pago, aceptas las <a href="/terminos" class="text-primary font-black underline">Políticas de Cancelación</a> y Términos de Servicio de L-SPA Premium.
+									Al completar este pago, aceptas las <a href={getLocalizedPath('/terminos', currentLang)} class="text-primary font-black underline">Políticas de Cancelación</a> y Términos de Servicio de L-SPA Premium.
 								</p>
 							</div>
 

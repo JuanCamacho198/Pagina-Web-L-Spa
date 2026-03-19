@@ -4,6 +4,10 @@
 	import Typography from '$lib/components/ui/Typography.svelte';
 	import { cn } from '$lib/utils/cn';
 	import bannerImage from '$lib/assets/banners/bannerSpa.avif';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
+
+	let currentLang = $derived($page.params.lang || 'es');
 
 	const pillars = [
 		{ 
@@ -204,14 +208,14 @@
 				<h2 class="text-4xl md:text-6xl font-black tracking-tighter leading-none mb-8">¿LISTO PARA TU <br /> TRANSFORMACIÓN?</h2>
 				<div class="flex flex-col sm:flex-row justify-center gap-6">
 					<Button 
-						href="/contacto"
+						href={getLocalizedPath('/contacto', currentLang)}
 						class="bg-white text-primary hover:bg-gray-100 px-12 py-6 rounded-[28px] text-lg font-black uppercase tracking-widest shadow-2xl shadow-black/10 group/btn"
 					>
 						Contáctanos Ahora
 						<ChevronRight size={20} class="ml-3 group-hover/btn:translate-x-2 transition-transform" />
 					</Button>
 					<Button 
-						href="/servicios"
+						href={getLocalizedPath('/servicios', currentLang)}
 						class="bg-transparent border-2 border-white/30 text-white hover:bg-white/10 px-12 py-6 rounded-[28px] text-lg font-black uppercase tracking-widest"
 					>
 						Explorar Servicios
