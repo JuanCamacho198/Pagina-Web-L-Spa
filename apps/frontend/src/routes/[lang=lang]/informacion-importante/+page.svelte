@@ -1,5 +1,9 @@
 <script lang="ts">
 	import { AlertCircle, ShieldAlert, Sparkles, MapPin, Watch, Wine, Info, ArrowUpRight, CheckCircle2 } from 'lucide-svelte';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
+
+	let currentLang = $derived($page.params.lang || 'es');
 
 	const points = [
 		{
@@ -124,7 +128,7 @@
 
 					<div class="relative z-10 shrink-0">
 						<a 
-							href="/contacto" 
+							href={getLocalizedPath('/contacto', currentLang)} 
 							class="px-8 py-4 bg-white text-gray-900 font-black text-[10px] uppercase tracking-widest rounded-full hover:bg-amber-500 hover:text-white transition-all duration-500 flex items-center gap-3"
 						>
 							Tengo una consulta específica

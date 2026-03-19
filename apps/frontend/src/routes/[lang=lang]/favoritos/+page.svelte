@@ -2,13 +2,16 @@
 	import { authClient } from '$lib/auth-client';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { Heart, Clock, Star, Trash2, ShoppingBag } from 'lucide-svelte';
 	import { fetchFavorites, removeFromFavorites, favoritesStore } from '$lib/favorites';
 	import Button from '$lib/components/ui/Button.svelte';
+	import { getLocalizedPath } from '$lib/i18n/utils';
 
 	const session = authClient.useSession();
 	
+	let currentLang = $derived($page.params.lang || 'es');
 	let loading = $state(true);
 
 	// Load favorites on mount
@@ -72,7 +75,7 @@
 					<h2 class="text-3xl font-black text-gray-900 tracking-tight uppercase">Aún no tienes favoritos</h2>
 					<p class="text-gray-400 font-medium max-w-sm mx-auto">Explora nuestros rituales y guarda tus favoritos para encontrar rápido lo que más te gusta.</p>
 				</div>
-				<Button href="/servicios" class="px-10 py-5 rounded-full shadow-xl shadow-primary/20">
+				<Button href={getLocalizedPath('/servicios', currentLang)} class="px-10 py-5 rounded-full shadow-xl shadow-primary/20">
 					DESCUBRIR SERVICIOS
 				</Button>
 			</div>
