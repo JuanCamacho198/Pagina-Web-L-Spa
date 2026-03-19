@@ -4,6 +4,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Typography from '$lib/components/ui/Typography.svelte';
 	import { toast } from '$lib/stores/toast.svelte';
+	import { _ } from 'svelte-i18n';
 
 	let isSubmitting = $state(false);
 	
@@ -14,7 +15,7 @@
 		// Simulación de envío
 		await new Promise(resolve => setTimeout(resolve, 2000));
 		
-		toast.success('¡Mensaje enviado con éxito! Te contactaremos pronto.');
+		toast.success($_('contact.toast.messageSent'));
 		isSubmitting = false;
 		(e.target as HTMLFormElement).reset();
 	};
@@ -22,7 +23,7 @@
 	const contactCards = [
 		{ 
 			icon: Mail, 
-			title: "Correo Electrónico", 
+			titleKey: 'contact.cards.email.title', 
 			value: "info@l-spa.com", 
 			href: "mailto:info@l-spa.com",
 			color: "bg-primary/10 text-primary",
@@ -30,7 +31,7 @@
 		},
 		{ 
 			icon: MessageCircle, 
-			title: "WhatsApp Business", 
+			titleKey: 'contact.cards.whatsapp.title', 
 			value: "+57 300 000 0000", 
 			href: "https://wa.me/573000000000",
 			color: "bg-emerald-50 text-emerald-500",
@@ -38,7 +39,7 @@
 		},
 		{ 
 			icon: MapPin, 
-			title: "Nuestra Sede", 
+			titleKey: 'contact.cards.location.title', 
 			value: "El Poblado, Medellín", 
 			href: "#map",
 			color: "bg-amber-50 text-amber-600",
@@ -48,8 +49,8 @@
 </script>
 
 <svelte:head>
-	<title>Contacto | L-SPA Premium Wellness Medellín</title>
-	<meta name="description" content="¿Tienes dudas? Contáctanos para agendar tu cita de bienestar en Medellín. Estamos listos para asesorarte." />
+	<title>{$_('contact.title')} | L-SPA Premium Wellness Medellín</title>
+	<meta name="description" content={$_('contact.subtitle')} />
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50/50 pb-32">
@@ -62,13 +63,13 @@
 		<div class="max-w-7xl mx-auto text-center relative z-10 space-y-8 animate-in fade-in slide-in-from-top-12 duration-1000">
 			<div class="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-white/20 bg-white/10 text-white text-[10px] font-black uppercase tracking-[0.4em]">
 				<Sparkles size={14} />
-				Canales de Atención
+				{$_('contact.hero.badge')}
 			</div>
 			<h1 class="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.85]">
-				ESTAMOS PARA <br /> <span class="text-transparent bg-clip-text bg-linear-to-r from-primary-light via-white to-primary-light/60">ESCUCHARTE</span>
+				{$_('contact.hero.headline')}
 			</h1>
 			<p class="text-xl text-primary-light/90 max-w-2xl mx-auto font-medium leading-relaxed">
-				¿Tienes dudas o quieres agendar una experiencia personalizada? Nuestro equipo de expertos está listo para asesorarte en tu viaje de bienestar.
+				{$_('contact.subtitle')}
 			</p>
 		</div>
 	</section>
@@ -88,7 +89,7 @@
 						<div class={cn("w-20 h-130 rounded-4xl flex items-center justify-center mb-8 transition-all duration-500 group-hover:bg-white/20 group-hover:text-white group-hover:scale-110 shadow-sm", card.color)}>
 							<card.icon size={36} strokeWidth={2.5} />
 						</div>
-						<h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-2 group-hover:text-white transition-colors">{card.title}</h3>
+						<h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-2 group-hover:text-white transition-colors">{$_(card.titleKey)}</h3>
 						<p class="text-2xl font-black text-gray-900 group-hover:text-white transition-colors tracking-tight">{card.value}</p>
 					</a>
 				{/each}
@@ -98,19 +99,19 @@
 					<div class="absolute top-0 right-0 p-8 opacity-20 group-hover:scale-125 transition-transform duration-1000">
 						<Clock size={80} />
 					</div>
-					<h4 class="text-lg font-black tracking-tight border-l-4 border-primary pl-6">Horarios de Atención</h4>
+					<h4 class="text-lg font-black tracking-tight border-l-4 border-primary pl-6">{$_('contact.hours.title')}</h4>
 					<div class="space-y-4">
 						<div class="flex justify-between items-center opacity-70 group-hover:opacity-100 transition-opacity">
-							<span class="text-[10px] font-black uppercase tracking-widest leading-none">Lunes - Viernes</span>
-							<span class="text-sm font-black">09:00 - 20:00</span>
+							<span class="text-[10px] font-black uppercase tracking-widest leading-none">{$_('contact.hours.weekdays')}</span>
+							<span class="text-sm font-black">{$_('contact.hours.openTime')}</span>
 						</div>
 						<div class="flex justify-between items-center opacity-70 group-hover:opacity-100 transition-opacity">
-							<span class="text-[10px] font-black uppercase tracking-widest">Sábados</span>
-							<span class="text-sm font-black">10:00 - 18:00</span>
+							<span class="text-[10px] font-black uppercase tracking-widest">{$_('contact.hours.saturday')}</span>
+							<span class="text-sm font-black">{$_('contact.hours.saturdayTime')}</span>
 						</div>
 						<div class="flex justify-between items-center text-primary-light font-black">
-							<span class="text-[10px] uppercase tracking-widest">Domingos</span>
-							<span class="text-sm">Cerrado</span>
+							<span class="text-[10px] uppercase tracking-widest">{$_('contact.hours.sunday')}</span>
+							<span class="text-sm">{$_('contact.hours.closed')}</span>
 						</div>
 					</div>
 				</div>
@@ -137,42 +138,42 @@
 
 					<div class="relative z-10 space-y-12">
 						<div class="space-y-4">
-							<h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter leading-none uppercase">Envíanos un <br /> <span class="text-primary italic">Mensaje Privado</span></h2>
+							<h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter leading-none uppercase">{$_('contact.form.title')}</h2>
 							<div class="h-1.5 w-24 bg-primary rounded-full"></div>
 						</div>
 
 						<form onsubmit={handleSubmit} class="space-y-8">
 							<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 								<div class="space-y-3">
-									<label for="name" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">Tu Nombre</label>
+									<label for="name" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">{$_('contact.form.name.label')}</label>
 									<input 
 										id="name"
 										required
 										type="text" 
 										class="w-full px-8 py-5 bg-gray-50 border-none rounded-4xl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900" 
-										placeholder="Ej. Juan Pérez" 
+										placeholder={$_('contact.form.name.placeholder')} 
 									/>
 								</div>
 								<div class="space-y-3">
-									<label for="email" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">Correo Electrónico</label>
+									<label for="email" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">{$_('contact.form.email.label')}</label>
 									<input 
 										id="email"
 										required
 										type="email" 
 										class="w-full px-8 py-5 bg-gray-50 border-none rounded-4xl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900" 
-										placeholder="juan@ejemplo.com" 
+										placeholder={$_('contact.form.email.placeholder')} 
 									/>
 								</div>
 							</div>
 							
 							<div class="space-y-3">
-								<label for="message" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">¿En qué podemos ayudarte?</label>
+								<label for="message" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-4">{$_('contact.form.message.label')}</label>
 								<textarea 
 									id="message"
 									required
 									rows={5} 
 									class="w-full px-8 py-6 bg-gray-50 border-none rounded-4xl ring-1 ring-gray-100 focus:ring-primary/20 transition-all outline-none font-bold text-gray-900 resize-none" 
-									placeholder="Describe tu consulta..."
+									placeholder={$_('contact.form.message.placeholder')}
 								></textarea>
 							</div>
 
@@ -184,11 +185,11 @@
 								{#if isSubmitting}
 									<div class="flex items-center gap-3">
 										<div class="h-13 w-5 border-2 border-white border-t-transparent animate-spin rounded-full"></div>
-										PROCESANDO...
+										{$_('contact.form.submitting')}
 									</div>
 								{:else}
 									<span class="flex items-center gap-4">
-										Enviar Información
+										{$_('contact.form.submit')}
 										<Send size={20} class="group-hover:translate-x-3 group-hover:-translate-y-3 transition-transform duration-500" />
 									</span>
 								{/if}

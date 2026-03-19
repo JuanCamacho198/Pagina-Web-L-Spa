@@ -52,6 +52,43 @@
     }
   }
   
+  // Navigation items - created dynamically when i18n is ready
+  let navItems = $derived($isLoading ? [] : [
+    { name: $_('nav.services'), path: getLocalizedPath('/servicios', currentLang) },
+    { name: $_('nav.bookings'), path: getLocalizedPath('/informacion-importante', currentLang) },
+    { name: $_('nav.about'), path: getLocalizedPath('/sobre-nosotros', currentLang) },
+    { name: $_('nav.contact'), path: getLocalizedPath('/contacto', currentLang) }
+  ]);
+  
+  // Loading text
+  let loadingText = $derived($isLoading ? 'Loading...' : $_('common.loading'));
+  let skipToMainText = $derived($isLoading ? 'Skip to main content' : $_('layout.skipToMain'));
+  let cartLabel = $derived($isLoading ? 'Cart' : (currentCartCount > 0 ? `${currentCartCount} items in cart` : 'View shopping cart'));
+  
+  // User menu translations
+  let userMenuTexts = $derived($isLoading ? {
+    role: 'Client',
+    profile: 'Profile',
+    bookings: 'Bookings',
+    favorites: 'Favorites',
+    logout: 'Logout'
+  } : {
+    role: $_('profile.roles.client'),
+    profile: $_('nav.profile'),
+    bookings: $_('nav.bookings'),
+    favorites: $_('nav.favorites'),
+    logout: $_('nav.logout')
+  });
+  
+  // Auth button texts
+  let authTexts = $derived($isLoading ? {
+    login: 'Login',
+    register: 'Register'
+  } : {
+    login: $_('nav.login'),
+    register: $_('auth.register.title')
+  });
+  
   // Subscribe to cart store
   onMount(() => {
     // Initialize theme
@@ -125,12 +162,12 @@
     <div class="min-h-screen flex items-center justify-center bg-white">
       <div class="animate-pulse flex flex-col items-center gap-4">
         <div class="w-12 h-12 bg-primary/20 rounded-xl"></div>
-        <div class="text-primary font-medium">{$_('common.loading')}</div>
+        <div class="text-primary font-medium">{loadingText}</div>
       </div>
     </div>
   {:else}
   <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-black focus:text-xs focus:uppercase focus:tracking-widest">
-    {$_('layout.skipToMain')}
+    {skipToMainText}
   </a>
   <div class="app-container min-h-screen flex flex-col font-sans selection:bg-primary/10">
     <header class="navbar bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-secondary/30 sticky top-0 z-50 px-6 py-4 transition-all duration-500">
@@ -151,13 +188,8 @@
         <span class="text-2xl font-display font-black tracking-tighter text-gray-900 dark:text-white uppercase">{branding.navbarText}</span>
       </a>
       
-      <nav class="hidden lg:flex items-center gap-10" aria-label="Navegación principal">
-        {#each [
-          { name: $_('nav.services'), path: getLocalizedPath('/servicios', currentLang) },
-          { name: $_('nav.bookings'), path: getLocalizedPath('/informacion-importante', currentLang) },
-          { name: $_('nav.about'), path: getLocalizedPath('/sobre-nosotros', currentLang) },
-          { name: $_('nav.contact'), path: getLocalizedPath('/contacto', currentLang) }
-        ] as link}
+      <nav class="hidden lg:flex items-center gap-10" aria-label="Main navigation">
+        {#each navItems as link}
           <a href={link.path} class="text-[10px] font-sans font-black uppercase tracking-[0.3em] text-gray-400 hover:text-primary transition-all duration-500 relative overflow-hidden group">
             {link.name}
             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-500"></span>
@@ -181,7 +213,7 @@
         </button>
 
         <!-- Shopping Cart Icon -->
-        <a href={getLocalizedPath('/carrito', currentLang)} class="relative p-2 text-gray-400 hover:text-primary transition-colors duration-500 group" aria-label={currentCartCount > 0 ? `${currentCartCount} items in cart` : 'View shopping cart'}>
+        <a href={getLocalizedPath('/carrito', currentLang)} class="relative p-2 text-gray-400 hover:text-primary transition-colors duration-500 group" aria-label={cartLabel}>
           <ShoppingCart size={24} />
           {#if currentCartCount > 0}
             <span class="absolute top-0 right-0 w-5 h-5 bg-primary text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-white scale-100 group-hover:scale-110 transition-transform">
@@ -203,20 +235,20 @@
             </button>
             
             {#if isUserMenuOpen}
-              <div class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 z-9999">
+              <div class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 z-[9999]">
                 <div class="p-6 border-b border-gray-50 dark:border-gray-700 mb-3 text-center">
-                   <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">{$_('profile.roles.client')}</p>
+                   <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">{userMenuTexts.role}</p>
                    <p class="text-sm font-black text-gray-900 dark:text-white truncate">{$session.data?.user.email}</p>
                 </div>
                 <div class="space-y-1">
                   <a href={getLocalizedPath('/perfil', currentLang)} onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
-                    <User size={16} /> {$_('nav.profile')}
+                    <User size={16} /> {userMenuTexts.profile}
                   </a>
                   <a href={getLocalizedPath('/mis-reservas', currentLang)} onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
-                    <Calendar size={16} /> {$_('nav.bookings')}
+                    <Calendar size={16} /> {userMenuTexts.bookings}
                   </a>
                   <a href={getLocalizedPath('/favoritos', currentLang)} onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary rounded-2xl transition-all">
-                    <Heart size={16} /> {$_('nav.favorites')}
+                    <Heart size={16} /> {userMenuTexts.favorites}
                   </a>
                   <!-- Admin/Staff Links -->
                   <div class="border-t border-gray-100 dark:border-gray-700 my-2 pt-2">
@@ -228,7 +260,7 @@
                     </a>
                   </div>
                   <button type="button" onclick={() => { authClient.signOut(); isUserMenuOpen = false; }} class="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-2xl transition-all">
-                    <LogOut size={16} /> {$_('nav.logout')}
+                    <LogOut size={16} /> {userMenuTexts.logout}
                   </button>
                 </div>
               </div>
@@ -236,10 +268,10 @@
           </div>
         {:else}
           <a href={getLocalizedPath('/login', currentLang)} class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-500 px-4">
-            {$_('nav.login')}
+            {authTexts.login}
           </a>
           <a href={getLocalizedPath('/registro', currentLang)} class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-white bg-primary hover:bg-primary/90 transition-all duration-500 px-6 py-3 rounded-full shadow-lg shadow-primary/20">
-            {$_('auth.register.title')}
+            {authTexts.register}
           </a>
           
         {/if}
