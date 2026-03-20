@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { cart, cartSubtotal, cartCount } from '$lib/cart';
 	import { authClient } from '$lib/auth-client';
 	import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, Sparkles, ShieldCheck, Heart, ChevronLeft, Lock } from 'lucide-svelte';
@@ -74,7 +74,7 @@
 						>
 							<!-- Image -->
 							<div class="w-40 h-40 rounded-spa-lg overflow-hidden shrink-0 border border-gray-100 dark:border-white/10 group-hover:border-primary/30 transition-colors">
-								<img src={item.image} alt={item.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2000ms]" />
+								<img src={item.image} alt={item.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-2000ms" />
 							</div>
 
 							<!-- Details -->

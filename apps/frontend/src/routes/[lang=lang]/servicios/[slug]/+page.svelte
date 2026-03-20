@@ -151,7 +151,7 @@ class="w-full h-full object-cover group-hover:scale-105 transition-transform dur
 {/if}
 
 <!-- Inner Gradient -->
-<div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-80"></div>
+<div class="absolute inset-0 bg-linear-to-t from-gray-900/80 via-transparent to-transparent opacity-80"></div>
 
 <div class="absolute bottom-10 left-10 text-white flex items-center gap-6">
 <div class="w-16 h-16 rounded-full border border-white/30 backdrop-blur-md flex items-center justify-center shadow-xl">
@@ -201,7 +201,7 @@ Añadir
 </button>
 <button
 onclick={handleToggleFavorite}
-class="w-full rounded-full py-4 font-bold text-[10px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 border {isFavorite ? 'bg-rose-50 dark:bg-rose-500/10 border-rose-100 dark:border-rose-500/20 text-rose-500' : 'bg-white border-gray-200 dark:border-white/20 text-gray-900 dark:text-white hover:border-gray-300 dark:hover:border-white/40'}"
+class="w-full rounded-full py-4 font-bold text-[10px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 border {isFavorite ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-500' : 'bg-white border-gray-200 dark:border-white/20 text-gray-900 dark:text-white hover:border-gray-300 dark:hover:border-white/40'}"
 >
 <Heart size={16} class={isFavorite ? 'fill-current' : ''} />
 {isFavorite ? 'Guardado' : 'Deseo'}
@@ -216,7 +216,7 @@ class="w-full rounded-full py-4 font-bold text-[10px] uppercase tracking-[0.2em]
 <section class="max-w-7xl mx-auto px-6 pt-10 pb-32">
 <div class="text-center mb-16 space-y-4">
 <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-primary dark:text-primary-light">Anatomía de la Sesión</h2>
-<div class="h-px w-24 bg-gradient-to-r from-transparent via-primary/50 to-transparent mx-auto"></div>
+<div class="h-px w-24 bg-linear-to-r from-transparent via-primary/50 to-transparent mx-auto"></div>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24">
@@ -235,7 +235,7 @@ class="w-full rounded-full py-4 font-bold text-[10px] uppercase tracking-[0.2em]
 <ul class="space-y-4">
 {#each includesList as item}
 <li class="flex items-start gap-4 group">
-<CheckCircle2 size={20} class="text-secondary dark:text-white/40 flex-shrink-0 mt-1" strokeWidth={1.5} />
+<CheckCircle2 size={20} class="text-secondary dark:text-white/40 shrink-0 mt-1" strokeWidth={1.5} />
 <span class="text-gray-600 dark:text-gray-300 font-light text-lg leading-relaxed group-hover:text-gray-900 dark:group-hover:text-white transition-colors">{item}</span>
 </li>
 {/each}
@@ -255,7 +255,7 @@ class="w-full rounded-full py-4 font-bold text-[10px] uppercase tracking-[0.2em]
 <ul class="space-y-4">
 {#each benefitsList as benefit}
 <li class="flex items-start gap-4">
-<div class="w-2 h-2 rounded-full bg-primary mt-2.5 flex-shrink-0"></div>
+<div class="w-2 h-2 rounded-full bg-primary mt-2.5 shrink-0"></div>
 <span class="text-gray-600 dark:text-gray-300 font-light text-lg leading-relaxed">{benefit}</span>
 </li>
 {/each}
@@ -324,8 +324,8 @@ class="w-full rounded-full py-4 font-bold text-[10px] uppercase tracking-[0.2em]
 </section>
 
 <!-- Review Section (Untouched logic, styled container) -->
-<section class="max-w-[1400px] mx-auto mb-32 px-6 lg:px-12">
-<div class="bg-white dark:bg-[#121213] rounded-[40px] p-8 lg:p-16 border border-gray-100 dark:border-white/5 shadow-2xl shadow-primary/5 dark:shadow-none min-h-[400px]">
+<section class="max-w-350 mx-auto mb-32 px-6 lg:px-12">
+<div class="bg-white dark:bg-[#121213] rounded-[40px] p-8 lg:p-16 border border-gray-100 dark:border-white/5 shadow-2xl shadow-primary/5 dark:shadow-none min-h-100">
 <div class="text-center mb-12">
 <h2 class="text-4xl font-display text-gray-900 dark:text-white mb-4">Voces de <span class="italic text-primary dark:text-primary-light">Paz</span></h2>
 <p class="text-gray-500 dark:text-gray-400 font-light">Experiencias reales de quienes han vivido este ritual.</p>
