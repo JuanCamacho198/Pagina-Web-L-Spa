@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun --hot src/index.ts",
-    "build": "bun build ./api/index.ts --outdir ./api --target node",
+    "build": "bun build src/api_index.ts --outfile ./api/index.js --target node",
     "start": "bun api/index.js",
     "start:prod": "bun api/index.js",
     "test": "bun test"
