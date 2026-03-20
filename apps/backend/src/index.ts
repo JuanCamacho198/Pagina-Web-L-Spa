@@ -11,22 +11,21 @@ import { auth } from './lib/auth'
 import { csrf } from './middleware/csrf'
 import { securityHeaders } from './middleware/security-headers'
 import { loggingMiddleware } from './middleware/logger'
-import * as Sentry from '@sentry/hono/node'
+import { Sentry } from './lib/sentry'
 
 const app = new Hono()
 
-app.use('*', Sentry.sentry(app, {
-  dsn: process.env.SENTRY_DSN,
-  tracesSampleRate: 1.0,
-  environment: process.env.NODE_ENV,
-}))
 app.use('*', loggingMiddleware)
 app.use('*', securityHeaders())
 app.use('*', csrf())
 app.use('*', cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'https://l-spa-frontend.vercel.app',
+  ],
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowHeaders: ['Content-Type', 'Authorization', 'X-Anonymous-ID', 'X-User-ID'],
+  allowHeaders: ['Content-Type', 'Authorization', 'X-Anonymous-ID', 'X-User-ID', 'x-csrf-token'],
   exposeHeaders: ['Content-Length'],
   maxAge: 600,
   credentials: true,

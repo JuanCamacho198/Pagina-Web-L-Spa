@@ -38,10 +38,11 @@ export const csrf = (config?: CSRFConfig): MiddlewareHandler => {
     const url = c.req.url;
 
     if (
-      method === 'GET' || 
-      method === 'HEAD' || 
+      method === 'GET' ||
+      method === 'HEAD' ||
       method === 'OPTIONS' ||
-      url.includes('/api/v1/auth/')
+      url.includes('/api/v1/auth/') ||
+      url.includes('/api/v1/health')
     ) {
       await next();
       return;

@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/hono/node';
+import * as Sentry from '@sentry/node';
 import { logger } from './logger.js';
 
 export const initSentry = () => {
