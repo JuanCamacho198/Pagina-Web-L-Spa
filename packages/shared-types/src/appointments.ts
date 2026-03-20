@@ -15,3 +15,11 @@ export const appointmentSchema = z.object({
 
 export type Appointment = z.infer<typeof appointmentSchema>;
 export type AppointmentStatus = z.infer<typeof appointmentStatusEnum>;
+
+// Extended type with joined data from related tables
+export interface AppointmentWithDetails extends Appointment {
+  serviceName?: string;
+  servicePrice?: number;
+  serviceDuration?: number;
+  userName?: string;
+}

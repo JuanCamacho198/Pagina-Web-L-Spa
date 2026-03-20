@@ -6,7 +6,7 @@
 	import { getLocalizedPath } from '$lib/i18n/utils';
 	import { Calendar, Clock, MapPin, Check, X, AlertCircle, RefreshCw } from 'lucide-svelte';
 	import { createQuery } from '@tanstack/svelte-query';
-	import type { Appointment } from '@l-spa/shared-types';
+	import type { AppointmentWithDetails } from '@l-spa/shared-types';
 
 	const session = authClient.useSession();
 	let currentLang = $derived($page.params.lang || 'es');
@@ -20,7 +20,13 @@
 		staleTime: 1000 * 60,
 	}));
 
-	let appointments = $derived($appointmentsQuery.data || []);
+	let appointments = $derived(appointmentsQuery.data || []);
+
+	$effect(() => {
+		if (browser && !$session.isPending && !$session.data) {
+			goto(getLocalizedPath('/login', currentLang));
+		}
+	});
 
 	function formatDate(dateStr: string) {
 		const date = new Date(dateStr);
@@ -70,7 +76,7 @@
 				<p class="text-gray-500 mt-2">Gestiona tus citas programadas</p>
 			</div>
 
-			{#if $appointmentsQuery.isLoading}
+			{#if appointmentsQuery.isLoading}
 				<div class="space-y-6">
 					{#each [1, 2, 3] as _}
 						<div class="bg-white rounded-spa-xl p-8 shadow-sm border border-gray-100 animate-pulse">
@@ -88,12 +94,12 @@
 						</div>
 					{/each}
 				</div>
-			{:else if $appointmentsQuery.isError}
+			{:else if appointmentsQuery.isError}
 				<div class="bg-rose-50 border border-rose-200 rounded-spa-xl p-12 text-center">
 					<AlertCircle size={48} class="mx-auto mb-4 text-rose-400" />
 					<p class="text-rose-600 font-black mb-6">Error al cargar tus reservas</p>
 					<button 
-						onclick={() => $appointmentsQuery.refetch()}
+						onclick={() => appointmentsQuery.refetch()}
 						class="inline-flex items-center gap-2 px-8 py-4 bg-rose-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-rose-600 transition-colors"
 					>
 						<RefreshCw size={16} />
