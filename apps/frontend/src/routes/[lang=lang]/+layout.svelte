@@ -16,6 +16,7 @@
   import LanguageSwitcher from '$lib/components/ui/LanguageSwitcher.svelte';
   import '$lib/i18n';
   import { _, isLoading } from 'svelte-i18n';
+  import spaLogo from '$lib/assets/logos/LOGO4x-sinfondo.png';
 
   import { page } from '$app/stores';
   import { getLocalizedPath } from '$lib/i18n/utils';
@@ -176,14 +177,16 @@
         {#if branding.customLogo}
           <img 
             src={branding.customLogo} 
-            alt="Logo" 
+            alt="L-SPA Logo" 
             class="h-10 w-auto object-contain brightness-110"
             style="height: {branding.logoSize}px"
           />
         {:else}
-          <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white scale-100 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/20">
-            <ShieldCheck size={20} />
-          </div>
+          <img 
+            src={spaLogo} 
+            alt="L-SPA Logo" 
+            class="h-12 w-auto object-contain"
+          />
         {/if}
         <span class="text-2xl font-display font-black tracking-tighter text-gray-900 dark:text-white uppercase">{branding.navbarText}</span>
       </a>
@@ -235,7 +238,7 @@
             </button>
             
             {#if isUserMenuOpen}
-              <div class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 z-[9999]">
+              <div class="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-gray-800 rounded-4xl shadow-2xl border border-gray-100 dark:border-gray-700 p-3 z-9999">
                 <div class="p-6 border-b border-gray-50 dark:border-gray-700 mb-3 text-center">
                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">{userMenuTexts.role}</p>
                    <p class="text-sm font-black text-gray-900 dark:text-white truncate">{$session.data?.user.email}</p>
@@ -252,7 +255,7 @@
                   </a>
                   <!-- Admin/Staff Links -->
                   <div class="border-t border-gray-100 dark:border-gray-700 my-2 pt-2">
-                    <a href="/staff" onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
+                    <a href={getLocalizedPath('/staff', currentLang)} onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
                       <Scissors size={16} /> Staff Panel
                     </a>
                     <a href="/admin" onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">

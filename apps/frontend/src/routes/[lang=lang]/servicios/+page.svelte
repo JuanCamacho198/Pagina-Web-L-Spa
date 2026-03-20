@@ -23,7 +23,8 @@
 	let services = $derived(servicesQuery.data || []);
 
 	let searchTerm = $state('');
-	let selectedCategory = $state($_('services.allCategories'));
+	// Use internal value 'all' to avoid i18n comparison issues
+	let selectedCategory = $state('all');
 	let sortOption = $state('default');
 
 	const categories = $derived([$_('services.allCategories'), ...new Set(services.map((s) => s.category || 'General'))]);
@@ -32,7 +33,7 @@
 		services
 			.filter((s) => {
 				const matchesSearch = s.name.toLowerCase().includes(searchTerm.toLowerCase());
-				const matchesCategory = selectedCategory === $_('services.allCategories') || (s.category || 'General') === selectedCategory;
+				const matchesCategory = selectedCategory === 'all' || (s.category || 'General') === selectedCategory;
 				return matchesSearch && matchesCategory;
 			})
 			.sort((a, b) => {
@@ -53,10 +54,18 @@
 	];
 
 	const categoryDropdownItems = $derived(
-		categories.map((cat: any) => ({
-				label: String(cat),
-				onClick: () => { selectedCategory = String(cat); }
-			}))
+		categories.map((cat: string) => ({
+			label: cat,
+			onClick: () => { 
+				// Convert display name to internal value
+				selectedCategory = cat === $_('services.allCategories') ? 'all' : cat; 
+			}
+		}))
+	);
+
+	// Get display label for selected category
+	let selectedCategoryLabel = $derived(
+		selectedCategory === 'all' ? $_('services.allCategories') : selectedCategory
 	);
 
 	const sortDropdownItems = $derived(
@@ -83,14 +92,14 @@
 				<SearchBar bind:value={searchTerm} />
 			</div>
 
-			<div class="flex flex-wrap gap-4 w-full lg:w-auto items-center justify-center lg:justify-end">
+				<div class="flex flex-wrap gap-4 w-full lg:w-auto items-center justify-center lg:justify-end">
 				<!-- Category -->
 				<div class="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-3xl border border-gray-100">
 					<Filter size={20} class="text-primary" />
 					<Dropdown items={categoryDropdownItems}>
 						{#snippet trigger()}
 							<span class="flex items-center gap-3 font-bold text-gray-700 text-sm py-1 px-2 outline-none cursor-pointer">
-								{selectedCategory}
+								{selectedCategoryLabel}
 								<ChevronDown size={16} class="text-primary opacity-50" />
 							</span>
 						{/snippet}
@@ -127,12 +136,12 @@
 				</div>
 				<Typography variant="h3" class="text-gray-900 font-bold mb-4">{$_('services.noResults.title')}</Typography>
 				<p class="text-gray-500 font-medium mb-10 max-w-md mx-auto">
-					{$_('services.noResults.description').replace('{search}', searchTerm).replace('{category}', selectedCategory)}
+					{$_('services.noResults.description').replace('{search}', searchTerm || '""').replace('{category}', selectedCategoryLabel)}
 				</p>
 				<Button
 					onclick={() => {
 						searchTerm = '';
-						selectedCategory = $_('services.allCategories');
+						selectedCategory = 'all';
 					}}
 					class="rounded-2xl px-8 py-4 font-bold"
 				>

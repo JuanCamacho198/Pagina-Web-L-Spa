@@ -14,10 +14,10 @@
 		Calendar,
 		ChevronRight,
 		ShieldCheck,
-		Sparkles,
 		Sun,
 		Moon
 	} from 'lucide-svelte';
+	import spaLogo from '$lib/assets/logos/LOGO4x-sinfondo.png';
 
 	let { children } = $props();
 	const session = authClient.useSession();
@@ -85,10 +85,8 @@
 		<aside class="w-72 bg-white dark:bg-gray-800 border-r border-secondary/20 fixed h-full flex flex-col transition-colors duration-500">
 			<!-- Logo & Theme Toggle -->
 			<div class="p-8 border-b border-secondary/20 flex items-center justify-between">
-				<a href="/admin" class="flex items-center gap-3">
-					<div class="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/20">
-						<Sparkles size={24} />
-					</div>
+				<a href="/" class="flex items-center gap-3">
+					<img src={spaLogo} alt="L-SPA Logo" class="h-12 w-auto object-contain" />
 					<div>
 						<span class="text-lg font-display font-black tracking-tighter text-gray-900 dark:text-white uppercase">L-SPA</span>
 						<p class="text-[10px] font-black uppercase tracking-widest text-primary">Panel Admin</p>
