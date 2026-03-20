@@ -1,14 +1,6 @@
 {
-  "buildCommand": "bun build ./src/index.ts --outdir ./dist --target node",
+  "buildCommand": "bun build ./api/index.ts --outdir ./api --target node",
   "installCommand": "bun install",
   "framework": null,
-  "regions": ["iad1"],
-  "outputDirectory": "dist",
-  "functions": {
-    "api/index.ts": {
-      "runtime": "nodejs@22.x",
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  }
+  "regions": ["iad1"]
 }
