@@ -1,5 +1,6 @@
 {
-  "buildCommand": "bun build ./api/index.ts --outdir ./dist --target node",
+  "buildCommand": "bun build ./api/index.ts --outdir ./api --target node",
   "installCommand": "bun install",
-  "framework": null
+  "framework": null,
+  "outputDirectory": "api"
 }
