@@ -3,10 +3,12 @@
 	import { authClient } from '$lib/auth-client';
 	import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, Sparkles, ShieldCheck, Heart, ChevronLeft, Lock } from 'lucide-svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Breadcrumb from '$lib/components/layout/Breadcrumb.svelte';
 	import { slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { getLocalizedPath } from '$lib/i18n/utils';
+	import { _ } from 'svelte-i18n';
 
 	const session = authClient.useSession();
 	let currentLang = $derived($page.params.lang || 'es');
@@ -28,6 +30,11 @@
 
 <div class="min-h-screen bg-[#FAFAFA] dark:bg-[#121212] transition-colors duration-700 pt-40 pb-32 px-6">
 	<div class="max-w-7xl mx-auto space-y-12">
+		<Breadcrumb items={[
+		  { label: $_('breadcrumbs.home'), href: getLocalizedPath('/', currentLang) },
+		  { label: $_('breadcrumbs.carrito') }
+		]} class="mb-4" />
+
 		<!-- Back Button -->
 		<a
 			href={getLocalizedPath('/servicios', currentLang)}
@@ -182,9 +189,6 @@
 </div>
 
 <style>
-	:global(html) {
-		/* Minimal CSS for dark mode general support just in case, already handled by tailwind index.css usually */
-	}
 	:global(body) {
 		background-image: radial-gradient(at 100% 0%, hsla(327, 67%, 33%, 0.03) 0, transparent 40%);
         background-attachment: fixed;

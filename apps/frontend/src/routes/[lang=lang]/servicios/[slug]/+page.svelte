@@ -11,6 +11,8 @@ import { cart } from '$lib/cart';
 import { addToFavorites, checkIsFavorite, removeFromFavorites } from '$lib/favorites';
 import { onMount } from 'svelte';
 import { getLocalizedPath } from '$lib/i18n/utils';
+  import { _ } from 'svelte-i18n';
+  import Breadcrumb from '$lib/components/layout/Breadcrumb.svelte';
 import { 
 ShoppingCart, 
 Clock,  
@@ -104,13 +106,11 @@ let contraindicationsList = $derived(parseList(service.contraindications));
 <div class="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0B] transition-colors duration-1000 selection:bg-primary/20 selection:text-primary-dark pb-32">
 <!-- Hero Header Content -->
 <div class="pt-32 pb-16 px-6 max-w-7xl mx-auto">
-<nav class="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.3em] mb-12 animate-in fade-in duration-1000">
-<a href={getLocalizedPath('/', currentLang)} class="text-gray-400 dark:text-gray-500 hover:text-primary transition-colors">Inicio</a>
-<span class="text-gray-300 dark:text-gray-700">/</span>
-<a href={getLocalizedPath('/servicios', currentLang)} class="text-gray-400 dark:text-gray-500 hover:text-primary transition-colors">Catálogo</a>
-<span class="text-gray-300 dark:text-gray-700">/</span>
-<span class="text-primary dark:text-primary-light">{service.name}</span>
-</nav>
+<Breadcrumb items={[
+  { label: $_('breadcrumbs.home'), href: getLocalizedPath('/', currentLang) },
+  { label: $_('breadcrumbs.servicios'), href: getLocalizedPath('/servicios', currentLang) },
+  { label: service.name }
+]} class="mb-12" />
 
 <div class="space-y-6 max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-150">
 <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gray-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-600 dark:text-gray-300 bg-white/50 dark:bg-white/5 backdrop-blur-sm">

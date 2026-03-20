@@ -601,6 +601,20 @@
     "originalError": "Original Error:",
     "contactSupport": "If the problem persists, contact technical support."
   },
+  "breadcrumbs": {
+    "home": "Home",
+    "servicios": "Catalog",
+    "carrito": "Cart",
+    "checkout": "Checkout",
+    "contacto": "Contact",
+    "privacidad": "Privacy",
+    "cookies": "Cookies",
+    "cancelacion": "Cancellation",
+    "datos": "Data Treatment",
+    "reservas": "My Bookings",
+    "perfil": "Profile",
+    "favoritos": "Favorites"
+  },
   "toast": {
     "addedToCart": "{name} added to cart",
     "removedFromCart": "{name} removed from cart",

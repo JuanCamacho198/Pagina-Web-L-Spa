@@ -1,5 +1,11 @@
 <script lang="ts">
 	import { CalendarX, Receipt, CreditCard, Clock, RotateCcw, AlertTriangle, ShieldCheck, ChevronRight, Info, Lock } from 'lucide-svelte';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
+	import { _ } from 'svelte-i18n';
+	import Breadcrumb from '$lib/components/layout/Breadcrumb.svelte';
+
+	let currentLang = $derived($page.params.lang || 'es');
 
 	type Section = {
 		icon: any;
@@ -63,6 +69,12 @@
 <div class="min-h-screen bg-white">
 	<!-- Hero Header -->
 	<header class="bg-gray-900 pt-40 pb-32 px-6 relative overflow-hidden">
+		<div class="max-w-7xl mx-auto mb-12">
+			<Breadcrumb items={[
+			  { label: $_('breadcrumbs.home'), href: getLocalizedPath('/', currentLang) },
+			  { label: $_('breadcrumbs.cancelacion') }
+			]} />
+		</div>
 		<!-- Decor -->
 		<div class="absolute inset-0 opacity-10 pointer-events-none overflow-hidden">
 			<div class="absolute top-0 right-0 w-150 h-150 bg-primary rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>

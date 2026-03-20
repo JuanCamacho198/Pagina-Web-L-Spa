@@ -5,11 +5,16 @@
 	import Dropdown from '$lib/components/ui/Dropdown.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Typography from '$lib/components/ui/Typography.svelte';
+	import Breadcrumb from '$lib/components/layout/Breadcrumb.svelte';
 	import { Filter, SortAsc, ChevronDown } from 'lucide-svelte';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { apiClient } from '$lib/api';
 	import { _ } from 'svelte-i18n';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
 	import type { Service } from '@l-spa/shared-types';
+
+	let currentLang = $derived($page.params.lang || 'es');
 
 	let { data } = $props();
 	
@@ -78,6 +83,12 @@
 
 <div class="servicios-page min-h-screen bg-linear-to-b from-white to-gray-50/50 flex flex-col pt-12 pb-24">
 	<section class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
+        <!-- Breadcrumb -->
+        <Breadcrumb items={[
+          { label: $_('breadcrumbs.home'), href: getLocalizedPath('/', currentLang) },
+          { label: $_('breadcrumbs.servicios') }
+        ]} class="mb-8" />
+
         <!-- Header -->
         <div class="mb-16">
             <Typography variant="h1" class="text-gray-900 mb-4">{$_('services.title')}</Typography>

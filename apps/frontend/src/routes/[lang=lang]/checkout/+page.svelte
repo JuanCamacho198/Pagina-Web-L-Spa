@@ -19,8 +19,14 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Typography from '$lib/components/ui/Typography.svelte';
 	import Badge from '$lib/components/ui/Badge.svelte';
+	import Breadcrumb from '$lib/components/layout/Breadcrumb.svelte';
 	import { toast } from '$lib/stores/toast.svelte';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
+	import { _ } from 'svelte-i18n';
+
+	let currentLang = $derived($page.params.lang || 'es');
 
 	interface Props {
 		data: any;
@@ -123,13 +129,19 @@
 		<!-- Back -->
 		<button
 			onclick={() => history.back()}
-			class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-all font-bold text-sm mb-12 group uppercase tracking-widest"
+			class="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-all font-bold text-sm mb-6 group uppercase tracking-widest"
 		>
 			<div class="h-10 w-px0 flex items-center justify-center rounded-4xl bg-white border border-gray-100 shadow-sm group-hover:scale-110 group-hover:bg-primary/5 transition-all">
 				<ChevronLeft size={20} />
 			</div>
 			Regresar
 		</button>
+
+		<Breadcrumb items={[
+		  { label: $_('breadcrumbs.home'), href: getLocalizedPath('/', currentLang) },
+		  { label: $_('breadcrumbs.carrito'), href: getLocalizedPath('/carrito', currentLang) },
+		  { label: $_('breadcrumbs.checkout') }
+		]} class="mb-12" />
 
 		<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
 			<!-- Main Form Area -->

@@ -3,8 +3,13 @@
 	import { cn } from '$lib/utils/cn';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Typography from '$lib/components/ui/Typography.svelte';
+	import Breadcrumb from '$lib/components/layout/Breadcrumb.svelte';
 	import { toast } from '$lib/stores/toast.svelte';
 	import { _ } from 'svelte-i18n';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
+
+	let currentLang = $derived($page.params.lang || 'es');
 
 	let isSubmitting = $state(false);
 	
@@ -56,6 +61,13 @@
 <div class="min-h-screen bg-gray-50/50 pb-32">
 	<!-- Hero Section -->
 	<section class="bg-primary-dark pt-40 pb-32 px-6 relative overflow-hidden">
+		<!-- Breadcrumb -->
+		<div class="max-w-7xl mx-auto mb-12">
+			<Breadcrumb items={[
+			  { label: $_('breadcrumbs.home'), href: getLocalizedPath('/', currentLang) },
+			  { label: $_('breadcrumbs.contacto') }
+			]} />
+		</div>
 		<!-- Decor -->
 		<div class="absolute top-0 right-0 w-160 h-160 bg-primary/20 opacity-50 rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
 		<div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary opacity-10 rounded-full -translate-x-1/2 translate-y-1/2 blur-2xl"></div>

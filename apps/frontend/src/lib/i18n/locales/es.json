@@ -601,6 +601,20 @@
     "originalError": "Error Original:",
     "contactSupport": "Si el problema persiste, contacta al soporte técnico."
   },
+  "breadcrumbs": {
+    "home": "Inicio",
+    "servicios": "Catálogo",
+    "carrito": "Carrito",
+    "checkout": "Checkout",
+    "contacto": "Contacto",
+    "privacidad": "Privacidad",
+    "cookies": "Cookies",
+    "cancelacion": "Cancelación",
+    "datos": "Tratamiento de Datos",
+    "reservas": "Mis Reservas",
+    "perfil": "Perfil",
+    "favoritos": "Favoritos"
+  },
   "toast": {
     "addedToCart": "{name} añadido al carrito",
     "removedFromCart": "{name} eliminado del carrito",

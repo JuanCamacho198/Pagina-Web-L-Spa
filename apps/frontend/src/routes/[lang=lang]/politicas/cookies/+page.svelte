@@ -1,5 +1,11 @@
 <script lang="ts">
 	import { Cookie, Settings, Eye, HelpCircle, ChevronRight, PieChart } from 'lucide-svelte';
+	import { page } from '$app/stores';
+	import { getLocalizedPath } from '$lib/i18n/utils';
+	import { _ } from 'svelte-i18n';
+	import Breadcrumb from '$lib/components/layout/Breadcrumb.svelte';
+
+	let currentLang = $derived($page.params.lang || 'es');
 </script>
 
 <svelte:head>
@@ -8,6 +14,11 @@
 
 <div class="min-h-screen bg-gray-50/50 dark:bg-gray-900 pt-40 pb-32 px-6">
 	<div class="max-w-4xl mx-auto space-y-12">
+		<Breadcrumb items={[
+		  { label: $_('breadcrumbs.home'), href: getLocalizedPath('/', currentLang) },
+		  { label: $_('breadcrumbs.cookies') }
+		]} />
+
 		<!-- Header -->
 		<header class="text-center space-y-8 animate-in fade-in slide-in-from-top-12 duration-1000">
 			<div class="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-primary/5 text-primary text-[10px] font-black uppercase tracking-[0.4em]">
