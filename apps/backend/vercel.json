@@ -1,6 +1,0 @@
-{
-  "buildCommand": "bun build ./api/index.ts --outdir ./api --target node",
-  "installCommand": "bun install",
-  "framework": null,
-  "regions": ["iad1"]
-}
