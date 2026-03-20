@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "bun --hot src/index.ts",
-    "build": "bun build ./src/index.ts --outdir ./dist --target node",
-    "start": "bun dist/index.js",
-    "start:prod": "bun dist/index.js",
+    "build": "bun build ./api/index.ts --outdir ./api --target node",
+    "start": "bun api/index.js",
+    "start:prod": "bun api/index.js",
     "test": "bun test"
   },
   "dependencies": {
