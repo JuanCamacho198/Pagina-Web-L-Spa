@@ -5,6 +5,7 @@
     "@eslint/js": "^9.0.0",
     "@l-spa/shared-types": "workspace:*",
     "@sentry/hono": "^10.0.0",
+    "@sveltejs/adapter-vercel": "^6.3.3",
     "bun-types": "^1.1.0",
     "concurrently": "^7.6.0",
     "eslint": "^9.0.0",
