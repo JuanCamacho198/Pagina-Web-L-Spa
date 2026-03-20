@@ -68,52 +68,52 @@
 	<title>Mi Perfil | L-SPA Experience</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50/50 pt-40 pb-32 px-6">
+<div class="min-h-screen bg-[#FAFAFA] dark:bg-[#121212] transition-colors duration-700 pt-40 pb-32 px-6">
 	{#if $session.isPending || loading}
 		<div class="max-w-4xl mx-auto flex flex-col items-center justify-center py-40 gap-6">
 			<div class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-			<p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Autenticando Santuario...</p>
+			<p class="text-[10px] font-medium uppercase tracking-[0.4em] text-gray-400 dark:text-gray-500">Autenticando Santuario...</p>
 		</div>
 	{:else if $session.data}
 		<div class="max-w-5xl mx-auto space-y-12">
 			<!-- Profile Hero Card -->
-			<div class="bg-white rounded-spa-xxl shadow-2xl shadow-primary/5 border border-gray-100 overflow-hidden relative group/hero">
-				<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover/hero:opacity-100 transition-opacity duration-1000"></div>
+			<div class="bg-white dark:bg-[#1A1A1A] rounded-spa-xxl shadow-spa dark:shadow-none border border-gray-50 dark:border-white/5 overflow-hidden relative group/hero transition-colors duration-700">
+				<div class="absolute inset-0 bg-primary/5 dark:bg-primary-dark/20 opacity-0 group-hover/hero:opacity-100 transition-opacity duration-1000"></div>
 				
-				<div class="p-12 md:p-20 relative z-10">
+				<div class="p-12 md:p-20 relative z-10 w-full">
 					<div class="flex flex-col md:flex-row items-center gap-12">
 						<!-- Avatar with Upload Hover -->
 						<div class="relative group">
-							<div class="w-48 h-48 rounded-[56px] overflow-hidden border-4 border-white shadow-2xl relative">
-								<img src={profileData?.user?.image || $session.data?.user.image || `https://ui-avatars.com/api/?name=${$session.data?.user.name}`} alt={$session.data?.user.name} class="w-full h-full object-cover" />
-								<div class="absolute inset-0 bg-gray-900/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center cursor-pointer">
-									<Camera size={40} class="text-white" />
+							<div class="w-48 h-48 rounded-spa-xl overflow-hidden border-4 border-white dark:border-[#2A2A2A] shadow-xl relative transition-colors duration-500">
+								<img src={profileData?.user?.image || $session.data?.user.image || `https://ui-avatars.com/api/?name=${$session.data?.user.name}&background=8C1B58&color=fff`} alt={$session.data?.user.name} class="w-full h-full object-cover" />
+								<div class="absolute inset-0 bg-primary-dark/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center cursor-pointer">
+									<Camera size={40} strokeWidth={1.5} class="text-white" />
 								</div>
 							</div>
-							<div class="absolute -bottom-4 -right-4 w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-xl">
-								<ShieldCheck size={28} />
+							<div class="absolute -bottom-4 -right-4 w-14 h-14 bg-primary dark:bg-primary-light text-white rounded-full flex items-center justify-center shadow-lg transition-colors">
+								<ShieldCheck size={24} strokeWidth={1.5} />
 							</div>
 						</div>
 
 						<!-- Bio Info -->
 						<div class="flex-1 text-center md:text-left space-y-6">
-							<div class="space-y-2">
-								<div class="inline-flex items-center gap-2 px-6 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em]">
+							<div class="space-y-4">
+								<div class="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-secondary/30 dark:bg-white/5 text-primary-dark dark:text-primary-light text-[10px] font-medium uppercase tracking-[0.3em] border border-secondary dark:border-white/10 transition-colors">
 									{profileData?.user?.role === 'admin' ? 'Administrador' : profileData?.user?.role === 'employee' ? 'Empleado' : 'Cliente Premium'}
 								</div>
-								<h1 class="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none uppercase">
-									{profileData?.user?.name?.split(' ')[0] || $session.data?.user.name?.split(' ')[0]} <br /> <span class="text-primary italic">{profileData?.user?.name?.split(' ').slice(1).join(' ') || $session.data?.user.name?.split(' ').slice(1).join(' ')}</span>
+								<h1 class="text-5xl md:text-7xl font-display text-gray-900 dark:text-white leading-[1.1] transition-colors">
+									{profileData?.user?.name?.split(' ')[0] || $session.data?.user.name?.split(' ')[0]} <br /> <span class="text-primary dark:text-primary-light italic font-light">{profileData?.user?.name?.split(' ').slice(1).join(' ') || $session.data?.user.name?.split(' ').slice(1).join(' ')}</span>
 								</h1>
 							</div>
 							
 							<div class="flex flex-wrap justify-center md:justify-start gap-8">
-								<div class="flex items-center gap-3 text-gray-400 font-bold text-sm">
-									<Mail size={18} class="text-primary" />
+								<div class="flex items-center gap-3 text-gray-500 dark:text-gray-400 font-light text-sm transition-colors">
+									<Mail size={18} strokeWidth={1.5} class="text-primary dark:text-secondary" />
 									{profileData?.user?.email || $session.data?.user.email}
 								</div>
 								{#if profileData?.user?.phone}
-									<div class="flex items-center gap-3 text-gray-400 font-bold text-sm">
-										<MapPin size={18} class="text-primary" />
+									<div class="flex items-center gap-3 text-gray-500 dark:text-gray-400 font-light text-sm transition-colors">
+										<MapPin size={18} strokeWidth={1.5} class="text-primary dark:text-secondary" />
 										{profileData.user.phone}
 									</div>
 								{/if}
@@ -123,32 +123,32 @@
 				</div>
 
 				<!-- Stats Floor -->
-				<div class="bg-gray-900 p-10 md:px-20 grid grid-cols-1 md:grid-cols-3 gap-12">
+				<div class="bg-primary-dark dark:bg-[#121212]/50 p-10 md:px-20 grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-primary/20 dark:border-white/5 transition-colors">
 					<div class="flex items-center gap-6 group/stat">
-						<div class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center text-primary group-hover/stat:bg-primary group-hover/stat:text-white transition-all duration-500">
-							<Calendar size={24} />
+						<div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-secondary group-hover/stat:bg-secondary group-hover/stat:text-primary-dark transition-all duration-500">
+							<Calendar size={20} strokeWidth={1.5} />
 						</div>
 						<div>
-							<p class="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Citas Realizadas</p>
-							<p class="text-2xl font-black text-white tracking-tight">{profileData?.stats?.appointmentsCount || 0}</p>
+							<p class="text-[10px] font-medium uppercase tracking-[0.2em] text-secondary/70 dark:text-gray-400">Citas Realizadas</p>
+							<p class="text-3xl font-display text-white tracking-tight mt-1">{profileData?.stats?.appointmentsCount || 0}</p>
 						</div>
 					</div>
 					<div class="flex items-center gap-6 group/stat">
-						<div class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center text-primary group-hover/stat:bg-primary group-hover/stat:text-white transition-all duration-500">
-							<Heart size={24} />
+						<div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-secondary group-hover/stat:bg-secondary group-hover/stat:text-primary-dark transition-all duration-500">
+							<Heart size={20} strokeWidth={1.5} />
 						</div>
 						<div>
-							<p class="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Favoritos</p>
-							<p class="text-2xl font-black text-white tracking-tight">{profileData?.stats?.favoritesCount || 0}</p>
+							<p class="text-[10px] font-medium uppercase tracking-[0.2em] text-secondary/70 dark:text-gray-400">Favoritos</p>
+							<p class="text-3xl font-display text-white tracking-tight mt-1">{profileData?.stats?.favoritesCount || 0}</p>
 						</div>
 					</div>
 					<div class="flex items-center gap-6 group/stat">
-						<div class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center text-primary group-hover/stat:bg-primary group-hover/stat:text-white transition-all duration-500">
-							<ShoppingBag size={24} />
+						<div class="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-secondary group-hover/stat:bg-secondary group-hover/stat:text-primary-dark transition-all duration-500">
+							<ShoppingBag size={20} strokeWidth={1.5} />
 						</div>
 						<div>
-							<p class="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">En Carrito</p>
-							<p class="text-2xl font-black text-white tracking-tight">{profileData?.stats?.cartCount || 0}</p>
+							<p class="text-[10px] font-medium uppercase tracking-[0.2em] text-secondary/70 dark:text-gray-400">En Carrito</p>
+							<p class="text-3xl font-display text-white tracking-tight mt-1">{profileData?.stats?.cartCount || 0}</p>
 						</div>
 					</div>
 				</div>
@@ -157,10 +157,10 @@
 			<!-- Interaction Grid -->
 			<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 				<!-- Settings / Account -->
-				<div class="lg:col-span-12 bg-white rounded-spa-xl p-12 shadow-2xl shadow-primary/5 border border-gray-100">
+				<div class="lg:col-span-12 bg-white dark:bg-[#1A1A1A] rounded-spa-xl p-12 shadow-spa dark:shadow-none border border-gray-50 dark:border-white/5 transition-colors duration-700">
 					<div class="flex items-center justify-between mb-12">
-						<h2 class="text-3xl font-black text-gray-900 tracking-tight uppercase">Gestión de <span class="text-primary italic">Cuenta</span></h2>
-						<Button variant="ghost" class="text-[10px] font-black tracking-widest uppercase">Editar Perfil</Button>
+						<h2 class="text-3xl font-display text-gray-900 dark:text-white transition-colors">Gestión de <span class="text-primary dark:text-primary-light italic">Cuenta</span></h2>
+						<Button variant="ghost" class="text-xs font-medium tracking-[0.2em] uppercase text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white">Editar Perfil</Button>
 					</div>
 
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -172,14 +172,14 @@
 						] as item}
 							<button 
 								onclick={item.action}
-								class="p-8 rounded-4xl border border-gray-50 flex items-start gap-6 hover:bg-gray-50 hover:border-primary/20 transition-all text-left group"
+								class="p-8 rounded-spa-lg border border-gray-100 dark:border-white/5 flex items-start gap-6 hover:bg-gray-50 dark:hover:bg-white/5 hover:border-primary/20 dark:hover:border-primary/20 transition-all text-left group"
 							>
-								<div class="p-4 rounded-4xl {item.danger ? 'bg-rose-50 text-rose-500' : 'bg-gray-50 text-gray-400 group-hover:bg-primary group-hover:text-white'} transition-all duration-500">
-									<item.icon size={24} />
+								<div class="p-4 rounded-full {item.danger ? 'bg-red-50/50 dark:bg-red-500/10 text-red-400' : 'bg-secondary/30  text-primary-dark dark:text-gray-400 group-hover:bg-primary group-hover:text-white dark:group-hover:bg-primary-light dark:group-hover:text-primary-dark'} transition-all duration-500 shadow-sm group-hover:scale-110">
+									<item.icon size={20} strokeWidth={1.5} />
 								</div>
-								<div>
-									<h4 class="text-lg font-black text-gray-900 tracking-tight">{item.title.toUpperCase()}</h4>
-									<p class="text-sm font-medium text-gray-400">{item.desc}</p>
+								<div class="space-y-1 mt-1">
+									<h4 class="text-sm font-medium uppercase tracking-widest text-gray-900 dark:text-white transition-colors">{item.title}</h4>
+									<p class="text-xs font-light text-gray-500 dark:text-gray-400 transition-colors">{item.desc}</p>
 								</div>
 							</button>
 						{/each}
@@ -190,14 +190,18 @@
 	{:else}
 		<!-- Not authenticated, show redirect message -->
 		<div class="max-w-4xl mx-auto flex flex-col items-center justify-center py-40 gap-6">
-			<p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Redirigiendo a login...</p>
+			<p class="text-[10px] font-medium uppercase tracking-[0.4em] text-gray-400 dark:text-gray-500">Redirigiendo a login...</p>
 		</div>
 	{/if}
 </div>
 
 <style>
 	:global(body) {
-		background-image: radial-gradient(at 0% 100%, hsla(327, 67%, 33%, 0.05) 0, transparent 40%);
-        background-attachment: fixed;
+		background-image: radial-gradient(at 0% 100%, hsla(327, 67%, 33%, 0.03) 0, transparent 40%);
+		background-attachment: fixed;
+	}
+	:global(.dark body) {
+		background-image: radial-gradient(at 0% 100%, hsla(327, 67%, 33%, 0.1) 0, transparent 40%);
 	}
 </style>
+        

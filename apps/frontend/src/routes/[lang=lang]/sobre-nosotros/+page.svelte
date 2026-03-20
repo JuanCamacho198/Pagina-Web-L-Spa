@@ -133,25 +133,25 @@
 	</section>
 
 	<!-- Pilares Section -->
-	<section class="py-32 px-6 lg:px-8 bg-primary-dark text-white relative overflow-hidden">
+	<section class="py-32 px-6 lg:px-8 bg-primary-dark dark:bg-[#0D0D0D] text-white relative overflow-hidden transition-colors duration-700">
 		<!-- Decor Circles -->
-		<div class="absolute -top-24 -left-24 w-120 h-120 bg-primary opacity-20 rounded-full blur-[120px]"></div>
-		<div class="absolute -bottom-24 -right-24 w-120 h-120 bg-secondary opacity-10 rounded-full blur-[120px]"></div>
+		<div class="absolute -top-24 -left-24 w-120 h-120 bg-primary dark:bg-white/5 opacity-20 rounded-full blur-[120px] transition-colors duration-700"></div>
+		<div class="absolute -bottom-24 -right-24 w-120 h-120 bg-secondary dark:bg-secondary/10 opacity-10 rounded-full blur-[120px] transition-colors duration-700"></div>
 
 		<div class="max-w-7xl mx-auto">
 			<div class="text-center space-y-6 mb-24 relative z-10">
-				<h2 class="text-xs font-medium uppercase tracking-[0.5em] text-accent">Nuestros Pilares</h2>
-				<p class="text-4xl md:text-6xl font-display leading-[1.2]">Fundamentos de <br /> <span class="text-secondary italic font-light">la Experiencia</span></p>
+				<h2 class="text-xs font-medium uppercase tracking-[0.5em] text-accent dark:text-gray-400">Nuestros Pilares</h2>
+				<p class="text-4xl md:text-6xl font-display leading-[1.2]">Fundamentos de <br /> <span class="text-secondary dark:text-white italic font-light">la Experiencia</span></p>
 			</div>
 
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
 				{#each pillars as pillar}
-					<div class="bg-white/5 backdrop-blur-md p-12 rounded-spa-xl border border-white/10 group hover:bg-white/10 hover:-translate-y-2 transition-all duration-700 shadow-2xl">
-						<div class={cn("h-16 w-16 rounded-full flex items-center justify-center mb-8 bg-white/10 transition-all duration-500 group-hover:scale-110", pillar.color)}>
+					<div class="bg-white/5 dark:bg-[#1A1A1A]/80 backdrop-blur-md p-12 rounded-spa-xl border border-white/10 dark:border-white/5 group hover:bg-white/10 dark:hover:bg-white/5 hover:-translate-y-2 transition-all duration-700 shadow-2xl dark:shadow-none">
+						<div class={cn("h-16 w-16 rounded-full flex items-center justify-center mb-8 bg-white/10 dark:bg-white/5 transition-all duration-500 group-hover:scale-110", pillar.color)}>
 							<pillar.icon size={28} strokeWidth={1.5} />
 						</div>
 						<h4 class="text-2xl font-display mb-4 text-white">{pillar.title}</h4>
-						<p class="text-sm text-gray-300 font-light leading-loose">
+						<p class="text-sm text-gray-300 dark:text-gray-400 font-light leading-loose">
 							{pillar.desc}
 						</p>
 					</div>
@@ -200,23 +200,35 @@
 	</section>
 
 	<!-- CTA Section -->
-	<section class="px-6">
-		<div class="max-w-5xl mx-auto bg-primary rounded-spa-xxl p-20 text-center text-white relative overflow-hidden group">
-			<div class="absolute inset-0 bg-black/10 translate-y-full group-hover:translate-y-0 transition-transform duration-700"></div>
-			
-			<div class="relative z-10 space-y-12">
-				<h2 class="text-4xl md:text-6xl font-black tracking-tighter leading-none mb-8">¿LISTO PARA TU <br /> TRANSFORMACIÓN?</h2>
-				<div class="flex flex-col sm:flex-row justify-center gap-6">
+	<section class="max-w-7xl mx-auto px-6 lg:px-8 mb-32">
+		<div class="rounded-spa-xxl bg-primary dark:bg-primary-dark p-16 md:p-24 text-center text-white relative overflow-hidden group shadow-spa dark:shadow-none transition-colors duration-700">
+			<!-- Elegant Dark Overlay / Decor -->
+			<div class="absolute inset-0 bg-linear-to-t from-[#121212]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+			<div class="absolute -top-40 -right-40 w-96 h-96 bg-white/5 rounded-full blur-[60px] group-hover:scale-110 transition-transform duration-1000"></div>
+
+			<div class="relative z-10 space-y-12 max-w-3xl mx-auto">
+				<div class="space-y-6">
+					<p class="text-xs font-medium uppercase tracking-[0.4em] text-secondary">Tu Viaje Empieza Aquí</p>
+					<h2 class="text-4xl md:text-6xl font-display leading-[1.2]">
+						¿Listo para tu <br />
+						<span class="italic font-light text-secondary">Transformación?</span>
+					</h2>
+					<p class="text-white/80 font-light text-lg">
+						Déjate llevar por una experiencia que renovará tu cuerpo y mente. Reserva tu espacio y descubre tu mejor versión.
+					</p>
+				</div>
+				
+				<div class="flex flex-col sm:flex-row justify-center gap-6 items-center">
 					<Button 
 						href={getLocalizedPath('/contacto', currentLang)}
-						class="bg-white text-primary hover:bg-gray-100 px-12 py-6 rounded-[28px] text-lg font-black uppercase tracking-widest shadow-2xl shadow-black/10 group/btn"
+						class="bg-white text-primary dark:text-primary-dark hover:bg-gray-50 px-10 py-4 rounded-full text-sm font-medium uppercase tracking-[0.2em] shadow-xl group/btn transition-colors"
 					>
-						Contáctanos Ahora
-						<ChevronRight size={20} class="ml-3 group-hover/btn:translate-x-2 transition-transform" />
+						Contáctanos
+						<ChevronRight size={16} strokeWidth={1.5} class="ml-2 group-hover/btn:translate-x-1 transition-transform" />
 					</Button>
 					<Button 
 						href={getLocalizedPath('/servicios', currentLang)}
-						class="bg-transparent border-2 border-white/30 text-white hover:bg-white/10 px-12 py-6 rounded-[28px] text-lg font-black uppercase tracking-widest"
+						class="bg-transparent border border-white/30 text-white hover:bg-white/10 hover:border-white px-10 py-4 rounded-full text-sm font-medium uppercase tracking-[0.2em] transition-all"
 					>
 						Explorar Servicios
 					</Button>
