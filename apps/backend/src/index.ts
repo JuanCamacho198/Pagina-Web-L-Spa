@@ -11,9 +11,11 @@ import { auth } from './lib/auth'
 import { csrf } from './middleware/csrf'
 import { securityHeaders } from './middleware/security-headers'
 import { loggingMiddleware } from './middleware/logger'
-import { Sentry } from './lib/sentry'
+import { initSentry } from './lib/sentry'
 
 const app = new Hono()
+
+initSentry()
 
 app.use('*', loggingMiddleware)
 app.use('*', securityHeaders())

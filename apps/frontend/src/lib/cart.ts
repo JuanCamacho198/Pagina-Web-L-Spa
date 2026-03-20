@@ -2,6 +2,10 @@ import { writable, derived, get } from 'svelte/store';
 import { browser } from '$app/environment';
 import { authClient } from './auth-client';
 
+const API_URL = typeof import.meta !== 'undefined' && (import.meta as any).env?.PUBLIC_API_URL 
+    ? (import.meta as any).env.PUBLIC_API_URL 
+    : 'http://localhost:3000/api/v1';
+
 export interface CartItem {
 	id: string;
 	serviceId: string;
@@ -15,7 +19,6 @@ export interface CartItem {
 }
 
 // Constants
-const API_URL = 'http://localhost:3000/api/v1';
 const ANONYMOUS_ID_KEY = 'lspa_guest_id';
 
 // Generate or get anonymous ID

@@ -1,6 +1,10 @@
 import { writable, get } from 'svelte/store';
 import { browser } from '$app/environment';
 
+const API_URL = typeof import.meta !== 'undefined' && (import.meta as any).env?.PUBLIC_API_URL 
+    ? (import.meta as any).env.PUBLIC_API_URL 
+    : 'http://localhost:3000/api/v1';
+
 export interface FavoriteItem {
 	id: string;
 	serviceId: string;
@@ -15,8 +19,6 @@ export interface FavoriteItem {
 	};
 	createdAt: Date;
 }
-
-const API_URL = 'http://localhost:3000/api/v1';
 
 // Generate or get anonymous ID
 function getAnonymousId(): string {

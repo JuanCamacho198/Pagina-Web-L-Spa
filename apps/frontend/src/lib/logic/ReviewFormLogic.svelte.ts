@@ -1,5 +1,13 @@
 import { toast } from '$lib/stores/toast.svelte';
 import { useQueryClient, createMutation } from '@tanstack/svelte-query';
+import { browser } from '$app/environment';
+
+const getApiUrl = () => {
+    if (browser) {
+        return (import.meta as any).env?.PUBLIC_API_URL || 'http://localhost:3000/api/v1';
+    }
+    return 'http://localhost:3000/api/v1';
+};
 
 export interface ReviewFormProps {
     serviceId: string;
@@ -17,7 +25,7 @@ export class ReviewFormLogic {
 
     mutation = createMutation(() => ({
         mutationFn: async (reviewData: any) => {
-            const response = await fetch('http://localhost:3000/api/reviews', {
+            const response = await fetch(`${getApiUrl()}/reviews`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(reviewData)

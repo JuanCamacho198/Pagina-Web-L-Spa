@@ -1,5 +1,8 @@
 import type { RequestHandler } from './$types';
 import { BASE_URL, SITE_NAME, SITE_DESCRIPTION } from '$lib/seo';
+import { PUBLIC_API_URL } from '$env/static/public';
+
+const API_URL = PUBLIC_API_URL || 'http://localhost:3000/api/v1';
 
 const PUBLIC_ROUTES = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
@@ -19,7 +22,7 @@ export const GET: RequestHandler = async () => {
   
   let serviceSlugs: string[] = [];
   try {
-    const response = await fetch(`${BASE_URL}/api/services`);
+    const response = await fetch(`${API_URL}/services`);
     if (response.ok) {
       const services = await response.json();
       serviceSlugs = (services as Array<{ slug?: string }>)

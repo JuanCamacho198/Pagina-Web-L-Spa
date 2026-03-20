@@ -4,8 +4,11 @@ import { createApiClient } from '$lib/api';
 import { createError } from '$lib/errors/factory';
 import type { AppError } from '$lib/errors/types';
 
+const API_BASE_URL = PUBLIC_API_URL || 'http://localhost:3000/api/v1';
+const AUTH_BASE_URL = API_BASE_URL.replace('/api/v1', '');
+
 export const authClient = createAuthClient({
-    baseURL: "http://localhost:3000",
+    baseURL: AUTH_BASE_URL,
     basePath: "/api/v1/auth",
     fetchOptions: {
         credentials: 'include',

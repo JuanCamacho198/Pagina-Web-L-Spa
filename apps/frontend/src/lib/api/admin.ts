@@ -1,8 +1,9 @@
 import { browser } from '$app/environment';
 import { authClient } from '$lib/auth-client';
 
-// API base URL
-const API_URL = 'http://localhost:3000/api/v1';
+const API_URL = typeof import.meta !== 'undefined' && (import.meta as any).env?.PUBLIC_API_URL 
+    ? (import.meta as any).env.PUBLIC_API_URL 
+    : 'http://localhost:3000/api/v1';
 
 // Types
 export interface Appointment {
