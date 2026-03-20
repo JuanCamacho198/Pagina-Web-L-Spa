@@ -1,6 +1,7 @@
 import type { ApiClientConfig, RequestConfig, RetryConfig, RateLimitConfig } from './types';
 import type { AppError, ErrorCode } from '../errors/types';
 import { createError, fromResponse, fromError, isRetryable, getRetryAfter } from '../errors/factory';
+import type { Appointment } from '@l-spa/shared-types';
 
 interface EndpointState {
   queue: Array<() => Promise<void>>;
@@ -49,6 +50,10 @@ export class ApiClient {
 
   async delete<T>(url: string, config?: RequestConfig): Promise<T> {
     return this.request<T>('DELETE', url, undefined, config);
+  }
+
+  async getUserAppointments(userId: string): Promise<Appointment[]> {
+    return this.get<Appointment[]>(`/appointments/user/${userId}`);
   }
 
   private async request<T>(
