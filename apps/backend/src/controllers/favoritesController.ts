@@ -1,7 +1,5 @@
 import { Hono } from 'hono';
-import { db } from '@l-spa/database';
-import { favorites, services } from '@l-spa/database/schema';
-import { eq, and, count } from 'drizzle-orm';
+import { db, favorites, services, eq, and, count } from '@l-spa/database';
 
 const favorite = new Hono();
 

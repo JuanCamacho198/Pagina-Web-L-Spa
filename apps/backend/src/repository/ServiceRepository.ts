@@ -13,11 +13,21 @@ export class ServiceRepository {
   }
 
   async create(data: ServiceSchema) {
-    const results = await db.insert(services).values({
-      ...data,
+    const insertData = {
+      name: data.name,
+      description: data.description ?? null,
       price: data.price.toString(),
+      category: data.category,
+      imageUrl: data.imageUrl || null,
+      duration: data.duration,
+      includes: data.includes ?? null,
+      idealFor: data.idealFor ?? null,
+      benefits: data.benefits ?? null,
+      contraindications: data.contraindications ?? null,
       intensity: data.intensity ?? 3,
-    }).returning();
+    };
+
+    const results = await db.insert(services).values(insertData).returning();
     return results[0];
   }
 
