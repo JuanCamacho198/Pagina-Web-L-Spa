@@ -1,17 +1,13 @@
 services:
   - type: web
     name: l-spa-api
-    rootDir: .
+    rootDir: apps/backend
     env: bun
     region: oregon
     plan: free
-    buildCommand: bun install && bun run --filter @l-spa/backend build
-    startCommand: bun run --filter @l-spa/backend start
+    buildCommand: bun install && bun run build
+    startCommand: bun run start
     healthCheckPath: /
     envVars:
       - key: NODE_ENV
         value: production
-      - key: DATABASE_URL
-        sync: false
-      - key: BETTER_AUTH_SECRET
-        sync: false
