@@ -4,9 +4,6 @@
   "type": "module",
   "scripts": {
     "dev": "bun --hot src/index.ts",
-    "build": "bun build src/api_index.ts --outfile ./api/index.js --target node",
-    "start": "bun api/index.js",
-    "start:prod": "bun api/index.js",
     "test": "bun test"
   },
   "dependencies": {
@@ -14,7 +11,7 @@
     "@hono/zod-validator": "^0.4.1",
     "@l-spa/database": "workspace:*",
     "@l-spa/shared-types": "workspace:*",
-    "@sentry/node": "^10.45.0",
+    "@sentry/vercel-edge": "^8.0.0",
     "better-auth": "^1.5.5",
     "drizzle-orm": "^0.45.1",
     "hono": "^4.6.1",
