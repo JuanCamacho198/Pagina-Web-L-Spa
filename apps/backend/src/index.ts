@@ -25,6 +25,8 @@ app.use('*', cors({
     'http://localhost:5173',
     'http://localhost:5174',
     'https://l-spa-frontend.vercel.app',
+    'https://l-spa.vercel.app',
+    'https://l-spa-git-*-.vercel.app', // Preview deployments
   ],
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowHeaders: ['Content-Type', 'Authorization', 'X-Anonymous-ID', 'X-User-ID', 'x-csrf-token'],
