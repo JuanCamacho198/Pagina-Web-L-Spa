@@ -4,14 +4,17 @@
   "type": "module",
   "scripts": {
     "dev": "bun --hot src/index.ts",
-    "test": "bun test"
+    "test": "bun test",
+    "build": "bun build src/api_index.ts --outfile ./api/index.js",
+    "start": "bun run api/index.js",
+    "start:prod": "bun run api/index.js"
   },
   "dependencies": {
     "@better-auth/infra": "^0.1.8",
     "@hono/zod-validator": "^0.4.1",
     "@l-spa/database": "workspace:*",
     "@l-spa/shared-types": "workspace:*",
-    "@sentry/vercel-edge": "^8.0.0",
+    "@sentry/node": "^8.0.0",
     "better-auth": "^1.5.5",
     "drizzle-orm": "^0.45.1",
     "hono": "^4.6.1",

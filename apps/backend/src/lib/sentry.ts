@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/vercel-edge';
+import * as Sentry from '@sentry/node';
 import { logger } from './logger.js';
 
 export const initSentry = () => {
