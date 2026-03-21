@@ -1,17 +1,3 @@
 {
-  "projects": [
-    {
-      "path": "apps/frontend",
-      "setupAction": "extend",
-      "buildCommand": "bun run build",
-      "outputDirectory": "dist",
-      "installCommand": "bun install"
-    },
-    {
-      "path": "apps/backend",
-      "setupAction": "extend",
-      "buildCommand": "bun run build",
-      "installCommand": "bun install"
-    }
-  ]
+  "installCommand": "bun install"
 }
