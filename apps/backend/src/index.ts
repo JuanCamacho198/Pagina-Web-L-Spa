@@ -40,6 +40,10 @@ app.get('/api/v1/health', (c) => {
   return c.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 
+app.get('/', (c) => {
+  return c.json({ status: 'ok', service: 'l-spa-api' })
+})
+
 app.all("/api/v1/auth/*", (c) => {
   return auth.handler(c.req.raw);
 });
