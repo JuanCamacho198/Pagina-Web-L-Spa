@@ -1,4 +1,5 @@
 import { apiClient } from '$lib/api';
+import { PUBLIC_API_URL } from '$env/static/public';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async () => {
@@ -10,7 +11,8 @@ export const load: LayoutServerLoad = async () => {
       siteConfig: siteConfig || {
         title: 'L-SPA',
         footer: 'Bienestar y relajación total.'
-      }
+      },
+      publicApiUrl: PUBLIC_API_URL
     };
   } catch (err) {
     console.error('Error loading global site config:', err);
@@ -18,7 +20,8 @@ export const load: LayoutServerLoad = async () => {
       siteConfig: {
         title: 'L-SPA',
         footer: 'Bienestar y relajación total.'
-      }
+      },
+      publicApiUrl: PUBLIC_API_URL
     };
   }
 };

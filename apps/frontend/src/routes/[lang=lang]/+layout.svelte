@@ -105,6 +105,11 @@
     // Reset SEO metadata for each navigation
     seoStore.reset();
     
+    // Set API URL globally for client-side modules (like cart.ts)
+    if (data.publicApiUrl) {
+      (window as any).__PUBLIC_API_URL__ = data.publicApiUrl;
+    }
+    
     const unsubscribe = cartStore.subscribe((items) => {
       cartItemsList = items;
     });

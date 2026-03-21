@@ -2,9 +2,14 @@ import { writable, derived, get } from 'svelte/store';
 import { browser } from '$app/environment';
 import { authClient } from './auth-client';
 
-const API_URL = typeof import.meta !== 'undefined' && (import.meta as any).env?.PUBLIC_API_URL 
-    ? (import.meta as any).env.PUBLIC_API_URL 
-    : 'http://localhost:3000/api/v1';
+// Get API URL from window config (set in layout) or fallback
+function getApiUrl(): string {
+	if (browser) {
+		return (window as any).__PUBLIC_API_URL__ || 'http://localhost:3000/api/v1';
+	}
+	return 'http://localhost:3000/api/v1';
+}
+const API_URL = getApiUrl();
 
 export interface CartItem {
 	id: string;
