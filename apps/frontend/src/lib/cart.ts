@@ -10,6 +10,21 @@ function getApiUrl(): string {
 	return 'http://localhost:3000/api/v1';
 }
 
+// Debounce utility to prevent API spam
+function debounce<T extends (...args: any[]) => any>(fn: T, delay: number): T {
+	let timeoutId: ReturnType<typeof setTimeout> | null = null;
+	
+	return ((...args: Parameters<T>) => {
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+		}
+		timeoutId = setTimeout(() => {
+			fn(...args);
+			timeoutId = null;
+		}, delay);
+	}) as T;
+}
+
 export interface CartItem {
 	id: string;
 	serviceId: string;
@@ -109,6 +124,48 @@ async function fetchCart() {
 	return [];
 }
 
+// Internal update function (will be debounced)
+async function updateQuantityInternal(itemId: string, quantity: number) {
+	if (!browser) return;
+	
+	const anonymousId = getAnonymousId();
+	
+	try {
+		const apiUrl = getApiUrl();
+		const response = await fetch(`${apiUrl}/cart/items/${itemId}`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Anonymous-ID': anonymousId,
+			},
+			body: JSON.stringify({ quantity }),
+			credentials: 'include',
+		});
+		
+		if (response.ok) {
+			await cart.load();
+			return;
+		}
+	} catch (e) {
+		console.error('Error updating quantity via API:', e);
+	}
+	
+	// Fallback to localStorage
+	cartStore.update(items => {
+		let newItems;
+		if (quantity <= 0) {
+			newItems = items.filter(i => i.id !== itemId);
+		} else {
+			newItems = items.map(i => i.id === itemId ? { ...i, quantity } : i);
+		}
+		localStorage.setItem('lspa_cart', JSON.stringify(newItems));
+		return newItems;
+	});
+}
+
+// Debounced version of updateQuantity (500ms debounce to prevent spam)
+const updateQuantityDebounced = debounce(updateQuantityInternal, 500);
+
 export const cart = {
 	Subscribe: cartStore.subscribe,
 	
@@ -202,32 +259,11 @@ export const cart = {
 		localStorage.removeItem('lspa_cart');
 	},
 
-	updateQuantity: async (itemId: string, quantity: number) => {
+	// Debounced update quantity - prevents API spam when clicking rapidly
+	updateQuantity: (itemId: string, quantity: number) => {
 		if (!browser) return;
 		
-		const anonymousId = getAnonymousId();
-		
-		try {
-			const apiUrl = getApiUrl();
-			const response = await fetch(`${apiUrl}/cart/items/${itemId}`, {
-				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Anonymous-ID': anonymousId,
-				},
-				body: JSON.stringify({ quantity }),
-				credentials: 'include',
-			});
-			
-			if (response.ok) {
-				await cart.load();
-				return;
-			}
-		} catch (e) {
-			console.error('Error updating quantity via API:', e);
-		}
-		
-		// Fallback to localStorage
+		// Update local state immediately for responsive UI
 		cartStore.update(items => {
 			let newItems;
 			if (quantity <= 0) {
@@ -238,6 +274,15 @@ export const cart = {
 			localStorage.setItem('lspa_cart', JSON.stringify(newItems));
 			return newItems;
 		});
+		
+		// Call debounced API
+		updateQuantityDebounced(itemId, quantity);
+	},
+
+	// Immediate update (bypasses debounce) - for when user leaves page
+	updateQuantityImmediate: async (itemId: string, quantity: number) => {
+		if (!browser) return;
+		await updateQuantityInternal(itemId, quantity);
 	},
 
 	removeItem: async (itemId: string) => {

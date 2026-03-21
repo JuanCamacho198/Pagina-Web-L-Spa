@@ -1,9 +1,13 @@
 import { writable, get } from 'svelte/store';
 import { browser } from '$app/environment';
 
-const API_URL = typeof import.meta !== 'undefined' && (import.meta as any).env?.PUBLIC_API_URL 
-    ? (import.meta as any).env.PUBLIC_API_URL 
-    : 'http://localhost:3000/api/v1';
+// Get API URL from window config (set in layout) or fallback - always call this function, don't cache it
+function getApiUrl(): string {
+	if (browser) {
+		return (window as any).__PUBLIC_API_URL__ || 'http://localhost:3000/api/v1';
+	}
+	return 'http://localhost:3000/api/v1';
+}
 
 export interface FavoriteItem {
 	id: string;
@@ -66,7 +70,8 @@ export async function fetchFavorites() {
 	}
 	
 	try {
-		const response = await fetch(`${API_URL}/favorites`, {
+		const apiUrl = getApiUrl();
+		const response = await fetch(`${apiUrl}/favorites`, {
 			credentials: 'include',
 			headers,
 		});
@@ -102,7 +107,8 @@ export async function addToFavorites(serviceId: string) {
 	}
 	
 	try {
-		const response = await fetch(`${API_URL}/favorites`, {
+		const apiUrl = getApiUrl();
+		const response = await fetch(`${apiUrl}/favorites`, {
 			method: 'POST',
 			headers,
 			body: JSON.stringify({ serviceId }),
@@ -139,7 +145,8 @@ export async function removeFromFavorites(serviceId: string) {
 	}
 	
 	try {
-		const response = await fetch(`${API_URL}/favorites/${serviceId}`, {
+		const apiUrl = getApiUrl();
+		const response = await fetch(`${apiUrl}/favorites/${serviceId}`, {
 			method: 'DELETE',
 			headers,
 			credentials: 'include',
@@ -175,7 +182,8 @@ export async function checkIsFavorite(serviceId: string): Promise<boolean> {
 	}
 	
 	try {
-		const response = await fetch(`${API_URL}/favorites/check/${serviceId}`, {
+		const apiUrl = getApiUrl();
+		const response = await fetch(`${apiUrl}/favorites/check/${serviceId}`, {
 			credentials: 'include',
 			headers,
 		});
