@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Star, Clock, MapPin, ChevronLeft, ChevronRight, Sparkles, MoveRight } from 'lucide-svelte';
-  import { isAuthenticated, login } from '$lib/auth';
+  import { authClient } from '$lib/auth-client';
   import Button from '$lib/components/ui/Button.svelte';
   import { onMount } from 'svelte';
   import bannerImage from '$lib/assets/banners/bannerSpa.avif';
@@ -10,6 +10,9 @@
   import { _ } from 'svelte-i18n';
 
   let { data } = $props();
+  
+  // Use authClient session like the layout does
+  const session = authClient.useSession();
   
   let currentLang = $derived($page.params.lang || 'es');
   
@@ -93,19 +96,19 @@
             </span>
           </Button>
           
-          {#if !$isAuthenticated}
-            <button onclick={login} class="group flex items-center gap-3 sm:gap-4 text-white font-semibold text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:text-primary-light transition-colors">
-              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 shrink-0">
-                <ChevronRight size={18} />
-              </div>
-              <span class="whitespace-nowrap">{$_('home.hero.login')}</span>
-            </button>
-          {:else}
+          {#if $session.data}
             <a href={getLocalizedPath('/sobre-nosotros', currentLang)} class="group flex items-center gap-3 sm:gap-4 text-white font-semibold text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:text-primary-light transition-colors">
               <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 shrink-0">
                 <ChevronRight size={18} />
               </div>
               <span class="whitespace-nowrap">{$_('home.hero.knowUs')}</span>
+            </a>
+          {:else}
+            <a href={getLocalizedPath('/login', currentLang)} class="group flex items-center gap-3 sm:gap-4 text-white font-semibold text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:text-primary-light transition-colors">
+              <div class="h-12 w-12 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-md group-hover:border-primary-light transition-all group-hover:scale-105 shrink-0">
+                <ChevronRight size={18} />
+              </div>
+              <span class="whitespace-nowrap">{$_('home.hero.login')}</span>
             </a>
           {/if}
         </div>

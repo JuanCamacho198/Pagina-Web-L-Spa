@@ -2,14 +2,13 @@ import { writable, derived, get } from 'svelte/store';
 import { browser } from '$app/environment';
 import { authClient } from './auth-client';
 
-// Get API URL from window config (set in layout) or fallback
+// Get API URL from window config (set in layout) or fallback - always call this function, don't cache it
 function getApiUrl(): string {
 	if (browser) {
 		return (window as any).__PUBLIC_API_URL__ || 'http://localhost:3000/api/v1';
 	}
 	return 'http://localhost:3000/api/v1';
 }
-const API_URL = getApiUrl();
 
 export interface CartItem {
 	id: string;
@@ -72,7 +71,8 @@ async function fetchCart() {
 	}
 	
 	try {
-		const response = await fetch(`${API_URL}/cart`, {
+		const apiUrl = getApiUrl();
+		const response = await fetch(`${apiUrl}/cart`, {
 			credentials: 'include',
 			headers,
 		});
@@ -141,7 +141,8 @@ export const cart = {
 				headers['X-Anonymous-ID'] = anonymousId;
 			}
 			
-			const response = await fetch(`${API_URL}/cart/items`, {
+			const apiUrl = getApiUrl();
+			const response = await fetch(`${apiUrl}/cart/items`, {
 				method: 'POST',
 				headers,
 				body: JSON.stringify({
@@ -185,7 +186,8 @@ export const cart = {
 		const anonymousId = getAnonymousId();
 		
 		try {
-			await fetch(`${API_URL}/cart`, {
+			const apiUrl = getApiUrl();
+			await fetch(`${apiUrl}/cart`, {
 				method: 'DELETE',
 				headers: {
 					'X-Anonymous-ID': anonymousId,
@@ -206,7 +208,8 @@ export const cart = {
 		const anonymousId = getAnonymousId();
 		
 		try {
-			const response = await fetch(`${API_URL}/cart/items/${itemId}`, {
+			const apiUrl = getApiUrl();
+			const response = await fetch(`${apiUrl}/cart/items/${itemId}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
@@ -243,7 +246,8 @@ export const cart = {
 		const anonymousId = getAnonymousId();
 		
 		try {
-			const response = await fetch(`${API_URL}/cart/items/${itemId}`, {
+			const apiUrl = getApiUrl();
+			const response = await fetch(`${apiUrl}/cart/items/${itemId}`, {
 				method: 'DELETE',
 				headers: {
 					'X-Anonymous-ID': anonymousId,
@@ -274,7 +278,8 @@ export const cart = {
 		const anonymousId = getAnonymousId();
 		
 		try {
-			await fetch(`${API_URL}/cart/migrate`, {
+			const apiUrl = getApiUrl();
+			await fetch(`${apiUrl}/cart/migrate`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
