@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bun --hot src/index.ts",
     "test": "bun test",
-    "build": "bun build src/api_index.ts --outfile ./api/index.js",
+    "build": "bun build src/api_index.ts --outfile ./api/index.js --target=node",
     "start": "bun run api/index.js",
     "start:prod": "bun run api/index.js"
   },
