@@ -3,27 +3,33 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --hot src/index.ts",
+    "dev": "bun --hot src/main.ts",
     "test": "bun test",
-    "build": "bun build src/index.ts --outfile ./dist/index.js --target=bun",
-    "start": "bun dist/index.js",
-    "start:prod": "bun dist/index.js"
+    "build": "bun build src/main.ts --outfile ./dist/main.js --target=bun --external @nestjs/microservices --external @nestjs/websockets",
+    "start": "bun dist/main.js",
+    "start:prod": "bun dist/main.js"
   },
   "dependencies": {
     "@better-auth/infra": "^0.1.8",
-    "@hono/node-server": "^1.19.11",
-    "@hono/zod-validator": "^0.4.1",
     "@l-spa/database": "workspace:*",
     "@l-spa/shared-types": "workspace:*",
+    "@nestjs/common": "^11.1.17",
+    "@nestjs/config": "^4.0.3",
+    "@nestjs/core": "^11.1.17",
+    "@nestjs/platform-express": "^11.1.17",
     "@sentry/node": "^8.0.0",
     "better-auth": "^1.5.5",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
     "drizzle-orm": "^0.45.1",
-    "hono": "^4.6.1",
+    "nestjs-zod": "^5.2.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@sentry/hono": "^10.0.0",
     "@types/bun": "^1.1.0",
+    "@types/express": "^5.0.6",
     "@types/node": "^20.11.0",
     "bun-types": "^1.1.0",
     "typescript": "^5.3.3"
