@@ -9,6 +9,7 @@ import { AppointmentsModule } from './modules/appointments/appointments.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { FavoritesModule } from './modules/favorites/favorites.module';
 import { SettingsModule } from './modules/settings/settings.module';
+import { HealthController } from './common/health.controller';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { SettingsModule } from './modules/settings/settings.module';
     FavoritesModule,
     SettingsModule,
   ],
-  controllers: [],
+  controllers: [HealthController],
   providers: [],
 })
 export class AppModule {}

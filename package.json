@@ -21,8 +21,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "concurrently -k -n backend,frontend -c yellow,cyan \"bun --hot apps/backend/src/index.ts\" \"cd apps/frontend && bun run dev\"",
-    "dev:backend:root": "bun --hot apps/backend/src/index.ts",
+    "dev": "concurrently -k -n backend,frontend -c yellow,cyan \"cd apps/backend && bun run dev\" \"cd apps/frontend && bun run dev\"",
+    "dev:backend:root": "cd apps/backend && bun run dev",
     "build": "bun run --filter \"*\" build",
     "typecheck": "tsc --noEmit",
     "lint": "bun run --filter \"*\" lint",
