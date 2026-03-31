@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
 import { ZodValidationPipe } from 'nestjs-zod';
 import * as Sentry from '@sentry/node';
 
@@ -50,8 +51,8 @@ async function bootstrap() {
     credentials: true,
   });
 
-  // Global Filter
-  app.useGlobalFilters(new AllExceptionsFilter());
+  // Global Filters (order matters - more specific first)
+  app.useGlobalFilters(new ValidationExceptionFilter(), new AllExceptionsFilter());
 
   // Global Pipe
   app.useGlobalPipes(new ZodValidationPipe());
