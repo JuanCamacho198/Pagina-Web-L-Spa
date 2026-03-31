@@ -2,8 +2,35 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { ZodValidationPipe } from 'nestjs-zod';
+import * as Sentry from '@sentry/node';
+
+// Initialize Sentry if DSN is provided
+function initSentry() {
+  const dsn = process.env.SENTRY_DSN;
+  if (dsn) {
+    Sentry.init({
+      dsn,
+      environment: process.env.NODE_ENV || 'development',
+      tracesSampleRate: 1.0,
+      beforeSend(event) {
+        // Sanitize sensitive data
+        if (event.request?.headers) {
+          delete event.request.headers['authorization'];
+          delete event.request.headers['cookie'];
+        }
+        return event;
+      },
+    });
+    console.log('[Sentry] Initialized');
+  } else {
+    console.log('[Sentry] Disabled (no SENTRY_DSN)');
+  }
+}
 
 async function bootstrap() {
+  // Initialize Sentry before creating the app
+  initSentry();
+
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
 

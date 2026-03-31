@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
@@ -9,13 +9,16 @@ import { AppointmentsModule } from './modules/appointments/appointments.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { FavoritesModule } from './modules/favorites/favorites.module';
 import { SettingsModule } from './modules/settings/settings.module';
+import { SentryModule } from './sentry/sentry.module';
 import { HealthController } from './common/health.controller';
+import { SentryMiddleware } from './common/middleware/sentry.middleware';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    SentryModule,
     DatabaseModule,
     AuthModule,
     ServicesModule,
@@ -29,4 +32,8 @@ import { HealthController } from './common/health.controller';
   controllers: [HealthController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(SentryMiddleware).forRoutes('*');
+  }
+}
