@@ -1,4 +1,3 @@
-# Ignore serverless source files (use built dist instead)
+# Only ignore source files that shouldn't be in the bundle output
+# The build process will handle src/vercel.ts and output to dist/
 apps/backend/api/
-apps/backend/src/vercel.ts
-apps/backend/src/vercel.js
