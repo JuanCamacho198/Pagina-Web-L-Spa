@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bun --hot src/main.ts",
     "test": "bun test",
-    "build": "bun build src/main.ts --outfile ./dist/main.js --target=bun --external @nestjs/microservices --external @nestjs/websockets && bun build src/vercel.ts --outfile ./src/vercel.js --target=node --external @nestjs/microservices --external @nestjs/microservices/microservices-module --external @nestjs/websockets --external @nestjs/websockets/socket-module",
+    "build": "bun build src/main.ts --outfile ./dist/main.js --target=bun --external @nestjs/microservices --external @nestjs/websockets && bun build src/vercel.ts --outfile ./dist/vercel.js --target=node --external @nestjs/microservices --external @nestjs/microservices/microservices-module --external @nestjs/websockets --external @nestjs/websockets/socket-module",
     "start": "bun dist/main.js",
     "start:prod": "bun dist/main.js"
   },

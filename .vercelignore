@@ -1,0 +1,4 @@
+# Ignore serverless source files (use built dist instead)
+apps/backend/api/
+apps/backend/src/vercel.ts
+apps/backend/src/vercel.js
