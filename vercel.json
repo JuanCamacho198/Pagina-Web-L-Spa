@@ -1,3 +1,6 @@
 {
-  "installCommand": "bun install"
+  "installCommand": "bun install",
+  "buildCommand": "cd apps/backend && bun build",
+  "outputDirectory": "apps/backend/dist",
+  "framework": null
 }
