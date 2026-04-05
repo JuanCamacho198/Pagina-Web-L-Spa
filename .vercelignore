@@ -15,4 +15,10 @@ scripts
 .env
 .env.*
 !.env.example
+!package.json
+!bun.lock
+!vercel.json
 !.vercelignore
+!apps/backend
+!packages/database
+!packages/shared-types
