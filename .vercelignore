@@ -1,2 +1,18 @@
-# Intentionally left minimal.
-# Do NOT ignore apps/backend/api/index.js (Vercel function entrypoint).
+# Ignore only these specific files/folders
+node_modules
+.git
+docs
+.agents
+.atl
+.codedb
+.docs
+.github
+.vscode
+drizzle
+openspec
+scripts
+*.md
+.env
+.env.*
+!.env.example
+!.vercelignore

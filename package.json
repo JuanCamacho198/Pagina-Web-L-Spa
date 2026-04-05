@@ -22,6 +22,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently -k -n backend,frontend -c yellow,cyan \"cd apps/backend && bun run dev\" \"cd apps/frontend && bun run dev\"",
+    "build:backend": "cd apps/backend && bun build",
     "dev:backend:root": "cd apps/backend && bun run dev",
     "build": "bun run --filter \"*\" build",
     "typecheck": "tsc --noEmit",
