@@ -1,6 +1,5 @@
 {
   "installCommand": "bun install",
-  "buildCommand": "bun run --filter @l-spa/backend build",
-  "outputDirectory": "apps/backend/dist",
+  "buildCommand": "bun run build:backend && bun run --filter @l-spa/frontend build",
   "framework": null
 }

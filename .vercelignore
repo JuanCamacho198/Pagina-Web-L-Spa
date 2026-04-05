@@ -20,5 +20,5 @@ scripts
 !vercel.json
 !.vercelignore
 !apps/backend
-!packages/database
-!packages/shared-types
+!apps/frontend
+!packages
