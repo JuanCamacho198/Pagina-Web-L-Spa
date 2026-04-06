@@ -15,10 +15,6 @@ scripts
 .env
 .env.*
 !.env.example
-!package.json
 !bun.lock
 !vercel.json
 !.vercelignore
-!apps/backend
-!apps/frontend
-!packages

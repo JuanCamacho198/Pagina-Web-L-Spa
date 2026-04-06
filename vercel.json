@@ -1,5 +1,5 @@
 {
   "installCommand": "bun install",
-  "buildCommand": "bun run build:backend && bun run --filter @l-spa/frontend build",
+  "buildCommand": "bun run --filter @l-spa/backend build && bun run --filter @l-spa/frontend build",
   "framework": null
 }
