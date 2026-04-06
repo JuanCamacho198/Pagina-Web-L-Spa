@@ -18,6 +18,7 @@ describe('frontend RBAC matrix', () => {
 
   test('decision reason matrix is deterministic', () => {
     expect(getRbacDecision('admin', 'admin', true)).toEqual({ authorized: true, reason: 'ok' });
+    expect(getRbacDecision('staff', 'admin', true)).toEqual({ authorized: true, reason: 'ok' });
     expect(getRbacDecision('staff', 'employee', true)).toEqual({ authorized: true, reason: 'ok' });
     expect(getRbacDecision('staff', 'customer', true)).toEqual({ authorized: false, reason: 'forbidden' });
     expect(getRbacDecision('admin', null, false)).toEqual({ authorized: false, reason: 'unauthenticated' });

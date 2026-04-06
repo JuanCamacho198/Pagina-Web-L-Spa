@@ -179,6 +179,22 @@ describe('ApiClient - Integration Tests', () => {
     expect(receivedHeaders['Content-Type']).toBe('application/json');
   });
 
+  it('should always include credentials for authenticated APIs', async () => {
+    let receivedCredentials: RequestCredentials | undefined;
+
+    mockFetch = async (_url: string | URL | Request, options?: RequestInit): Promise<Response> => {
+      receivedCredentials = options?.credentials;
+      return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (globalThis as any).fetch = mockFetch;
+
+    const client = new ApiClient({ baseURL: 'http://test.com' });
+    await client.get('/secure-endpoint');
+
+    expect(receivedCredentials).toBe('include');
+  });
+
   it('should use custom headers', async () => {
     let receivedCustomHeader = false;
 

@@ -249,6 +249,7 @@ export class ApiClient {
     try {
       const response = await fetch(url, {
         method,
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           ...this.defaultHeaders,
