@@ -99,6 +99,7 @@
         align === 'right' ? 'right-0' : 'left-0'
       )}
       role="menu"
+      tabindex="-1"
       bind:this={menuRef}
       onkeydown={handleKeydown}
     >

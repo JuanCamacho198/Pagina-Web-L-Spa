@@ -7,6 +7,10 @@
 
   let { mode = 'login' } = $props<{ mode?: 'login' | 'register' }>();
   const logic = new AuthFormLogic(mode);
+
+  $effect(() => {
+    logic.isLogin = mode === 'login';
+  });
 </script>
 
 <div class="w-full max-w-md mx-auto p-8 bg-white rounded-4xl border border-gray-100 shadow-2xl">

@@ -151,25 +151,25 @@
 
 <Skeleton loading={isLoading} {fallback}>
 	<div class="space-y-8">
-	<!-- Header -->
-	<div class="flex items-center justify-between">
-		<div>
-			<h1 class="text-3xl font-display font-black text-gray-900 dark:text-white tracking-tight uppercase">Dashboard</h1>
-			<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Bienvenido al panel de administración</p>
+		<!-- Header -->
+		<div class="flex items-center justify-between">
+			<div>
+				<h1 class="text-3xl font-display font-black text-gray-900 dark:text-white tracking-tight uppercase">Dashboard</h1>
+				<p class="text-gray-500 dark:text-gray-400 font-medium mt-1">Bienvenido al panel de administración</p>
+			</div>
+			<div class="flex items-center gap-4">
+				<button 
+					onclick={loadData}
+					disabled={loading}
+					class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-primary transition-colors disabled:opacity-50"
+				>
+					{#if loading}
+						<Loader2 size={14} class="animate-spin" />
+					{/if}
+					Última actualización: {lastUpdate}
+				</button>
+			</div>
 		</div>
-		<div class="flex items-center gap-4">
-			<button 
-				onclick={loadData}
-				disabled={loading}
-				class="flex items-center gap-2 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-primary transition-colors disabled:opacity-50"
-			>
-				{#if loading}
-					<Loader2 size={14} class="animate-spin" />
-				{/if}
-				Última actualización: {lastUpdate}
-			</button>
-		</div>
-	</div>
 
 		<!-- Stats Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -261,4 +261,5 @@
 				{/if}
 			</div>
 		</div>
-	</Skeleton>
+	</div>
+</Skeleton>

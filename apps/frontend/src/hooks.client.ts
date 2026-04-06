@@ -1,7 +1,7 @@
 import { isAppError, type AppError } from '$lib/errors/types';
 import { authClient } from '$lib/auth-client';
 
-export function handleClientError(error: unknown): void {
+export function handleError(error: unknown): void {
   if (isAppError(error)) {
     const appError = error as AppError;
     
@@ -38,16 +38,16 @@ export async function setupClientErrorHandlers(): Promise<void> {
 
   window.onerror = (message, source, lineno, colno, error) => {
     console.error('[Global Error]', { message, source, lineno, colno, error });
-    handleClientError(error || new Error(String(message)));
+    handleError(error || new Error(String(message)));
     return false;
   };
 
   window.onunhandledrejection = (event) => {
     console.error('[Unhandled Promise Rejection]', event.reason);
-    handleClientError(event.reason);
+    handleError(event.reason);
   };
 }
 
-export function initializeErrorHandling(): void {
+export function init(): void {
   setupClientErrorHandlers().catch(console.error);
 }

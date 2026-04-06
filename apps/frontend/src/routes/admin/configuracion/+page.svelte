@@ -409,6 +409,15 @@
 								ondragover={handleDragOver}
 								ondragleave={handleDragLeave}
 								ondrop={handleDrop}
+								role="button"
+								tabindex="0"
+								onkeydown={(e) => {
+									if (e.key === 'Enter' || e.key === ' ') {
+										e.preventDefault();
+										document.getElementById('logo-upload-input')?.click();
+									}
+								}}
+								aria-label="Zona de carga de logo"
 							>
 								{#if logoPreviewUrl || branding.customLogo}
 									<div class="relative inline-block">
@@ -434,17 +443,18 @@
 									</p>
 								{/if}
 								
-								<label class="inline-block cursor-pointer">
-									<input 
-										type="file" 
-										accept="image/png,image/jpeg,image/webp"
-										onchange={handleLogoUpload}
-										class="hidden"
-									/>
-									<span class="inline-block px-6 py-3 bg-primary text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary/90 transition-colors">
-										Subir Imagen
-									</span>
-								</label>
+							<label for="logo-upload-input" class="inline-block cursor-pointer">
+								<input 
+									id="logo-upload-input"
+									type="file" 
+									accept="image/png,image/jpeg,image/webp"
+									onchange={handleLogoUpload}
+									class="hidden"
+								/>
+								<span class="inline-block px-6 py-3 bg-primary text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary/90 transition-colors">
+									Subir Imagen
+								</span>
+							</label>
 								
 								<p class="text-xs text-gray-400 mt-4">PNG, JPG o WebP. Máximo 500KB.</p>
 							</div>
