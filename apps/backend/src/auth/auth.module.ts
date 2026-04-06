@@ -6,6 +6,7 @@ import * as schema from '@l-spa/database/schema';
 import { AuthController } from './auth.controller';
 import { AuthGuard } from './auth.guard';
 import { OptionalAuthGuard } from './optional-auth.guard';
+import { getTrustedOrigins } from '../common/cors';
 
 @Global()
 @Module({
@@ -23,7 +24,7 @@ import { OptionalAuthGuard } from './optional-auth.guard';
           emailAndPassword: {
             enabled: true,
           },
-          trustedOrigins: configService.get<string>('BETTER_AUTH_TRUSTED_ORIGINS')?.split(',') || ['http://localhost:5173'],
+          trustedOrigins: getTrustedOrigins(configService.get<string>('BETTER_AUTH_TRUSTED_ORIGINS')),
           advanced: {
             defaultCookieAttributes: {
               sameSite: 'lax',

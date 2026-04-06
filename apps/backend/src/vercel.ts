@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter.js';
 import { ValidationExceptionFilter } from './common/filters/validation-exception.filter.js';
+import { buildCorsOriginValidator } from './common/cors.js';
 import { ZodValidationPipe } from 'nestjs-zod';
 import * as Sentry from '@sentry/node';
 
@@ -33,14 +34,10 @@ async function createHandler(): Promise<NodeHandler> {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
 
+  const trustedOrigins = process.env.BETTER_AUTH_TRUSTED_ORIGINS;
+
   app.enableCors({
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:5174',
-      'https://l-spa-frontend.vercel.app',
-      'https://l-spa.vercel.app',
-      /^https:\/\/l-spa-git-.*-\.vercel\.app$/,
-    ],
+    origin: buildCorsOriginValidator(trustedOrigins),
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Anonymous-ID', 'X-User-ID', 'x-csrf-token'],
     exposedHeaders: ['Content-Length'],

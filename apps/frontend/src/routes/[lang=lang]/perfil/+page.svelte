@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { authClient } from '$lib/auth-client';
+	import { PUBLIC_API_URL } from '$env/static/public';
 	import { User, Mail, ShieldCheck, LogOut, Heart, Calendar, MapPin, Camera, ShoppingBag } from 'lucide-svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Skeleton from 'boneyard-js/svelte';
@@ -11,7 +12,7 @@
 	const session = authClient.useSession();
 
 	// API URL
-	const API_URL = 'http://localhost:3000/api/v1';
+	const API_URL = PUBLIC_API_URL || 'http://localhost:3000/api/v1';
 
 	// Profile data state
 	let profileData = $state<any>(null);
