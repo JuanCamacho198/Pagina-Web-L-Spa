@@ -1,14 +1,15 @@
 {
   "version": 2,
   "functions": {
-    "apps/backend/src/vercel.ts": {
-      "runtime": "@vercel/node"
+    "api/index.js": {
+      "runtime": "@vercel/node",
+      "includeFiles": "apps/backend/dist/**"
     }
   },
   "routes": [
     {
       "src": "/api/v1/(.*)",
-      "dest": "apps/backend/src/vercel.ts"
+      "dest": "api/index.js"
     },
     {
       "handle": "filesystem"
