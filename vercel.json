@@ -1,5 +1,10 @@
 {
   "installCommand": "bun install",
   "buildCommand": "bun run --filter @l-spa/backend build && bun run --filter @l-spa/frontend build",
-  "framework": null
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "apps/backend/dist/vercel.js"
+    }
+  ]
 }
