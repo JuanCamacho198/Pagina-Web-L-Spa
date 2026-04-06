@@ -1,4 +1,18 @@
 {
-  "installCommand": "bun install",
-  "buildCommand": "bun run --filter @l-spa/backend build && bun run --filter @l-spa/frontend build"
+  "version": 2,
+  "builds": [
+    {
+      "src": "apps/backend/src/vercel.ts",
+      "use": "@vercel/node",
+      "config": {
+        "runtime": "nodejs24.x"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/v1/(.*)",
+      "dest": "apps/backend/src/vercel.ts"
+    }
+  ]
 }
