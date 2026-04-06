@@ -7,6 +7,10 @@
       "config": {
         "runtime": "nodejs24.x"
       }
+    },
+    {
+      "src": "apps/frontend/package.json",
+      "use": "@sveltejs/vercel"
     }
   ],
   "routes": [
