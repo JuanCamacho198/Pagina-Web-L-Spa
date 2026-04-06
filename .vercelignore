@@ -18,3 +18,5 @@ scripts
 !bun.lock
 !vercel.json
 !.vercelignore
+!api
+!apps/backend/dist
