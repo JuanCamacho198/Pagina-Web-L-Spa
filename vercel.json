@@ -1,9 +1,4 @@
 {
   "installCommand": "bun install",
-  "buildCommand": "bun run --filter @l-spa/backend build && bun run --filter @l-spa/frontend build",
-  "functions": {
-    "apps/backend/dist/vercel.js": {
-      "runtime": "nodejs24.x"
-    }
-  }
+  "buildCommand": "bun run --filter @l-spa/frontend build"
 }
