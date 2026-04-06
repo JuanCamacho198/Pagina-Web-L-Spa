@@ -5,6 +5,7 @@ import { ValidationExceptionFilter } from './common/filters/validation-exception
 import { buildCorsOriginValidator } from './common/cors';
 import { ZodValidationPipe } from 'nestjs-zod';
 import * as Sentry from '@sentry/node';
+import { authSessionNoCacheMiddleware } from './common/middleware/auth-session-cache-control';
 
 // Initialize Sentry if DSN is provided
 function initSentry() {
@@ -47,6 +48,8 @@ async function bootstrap() {
     maxAge: 600,
     credentials: true,
   });
+
+  app.use(authSessionNoCacheMiddleware);
 
   // Global Filters (order matters - more specific first)
   app.useGlobalFilters(new ValidationExceptionFilter(), new AllExceptionsFilter());

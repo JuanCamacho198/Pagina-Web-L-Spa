@@ -16,6 +16,8 @@ import { getTrustedOrigins } from '../common/cors';
     {
       provide: 'AUTH_CLIENT',
       useFactory: (db: any, configService: ConfigService) => {
+        const isProduction = configService.get<string>('NODE_ENV') === 'production';
+
         return betterAuth({
           database: drizzleAdapter(db, {
             provider: 'pg',
@@ -28,8 +30,9 @@ import { getTrustedOrigins } from '../common/cors';
           trustedOrigins: getTrustedOrigins(configService.get<string>('BETTER_AUTH_TRUSTED_ORIGINS')),
           advanced: {
             defaultCookieAttributes: {
-              sameSite: 'lax',
-              secure: configService.get<string>('NODE_ENV') === 'production',
+              sameSite: isProduction ? 'none' : 'lax',
+              secure: isProduction,
+              httpOnly: true,
             },
           },
         });

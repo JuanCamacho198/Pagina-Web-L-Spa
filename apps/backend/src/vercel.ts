@@ -5,6 +5,7 @@ import { ValidationExceptionFilter } from './common/filters/validation-exception
 import { buildCorsOriginValidator } from './common/cors.js';
 import { ZodValidationPipe } from 'nestjs-zod';
 import * as Sentry from '@sentry/node';
+import { authSessionNoCacheMiddleware } from './common/middleware/auth-session-cache-control.js';
 
 type NodeHandler = (req: any, res: any) => any;
 
@@ -44,6 +45,8 @@ async function createHandler(): Promise<NodeHandler> {
     maxAge: 600,
     credentials: true,
   });
+
+  app.use(authSessionNoCacheMiddleware);
 
   app.useGlobalFilters(new ValidationExceptionFilter(), new AllExceptionsFilter());
   app.useGlobalPipes(new ZodValidationPipe());
