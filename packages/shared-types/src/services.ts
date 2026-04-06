@@ -23,6 +23,7 @@ export type UpdateServiceSchema = z.infer<typeof updateServiceSchema>;
 
 export interface Service extends ServiceSchema {
   id: string;
-  image_url?: string; // Compatibility with both camelCase and snake_case
+  image_url?: string;
   imageFileName?: string;
+  cloudinaryId?: string;
 }

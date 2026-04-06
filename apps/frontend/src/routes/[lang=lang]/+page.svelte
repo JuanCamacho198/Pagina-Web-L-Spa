@@ -8,6 +8,7 @@
   import { page } from '$app/stores';
   import { getLocalizedPath } from '$lib/i18n/utils';
   import { _ } from 'svelte-i18n';
+  import Skeleton from 'boneyard-js/svelte';
 
   let { data } = $props();
   
@@ -62,13 +63,19 @@
       duration: service.duration || 60
     }))
   );
+
+  let isLoading = $state(false);
 </script>
+
+<svelte:head>
+  <link rel="preload" as="image" href={bannerImage} type="image/avif" fetchpriority="high" />
+</svelte:head>
 
 <div class="grow font-sans bg-gray-50 dark:bg-gray-900 border-t border-secondary/10">
   <!-- Hero Section -->
   <section class="relative min-h-[90vh] flex items-center overflow-hidden bg-gray-900 pb-20">
     <div class="absolute inset-0 z-0">
-      <enhanced:img src={bannerImage} alt="L-SPA Banner" class="w-full h-full object-cover opacity-50 mix-blend-overlay" />
+      <enhanced:img src={bannerImage} alt="L-SPA Banner" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover opacity-50 mix-blend-overlay" />
       <div class="absolute inset-0 bg-linear-to-b from-black/20 via-black/40 to-black/80"></div>
     </div>
     
@@ -185,6 +192,23 @@
         </a>
       </div>
       
+      {#snippet fallback()}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {#each Array(3) as _}
+            <div class="overflow-hidden group border border-secondary/20 shadow-xl transition-all duration-700 rounded-[2.5rem] bg-white dark:bg-gray-900 flex flex-col">
+              <div class="h-64 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+              <div class="p-8 flex-1 flex flex-col space-y-4">
+                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/2"></div>
+                <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-3/4"></div>
+                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-full"></div>
+                <div class="h-10 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse w-full mt-auto"></div>
+              </div>
+            </div>
+          {/each}
+        </div>
+      {/snippet}
+
+      <Skeleton loading={isLoading} {fallback}>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {#each featuredServices as service}
           <div class="overflow-hidden group border border-secondary/20 shadow-xl hover:shadow-2xl transition-all duration-700 rounded-[2.5rem] bg-white dark:bg-gray-900 hover:-translate-y-3 flex flex-col">
@@ -212,6 +236,7 @@
           </div>
         {/each}
       </div>
+      </Skeleton>
     </div>
   </section>
 </div>

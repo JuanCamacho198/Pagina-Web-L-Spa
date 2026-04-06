@@ -2,6 +2,7 @@
   import { cn } from '$lib/utils/cn';
   import StarRating from '../ui/StarRating.svelte';
   import Badge from '../ui/Badge.svelte';
+  import OptimizedImage from '../ui/OptimizedImage.svelte';
   import { ArrowRight, Clock, ShoppingBag, Check, Heart } from 'lucide-svelte';
   import { slugify } from '$lib/utils/text';
   import { handleAddToCartLogic } from '$lib/logic/ServiceCardLogic';
@@ -71,21 +72,12 @@
   )}
 >
   <div class="relative h-64 overflow-hidden">
-    {#if service.imageUrl || service.image_url}
-      <img 
-        src={service.imageUrl || service.image_url} 
+    {#if service.imageUrl || service.image_url || service.imageFileName}
+      <OptimizedImage 
+        src={service.imageUrl || service.image_url || ''} 
+        cloudinaryId={service.cloudinaryId}
         alt={service.name}
-        loading="lazy"
-        decoding="async"
-        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-      />
-    {:else if service.imageFileName}
-      <img 
-        src="/assets/{service.imageFileName}" 
-        alt={service.name}
-        loading="lazy"
-        decoding="async"
-        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        class="w-full h-full transition-transform duration-700 group-hover:scale-110"
       />
     {:else}
       <div class="w-full h-full bg-gray-100 flex items-center justify-center">

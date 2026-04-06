@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Search, Plus, Edit, Trash2, Eye, Clock, Star, ToggleLeft, ToggleRight, Loader2, X } from 'lucide-svelte';
 	import { adminApi, type Service } from '$lib/api/admin';
+	import Skeleton from 'boneyard-js/svelte';
 
 	// Data from API
 	let services: Service[] = $state([]);
@@ -53,13 +54,13 @@
 		})
 	);
 
-	function formatPrice(price: number) {
+	let formatPrice = $derived((price: number) => {
 		return new Intl.NumberFormat('es-CO', { 
 			style: 'currency', 
 			currency: 'COP',
 			minimumFractionDigits: 0
 		}).format(price);
-	}
+	});
 
 	function getCategoryLabel(category: string) {
 		const labels: Record<string, string> = {
@@ -217,6 +218,27 @@
 			</select>
 		</div>
 
+{#snippet fallback()}
+			<!-- Skeleton for services grid -->
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{#each Array(6) as _, i}
+					<div class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden">
+						<div class="h-48 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+						<div class="p-6 space-y-4">
+							<div class="h-6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-3/4"></div>
+							<div class="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-full"></div>
+							<div class="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-2/3"></div>
+							<div class="flex justify-between pt-4">
+								<div class="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/4"></div>
+								<div class="h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/3"></div>
+							</div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{/snippet}
+
+		<Skeleton loading={loading && services.length > 0} {fallback}>
 		<!-- Services Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 			{#each filteredServices as service}
@@ -296,6 +318,7 @@
 				<p class="text-gray-400 dark:text-gray-500 font-medium">No se encontraron servicios</p>
 			</div>
 		{/if}
+		</Skeleton>
 	{/if}
 </div>
 

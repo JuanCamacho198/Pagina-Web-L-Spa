@@ -13,6 +13,7 @@
 	import { page } from '$app/stores';
 	import { getLocalizedPath } from '$lib/i18n/utils';
 	import type { Service } from '@l-spa/shared-types';
+	import Skeleton from 'boneyard-js/svelte';
 
 	let currentLang = $derived($page.params.lang || 'es');
 
@@ -79,6 +80,8 @@
 			onClick: () => { sortOption = opt.value }
 		}))
 	);
+
+	let isLoading = $derived(servicesQuery.isLoading);
 </script>
 
 <div class="servicios-page min-h-screen bg-linear-to-b from-white to-gray-50/50 flex flex-col pt-12 pb-24">
@@ -132,6 +135,26 @@
 			</div>
 		</div>
 
+		{#snippet fallback()}
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+				{#each Array(6) as _, i}
+					<div class="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden">
+						<div class="h-56 bg-gray-100 animate-pulse"></div>
+						<div class="p-8 space-y-4">
+							<div class="h-8 bg-gray-100 rounded animate-pulse w-3/4"></div>
+							<div class="h-4 bg-gray-100 rounded animate-pulse w-full"></div>
+							<div class="h-4 bg-gray-100 rounded animate-pulse w-2/3"></div>
+							<div class="flex justify-between items-center pt-4">
+								<div class="h-4 bg-gray-100 rounded animate-pulse w-1/4"></div>
+								<div class="h-10 bg-gray-100 rounded-full animate-pulse w-24"></div>
+							</div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{/snippet}
+
+		<Skeleton loading={isLoading} {fallback}>
 		{#if filteredServices.length > 0}
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 				{#each filteredServices as service (service.id)}
@@ -160,5 +183,6 @@
 				</Button>
 			</div>
 		{/if}
+		</Skeleton>
 	</section>
 </div>

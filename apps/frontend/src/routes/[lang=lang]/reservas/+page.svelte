@@ -20,6 +20,7 @@
 	import Modal from '$lib/components/ui/Modal.svelte';
 	import LazyModal from '$lib/components/common/LazyModal.svelte';
 	import { toast } from '$lib/stores/toast.svelte';
+	import Skeleton from 'boneyard-js/svelte';
 
 	let currentLang = $derived($page.params.lang || 'es');
 
@@ -112,6 +113,43 @@
 			</div>
 		</header>
 
+		{#snippet fallback()}
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+				{#each Array(6) as _}
+					<div class="bg-white rounded-[40px] overflow-hidden border border-gray-100 shadow-sm flex flex-col">
+						<div class="p-10 grow space-y-6">
+							<div class="flex justify-between items-start">
+								<div class="h-8 w-24 bg-gray-200 rounded-full animate-pulse"></div>
+								<div class="h-10 w-10 bg-gray-200 rounded-full animate-pulse"></div>
+							</div>
+							<div class="h-8 bg-gray-200 rounded animate-pulse w-3/4"></div>
+							<div class="space-y-4">
+								<div class="flex items-center gap-5">
+									<div class="w-px2 h-12 bg-gray-200 rounded-[20px] animate-pulse"></div>
+									<div class="space-y-2">
+										<div class="h-3 w-12 bg-gray-200 rounded animate-pulse"></div>
+										<div class="h-5 w-24 bg-gray-200 rounded animate-pulse"></div>
+									</div>
+								</div>
+								<div class="flex items-center gap-5">
+									<div class="w-px2 h-12 bg-gray-200 rounded-[20px] animate-pulse"></div>
+									<div class="space-y-2">
+										<div class="h-3 w-12 bg-gray-200 rounded animate-pulse"></div>
+										<div class="h-5 w-20 bg-gray-200 rounded animate-pulse"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="px-10 py-6 bg-gray-50/50 border-t border-gray-100 flex items-center justify-between">
+							<div class="h-4 w-20 bg-gray-200 rounded animate-pulse"></div>
+							<div class="h-10 w-px0 bg-gray-200 rounded-full animate-pulse"></div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{/snippet}
+
+		<Skeleton loading={isLoading} {fallback}>
 		{#if error}
 			<div class="bg-white rounded-[40px] p-20 text-center shadow-2xl shadow-rose-100/50 border border-rose-50 max-w-2xl mx-auto animate-in fade-in zoom-in duration-500">
 				<div class="w-24 h-134 bg-rose-50 rounded-4xl flex items-center justify-center mx-auto mb-8 text-rose-500">
@@ -213,6 +251,7 @@
 				{/each}
 			</div>
 		{/if}
+		</Skeleton>
 	</div>
 </div>
 

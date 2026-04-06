@@ -2,6 +2,7 @@
 import { page as pageStore } from '$app/stores';
 import { cn } from '$lib/utils/cn';
 import Button from '$lib/components/ui/Button.svelte';
+import OptimizedImage from '$lib/components/ui/OptimizedImage.svelte';
 import { getLocalizedPath } from '$lib/i18n/utils';
 import bannerImage from '$lib/assets/banners/bannerSpa.avif';
 import { 
@@ -51,10 +52,11 @@ color: "text-emerald-500"
 <section class="relative min-h-[90vh] flex flex-col justify-end pb-24 overflow-hidden">
 <!-- Background Image with mix-blend for cinematic feel -->
 <div class="absolute inset-0 z-0">
-<img
+<OptimizedImage
 src={bannerImage}
 alt="L-SPA Essence Retreat"
-class="w-full h-full object-cover brightness-[0.7] dark:brightness-[0.4] saturate-50 scale-105 animate-in fade-in zoom-in-105 duration-[3s]"
+priority={true}
+class="w-full h-full brightness-[0.7] dark:brightness-[0.4] saturate-50 scale-105 animate-in fade-in zoom-in-105 duration-[3s]"
 />
 <div class="absolute inset-0 bg-linear-to-t from-[#FAFAFA] via-[#FAFAFA]/50 dark:from-[#0A0A0B] dark:via-[#0A0A0B]/80 to-transparent"></div>
 </div>
@@ -170,10 +172,10 @@ Ser el refugio innegociable de quienes entienden que detenerse es el mayor lujo 
 <!-- Experiencia y Ubicación Cinematográfica -->
 <section class="relative h-[80vh] min-h-150 mt-24">
 <div class="absolute inset-0">
-<img
+<OptimizedImage
 src={bannerImage}
 alt="Ubicación L-SPA"
-class="w-full h-full object-cover brightness-50 dark:brightness-25 grayscale-30"
+class="w-full h-full brightness-50 dark:brightness-25 grayscale-30"
 />
 </div>
 

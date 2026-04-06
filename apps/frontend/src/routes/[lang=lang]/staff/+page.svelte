@@ -14,8 +14,10 @@
 		Clock,
 		User,
 		Scissors,
-		Shield
+		Shield,
+		Loader2
 	} from 'lucide-svelte';
+	import Skeleton from 'boneyard-js/svelte';
 
 	const session = authClient.useSession();
 	let currentLang = $derived($page.params.lang || 'es');
@@ -175,6 +177,16 @@
 
 		<main class="p-8">
 			<div class="max-w-6xl mx-auto">
+				{#snippet fallback()}
+					<div class="flex items-center justify-center py-20">
+						<div class="text-center">
+							<div class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+							<p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Cargando...</p>
+						</div>
+					</div>
+				{/snippet}
+
+				<Skeleton loading={isLoading} {fallback}>
 				{#if isLoading}
 					<div class="flex items-center justify-center py-20">
 						<div class="text-center">
@@ -320,6 +332,7 @@
 						</div>
 					</div>
 				{/if}
+				</Skeleton>
 			</div>
 		</main>
 	</div>

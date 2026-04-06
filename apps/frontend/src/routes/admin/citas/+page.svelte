@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Search, Calendar as CalendarIcon, Clock, Check, X, MoreVertical, Loader2 } from 'lucide-svelte';
 	import { adminApi, type Appointment, type AppointmentStats } from '$lib/api/admin';
+	import Skeleton from 'boneyard-js/svelte';
 
 	// Data from API
 	let appointments: Appointment[] = $state([]);
@@ -117,7 +118,20 @@
 	onMount(() => {
 		loadData();
 	});
+
+	let isLoading = $derived(loading);
 </script>
+
+{#snippet fallback()}
+	<div class="flex items-center justify-center py-20">
+		<div class="flex flex-col items-center gap-4">
+			<Loader2 size={40} class="text-primary animate-spin" />
+			<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando citas...</p>
+		</div>
+	</div>
+{/snippet}
+
+<Skeleton loading={isLoading} {fallback}>
 
 <div class="space-y-8">
 	<!-- Header -->
@@ -144,15 +158,6 @@
 		</div>
 	</div>
 
-	{#if loading && !stats}
-		<!-- Loading State -->
-		<div class="flex items-center justify-center py-20">
-			<div class="flex flex-col items-center gap-4">
-				<Loader2 size={40} class="text-primary animate-spin" />
-				<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando citas...</p>
-			</div>
-		</div>
-	{:else}
 		<!-- Stats -->
 		<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 			<div class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-2xl shadow-primary/5 border border-secondary/20">
@@ -289,5 +294,5 @@
 				</div>
 			{/if}
 		</div>
-	{/if}
-</div>
+	</div>
+	</Skeleton>

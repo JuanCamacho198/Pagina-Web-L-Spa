@@ -2,6 +2,7 @@
 	import { authClient } from '$lib/auth-client';
 	import { User, Mail, ShieldCheck, LogOut, Heart, Calendar, MapPin, Camera, ShoppingBag } from 'lucide-svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Skeleton from 'boneyard-js/svelte';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
@@ -16,6 +17,7 @@
 	let profileData = $state<any>(null);
 	let loading = $state(true);
 	let error = $state('');
+	let isLoading = $derived($session.isPending || loading);
 
 	// Fetch profile data from API
 	async function fetchProfileData() {
@@ -68,14 +70,17 @@
 	<title>Mi Perfil | L-SPA Experience</title>
 </svelte:head>
 
+{#snippet fallback()}
+	<div class="max-w-5xl mx-auto space-y-8 py-8">
+		<div class="h-72 rounded-spa-xxl bg-white dark:bg-[#1A1A1A] border border-gray-100 dark:border-white/5 animate-pulse"></div>
+		<div class="h-80 rounded-spa-xl bg-white dark:bg-[#1A1A1A] border border-gray-100 dark:border-white/5 animate-pulse"></div>
+	</div>
+{/snippet}
+
 <div class="min-h-screen bg-[#FAFAFA] dark:bg-[#121212] transition-colors duration-700 pt-40 pb-32 px-6">
-	{#if $session.isPending || loading}
-		<div class="max-w-4xl mx-auto flex flex-col items-center justify-center py-40 gap-6">
-			<div class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-			<p class="text-[10px] font-medium uppercase tracking-[0.4em] text-gray-400 dark:text-gray-500">Autenticando Santuario...</p>
-		</div>
-	{:else if $session.data}
-		<div class="max-w-5xl mx-auto space-y-12">
+	<Skeleton loading={isLoading} name="profile-page" {fallback}>
+		{#if $session.data}
+			<div class="max-w-5xl mx-auto space-y-12">
 			<!-- Profile Hero Card -->
 			<div class="bg-white dark:bg-[#1A1A1A] rounded-spa-xxl shadow-spa dark:shadow-none border border-gray-50 dark:border-white/5 overflow-hidden relative group/hero transition-colors duration-700">
 				<div class="absolute inset-0 bg-primary/5 dark:bg-primary-dark/20 opacity-0 group-hover/hero:opacity-100 transition-opacity duration-1000"></div>
@@ -186,13 +191,14 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	{:else}
-		<!-- Not authenticated, show redirect message -->
-		<div class="max-w-4xl mx-auto flex flex-col items-center justify-center py-40 gap-6">
-			<p class="text-[10px] font-medium uppercase tracking-[0.4em] text-gray-400 dark:text-gray-500">Redirigiendo a login...</p>
-		</div>
-	{/if}
+			</div>
+		{:else}
+			<!-- Not authenticated, show redirect message -->
+			<div class="max-w-4xl mx-auto flex flex-col items-center justify-center py-40 gap-6">
+				<p class="text-[10px] font-medium uppercase tracking-[0.4em] text-gray-400 dark:text-gray-500">Redirigiendo a login...</p>
+			</div>
+		{/if}
+	</Skeleton>
 </div>
 
 <style>
@@ -204,4 +210,3 @@
 		background-image: radial-gradient(at 0% 100%, hsla(327, 67%, 33%, 0.1) 0, transparent 40%);
 	}
 </style>
-        

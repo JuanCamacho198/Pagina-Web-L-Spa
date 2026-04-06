@@ -12,6 +12,7 @@
 		Loader2
 	} from 'lucide-svelte';
 	import { adminApi, type DashboardStats, type Appointment, type Service } from '$lib/api/admin';
+	import Skeleton from 'boneyard-js/svelte';
 
 	// Data from API
 	let stats: DashboardStats | null = $state(null);
@@ -135,9 +136,21 @@
 	onMount(() => {
 		loadData();
 	});
+
+	let isLoading = $derived(loading);
 </script>
 
-<div class="space-y-8">
+{#snippet fallback()}
+	<div class="flex items-center justify-center py-20">
+		<div class="flex flex-col items-center gap-4">
+			<Loader2 size={40} class="text-primary animate-spin" />
+			<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando datos...</p>
+		</div>
+	</div>
+{/snippet}
+
+<Skeleton loading={isLoading} {fallback}>
+	<div class="space-y-8">
 	<!-- Header -->
 	<div class="flex items-center justify-between">
 		<div>
@@ -158,15 +171,6 @@
 		</div>
 	</div>
 
-	{#if loading && !stats}
-		<!-- Loading State -->
-		<div class="flex items-center justify-center py-20">
-			<div class="flex flex-col items-center gap-4">
-				<Loader2 size={40} class="text-primary animate-spin" />
-				<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando datos...</p>
-			</div>
-		</div>
-	{:else}
 		<!-- Stats Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 			{#each statsData as stat}
@@ -257,5 +261,4 @@
 				{/if}
 			</div>
 		</div>
-	{/if}
-</div>
+	</Skeleton>

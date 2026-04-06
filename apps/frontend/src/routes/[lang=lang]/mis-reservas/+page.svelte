@@ -4,9 +4,10 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { getLocalizedPath } from '$lib/i18n/utils';
-	import { Calendar, Clock, MapPin, Check, X, AlertCircle, RefreshCw } from 'lucide-svelte';
+	import { Calendar, Clock, MapPin, Check, X, AlertCircle, RefreshCw, Loader2 } from 'lucide-svelte';
 	import { createQuery } from '@tanstack/svelte-query';
 	import type { AppointmentWithDetails } from '@l-spa/shared-types';
+	import Skeleton from 'boneyard-js/svelte';
 
 	const session = authClient.useSession();
 	let currentLang = $derived($page.params.lang || 'es');
@@ -21,6 +22,8 @@
 	}));
 
 	let appointments = $derived(appointmentsQuery.data || []);
+
+	let isLoading = $derived(appointmentsQuery.isLoading);
 
 	$effect(() => {
 		if (browser && !$session.isPending && !$session.data) {
@@ -76,6 +79,27 @@
 				<p class="text-gray-500 mt-2">Gestiona tus citas programadas</p>
 			</div>
 
+			{#snippet fallback()}
+				<div class="space-y-6">
+					{#each [1, 2, 3] as _}
+						<div class="bg-white rounded-spa-xl p-8 shadow-sm border border-gray-100 animate-pulse">
+							<div class="flex flex-col md:flex-row md:items-center gap-6">
+								<div class="w-24 h-24 bg-gray-200 rounded-3xl"></div>
+								<div class="flex-1 space-y-4">
+									<div class="h-6 bg-gray-200 rounded w-1/3"></div>
+									<div class="h-4 bg-gray-200 rounded w-1/4"></div>
+									<div class="flex gap-4">
+										<div class="h-4 bg-gray-200 rounded w-24"></div>
+										<div class="h-4 bg-gray-200 rounded w-32"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{/each}
+				</div>
+			{/snippet}
+
+			<Skeleton loading={isLoading} {fallback}>
 			{#if appointmentsQuery.isLoading}
 				<div class="space-y-6">
 					{#each [1, 2, 3] as _}
@@ -164,6 +188,7 @@
 					{/each}
 				</div>
 			{/if}
+			</Skeleton>
 		</div>
 	{/if}
 </div>

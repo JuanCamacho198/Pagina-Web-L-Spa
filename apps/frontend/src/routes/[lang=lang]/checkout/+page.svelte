@@ -25,6 +25,7 @@
 	import { page } from '$app/stores';
 	import { getLocalizedPath } from '$lib/i18n/utils';
 	import { _ } from 'svelte-i18n';
+	import Skeleton from 'boneyard-js/svelte';
 
 	let currentLang = $derived($page.params.lang || 'es');
 
@@ -36,6 +37,7 @@
 
 	let currentStep = $state(0);
 	let isSubmitting = $state(false);
+	let isLoading = $derived(!data?.itemsToCheckout);
 
 	// Form values using Runes
 	let formData = $state({
@@ -124,6 +126,20 @@
 
 <h1 class="sr-only">Finalizar Reserva - L-SPA</h1>
 
+{#snippet fallback()}
+<div class="min-h-screen bg-gray-50/50 pb-24 pt-12">
+	<div class="max-w-7xl mx-auto px-6 lg:px-8 space-y-10">
+		<div class="h-4 w-32 rounded bg-gray-200 animate-pulse"></div>
+		<div class="h-6 w-56 rounded bg-gray-200 animate-pulse"></div>
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+			<div class="lg:col-span-8 h-[32rem] rounded-spa-xl bg-white border border-gray-100 animate-pulse"></div>
+			<div class="lg:col-span-4 h-[24rem] rounded-spa-xl bg-white border border-gray-100 animate-pulse"></div>
+		</div>
+	</div>
+</div>
+{/snippet}
+
+<Skeleton loading={isLoading} name="checkout-page" {fallback}>
 <div class="min-h-screen bg-gray-50/50 pb-24 pt-12">
 	<div class="max-w-7xl mx-auto px-6 lg:px-8">
 		<!-- Back -->
@@ -461,6 +477,7 @@
 		</div>
 	</div>
 </div>
+</Skeleton>
 
 <style>
 	:global(body) {

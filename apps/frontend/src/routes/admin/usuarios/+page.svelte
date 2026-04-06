@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Search, Plus, Edit, Trash2, Eye, Loader2, X, ChevronDown } from 'lucide-svelte';
 	import { adminApi, type User } from '$lib/api/admin';
+	import Skeleton from 'boneyard-js/svelte';
 
 	// Data from API
 	let users: User[] = $state([]);
@@ -103,7 +104,20 @@
 			document.removeEventListener('click', handleClickOutside);
 		};
 	});
+
+	let isLoading = $derived(loading);
 </script>
+
+{#snippet fallback()}
+	<div class="flex items-center justify-center py-20">
+		<div class="flex flex-col items-center gap-4">
+			<Loader2 size={40} class="text-primary animate-spin" />
+			<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando usuarios...</p>
+		</div>
+	</div>
+{/snippet}
+
+<Skeleton loading={isLoading} {fallback}>
 
 <div class="space-y-8">
 	<!-- Header -->
@@ -126,15 +140,6 @@
 		</div>
 	</div>
 
-	{#if loading && users.length === 0}
-		<!-- Loading State -->
-		<div class="flex items-center justify-center py-20">
-			<div class="flex flex-col items-center gap-4">
-				<Loader2 size={40} class="text-primary animate-spin" />
-				<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando usuarios...</p>
-			</div>
-		</div>
-	{:else}
 		<!-- Filters -->
 		<div class="flex items-center gap-4">
 			<div class="flex-1 relative">
@@ -250,5 +255,5 @@
 				</div>
 			{/if}
 		</div>
-	{/if}
-</div>
+	</div>
+	</Skeleton>

@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { Save, Building2, MapPin, Phone, Mail, Clock, Globe, Bell, Shield, Palette, Upload, X, Eye, EyeOff, ShieldCheck } from 'lucide-svelte';
+	import Skeleton from 'boneyard-js/svelte';
 	import { 
 		loadBrandingConfig, 
 		saveBrandingConfig, 
@@ -87,8 +88,10 @@
 	let previewDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
 	let activeTab = $state('general');
+	let loading = $state(true);
 	let saving = $state(false);
 	let saveSuccess = $state(false);
+	let isLoading = $derived(loading);
 
 	const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 	const dayLabels: Record<string, string> = {
@@ -216,9 +219,25 @@
 		branding = getBrandingWithDefaults();
 		previewBranding = { ...branding };
 		logoPreviewUrl = branding.customLogo;
+		loading = false;
 	});
 </script>
 
+{#snippet fallback()}
+	<div class="space-y-8">
+		<div class="flex items-center justify-between">
+			<div class="space-y-3">
+				<div class="h-8 w-48 rounded bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+				<div class="h-4 w-72 rounded bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+			</div>
+			<div class="h-12 w-40 rounded-2xl bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+		</div>
+		<div class="h-16 rounded-3xl bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+		<div class="h-[38rem] rounded-3xl bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+	</div>
+{/snippet}
+
+<Skeleton loading={isLoading} name="admin-settings-page" {fallback}>
 <div class="space-y-8">
 	<!-- Header -->
 	<div class="flex items-center justify-between">
@@ -699,3 +718,4 @@
 		{/if}
 	</div>
 </div>
+</Skeleton>

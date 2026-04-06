@@ -4,8 +4,10 @@ import { cn } from '$lib/utils/cn';
 import Button from '$lib/components/ui/Button.svelte';
 import Typography from '$lib/components/ui/Typography.svelte';
 import Badge from '$lib/components/ui/Badge.svelte';
+import OptimizedImage from '$lib/components/ui/OptimizedImage.svelte';
 import ReviewSection from '$lib/components/services/ReviewSection.svelte';
 import ServiceCard from '$lib/components/services/ServiceCard.svelte';
+import Skeleton from 'boneyard-js/svelte';
 import { toast } from '$lib/stores/toast.svelte';
 import { cart } from '$lib/cart';
 import { addToFavorites, checkIsFavorite, removeFromFavorites } from '$lib/favorites';
@@ -96,6 +98,7 @@ let benefitsList = $derived(parseList(service.benefits));
 let includesList = $derived(parseList(service.includes));
 let idealForList = $derived(parseList(service.idealFor));
 let contraindicationsList = $derived(parseList(service.contraindications));
+let isLoading = $derived(!service?.id);
 </script>
 
 <svelte:head>
@@ -103,6 +106,23 @@ let contraindicationsList = $derived(parseList(service.contraindications));
 <meta name="description" content={service.description} />
 </svelte:head>
 
+{#snippet fallback()}
+<div class="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0B] transition-colors duration-1000 selection:bg-primary/20 selection:text-primary-dark pb-32">
+<section class="max-w-7xl mx-auto pt-32 pb-16 px-6">
+<div class="h-4 w-40 rounded bg-gray-200 dark:bg-white/10 animate-pulse mb-8"></div>
+<div class="space-y-4 max-w-2xl">
+<div class="h-4 w-32 rounded bg-gray-200 dark:bg-white/10 animate-pulse"></div>
+<div class="h-16 w-full rounded bg-gray-200 dark:bg-white/10 animate-pulse"></div>
+</div>
+</section>
+<section class="max-w-7xl mx-auto px-6 lg:px-12 mb-24 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-8 h-96 rounded-[40px] bg-gray-200 dark:bg-white/10 animate-pulse"></div>
+<div class="lg:col-span-4 h-96 rounded-[40px] bg-gray-200 dark:bg-white/10 animate-pulse"></div>
+</section>
+</div>
+{/snippet}
+
+<Skeleton loading={isLoading} name="service-detail-page" {fallback}>
 <div class="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0B] transition-colors duration-1000 selection:bg-primary/20 selection:text-primary-dark pb-32">
 <!-- Hero Header Content -->
 <div class="pt-32 pb-16 px-6 max-w-7xl mx-auto">
@@ -130,19 +150,13 @@ let contraindicationsList = $derived(parseList(service.contraindications));
 <!-- Visual Feature Left -->
 <div class="lg:col-span-8 relative group rounded-[40px] overflow-hidden shadow-2xl dark:shadow-none animate-in fade-in zoom-in-95 duration-1000 delay-300">
 <div class="aspect-4/3 w-full">
-{#if service.imageUrl || service.image_url}
-<img
-src={service.imageUrl || service.image_url}
+{#if service.imageUrl || service.image_url || service.imageFileName}
+<OptimizedImage
+src={service.imageUrl || service.image_url || ''}
+cloudinaryId={service.cloudinaryId}
 alt={service.name}
-loading="lazy"
-class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[3s] ease-out brightness-95 dark:brightness-80"
-/>
-{:else if service.imageFileName}
-<img
-src="/assets/{service.imageFileName}"
-alt={service.name}
-loading="lazy"
-class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[3s] ease-out brightness-95 dark:brightness-80"
+priority={true}
+class="w-full h-full group-hover:scale-105 transition-transform duration-[3s] ease-out brightness-95 dark:brightness-80"
 />
 {:else}
 <div class="w-full h-full bg-gray-100 dark:bg-white/5 flex items-center justify-center">
@@ -360,6 +374,7 @@ Ver Catálogo Completo
 </section>
 {/if}
 </div>
+</Skeleton>
 
 <style>
 :global(body) {

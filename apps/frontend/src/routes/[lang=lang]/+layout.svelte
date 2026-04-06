@@ -3,6 +3,7 @@
   import Button from '$lib/components/ui/Button.svelte';
   import Toaster from '$lib/components/feedback/Toast.svelte';
   import Footer from '$lib/components/layout/Footer.svelte';
+  import MobileNav from '$lib/components/layout/MobileNav.svelte';
   import { onMount } from 'svelte';
   import { authClient } from '$lib/auth-client';
   import { initializeErrorHandling } from '$lib/error-handlers';
@@ -15,6 +16,7 @@
   import { seoStore, BASE_URL, SITE_NAME, TWITTER_HANDLE } from '$lib/seo';
   import LanguageSwitcher from '$lib/components/ui/LanguageSwitcher.svelte';
   import '$lib/i18n';
+  import '$lib/bones/registry.js';
   import { _, isLoading } from 'svelte-i18n';
   import spaLogo from '$lib/assets/logos/LOGO4x-sinfondo.png';
 
@@ -65,6 +67,15 @@
   let loadingText = $derived($isLoading ? 'Loading...' : $_('common.loading'));
   let skipToMainText = $derived($isLoading ? 'Skip to main content' : $_('layout.skipToMain'));
   let cartLabel = $derived($isLoading ? 'Cart' : (currentCartCount > 0 ? `${currentCartCount} items in cart` : 'View shopping cart'));
+  let mobileNavTexts = $derived(currentLang === 'en' ? {
+    navLabel: 'Main navigation menu',
+    openMenu: 'Open navigation menu',
+    closeMenu: 'Close navigation menu'
+  } : {
+    navLabel: 'Menu principal de navegacion',
+    openMenu: 'Abrir menu de navegacion',
+    closeMenu: 'Cerrar menu de navegacion'
+  });
   
   // User menu translations
   let userMenuTexts = $derived($isLoading ? {
@@ -283,6 +294,13 @@
           </a>
           
         {/if}
+
+        <MobileNav
+          links={navItems}
+          navLabel={mobileNavTexts.navLabel}
+          openMenuLabel={mobileNavTexts.openMenu}
+          closeMenuLabel={mobileNavTexts.closeMenu}
+        />
       </div>
     </div>
   </header>

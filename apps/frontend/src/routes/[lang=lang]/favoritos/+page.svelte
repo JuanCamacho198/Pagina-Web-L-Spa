@@ -8,11 +8,13 @@
 	import { fetchFavorites, removeFromFavorites, favoritesStore } from '$lib/favorites';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { getLocalizedPath } from '$lib/i18n/utils';
+	import Skeleton from 'boneyard-js/svelte';
 
 	const session = authClient.useSession();
 	
 	let currentLang = $derived($page.params.lang || 'es');
 	let loading = $state(true);
+	let isLoading = $derived($session.isPending || loading);
 
 	// Load favorites on mount
 	onMount(async () => {
@@ -49,8 +51,23 @@
 	<title>Mis Favoritos | L-SPA</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50/50 pt-40 pb-32 px-6">
+{#snippet fallback()}
 	<div class="max-w-7xl mx-auto space-y-12">
+		<header class="text-center space-y-8">
+			<div class="h-8 w-52 rounded-full bg-gray-200 animate-pulse mx-auto"></div>
+			<div class="h-20 w-full max-w-2xl rounded bg-gray-200 animate-pulse mx-auto"></div>
+		</header>
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			{#each Array(6) as _, i}
+				<div class="h-[28rem] rounded-spa-xl bg-white border border-gray-100 animate-pulse"></div>
+			{/each}
+		</div>
+	</div>
+{/snippet}
+
+<div class="min-h-screen bg-gray-50/50 pt-40 pb-32 px-6">
+	<Skeleton loading={isLoading} name="favorites-page" {fallback}>
+		<div class="max-w-7xl mx-auto space-y-12">
 		<!-- Header -->
 		<header class="text-center space-y-8">
 			<div class="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-primary/5 text-primary text-[10px] font-black uppercase tracking-[0.4em]">
@@ -133,7 +150,8 @@
 				{/each}
 			</div>
 		{/if}
-	</div>
+		</div>
+	</Skeleton>
 </div>
 
 <style>
