@@ -1,11 +1,7 @@
 {
   "version": 2,
-  "functions": {
-    "api/index.js": {
-      "runtime": "@vercel/node",
-      "includeFiles": "apps/backend/dist/**"
-    }
-  },
+  "buildCommand": "cd apps/backend && bun run build",
+  "outputDirectory": ".",
   "routes": [
     {
       "src": "/api/v1/(.*)",
