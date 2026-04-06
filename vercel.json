@@ -9,7 +9,7 @@
       }
     },
     {
-      "src": "apps/frontend/package.json",
+      "src": "apps/frontend",
       "use": "@sveltejs/vercel"
     }
   ],
