@@ -1,29 +1,17 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "apps/backend/src/vercel.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "packages/database/**",
-          "packages/shared-types/**",
-          "apps/backend/src/**"
-        ]
-      }
-    },
-    {
-      "src": "apps/frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": ".svelte-kit/vercel"
-      }
+  "functions": {
+    "apps/backend/src/vercel.ts": {
+      "runtime": "@vercel/node"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/v1/(.*)",
       "dest": "apps/backend/src/vercel.ts"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
