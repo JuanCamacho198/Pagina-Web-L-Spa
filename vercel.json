@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "cd apps/backend && bun run build",
-  "outputDirectory": ".",
   "routes": [
     {
       "src": "/api/v1/(.*)",
