@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
-import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
+import { AppModule } from './app.module.js';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter.js';
+import { ValidationExceptionFilter } from './common/filters/validation-exception.filter.js';
 import { ZodValidationPipe } from 'nestjs-zod';
 import * as Sentry from '@sentry/node';
 
