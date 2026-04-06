@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Body, Param, UseGuards, BadRequestException, NotFoundException } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { AuthGuard } from '../../auth/auth.guard';
+import { RolesGuard } from '../../auth/roles.guard';
+import { Roles } from '../../auth/roles.decorator';
 import { z } from 'zod';
 import { createZodDto } from 'nestjs-zod';
 
@@ -25,7 +27,8 @@ export class SettingsController {
   }
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin')
   async setConfig(@Body() body: SetConfigDto) {
     const { id, data } = body;
     if (!id || !data) {

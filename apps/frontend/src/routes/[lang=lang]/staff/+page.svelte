@@ -4,6 +4,10 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { getLocalizedPath } from '$lib/i18n/utils';
+	import { getRbacDecision } from '$lib/auth/rbac';
+	import { toast } from '$lib/stores/toast.svelte';
+	import { get } from 'svelte/store';
+	import { _, isLoading as i18nLoading } from 'svelte-i18n';
 	import { 
 		Calendar, 
 		Users,
@@ -21,6 +25,8 @@
 
 	const session = authClient.useSession();
 	let currentLang = $derived($page.params.lang || 'es');
+	let userRole = $state<'admin' | 'employee' | 'customer' | null>(null);
+	let roleResolved = $state(false);
 
 	type EmployeeAppointment = {
 		id: string;
@@ -41,11 +47,61 @@
 	let isLoading = $state(true);
 	let error = $state<string | null>(null);
 
+	const uiText = $derived($i18nLoading ? {
+		loading: 'Loading...',
+		unauthorizedTitle: 'No access to staff panel',
+		unauthorizedDescription: 'Your account does not have staff permissions.',
+		backHome: 'Back to home',
+		goAdmin: 'Go to admin panel',
+		signIn: 'Sign in'
+	} : {
+		loading: $_('common.loading'),
+		unauthorizedTitle: $_('auth.access.staffDeniedTitle'),
+		unauthorizedDescription: $_('auth.access.staffDeniedDescription'),
+		backHome: $_('auth.access.backHome'),
+		goAdmin: $_('auth.access.goAdmin'),
+		signIn: $_('nav.login')
+	});
+
+	const accessDecision = $derived(
+		getRbacDecision('staff', userRole, Boolean($session.data))
+	);
+
+	function t(key: string, fallback: string): string {
+		const translate = get(_);
+		const value = translate(key);
+		return typeof value === 'string' && value !== key ? value : fallback;
+	}
+
 	// Redirect if not authenticated
 	$effect(() => {
 		if (browser && !$session.isPending && !$session.data) {
-			goto('/login');
+			const returnTo = encodeURIComponent(getLocalizedPath('/staff', currentLang));
+			goto(`${getLocalizedPath('/login', currentLang)}?returnTo=${returnTo}`, { replaceState: true });
 		}
+	});
+
+	$effect(() => {
+		if (!browser || $session.isPending) return;
+
+		if (!$session.data?.user?.id) {
+			userRole = null;
+			roleResolved = true;
+			return;
+		}
+
+		roleResolved = false;
+
+		(async () => {
+			try {
+				const profile = await apiClient.get<{ role?: 'admin' | 'employee' | 'customer' }>(`/users/${$session.data?.user?.id}`);
+				userRole = profile?.role ?? null;
+			} catch {
+				userRole = null;
+			} finally {
+				roleResolved = true;
+			}
+		})();
 	});
 
 	// Fetch appointments on mount when session is ready
@@ -95,8 +151,25 @@
 	}
 
 	async function handleLogout() {
-		await authClient.signOut();
-		goto('/');
+		try {
+			const { error } = await authClient.signOut();
+
+			if (error) {
+				throw error;
+			}
+
+			toast.success(
+				t('auth.toast.logout.success.message', 'Your session has ended successfully.'),
+				t('auth.toast.logout.success.title', 'Signed out')
+			);
+
+			goto(getLocalizedPath('/', currentLang), { replaceState: true, invalidateAll: true });
+		} catch {
+			toast.error(
+				t('auth.toast.logout.error.message', 'We could not sign you out. Please try again.'),
+				t('auth.toast.logout.error.title', 'Sign out failed')
+			);
+		}
 	}
 
 	function getStatusColor(status: string) {
@@ -129,14 +202,14 @@
 	<title>Panel Empleados | L-SPA</title>
 </svelte:head>
 
-{#if $session.isPending}
+{#if $session.isPending || !roleResolved}
 	<div class="min-h-screen flex items-center justify-center bg-gray-50">
 		<div class="text-center">
 			<div class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
-			<p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Cargando...</p>
+			<p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">{uiText.loading}</p>
 		</div>
 	</div>
-{:else if $session.data}
+{:else if accessDecision.authorized}
 	<div class="min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
 		<!-- Top Header -->
 		<header class="bg-white border-b border-gray-200 px-8 py-4">
@@ -338,10 +411,18 @@
 	</div>
 {:else}
 	<div class="min-h-screen flex items-center justify-center bg-gray-50">
-		<div class="text-center">
+		<div class="text-center max-w-md px-6">
 			<Shield size={48} class="mx-auto mb-4 text-gray-300" />
-			<p class="text-gray-500">No tienes acceso a este panel</p>
-			<a href={getLocalizedPath('/login', currentLang)} class="text-primary font-black">Iniciar sesión</a>
+			<p class="text-lg font-black text-gray-800 mb-2">{uiText.unauthorizedTitle}</p>
+			<p class="text-sm text-gray-500 mb-6">{uiText.unauthorizedDescription}</p>
+			<div class="flex items-center justify-center gap-3">
+				<a href={getLocalizedPath('/', currentLang)} class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border border-secondary/40 text-gray-600 hover:bg-secondary/20 transition-colors">{uiText.backHome}</a>
+				{#if userRole === 'admin'}
+					<a href="/admin" class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest bg-primary text-white hover:bg-primary/90 transition-colors">{uiText.goAdmin}</a>
+				{:else}
+					<a href={getLocalizedPath('/login', currentLang)} class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest bg-primary text-white hover:bg-primary/90 transition-colors">{uiText.signIn}</a>
+				{/if}
+			</div>
 		</div>
 	</div>
 {/if}

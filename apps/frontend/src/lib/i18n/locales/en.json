@@ -441,6 +441,61 @@
     "password": "Password",
     "name": "Full Name",
     "loading": "Loading...",
+    "toast": {
+      "login": {
+        "success": {
+          "title": "Welcome back",
+          "message": "You have signed in successfully."
+        },
+        "error": {
+          "title": "Sign in failed",
+          "message": "We could not validate your credentials. Please try again.",
+          "invalidCredentials": "We could not validate your credentials. Please try again.",
+          "emailNotVerified": "Please verify your email before signing in.",
+          "rateLimited": "Too many attempts. Please wait a moment and try again.",
+          "server": "Unable to sign in right now. Please try again later."
+        }
+      },
+      "register": {
+        "success": {
+          "title": "Account created",
+          "message": "Your account is ready. You can sign in now."
+        },
+        "error": {
+          "title": "Registration failed",
+          "message": "We could not create your account right now.",
+          "emailInUse": "That email is already in use. Try signing in instead.",
+          "weakPassword": "Your password is too weak. Please choose a stronger one.",
+          "rateLimited": "Too many attempts. Please wait a moment and try again.",
+          "server": "Unable to create your account right now. Please try again later."
+        }
+      },
+      "logout": {
+        "success": {
+          "title": "Signed out",
+          "message": "Your session has ended successfully."
+        },
+        "error": {
+          "title": "Sign out failed",
+          "message": "We could not sign you out. Please try again."
+        }
+      },
+      "generic": {
+        "error": {
+          "title": "Unexpected error",
+          "message": "An unexpected error occurred. Please try again."
+        }
+      }
+    },
+    "access": {
+      "adminDeniedTitle": "You do not have access to the admin panel",
+      "adminDeniedDescription": "Your account does not have administrator permissions for this section.",
+      "staffDeniedTitle": "You do not have access to the staff panel",
+      "staffDeniedDescription": "Your account does not have staff permissions for this section.",
+      "backHome": "Back to home",
+      "goStaff": "Go to staff panel",
+      "goAdmin": "Go to admin panel"
+    },
     "copyright": "© 2026 L-SPA. All rights reserved."
   },
   "payment": {

@@ -5,7 +5,8 @@
   import Footer from '$lib/components/layout/Footer.svelte';
   import MobileNav from '$lib/components/layout/MobileNav.svelte';
   import { onMount } from 'svelte';
-  import { authClient } from '$lib/auth-client';
+  import { goto } from '$app/navigation';
+  import { authClient, apiClient } from '$lib/auth-client';
   import { initializeErrorHandling } from '$lib/error-handlers';
   import { User, LogOut, Settings, Calendar, Heart, ShieldCheck, ShoppingCart, LayoutDashboard, Scissors, Sun, Moon } from 'lucide-svelte';
   import { cart, cartStore } from '$lib/cart';
@@ -18,10 +19,12 @@
   import '$lib/i18n';
   import '$lib/bones/registry.js';
   import { _, isLoading } from 'svelte-i18n';
+  import { get } from 'svelte/store';
   import spaLogo from '$lib/assets/logos/LOGO4x-sinfondo.png';
 
   import { page } from '$app/stores';
-  import { getLocalizedPath } from '$lib/i18n/utils';
+  import { getLocalizedPath, resolveActiveLocale } from '$lib/i18n/utils';
+  import { toast } from '$lib/stores/toast.svelte';
   
   let { data, children } = $props();
   const session = authClient.useSession();
@@ -48,6 +51,7 @@
   // User menu dropdown state
   let isUserMenuOpen = $state(false);
   let userMenuRef = $state<HTMLElement | null>(null);
+  let userRole = $state<'admin' | 'employee' | 'customer' | null>(null);
   
   function handleUserMenuClickOutside(event: MouseEvent) {
     if (isUserMenuOpen && userMenuRef && !userMenuRef.contains(event.target as Node)) {
@@ -85,7 +89,12 @@
     favorites: 'Favorites',
     logout: 'Logout'
   } : {
-    role: $_('profile.roles.client'),
+    role:
+      userRole === 'admin'
+        ? $_('profile.roles.admin')
+        : userRole === 'employee'
+          ? $_('profile.roles.employee')
+          : $_('profile.roles.client'),
     profile: $_('nav.profile'),
     bookings: $_('nav.bookings'),
     favorites: $_('nav.favorites'),
@@ -100,6 +109,16 @@
     login: $_('nav.login'),
     register: $_('auth.register.title')
   });
+
+  const authUiState = $derived(
+    $session.isPending ? 'auth-resolving' : ($session.data ? 'authenticated' : 'guest')
+  );
+
+  function t(key: string, fallback: string): string {
+    const translate = get(_);
+    const value = translate(key);
+    return typeof value === 'string' && value !== key ? value : fallback;
+  }
   
   // Subscribe to cart store
   onMount(() => {
@@ -133,9 +152,55 @@
       cart.load();
     }
   });
+
+  $effect(() => {
+    if ($session.isPending) return;
+
+    if (!$session.data?.user?.id) {
+      userRole = null;
+      return;
+    }
+
+    (async () => {
+      try {
+        const profile = await apiClient.get<{ role?: 'admin' | 'employee' | 'customer' }>(`/users/${$session.data?.user?.id}`);
+        userRole = profile?.role ?? 'customer';
+      } catch {
+        userRole = 'customer';
+      }
+    })();
+  });
   
   function handleToggleTheme() {
     currentTheme = toggleTheme();
+  }
+
+  async function handleSignOut() {
+    const activeLocale = resolveActiveLocale({
+      urlLocale: $page.params.lang,
+      cookieLocale: null
+    });
+
+    try {
+      const { error } = await authClient.signOut();
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success(
+        t('auth.toast.logout.success.message', 'Your session has ended successfully.'),
+        t('auth.toast.logout.success.title', 'Signed out')
+      );
+
+      isUserMenuOpen = false;
+      await goto(getLocalizedPath('/', activeLocale), { replaceState: true, invalidateAll: true });
+    } catch {
+      toast.error(
+        t('auth.toast.logout.error.message', 'We could not sign you out. Please try again.'),
+        t('auth.toast.logout.error.title', 'Sign out failed')
+      );
+    }
   }
 </script>
 
@@ -241,8 +306,7 @@
           {/if}
         </a>
 
-        <!-- Show login button immediately while session loads, replace with user info once loaded -->
-        {#if $session.data}
+        {#if authUiState === 'authenticated'}
           <!-- User Profile Dropdown -->
           <div class="relative" bind:this={userMenuRef}>
             <button 
@@ -270,29 +334,32 @@
                     <Heart size={16} /> {userMenuTexts.favorites}
                   </a>
                   <!-- Admin/Staff Links -->
-                  <div class="border-t border-gray-100 dark:border-gray-700 my-2 pt-2">
-                    <a href={getLocalizedPath('/staff', currentLang)} onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
-                      <Scissors size={16} /> Staff Panel
-                    </a>
-                    <a href="/admin" onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
-                      <LayoutDashboard size={16} /> Admin Panel
-                    </a>
-                  </div>
-                  <button type="button" onclick={() => { authClient.signOut(); isUserMenuOpen = false; }} class="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-2xl transition-all">
+                  {#if userRole === 'employee' || userRole === 'admin'}
+                    <div class="border-t border-gray-100 dark:border-gray-700 my-2 pt-2">
+                      <a href={getLocalizedPath('/staff', currentLang)} onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
+                        <Scissors size={16} /> Staff Panel
+                      </a>
+                      {#if userRole === 'admin'}
+                        <a href="/admin" onclick={() => isUserMenuOpen = false} class="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 rounded-2xl transition-all">
+                          <LayoutDashboard size={16} /> Admin Panel
+                        </a>
+                      {/if}
+                    </div>
+                  {/if}
+                  <button type="button" onclick={handleSignOut} class="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-2xl transition-all">
                     <LogOut size={16} /> {userMenuTexts.logout}
                   </button>
                 </div>
               </div>
             {/if}
           </div>
-        {:else}
+        {:else if authUiState === 'guest'}
           <a href={getLocalizedPath('/login', currentLang)} class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-500 px-4">
             {authTexts.login}
           </a>
           <a href={getLocalizedPath('/registro', currentLang)} class="text-[10px] font-sans font-black uppercase tracking-[0.4em] text-white bg-primary hover:bg-primary/90 transition-all duration-500 px-6 py-3 rounded-full shadow-lg shadow-primary/20">
             {authTexts.register}
           </a>
-          
         {/if}
 
         <MobileNav

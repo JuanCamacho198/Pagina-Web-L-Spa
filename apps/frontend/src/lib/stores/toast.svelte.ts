@@ -2,6 +2,7 @@ export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 export interface Toast {
   id: string;
+  title: string;
   message: string;
   type: ToastType;
 }
@@ -10,9 +11,16 @@ export interface Toast {
 class ToastStore {
   toasts = $state<Toast[]>([]);
 
-  add(message: string, type: ToastType = 'info') {
+  private getDefaultTitle(type: ToastType): string {
+    if (type === 'success') return 'Success';
+    if (type === 'error') return 'Error';
+    if (type === 'warning') return 'Warning';
+    return 'Info';
+  }
+
+  add(message: string, type: ToastType = 'info', title?: string) {
     const id = crypto.randomUUID().split('-')[0];
-    this.toasts.push({ id, message, type });
+    this.toasts.push({ id, title: title ?? this.getDefaultTitle(type), message, type });
     
     setTimeout(() => {
       this.remove(id);
@@ -26,10 +34,10 @@ class ToastStore {
     }
   }
 
-  success(msg: string) { this.add(msg, 'success'); }
-  error(msg: string) { this.add(msg, 'error'); }
-  info(msg: string) { this.add(msg, 'info'); }
-  warning(msg: string) { this.add(msg, 'warning'); }
+  success(msg: string, title?: string) { this.add(msg, 'success', title); }
+  error(msg: string, title?: string) { this.add(msg, 'error', title); }
+  info(msg: string, title?: string) { this.add(msg, 'info', title); }
+  warning(msg: string, title?: string) { this.add(msg, 'warning', title); }
 }
 
 export const toast = new ToastStore();

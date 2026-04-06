@@ -6,6 +6,7 @@ import * as schema from '@l-spa/database/schema';
 import { AuthController } from './auth.controller';
 import { AuthGuard } from './auth.guard';
 import { OptionalAuthGuard } from './optional-auth.guard';
+import { RolesGuard } from './roles.guard';
 import { getTrustedOrigins } from '../common/cors';
 
 @Global()
@@ -37,7 +38,8 @@ import { getTrustedOrigins } from '../common/cors';
     },
     AuthGuard,
     OptionalAuthGuard,
+    RolesGuard,
   ],
-  exports: ['AUTH_CLIENT', AuthGuard, OptionalAuthGuard],
+  exports: ['AUTH_CLIENT', AuthGuard, OptionalAuthGuard, RolesGuard],
 })
 export class AuthModule {}

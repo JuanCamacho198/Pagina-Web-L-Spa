@@ -3,6 +3,8 @@ import { AppointmentsService } from './appointments.service';
 import { createZodDto } from 'nestjs-zod';
 import { appointmentSchema, appointmentStatusEnum } from '@l-spa/shared-types';
 import { AuthGuard } from '../../auth/auth.guard';
+import { RolesGuard } from '../../auth/roles.guard';
+import { Roles } from '../../auth/roles.decorator';
 import { z } from 'zod';
 
 class CreateAppointmentDto extends createZodDto(appointmentSchema) {}
@@ -24,6 +26,8 @@ export class AppointmentsController {
   }
 
   @Get('employee/:auth0Id')
+  @UseGuards(RolesGuard)
+  @Roles('employee', 'admin')
   async getEmployeeAppointments(
     @Param('auth0Id') auth0Id: string,
     @Query('startDate') startDate: string,
@@ -58,6 +62,8 @@ export class AppointmentsController {
   }
 
   @Patch(':id/status')
+  @UseGuards(RolesGuard)
+  @Roles('employee', 'admin')
   async updateStatus(@Param('id') id: string, @Body() body: UpdateStatusDto) {
     const result = await this.appointmentsService.updateAppointmentStatus(id, body.status as any);
     if (!result) {
@@ -67,6 +73,8 @@ export class AppointmentsController {
   }
 
   @Delete(':id')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   async deleteAppointment(@Param('id') id: string) {
     const result = await this.appointmentsService.deleteAppointment(id);
     if (!result) {
@@ -78,6 +86,8 @@ export class AppointmentsController {
   // Admin
 
   @Get()
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   async getAllAppointments(
     @Query('status') status?: string,
     @Query('date') date?: string,
@@ -87,6 +97,8 @@ export class AppointmentsController {
   }
 
   @Get('stats')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   async getStats() {
     return await this.appointmentsService.getStats();
   }

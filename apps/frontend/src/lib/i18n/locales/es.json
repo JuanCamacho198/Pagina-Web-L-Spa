@@ -441,6 +441,61 @@
     "password": "Contraseña",
     "name": "Nombre Completo",
     "loading": "Cargando...",
+    "toast": {
+      "login": {
+        "success": {
+          "title": "Bienvenido de nuevo",
+          "message": "Tu sesion se inicio correctamente."
+        },
+        "error": {
+          "title": "No se pudo iniciar sesion",
+          "message": "No pudimos validar tus credenciales. Intentalo otra vez.",
+          "invalidCredentials": "No pudimos validar tus credenciales. Intentalo otra vez.",
+          "emailNotVerified": "Debes verificar tu correo antes de iniciar sesion.",
+          "rateLimited": "Has intentado demasiadas veces. Espera un momento e intentalo de nuevo.",
+          "server": "No pudimos iniciar sesion en este momento. Intentalo mas tarde."
+        }
+      },
+      "register": {
+        "success": {
+          "title": "Cuenta creada",
+          "message": "Tu cuenta esta lista. Ya puedes iniciar sesion."
+        },
+        "error": {
+          "title": "No se pudo completar el registro",
+          "message": "No pudimos crear tu cuenta en este momento.",
+          "emailInUse": "Ese correo ya esta en uso. Prueba iniciando sesion.",
+          "weakPassword": "Tu contrasena es muy debil. Usa una mas segura.",
+          "rateLimited": "Has intentado demasiadas veces. Espera un momento e intentalo de nuevo.",
+          "server": "No pudimos crear tu cuenta en este momento. Intentalo mas tarde."
+        }
+      },
+      "logout": {
+        "success": {
+          "title": "Sesion cerrada",
+          "message": "Tu sesion se cerro correctamente."
+        },
+        "error": {
+          "title": "No se pudo cerrar sesion",
+          "message": "No pudimos cerrar tu sesion. Intentalo nuevamente."
+        }
+      },
+      "generic": {
+        "error": {
+          "title": "Error inesperado",
+          "message": "Ocurrio un error inesperado. Intentalo nuevamente."
+        }
+      }
+    },
+    "access": {
+      "adminDeniedTitle": "No tienes acceso al panel administrativo",
+      "adminDeniedDescription": "Tu cuenta no tiene permisos de administrador para ingresar a esta seccion.",
+      "staffDeniedTitle": "No tienes acceso al panel de staff",
+      "staffDeniedDescription": "Tu cuenta no tiene permisos de staff para ingresar a esta seccion.",
+      "backHome": "Volver al inicio",
+      "goStaff": "Ir a panel de staff",
+      "goAdmin": "Ir a panel admin"
+    },
     "copyright": "© 2026 L-SPA. Todos los derechos reservados."
   },
   "payment": {

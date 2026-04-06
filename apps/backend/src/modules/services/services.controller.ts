@@ -3,6 +3,8 @@ import { ServicesService } from './services.service';
 import { createZodDto } from 'nestjs-zod';
 import { serviceSchema } from '@l-spa/shared-types';
 import { AuthGuard } from '../../auth/auth.guard';
+import { RolesGuard } from '../../auth/roles.guard';
+import { Roles } from '../../auth/roles.decorator';
 
 class CreateServiceDto extends createZodDto(serviceSchema) {}
 class UpdateServiceDto extends createZodDto(serviceSchema.partial()) {}
@@ -26,13 +28,15 @@ export class ServicesController {
   }
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin')
   async createService(@Body() data: CreateServiceDto) {
     return await this.servicesService.createService(data);
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin')
   async updateService(@Param('id') id: string, @Body() data: UpdateServiceDto) {
     const result = await this.servicesService.updateService(id, data);
     if (!result) {
@@ -42,7 +46,8 @@ export class ServicesController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles('admin')
   async deleteService(@Param('id') id: string) {
     const result = await this.servicesService.deleteService(id);
     if (!result) {

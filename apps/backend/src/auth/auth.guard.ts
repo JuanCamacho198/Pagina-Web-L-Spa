@@ -6,10 +6,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { fromNodeHeaders } from 'better-auth/node';
+import { user, eq } from '@l-spa/database';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(@Inject('AUTH_CLIENT') private readonly auth: any) {}
+  constructor(
+    @Inject('AUTH_CLIENT') private readonly auth: any,
+    @Inject('DRIZZLE_CONNECTION') private readonly db: any,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -31,7 +35,16 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    request.user = session.user;
+    const dbUser = await this.db
+      .select({ role: user.role })
+      .from(user)
+      .where(eq(user.id, session.user.id))
+      .limit(1);
+
+    request.user = {
+      ...session.user,
+      role: dbUser[0]?.role ?? 'customer',
+    };
     request.session = session.session;
     return true;
   }

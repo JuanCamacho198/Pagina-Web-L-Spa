@@ -4,6 +4,8 @@ import { CartService } from '../cart/cart.service';
 import { createZodDto } from 'nestjs-zod';
 import { userSyncSchema, userUpdateSchema, cartItemSchema } from '@l-spa/shared-types';
 import { AuthGuard } from '../../auth/auth.guard';
+import { RolesGuard } from '../../auth/roles.guard';
+import { Roles } from '../../auth/roles.decorator';
 import { z } from 'zod';
 
 class UserSyncDto extends createZodDto(userSyncSchema) {}
@@ -37,11 +39,15 @@ export class UsersController {
   }
 
   @Get('admin/all')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   async getAllUsers() {
     return await this.usersService.getAllUsers();
   }
 
   @Patch('admin/:userId/role')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   async updateUserRole(@Param('userId') userId: string, @Body() body: UpdateRoleDto) {
     const updatedUser = await this.usersService.updateUserRole(userId, body.role);
     if (!updatedUser) {

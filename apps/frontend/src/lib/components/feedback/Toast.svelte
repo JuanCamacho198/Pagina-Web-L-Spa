@@ -41,7 +41,7 @@
       
       <div class="flex-1">
         <p class="text-[14px] font-bold leading-tight">
-          {t.type.charAt(0).toUpperCase() + t.type.slice(1)}
+          {t.title}
         </p>
         <p class="text-[13px] font-medium opacity-90 leading-snug mt-1 text-gray-600">
           {t.message}

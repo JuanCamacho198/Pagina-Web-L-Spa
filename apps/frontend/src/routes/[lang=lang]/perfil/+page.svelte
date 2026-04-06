@@ -6,6 +6,11 @@
 	import Skeleton from 'boneyard-js/svelte';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { getLocalizedPath, resolveActiveLocale } from '$lib/i18n/utils';
+	import { toast } from '$lib/stores/toast.svelte';
+	import { _ } from 'svelte-i18n';
+	import { get } from 'svelte/store';
 	import { onMount } from 'svelte';
 
 	// Use Better Auth session directly
@@ -19,6 +24,13 @@
 	let loading = $state(true);
 	let error = $state('');
 	let isLoading = $derived($session.isPending || loading);
+	let currentLang = $derived($page.params.lang || 'es');
+
+	function t(key: string, fallback: string): string {
+		const translate = get(_);
+		const value = translate(key);
+		return typeof value === 'string' && value !== key ? value : fallback;
+	}
 
 	// Fetch profile data from API
 	async function fetchProfileData() {
@@ -62,8 +74,33 @@
 
 	// Logout handler
 	async function handleLogout() {
-		await authClient.signOut();
-		goto('/');
+		const activeLocale = resolveActiveLocale({
+			urlLocale: currentLang,
+			cookieLocale: null
+		});
+
+		try {
+			const { error: signOutError } = await authClient.signOut();
+
+			if (signOutError) {
+				throw signOutError;
+			}
+
+			toast.success(
+				t('auth.toast.logout.success.message', 'Your session has ended successfully.'),
+				t('auth.toast.logout.success.title', 'Signed out')
+			);
+
+			await goto(getLocalizedPath('/', activeLocale), {
+				replaceState: true,
+				invalidateAll: true
+			});
+		} catch {
+			toast.error(
+				t('auth.toast.logout.error.message', 'We could not sign you out. Please try again.'),
+				t('auth.toast.logout.error.title', 'Sign out failed')
+			);
+		}
 	}
 </script>
 
