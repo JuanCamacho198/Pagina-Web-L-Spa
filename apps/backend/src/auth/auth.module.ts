@@ -11,6 +11,7 @@ import { RolesGuard } from './roles.guard';
 import { LockoutGuard } from './guards/lockout.guard';
 import { getTrustedOrigins } from '../common/cors';
 import { LockoutService } from './services/lockout.service';
+import { AuditService } from '../common/audit.service.js';
 
 @Global()
 @Module({
@@ -29,6 +30,7 @@ import { LockoutService } from './services/lockout.service';
           basePath: '/api/v1/auth',
           emailAndPassword: {
             enabled: true,
+            requireEmailVerification: true,
           },
           trustedOrigins: getTrustedOrigins(configService.get<string>('BETTER_AUTH_TRUSTED_ORIGINS')),
           advanced: {
@@ -47,7 +49,8 @@ import { LockoutService } from './services/lockout.service';
     RolesGuard,
     LockoutService,
     LockoutGuard,
+    AuditService,
   ],
-  exports: ['AUTH_CLIENT', AuthGuard, OptionalAuthGuard, RolesGuard, LockoutService, LockoutGuard],
+  exports: ['AUTH_CLIENT', AuthGuard, OptionalAuthGuard, RolesGuard, LockoutService, LockoutGuard, AuditService],
 })
 export class AuthModule {}

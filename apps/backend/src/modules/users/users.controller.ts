@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Patch, Delete, Body, Param, UseGuards, NotFoundException, BadRequestException, Req } from '@nestjs/common';
+import { Controller, Get, Post, Put, Patch, Delete, Body, Param, UseGuards, NotFoundException, BadRequestException, Req, Inject } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CartService } from '../cart/cart.service';
 import { createZodDto } from 'nestjs-zod';
@@ -7,6 +7,7 @@ import { AuthGuard } from '../../auth/auth.guard';
 import { RolesGuard } from '../../auth/roles.guard';
 import { Roles } from '../../auth/roles.decorator';
 import { LockoutService } from '../../auth/services/lockout.service';
+import { AuditService } from '../../common/audit.service.js';
 import { z } from 'zod';
 
 class UserSyncDto extends createZodDto(userSyncSchema) {}
@@ -24,7 +25,8 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly cartService: CartService,
-    private readonly lockoutService: LockoutService
+    private readonly lockoutService: LockoutService,
+    @Inject(AuditService) private readonly auditService: AuditService
   ) {}
 
   @Get('profile/stats')
@@ -50,22 +52,53 @@ export class UsersController {
   @Patch('admin/:userId/role')
   @UseGuards(RolesGuard)
   @Roles('admin')
-  async updateUserRole(@Param('userId') userId: string, @Body() body: UpdateRoleDto) {
+  async updateUserRole(@Param('userId') userId: string, @Body() body: UpdateRoleDto, @Req() req: any) {
+    const adminId = req.user?.id;
+    const ipAddress = req.ip || req.headers['x-forwarded-for'] as string || 'unknown';
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    
+    const oldUser = await this.usersService.getUserByAuth0Id(userId);
+    const oldRole = oldUser?.role;
+    
     const updatedUser = await this.usersService.updateUserRole(userId, body.role);
     if (!updatedUser) {
       throw new NotFoundException('Usuario no encontrado');
     }
+    
+    await this.auditService.log({
+      userId: adminId,
+      action: 'ROLE_CHANGE',
+      ipAddress,
+      userAgent,
+      success: true,
+      metadata: { targetUserId: userId, oldRole, newRole: body.role },
+    });
+    
     return updatedUser;
   }
 
   @Patch('admin/:userId/unlock')
   @UseGuards(RolesGuard)
   @Roles('admin')
-  async unlockUser(@Param('userId') userId: string) {
+  async unlockUser(@Param('userId') userId: string, @Req() req: any) {
+    const adminId = req.user?.id;
+    const ipAddress = req.ip || req.headers['x-forwarded-for'] as string || 'unknown';
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    
     const unlocked = await this.lockoutService.unlockAccount(userId);
     if (!unlocked) {
       throw new NotFoundException('Usuario no encontrado o no estaba bloqueado');
     }
+    
+    await this.auditService.log({
+      userId: adminId,
+      action: 'USER_UNLOCK',
+      ipAddress,
+      userAgent,
+      success: true,
+      metadata: { targetUserId: userId },
+    });
+    
     return { message: 'Usuario desbloqueado exitosamente' };
   }
 

@@ -13,6 +13,8 @@ import { SentryModule } from './sentry/sentry.module.js';
 import { HealthController } from './common/health.controller.js';
 import { SentryMiddleware } from './common/middleware/sentry.middleware.js';
 import { createRateLimitMiddleware } from './common/middleware/rate-limit.middleware.js';
+import { SecurityHeadersMiddleware } from './common/middleware/security-headers.middleware.js';
+import { AuditService } from './common/audit.service.js';
 
 @Module({
   imports: [
@@ -31,11 +33,17 @@ import { createRateLimitMiddleware } from './common/middleware/rate-limit.middle
     SettingsModule,
   ],
   controllers: [HealthController],
-  providers: [],
+  providers: [AuditService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(SentryMiddleware).forRoutes('*');
+    consumer
+      .apply(SentryMiddleware)
+      .forRoutes('*');
+    
+    consumer
+      .apply(SecurityHeadersMiddleware)
+      .forRoutes('*');
     
     const rateLimitConfig = {
       maxAttempts: parseInt(process.env.RATE_LIMIT_MAX_ATTEMPTS || '5', 10),

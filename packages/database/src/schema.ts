@@ -139,3 +139,15 @@ export const accountLockouts = pgTable('account_lockouts', {
   expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
   lockedBy: varchar('locked_by', { length: 50 }).default('system'),
 });
+
+// Audit Log Table
+export const auditLog = pgTable('audit_log', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id'),
+  action: varchar('action', { length: 100 }).notNull(),
+  ipAddress: text('ip_address'),
+  userAgent: text('user_agent'),
+  timestamp: timestamp('timestamp', { withTimezone: true }).notNull().defaultNow(),
+  success: boolean('success').notNull().default(true),
+  metadata: text('metadata'),
+});
