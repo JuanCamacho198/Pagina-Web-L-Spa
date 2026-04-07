@@ -7,7 +7,7 @@ export default defineConfig({
     },
   },
   test: {
-    include: ['**/*.test.ts', '**/*.spec.ts'],
+    include: ['**/*.test.ts', '**/*.spec.ts', '**/*.test.mjs'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**'],
     environment: 'node',
     globals: true,

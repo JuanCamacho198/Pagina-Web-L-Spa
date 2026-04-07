@@ -60,3 +60,41 @@ jobs:
 
       - name: Run tests
         run: bun run test:run
+
+  selective_deploy_hardening:
+    name: Selective Deploy Hardening
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Detect selective deploy related changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            selective_deploy:
+              - '.github/workflows/**'
+              - 'scripts/ci/**'
+
+      - name: Setup Bun
+        if: steps.changes.outputs.selective_deploy == 'true'
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        if: steps.changes.outputs.selective_deploy == 'true'
+        run: bun install --frozen-lockfile
+
+      - name: Run selective deploy tests
+        if: steps.changes.outputs.selective_deploy == 'true'
+        run: bun run test:run -- scripts/ci/__tests__/compute-impacts.test.mjs scripts/ci/__tests__/workflow-gating.test.mjs
+
+      - name: Validate compute-impacts syntax
+        if: steps.changes.outputs.selective_deploy == 'true'
+        run: node --check scripts/ci/compute-impacts.mjs
+
+      - name: Skip selective deploy hardening checks
+        if: steps.changes.outputs.selective_deploy != 'true'
+        run: echo "No workflow/scripts changes detected; selective deploy hardening checks skipped."

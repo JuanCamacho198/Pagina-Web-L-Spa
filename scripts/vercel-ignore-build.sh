@@ -1,39 +1,21 @@
 #!/bin/bash
 
-# Vercel Ignore Build Script
+# DEPRECATED: Legacy Vercel Ignore Build Script
+#
+# Deploy selection is now owned by GitHub Actions:
+# - .github/workflows/cd.yml
+# - scripts/ci/compute-impacts.mjs
+#
+# This script intentionally returns "proceed" to avoid split ownership
+# and should not be used as a deploy decision source.
+#
 # Usage: ./scripts/vercel-ignore-build.sh [project-name]
-# Returns: 0 = cancel build, 1 = proceed with build
+# Returns: 1 = proceed with build
 
 PROJECT=$1
 
-# Get the commit range from Vercel env or use git defaults
-if [ -n "$VERCEL_GIT_COMMIT_REF" ]; then
-  COMMIT_RANGE="$VERCEL_GIT_PREVIOUS_SHA..$VERCEL_GIT_COMMIT_SHA"
-else
-  COMMIT_RANGE="HEAD^..HEAD"
-fi
+echo "[DEPRECATED] scripts/vercel-ignore-build.sh ($PROJECT)"
+echo "[DEPRECATED] Selective deploy source of truth is GitHub Actions (cd.yml + compute-impacts.mjs)."
+echo "[DEPRECATED] Returning proceed (exit 1) to avoid dashboard-level deploy gating drift."
 
-case $PROJECT in
-  frontend)
-    # Frontend only changes
-    if git diff --quiet $COMMIT_RANGE -- 'apps/frontend/**'; then
-      echo "No changes in frontend, canceling build."
-      exit 0
-    fi
-    echo "Changes detected in frontend, proceeding with build."
-    exit 1
-    ;;
-  backend)
-    # Backend + packages (shared code)
-    if git diff --quiet $COMMIT_RANGE -- 'apps/backend/**' 'packages/**'; then
-      echo "No changes in backend or packages, canceling build."
-      exit 0
-    fi
-    echo "Changes detected in backend/packages, proceeding with build."
-    exit 1
-    ;;
-  *)
-    echo "Unknown project: $PROJECT"
-    exit 1
-    ;;
-esac
+exit 1

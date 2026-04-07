@@ -2,17 +2,69 @@ name: Release
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
   workflow_dispatch:
     inputs:
       version:
         description: 'Version bump type (patch, minor, major, or skip)'
         required: false
         default: ''
+      base_sha:
+        description: 'Optional base SHA for manual impact diff'
+        required: false
+        default: ''
 
 jobs:
+  changes:
+    name: Compute selective deploy impacts
+    runs-on: ubuntu-latest
+    outputs:
+      deploy_frontend: ${{ steps.compute.outputs.deploy_frontend }}
+      deploy_backend: ${{ steps.compute.outputs.deploy_backend }}
+      deploy_mode: ${{ steps.compute.outputs.deploy_mode }}
+      impact_frontend: ${{ steps.compute.outputs.impact_frontend }}
+      impact_backend: ${{ steps.compute.outputs.impact_backend }}
+      impact_shared: ${{ steps.compute.outputs.impact_shared }}
+      impact_none: ${{ steps.compute.outputs.impact_none }}
+      impact_classes: ${{ steps.compute.outputs.impact_classes }}
+      impact_summary: ${{ steps.compute.outputs.impact_summary }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute impacts
+        id: compute
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_BASE_REF: ${{ github.base_ref }}
+          INPUT_BASE_SHA: ${{ github.event.inputs.base_sha }}
+        run: node scripts/ci/compute-impacts.mjs
+
+      - name: Audit impact summary
+        env:
+          IMPACT_SUMMARY: ${{ steps.compute.outputs.impact_summary }}
+          DEPLOY_FRONTEND: ${{ steps.compute.outputs.deploy_frontend }}
+          DEPLOY_BACKEND: ${{ steps.compute.outputs.deploy_backend }}
+          DEPLOY_MODE: ${{ steps.compute.outputs.deploy_mode }}
+          IMPACT_CLASSES: ${{ steps.compute.outputs.impact_classes }}
+        run: |
+          echo "## Selective Deploy Audit" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Deploy mode: $DEPLOY_MODE" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Impact classes: $IMPACT_CLASSES" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Frontend deploy: $DEPLOY_FRONTEND" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Backend deploy: $DEPLOY_BACKEND" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Summary JSON:" >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          echo "$IMPACT_SUMMARY" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
   build:
     name: Build
+    needs: changes
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -31,9 +83,108 @@ jobs:
       - name: Build application
         run: bun run build
 
+  deploy_frontend:
+    name: Deploy Frontend
+    needs: changes
+    if: needs.changes.outputs.deploy_frontend == 'true'
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_FRONTEND_PROJECT_ID }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Deploy frontend app
+        working-directory: apps/frontend
+        env:
+          DEPLOY_MODE: ${{ needs.changes.outputs.deploy_mode }}
+        run: |
+          if [ "$DEPLOY_MODE" = "production" ]; then
+            bunx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+            bunx vercel build --prod --token "$VERCEL_TOKEN"
+            bunx vercel deploy --prebuilt --prod --token "$VERCEL_TOKEN"
+          else
+            bunx vercel pull --yes --environment=preview --token "$VERCEL_TOKEN"
+            bunx vercel build --token "$VERCEL_TOKEN"
+            bunx vercel deploy --prebuilt --token "$VERCEL_TOKEN"
+          fi
+
+      - name: Frontend deploy audit
+        if: always()
+        env:
+          DEPLOY_MODE: ${{ needs.changes.outputs.deploy_mode }}
+          DEPLOY_FRONTEND: ${{ needs.changes.outputs.deploy_frontend }}
+          IMPACT_CLASSES: ${{ needs.changes.outputs.impact_classes }}
+        run: |
+          echo "## Frontend Deploy" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Target: frontend" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Mode: $DEPLOY_MODE" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Gate deploy_frontend: $DEPLOY_FRONTEND" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Impact classes: $IMPACT_CLASSES" >> "$GITHUB_STEP_SUMMARY"
+
+  deploy_backend:
+    name: Deploy Backend
+    needs: changes
+    if: needs.changes.outputs.deploy_backend == 'true'
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Deploy backend app
+        working-directory: apps/backend
+        env:
+          DEPLOY_MODE: ${{ needs.changes.outputs.deploy_mode }}
+        run: |
+          if [ "$DEPLOY_MODE" = "production" ]; then
+            bunx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+            bunx vercel build --prod --token "$VERCEL_TOKEN"
+            bunx vercel deploy --prebuilt --prod --token "$VERCEL_TOKEN"
+          else
+            bunx vercel pull --yes --environment=preview --token "$VERCEL_TOKEN"
+            bunx vercel build --token "$VERCEL_TOKEN"
+            bunx vercel deploy --prebuilt --token "$VERCEL_TOKEN"
+          fi
+
+      - name: Backend deploy audit
+        if: always()
+        env:
+          DEPLOY_MODE: ${{ needs.changes.outputs.deploy_mode }}
+          DEPLOY_BACKEND: ${{ needs.changes.outputs.deploy_backend }}
+          IMPACT_CLASSES: ${{ needs.changes.outputs.impact_classes }}
+        run: |
+          echo "## Backend Deploy" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Target: backend" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Mode: $DEPLOY_MODE" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Gate deploy_backend: $DEPLOY_BACKEND" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Impact classes: $IMPACT_CLASSES" >> "$GITHUB_STEP_SUMMARY"
+
   release:
     name: Release
     needs: build
+    if: github.ref_name == 'main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     permissions:
       contents: write
