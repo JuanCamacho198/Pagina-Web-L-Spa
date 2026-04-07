@@ -10,5 +10,5 @@
       "@l-spa/database": ["../../packages/database/src/index.ts"]
     }
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["src/**/*", "test/**/*", "src/lib/**/*"]
 }

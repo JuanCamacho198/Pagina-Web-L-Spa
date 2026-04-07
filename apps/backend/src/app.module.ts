@@ -13,6 +13,7 @@ import { SentryModule } from './sentry/sentry.module.js';
 import { HealthController } from './common/health.controller.js';
 import { SentryMiddleware } from './common/middleware/sentry.middleware.js';
 import { createRateLimitMiddleware } from './common/middleware/rate-limit.middleware.js';
+import { UserRateLimitMiddleware } from './common/middleware/user-rate-limit.middleware.js';
 import { SecurityHeadersMiddleware } from './common/middleware/security-headers.middleware.js';
 import { AuditService } from './common/audit.service.js';
 
@@ -43,6 +44,10 @@ export class AppModule implements NestModule {
     
     consumer
       .apply(SecurityHeadersMiddleware)
+      .forRoutes('*');
+
+    consumer
+      .apply(UserRateLimitMiddleware)
       .forRoutes('*');
     
     const rateLimitConfig = {

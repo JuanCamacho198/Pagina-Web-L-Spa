@@ -12,6 +12,7 @@
     "./appointments": "./src/appointments.ts",
     "./config": "./src/config.ts",
     "./reviews": "./src/reviews.ts",
-    "./users": "./src/users.ts"
+    "./users": "./src/users.ts",
+    "./rate-limit": "./src/rate-limit.ts"
   }
 }
