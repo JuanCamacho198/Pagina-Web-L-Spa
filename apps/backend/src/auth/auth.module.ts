@@ -4,14 +4,17 @@ import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import * as schema from '@l-spa/database/schema';
 import { AuthController } from './auth.controller';
+import { CustomAuthController } from './custom-auth.controller';
 import { AuthGuard } from './auth.guard';
 import { OptionalAuthGuard } from './optional-auth.guard';
 import { RolesGuard } from './roles.guard';
+import { LockoutGuard } from './guards/lockout.guard';
 import { getTrustedOrigins } from '../common/cors';
+import { LockoutService } from './services/lockout.service';
 
 @Global()
 @Module({
-  controllers: [AuthController],
+  controllers: [AuthController, CustomAuthController],
   providers: [
     {
       provide: 'AUTH_CLIENT',
@@ -42,7 +45,9 @@ import { getTrustedOrigins } from '../common/cors';
     AuthGuard,
     OptionalAuthGuard,
     RolesGuard,
+    LockoutService,
+    LockoutGuard,
   ],
-  exports: ['AUTH_CLIENT', AuthGuard, OptionalAuthGuard, RolesGuard],
+  exports: ['AUTH_CLIENT', AuthGuard, OptionalAuthGuard, RolesGuard, LockoutService, LockoutGuard],
 })
 export class AuthModule {}

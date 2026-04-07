@@ -130,3 +130,12 @@ export const reviews = pgTable('reviews', {
     user_service_idx: uniqueIndex('user_service_review_idx').on(table.userId, table.serviceId),
   };
 });
+
+// Account Lockouts Table
+export const accountLockouts = pgTable('account_lockouts', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull(),
+  lockedAt: timestamp('locked_at', { withTimezone: true }).notNull().defaultNow(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  lockedBy: varchar('locked_by', { length: 50 }).default('system'),
+});

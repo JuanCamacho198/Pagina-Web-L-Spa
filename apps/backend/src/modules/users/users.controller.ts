@@ -6,6 +6,7 @@ import { userSyncSchema, userUpdateSchema, cartItemSchema } from '@l-spa/shared-
 import { AuthGuard } from '../../auth/auth.guard';
 import { RolesGuard } from '../../auth/roles.guard';
 import { Roles } from '../../auth/roles.decorator';
+import { LockoutService } from '../../auth/services/lockout.service';
 import { z } from 'zod';
 
 class UserSyncDto extends createZodDto(userSyncSchema) {}
@@ -22,7 +23,8 @@ class UpdateRoleDto extends createZodDto(updateRoleSchema) {}
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly cartService: CartService
+    private readonly cartService: CartService,
+    private readonly lockoutService: LockoutService
   ) {}
 
   @Get('profile/stats')
@@ -54,6 +56,17 @@ export class UsersController {
       throw new NotFoundException('Usuario no encontrado');
     }
     return updatedUser;
+  }
+
+  @Patch('admin/:userId/unlock')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
+  async unlockUser(@Param('userId') userId: string) {
+    const unlocked = await this.lockoutService.unlockAccount(userId);
+    if (!unlocked) {
+      throw new NotFoundException('Usuario no encontrado o no estaba bloqueado');
+    }
+    return { message: 'Usuario desbloqueado exitosamente' };
   }
 
   @Get(':auth0Id')
