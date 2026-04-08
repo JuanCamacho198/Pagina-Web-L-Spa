@@ -140,16 +140,7 @@
 	let isLoading = $derived(loading);
 </script>
 
-{#snippet fallback()}
-	<div class="flex items-center justify-center py-20">
-		<div class="flex flex-col items-center gap-4">
-			<Loader2 size={40} class="text-primary animate-spin" />
-			<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando datos...</p>
-		</div>
-	</div>
-{/snippet}
-
-<Skeleton loading={isLoading} {fallback}>
+<Skeleton loading={isLoading}>
 	<div class="space-y-8">
 		<!-- Header -->
 		<div class="flex items-center justify-between">

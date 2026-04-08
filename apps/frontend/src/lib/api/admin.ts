@@ -6,6 +6,24 @@ const API_URL = typeof import.meta !== 'undefined' && (import.meta as any).env?.
     : 'http://localhost:3000/api/v1';
 
 // Types
+export interface ApiError {
+	status: number;
+	message: string;
+	timestamp: string;
+}
+
+export interface ApiResponse<T> {
+	data: T;
+	error: null;
+}
+
+export interface ApiErrorResponse {
+	data: null;
+	error: ApiError;
+}
+
+export type ApiResult<T> = ApiResponse<T> | ApiErrorResponse;
+
 export interface Appointment {
 	id: string;
 	userId: string;
@@ -96,8 +114,13 @@ async function getUserId(): Promise<string | null> {
 async function fetchApi<T>(
 	endpoint: string,
 	options: RequestInit = {}
-): Promise<T | null> {
-	if (!browser) return null;
+): Promise<ApiResult<T>> {
+	if (!browser) {
+		return {
+			data: null,
+			error: { status: 0, message: 'Not in browser environment', timestamp: new Date().toISOString() }
+		};
+	}
 
 	const userId = await getUserId();
 	
@@ -118,14 +141,23 @@ async function fetchApi<T>(
 		});
 
 		if (!response.ok) {
+			const errorMessage = await response.text().catch(() => response.statusText);
 			console.error(`API Error: ${response.status} ${response.statusText}`);
-			return null;
+			return {
+				data: null,
+				error: { status: response.status, message: errorMessage, timestamp: new Date().toISOString() }
+			};
 		}
 
-		return await response.json();
+		const data = await response.json();
+		return { data, error: null };
 	} catch (error) {
 		console.error('API fetch error:', error);
-		return null;
+		const errorMessage = error instanceof Error ? error.message : 'Network error';
+		return {
+			data: null,
+			error: { status: 0, message: errorMessage, timestamp: new Date().toISOString() }
+		};
 	}
 }
 
@@ -135,41 +167,41 @@ export const adminApi = {
 	// ============ DASHBOARD ============
 	
 	async getDashboardStats(): Promise<DashboardStats | null> {
-		const appointments = await fetchApi<AppointmentStats>('/appointments/stats');
+		const appointmentsResult = await fetchApi<AppointmentStats>('/appointments/stats');
 		
 		// Get total users count
-		const users = await this.getUsers();
+		const usersResult = await this.getUsers();
 		
 		// Get total services count
-		const services = await this.getServices();
+		const servicesResult = await this.getServices();
 
-		if (!appointments || !users || !services) {
+		if (!appointmentsResult || appointmentsResult.error || !usersResult || !servicesResult) {
 			// Return fallback data
 			return {
-				totalUsers: users?.length || 0,
-				totalServices: services?.length || 0,
-				totalAppointments: appointments?.total || 0,
-				monthlyRevenue: appointments?.revenue || 0,
-				thisMonthAppointments: appointments?.thisMonth || 0,
-				confirmedAppointments: appointments?.confirmed || 0,
-				pendingAppointments: appointments?.pending || 0,
+				totalUsers: usersResult?.length || 0,
+				totalServices: servicesResult?.length || 0,
+				totalAppointments: appointmentsResult?.data?.total || 0,
+				monthlyRevenue: appointmentsResult?.data?.revenue || 0,
+				thisMonthAppointments: appointmentsResult?.data?.thisMonth || 0,
+				confirmedAppointments: appointmentsResult?.data?.confirmed || 0,
+				pendingAppointments: appointmentsResult?.data?.pending || 0,
 			};
 		}
 
 		return {
-			totalUsers: users.length,
-			totalServices: services.length,
-			totalAppointments: appointments.total,
-			monthlyRevenue: appointments.revenue,
-			thisMonthAppointments: appointments.thisMonth,
-			confirmedAppointments: appointments.confirmed,
-			pendingAppointments: appointments.pending,
+			totalUsers: usersResult.length,
+			totalServices: servicesResult.length,
+			totalAppointments: appointmentsResult.data.total,
+			monthlyRevenue: appointmentsResult.data.revenue,
+			thisMonthAppointments: appointmentsResult.data.thisMonth,
+			confirmedAppointments: appointmentsResult.data.confirmed,
+			pendingAppointments: appointmentsResult.data.pending,
 		};
 	},
 
 	async getRecentAppointments(limit = 5): Promise<Appointment[]> {
-		const appointments = await fetchApi<Appointment[]>('/appointments?limit=' + limit);
-		return appointments || [];
+		const result = await fetchApi<Appointment[]>('/appointments?limit=' + limit);
+		return result.error ? [] : (result.data || []);
 	},
 
 	// ============ APPOINTMENTS ============
@@ -187,65 +219,71 @@ export const adminApi = {
 		const query = params.toString();
 		const endpoint = query ? `/appointments?${query}` : '/appointments';
 
-		const appointments = await fetchApi<Appointment[]>(endpoint);
-		return appointments || [];
+		const result = await fetchApi<Appointment[]>(endpoint);
+		return result.error ? [] : (result.data || []);
 	},
 
 	async getAppointmentStats(): Promise<AppointmentStats | null> {
-		return await fetchApi<AppointmentStats>('/appointments/stats');
+		const result = await fetchApi<AppointmentStats>('/appointments/stats');
+		return result.error ? null : result.data;
 	},
 
 	async confirmAppointment(id: string): Promise<Appointment | null> {
-		return await fetchApi<Appointment>(`/appointments/${id}/status`, {
+		const result = await fetchApi<Appointment>(`/appointments/${id}/status`, {
 			method: 'PATCH',
 			body: JSON.stringify({ status: 'confirmed' }),
 		});
+		return result.error ? null : result.data;
 	},
 
 	async cancelAppointment(id: string): Promise<Appointment | null> {
-		return await fetchApi<Appointment>(`/appointments/${id}/status`, {
+		const result = await fetchApi<Appointment>(`/appointments/${id}/status`, {
 			method: 'PATCH',
 			body: JSON.stringify({ status: 'cancelled' }),
 		});
+		return result.error ? null : result.data;
 	},
 
 	async completeAppointment(id: string): Promise<Appointment | null> {
-		return await fetchApi<Appointment>(`/appointments/${id}/status`, {
+		const result = await fetchApi<Appointment>(`/appointments/${id}/status`, {
 			method: 'PATCH',
 			body: JSON.stringify({ status: 'completed' }),
 		});
+		return result.error ? null : result.data;
 	},
 
 	async deleteAppointment(id: string): Promise<boolean> {
 		const result = await fetchApi<{ message: string }>(`/appointments/${id}`, {
 			method: 'DELETE',
 		});
-		return result !== null;
+		return !result.error && result.data !== null;
 	},
 
 	// ============ USERS ============
 
 	async getUsers(): Promise<User[]> {
-		const users = await fetchApi<User[]>('/users/admin/all');
-		return users || [];
+		const result = await fetchApi<User[]>('/users/admin/all');
+		return result.error ? [] : (result.data || []);
 	},
 
 	async updateUserRole(userId: string, role: 'admin' | 'employee' | 'customer'): Promise<User | null> {
-		return await fetchApi<User>(`/users/admin/${userId}/role`, {
+		const result = await fetchApi<User>(`/users/admin/${userId}/role`, {
 			method: 'PATCH',
 			body: JSON.stringify({ role }),
 		});
+		return result.error ? null : result.data;
 	},
 
 	// ============ SERVICES ============
 
 	async getServices(): Promise<Service[]> {
-		const services = await fetchApi<Service[]>('/services');
-		return services || [];
+		const result = await fetchApi<Service[]>('/services');
+		return result.error ? [] : (result.data || []);
 	},
 
 	async getService(id: string): Promise<Service | null> {
-		return await fetchApi<Service>(`/services/${id}`);
+		const result = await fetchApi<Service>(`/services/${id}`);
+		return result.error ? null : result.data;
 	},
 
 	async createService(data: {
@@ -258,10 +296,11 @@ export const adminApi = {
 		active?: boolean;
 		intensity?: number;
 	}): Promise<Service | null> {
-		return await fetchApi<Service>('/services', {
+		const result = await fetchApi<Service>('/services', {
 			method: 'POST',
 			body: JSON.stringify(data),
 		});
+		return result.error ? null : result.data;
 	},
 
 	async updateService(
@@ -277,17 +316,18 @@ export const adminApi = {
 			intensity: number;
 		}>
 	): Promise<Service | null> {
-		return await fetchApi<Service>(`/services/${id}`, {
+		const result = await fetchApi<Service>(`/services/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify(data),
 		});
+		return result.error ? null : result.data;
 	},
 
 	async deleteService(id: string): Promise<boolean> {
 		const result = await fetchApi<{ message: string }>(`/services/${id}`, {
 			method: 'DELETE',
 		});
-		return result !== null;
+		return !result.error && result.data !== null;
 	},
 
 	async toggleServiceActive(id: string, active: boolean): Promise<Service | null> {
