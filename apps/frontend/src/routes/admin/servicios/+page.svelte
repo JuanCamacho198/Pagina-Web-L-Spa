@@ -157,6 +157,8 @@
 	onMount(() => {
 		loadData();
 	});
+
+	let isLoading = $derived(loading);
 </script>
 
 <div class="space-y-8">
@@ -187,16 +189,7 @@
 		</div>
 	</div>
 
-	{#if loading && services.length === 0}
-		<!-- Loading State -->
-		<div class="flex items-center justify-center py-20">
-			<div class="flex flex-col items-center gap-4">
-				<Loader2 size={40} class="text-primary animate-spin" />
-				<p class="text-gray-500 dark:text-gray-400 font-medium">Cargando servicios...</p>
-			</div>
-		</div>
-	{:else}
-		<!-- Filters -->
+	<!-- Filters -->
 		<div class="flex items-center gap-4">
 			<div class="flex-1 relative">
 				<Search size={18} class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -218,28 +211,7 @@
 			</select>
 		</div>
 
-{#snippet fallback()}
-			<!-- Skeleton for services grid -->
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-				{#each Array(6) as _, i}
-					<div class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden">
-						<div class="h-48 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
-						<div class="p-6 space-y-4">
-							<div class="h-6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-3/4"></div>
-							<div class="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-full"></div>
-							<div class="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-2/3"></div>
-							<div class="flex justify-between pt-4">
-								<div class="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/4"></div>
-								<div class="h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-1/3"></div>
-							</div>
-						</div>
-					</div>
-				{/each}
-			</div>
-		{/snippet}
-
-		<Skeleton loading={loading && services.length > 0} {fallback}>
-		<!-- Services Grid -->
+	<!-- Services Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 			{#each filteredServices as service}
 				<div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl shadow-primary/5 border border-secondary/20 overflow-hidden transition-all duration-500 hover:-translate-y-2 {service.active ? '' : 'opacity-60'}">
@@ -318,9 +290,8 @@
 				<p class="text-gray-400 dark:text-gray-500 font-medium">No se encontraron servicios</p>
 			</div>
 		{/if}
-		</Skeleton>
-	{/if}
-</div>
+		{/if}
+	</div>
 
 <!-- Modal -->
 {#if showModal}
