@@ -20,6 +20,52 @@
     closeMenuLabel = 'Close menu'
   }: Props = $props();
 
+  function normalizeText(value: string) {
+    return value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim();
+  }
+
+  function isPrimaryLink(link: NavLink) {
+    const normalizedName = normalizeText(link.name);
+    const normalizedPath = normalizeText(link.path);
+
+    const primaryNames = [
+      'inicio',
+      'home',
+      'servicios',
+      'services',
+      'reservas',
+      'bookings',
+      'perfil',
+      'profile',
+      'carrito',
+      'cart'
+    ];
+
+    const primaryPathTokens = [
+      '/servicios',
+      '/services',
+      '/informacion-importante',
+      '/bookings',
+      '/mis-reservas',
+      '/reservas',
+      '/perfil',
+      '/profile',
+      '/carrito',
+      '/cart'
+    ];
+
+    return (
+      primaryNames.includes(normalizedName) ||
+      primaryPathTokens.some((token) => normalizedPath.includes(token))
+    );
+  }
+
+  const secondaryLinks = $derived(links.filter((link) => !isPrimaryLink(link)));
+
   const drawerId = 'mobile-navigation-drawer';
   const drawerTitleId = 'mobile-navigation-title';
   let isOpen = $state(false);
@@ -115,7 +161,7 @@
       </div>
 
       <ul class="space-y-1" role="list">
-        {#each links as link}
+        {#each secondaryLinks as link}
           <li>
             <a
               href={link.path}

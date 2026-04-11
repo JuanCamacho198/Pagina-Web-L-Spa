@@ -71,7 +71,7 @@
     className
   )}
 >
-  <div class="relative h-64 overflow-hidden">
+  <div class="relative h-56 overflow-hidden sm:h-60 lg:h-64">
     {#if service.imageUrl || service.image_url || service.imageFileName}
       <OptimizedImage 
         src={service.imageUrl || service.image_url || ''} 
@@ -94,7 +94,7 @@
     <!-- Favorite Button - Top Right -->
     <button 
       onclick={handleToggleFavorite}
-      class="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110"
+      class="absolute right-3 top-3 z-10 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-110 sm:right-4 sm:top-4"
       aria-label={isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
     >
       <Heart 
@@ -106,38 +106,38 @@
       />
     </button>
 
-    <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-2xl shadow-lg flex items-center gap-2">
+    <div class="absolute bottom-3 right-3 flex items-center gap-2 rounded-2xl bg-white/90 px-3 py-1.5 shadow-lg backdrop-blur-md sm:bottom-4 sm:right-4">
       <StarRating rating={4.5} size={14} readonly />
       <span class="text-xs font-bold text-gray-800">4.5</span>
     </div>
   </div>
 
-  <div class="p-8 flex flex-col flex-1">
-    <div class="mb-4">
-      <div class="flex items-center justify-between gap-2 mb-2">
-        <h3 class="text-2xl font-black text-gray-900 group-hover:text-primary transition-colors line-clamp-1">
+  <div class="flex flex-1 flex-col p-5 sm:p-6 lg:p-8">
+    <div class="mb-3 sm:mb-4">
+      <div class="mb-2 flex items-center justify-between gap-2">
+        <h3 class="line-clamp-1 text-xl font-black text-gray-900 transition-colors group-hover:text-primary lg:text-2xl">
           {service.name}
         </h3>
-        <div class="p-2 bg-gray-50 rounded-xl group-hover:bg-primary group-hover:text-white transition-all duration-300">
+        <div class="rounded-xl bg-gray-50 p-2 transition-all duration-300 group-hover:bg-primary group-hover:text-white">
            <ArrowRight size={18} class="group-hover:translate-x-0.5 transition-transform" />
         </div>
       </div>
-      <p class="text-gray-500 text-sm leading-relaxed line-clamp-2 font-medium">
+      <p class="line-clamp-2 text-[13px] font-medium leading-relaxed text-gray-500 sm:text-sm">
         {service.description || 'Disfruta de una experiencia única de bienestar y relajación diseñada especialmente para ti.'}
       </p>
     </div>
 
-    <div class="flex flex-wrap gap-4 mb-8 mt-auto">
-      <div class="flex items-center gap-2 text-gray-400 bg-gray-50/50 px-3 py-1.5 rounded-xl">
+    <div class="mt-auto mb-6 flex flex-wrap gap-3 sm:mb-8 sm:gap-4">
+      <div class="flex items-center gap-2 rounded-xl bg-gray-50/50 px-3 py-1.5 text-gray-400">
         <Clock size={14} class="text-primary/60" />
         <span class="text-[10px] font-black uppercase tracking-wider">{service.duration || 60} min</span>
       </div>
     </div>
 
-    <div class="flex items-center justify-between gap-4 pt-6 border-t border-gray-100">
+    <div class="flex items-center justify-between gap-3 border-t border-gray-100 pt-4 sm:gap-4 sm:pt-6">
       <div class="flex flex-col">
         <span class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Inversión</span>
-        <span class="text-2xl font-black text-gray-900">
+        <span class="text-xl font-black text-gray-900 lg:text-2xl">
           {Number(service.price).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })}
         </span>
       </div>
@@ -149,7 +149,7 @@
           disabled={isAdded}
           aria-label={isAdded ? 'Añadido al carrito' : 'Añadir al carrito'}
           class={cn(
-            "h-12 w-12 flex items-center justify-center rounded-2xl border transition-all duration-300 shadow-sm",
+            "flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-2xl border transition-all duration-300 shadow-sm lg:h-12 lg:w-12",
             isAdded 
               ? "bg-emerald-50 border-emerald-100 text-emerald-500 scale-95" 
               : "bg-white border-gray-100 text-gray-400 hover:bg-primary hover:border-primary hover:text-white hover:shadow-lg hover:shadow-primary/20"

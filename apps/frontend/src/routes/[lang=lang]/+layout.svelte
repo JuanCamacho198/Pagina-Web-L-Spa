@@ -4,6 +4,7 @@
   import Toaster from '$lib/components/feedback/Toast.svelte';
   import Footer from '$lib/components/layout/Footer.svelte';
   import MobileNav from '$lib/components/layout/MobileNav.svelte';
+  import BottomNav from '$lib/components/layout/BottomNav.svelte';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { authClient, apiClient } from '$lib/auth-client';
@@ -79,6 +80,20 @@
     navLabel: 'Menu principal de navegacion',
     openMenu: 'Abrir menu de navegacion',
     closeMenu: 'Cerrar menu de navegacion'
+  });
+
+  let bottomNavTexts = $derived(currentLang === 'en' ? {
+    home: 'Home',
+    services: 'Services',
+    bookings: 'Bookings',
+    profileOrCart: 'Cart',
+    navAria: 'Bottom navigation'
+  } : {
+    home: 'Inicio',
+    services: 'Servicios',
+    bookings: 'Reservas',
+    profileOrCart: 'Carrito',
+    navAria: 'Navegacion inferior'
   });
   
   // User menu translations
@@ -372,9 +387,13 @@
     </div>
   </header>
 
-  <main id="main" class="grow bg-white dark:bg-gray-900 transition-colors duration-300">
+  <main id="main" class="grow bg-white pb-[calc(4rem+env(safe-area-inset-bottom))] transition-colors duration-300 lg:pb-0 dark:bg-gray-900">
     {@render children?.()}
   </main>
+
+  {#if !isAdminSection}
+    <BottomNav currentLang={currentLang} labels={bottomNavTexts} />
+  {/if}
 
   {#if !isAdminSection}
     <Footer {branding} />
