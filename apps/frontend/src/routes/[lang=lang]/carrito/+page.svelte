@@ -15,7 +15,7 @@
 
 	const handleCheckout = () => {
 		// Next phase: redirect to booking stepper or flow
-		window.location.href = '/checkout';
+		window.location.href = getLocalizedPath('/checkout', currentLang);
 	};
 	
 	// Load cart when page mounts

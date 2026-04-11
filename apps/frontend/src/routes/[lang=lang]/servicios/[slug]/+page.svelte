@@ -194,10 +194,10 @@ class="w-full h-full group-hover:scale-105 transition-transform duration-[3s] ea
 
 <div class="space-y-4">
 <Button
-href="/booking?serviceId={service.id}"
-class="w-full rounded-full bg-primary hover:bg-primary-dark text-white px-8 py-6 font-bold text-xs uppercase tracking-[0.3em] shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all h-auto cursor-pointer"
+	href={getLocalizedPath(`/checkout?serviceId=${service.id}`, currentLang)}
+	class="w-full rounded-full bg-primary hover:bg-primary-dark text-white px-8 py-6 font-bold text-xs uppercase tracking-[0.3em] shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all h-auto cursor-pointer"
 >
-Reservar Retiro
+	Reservar Retiro
 </Button>
 
 <div class="grid grid-cols-2 gap-4">
